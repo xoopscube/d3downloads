@@ -10,7 +10,7 @@ class XoopsGTicket {
 	var $_latest_token = '' ;
 	var $messages = array() ;
 
-	function XoopsGTicket()
+	function __construct()
 	{
 		global $xoopsConfig ;
 
@@ -308,6 +308,3 @@ function admin_refcheck($chkref = "") {
 }
 
 }
-
-
-?>

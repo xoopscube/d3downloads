@@ -9,7 +9,7 @@ if( ! class_exists( 'd3downloadsComment' ) )
 	{
 		function fetchSummary( $external_link_id )
 		{
-			require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+			require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 
 			$db =& Database::getInstance() ;
 			$myts =& d3downloadsTextSanitizer::sGetInstance() ;
@@ -42,8 +42,8 @@ if( ! class_exists( 'd3downloadsComment' ) )
 
 		function validate_id( $link_id )
 		{
-			include_once dirname( dirname(__FILE__) ).'/class/user_access.php' ;
-			include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
+			include_once dirname(__FILE__, 2) .'/class/user_access.php' ;
+			include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
 
 			$db =& Database::getInstance() ;
 			$mydirname = $this->mydirname ;
@@ -63,7 +63,7 @@ if( ! class_exists( 'd3downloadsComment' ) )
 
 		function onUpdate( $mode , $link_id , $forum_id , $topic_id , $post_id = 0 )
 		{
-			include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+			include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 
 			$db =& Database::getInstance() ;
 			$mydirname = $this->mydirname ;
@@ -114,5 +114,3 @@ if( ! class_exists( 'd3downloadsComment' ) )
 		}
 	}
 }
-
-?>

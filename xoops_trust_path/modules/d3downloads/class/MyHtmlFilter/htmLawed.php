@@ -887,5 +887,3 @@ if( ! class_exists( 'MyHtmlFilter' ) ) {
 // ===== end htmLawed ========================
 	}
 }
-
-?>

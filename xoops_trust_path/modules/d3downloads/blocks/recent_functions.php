@@ -7,8 +7,8 @@ if (! function_exists('b_d3downloads_recent_show') ) {
 		$db =& Database::getInstance() ;
 		(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance() ;
 
-		include_once dirname( dirname(__FILE__) ).'/class/user_access.php' ;
-		include_once dirname( dirname(__FILE__) ).'/class/block_download.php' ;
+		include_once dirname(__FILE__, 2) .'/class/user_access.php' ;
+		include_once dirname(__FILE__, 2) .'/class/block_download.php' ;
 
 		$mydirname = empty( $options[0] ) ? 'd3downloads' : $options[0] ;
 		$max_entry = empty( $options[1] ) ? 10 : intval( $options[1] )  ;
@@ -89,5 +89,3 @@ if (! function_exists('b_d3downloads_recent_edit') ) {
 		return $tpl->fetch( 'db:'.$mydirname.'_blockedit_recent.html' ) ;
 	}
 }
-
-?>

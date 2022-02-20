@@ -17,11 +17,11 @@ if( ! class_exists( 'd3downloadsTextSanitizer' ) )
 			return $instance ;
 		}
 
-		function &getInstance()
-		{
-			$instance =& self::sGetInstance();
-			return $instance;
-		}
+        static function &getInstance()
+        {
+            $instance =& self::sGetInstance();
+            return $instance;
+        }
 
 		// override
 		function &htmlSpecialChars( $text, $forEdit=false )
@@ -400,5 +400,3 @@ if( ! class_exists( 'd3downloadsTextSanitizer' ) )
 		}
 	}
 }
-
-?>

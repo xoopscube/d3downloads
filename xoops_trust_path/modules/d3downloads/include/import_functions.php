@@ -3,7 +3,7 @@
 if ( ! function_exists('d3download_import_errordie') ) {
 	function d3download_import_errordie( $mydirname )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/file_manager.php' ;
+		include_once dirname(__FILE__, 2) .'/class/file_manager.php' ;
 		$file_manager = new file_manager( $mydirname ) ;
 		$file_manager->errordie() ;
 	}
@@ -72,7 +72,7 @@ if ( ! function_exists('d3download_import_from_mydownloads') ) {
 		// upload files delete
 		d3download_delete_uploadfiles_for_import( $mydirname );
 		// make serialize data
-		include_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
+		include_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
 		d3download_make_serialize_data( $mydirname );
 		// cache files delete
 		d3download_delete_cache_of_categories( $mydirname ) ;
@@ -146,7 +146,7 @@ if ( ! function_exists('d3download_import_from_d3download') ) {
 	{
 		$db =& Database::getInstance() ;
 
-		include_once dirname( dirname(__FILE__) ).'/include/mytable.php' ;
+		include_once dirname(__FILE__, 2) .'/include/mytable.php' ;
 
 		if( ! empty( $uploads_dir_error ) ){
 			redirect_header( XOOPS_URL."/modules/$mydirname/admin/index.php?page=import" , 10 , _MD_D3DOWNLOADS_FILE_CONFIGERROR ) ;
@@ -170,7 +170,7 @@ if ( ! function_exists('d3download_import_from_d3download') ) {
 			// convert url
 			d3download_copy_converturl_for_import( $mydirname, $from_dirname );
 			// make serialize data
-			include_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
+			include_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
 			d3download_make_serialize_data( $mydirname );
 			// cache files delete
 			d3download_delete_cache_of_categories( $mydirname ) ;
@@ -181,7 +181,7 @@ if ( ! function_exists('d3download_import_from_d3download') ) {
 if (! function_exists('d3download_default_user_access')) {
 	function d3download_default_user_access( $mydirname )
 	{
-		include_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
+		include_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
 		$error = d3download_set_default_user_access( $mydirname ) ;
 		if( $error ) d3download_import_errordie( $mydirname ) ;
 	}
@@ -230,7 +230,7 @@ if ( ! function_exists('d3download_copy_uploadfiles_for_import') ) {
 if ( ! function_exists('d3download_copy_converturl_for_import') ) {
 	function d3download_copy_converturl_for_import( $mydirname, $from_dirname )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+		require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 		$myts =& d3downloadsTextSanitizer::sGetInstance() ;
 		$db =& Database::getInstance() ;
 
@@ -284,7 +284,7 @@ if ( ! function_exists('d3download_convert_uploaddir') ) {
 if (! function_exists('d3download_convert_from_wfdownloads')) {
 	function d3download_convert_from_wfdownloads( $mydirname, $target_dirname )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+		require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 		$myts =& d3downloadsTextSanitizer::sGetInstance() ;
 		$db =& Database::getInstance() ;
 
@@ -359,5 +359,3 @@ if ( ! function_exists('d3download_uploads_dir_check_for_import') ) {
 		}
 	}
 }
-
-?>

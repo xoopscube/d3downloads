@@ -267,7 +267,7 @@ if( ! class_exists( 'broken_report' ) )
 		var $email_length = 60 ;
 		var $cron_param_array = array( 'pass' , 'limit' , 'offset' ) ;
 
-		function broken_report( $mydirname )
+		function __construct($mydirname )
 		{
 			global $xoopsUser ;
 			include_once dirname( dirname(__FILE__) ).'/include/mytable.php' ;
@@ -534,7 +534,7 @@ if( ! class_exists( 'broken_report' ) )
 
 		function check_file( $file )
 		{
-			$this->check_result = ( ! is_file( $file ) || filesize( $file ) == 0 ) ? false : true ;
+			$this->check_result = !((!is_file($file) || filesize($file) == 0));
 			$this->status       = ( ! $this->check_result ) ? 'broken file' : '' ;
 		}
 
@@ -575,7 +575,7 @@ if( ! class_exists( 'broken_report' ) )
 
 		function message_option()
 		{
-			return ( $this->option_config( 'broken_message_from_sender' ) ) ? true : false ;
+			return (bool)$this->option_config('broken_message_from_sender');
 		}
 
 		function set_trigger_event( $title )
@@ -657,5 +657,3 @@ if( ! class_exists( 'broken_report' ) )
 		}
 	}
 }
-
-?>

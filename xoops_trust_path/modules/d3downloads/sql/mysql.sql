@@ -23,7 +23,7 @@ CREATE TABLE broken (
   KEY (`lid`),
   KEY (`sender`),
   KEY (`ip`)
-) ENGINE=MYISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -45,7 +45,7 @@ CREATE TABLE cat (
   `cids_child` text,
   PRIMARY KEY  (`cid`),
   KEY pid (`pid`)
-) ENGINE=MYISAM;
+) ENGINE=InnoDB;
 
 INSERT INTO cat (
   cid, pid, title, imgurl, description, shotsdir, cat_weight, submit_message, date )
@@ -98,7 +98,7 @@ CREATE TABLE downloads (
   KEY (`cid`),
   KEY (`visible`),
   KEY (`cancomment`)
-) ENGINE=MYISAM;
+) ENGINE=InnoDB;
 
 # --------------------------------------------------------
 
@@ -143,7 +143,7 @@ CREATE TABLE unapproval (
   KEY `lid` (`lid`),
   KEY `cid` (`cid`),
   KEY `title` (`title`(40))
-) ENGINE=MYISAM;
+) ENGINE=InnoDB;
 
 # --------------------------------------------------------
 
@@ -170,7 +170,7 @@ CREATE TABLE downloads_history (
   PRIMARY KEY  (`id`),
   KEY  (`lid`),
   KEY (`cid`)
-) ENGINE=MYISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -193,7 +193,7 @@ CREATE TABLE user_access (
   KEY (`uid`),
   KEY (`groupid`),
   KEY (`can_post`)
-) ENGINE=MYISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -211,7 +211,7 @@ CREATE TABLE votedata (
   KEY (`lid`),
   KEY (`ratinguser`),
   KEY (`ratingtimestamp`)
-) ENGINE=MYISAM;
+) ENGINE=InnoDB;
 # --------------------------------------------------------
 
 #
@@ -224,4 +224,4 @@ CREATE TABLE `mylink` (
   `date` int(10) NOT NULL default '0',
   UNIQUE KEY  (`uid`),
   KEY (`date`)
-) ENGINE=MYISAM;
+) ENGINE=InnoDB;

@@ -51,5 +51,3 @@ $adminmenu4altsys = array(
 		'link' => 'admin/index.php?mode=admin&lib=altsys&page=mypreferences' ,
 	) ,
 ) ;
-
-?>

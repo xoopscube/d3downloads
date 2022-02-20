@@ -65,11 +65,11 @@ $whr_cat = "cid IN (".implode(",", $user_access->can_read() ).")" ;
 $mydownload = new MyDownload( $mydirname );
 $rankings = $mydownload->get_downdata_for_topten( $whr_cat, $sortDB ) ;
 
-// ‰{——‰Â”\‚ÈƒJƒeƒSƒŠ‚ÌƒŠƒXƒg‚ð SELECTƒ{ƒbƒNƒX—p‚ÉŽæ“¾
+// ï¿½{ï¿½ï¿½ï¿½Â”\ï¿½ÈƒJï¿½eï¿½Sï¿½ï¿½ï¿½Ìƒï¿½ï¿½Xï¿½gï¿½ï¿½ SELECTï¿½{ï¿½bï¿½Nï¿½Xï¿½pï¿½ÉŽæ“¾
 $category4assin = d3download_makecache_for_selbox( $mydirname, $whr_cat, 0, 1 );
 $lang_directcatsel = _MD_D3DOWNLOADS_SEL_CATEGORY;
 
-// ‰{——‰Â”\‚È“o˜^Œ”‚ð SELECTƒ{ƒbƒNƒX—p‚ÉŽæ“¾
+// ï¿½{ï¿½ï¿½ï¿½Â”\ï¿½È“oï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ SELECTï¿½{ï¿½bï¿½Nï¿½Xï¿½pï¿½ÉŽæ“¾
 $num = $mydownload->Total_Num( $whr_cat );
 $total_num = sprintf( _MD_D3DOWNLOADS_TOTAL_NUM , intval( $num ) );
 $xoopsTpl->assign( 'download_total_num' , $total_num ) ;
@@ -90,4 +90,3 @@ $xoopsTpl->assign( array(
 ) ) ;
 include_once XOOPS_ROOT_PATH.'/footer.php';
 
-?>

@@ -4,15 +4,15 @@ global $xoopsUser ;
 
 include XOOPS_ROOT_PATH.'/header.php';
 
-include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
-include_once dirname( dirname(__FILE__) ).'/class/user_access.php' ;
-require_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
+include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
+include_once dirname(__FILE__, 2) .'/class/user_access.php' ;
+require_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
 
 $user_access = new user_access( $mydirname ) ;
 
 $download4assign = $category = $all = array() ;
 
-// ‰{——E“Še‰Â”\‚ÈƒJƒeƒSƒŠŽæ“¾‚Ì€”õ
+// ï¿½{ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½eï¿½Â”\ï¿½ÈƒJï¿½eï¿½Sï¿½ï¿½ï¿½æ“¾ï¿½Ìï¿½ï¿½ï¿½
 $whr_cat = "cid IN (".implode(",", $user_access->can_read() ).")" ;
 $whr_cat4read = "d.".$whr_cat ;
 
@@ -38,7 +38,7 @@ $xoopsTpl->assign('lang_cursortedby', sprintf( _MD_D3DOWNLOADS_CURSORTBY, d3down
 
 $mydownload = new MyDownload( $mydirname );
 
-// CID ‚ðŽæ“¾‚µ‚½ê‡‚Ìˆ—
+// CID ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½Ìï¿½ï¿½ï¿½
 $cid = ( ! empty( $_GET['cid'] ) ) ? intval( $_GET['cid'] ) : 0 ;
 $select_intree = d3download_select_intree();
 $intree =  ( ! empty( $_GET['intree'] ) ) ? 1 : 0 ;
@@ -48,18 +48,18 @@ $xoopsTpl->assign( 'category_id', $cid );
 $xoopsTpl->assign( 'select_intree' , $select_intree ) ; 
 $xoopsTpl->assign( 'intree', $intree );
 
-// “o˜^Œ”‚ðŽæ“¾
+// ï¿½oï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾
 $total =  $mydownload->Total_Num( $whr_cat, $cid, 0, 0, $intree ) ;
 $total_num = ( ! empty( $cid ) ) ? sprintf( _MD_D3DOWNLOADS_CATEGORY_NUM , $total ) : sprintf( _MD_D3DOWNLOADS_TOTAL_NUM , $total ) ;
 
-// ”ñŒöŠJŒ”‚ðƒAƒTƒCƒ“
+// ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Tï¿½Cï¿½ï¿½
 if( $module_admin ){
 	$invisible_num = $mydownload->Invisible_Num( $cid, $intree ) ;
 	$xoopsTpl->assign( 'invisible_num' , $invisible_num['num']  ) ;
 	$xoopsTpl->assign( 'invisible_link' , $invisible_num['link']  ) ;
 }
 
-// ƒy[ƒWƒ^ƒCƒgƒ‹‚ðƒAƒTƒCƒ“
+// ï¿½yï¿½[ï¿½Wï¿½^ï¿½Cï¿½gï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Tï¿½Cï¿½ï¿½
 $pagetitle4assign = _MD_D3DOWNLOADS_FILELIST_MAIN ;
 if( ! empty( $cid ) ){
 	include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
@@ -67,17 +67,19 @@ if( ! empty( $cid ) ){
 	$pagetitle4assign .= ' - '.$mycategory->return_title() ;
 }
 
-// ƒpƒ“‚­‚¸•”•ª‚Ìˆ—
+// ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
 $bc[0] = d3download_breadcrumbs( $mydirname ) ;
 $breadcrumbs_tree = d3download_breadcrumbs_tree( $mydirname, $cid, $whr_cat, "index.php?page=filelist" ) ;
 $bc[] = ( empty( $breadcrumbs_tree ) ) ? array( 'name' => _MD_D3DOWNLOADS_FILELIST_MAIN ) : array( 'url' => 'index.php?page=filelist' , 'name' => _MD_D3DOWNLOADS_FILELIST_MAIN ) ;
 $breadcrumbs = array_merge( $bc, $breadcrumbs_tree ) ;
 
-// ƒy[ƒWƒiƒr‚Ìˆ—
+// ï¿½yï¿½[ï¿½Wï¿½iï¿½rï¿½Ìï¿½ï¿½ï¿½
 $perpage4assign = d3download_items_perpage();
 $select_perpage = d3download_select_perpage( $mydirname ) ;
 $current_start = isset( $_GET['start'] ) ? intval( $_GET['start'] ) : 0 ;
-require_once dirname( dirname(__FILE__) ).'/class/my_pagenav.php' ;
+
+require_once dirname(__FILE__, 2) .'/class/my_pagenav.php' ;
+
 $orderby4pagenav = d3download_convertorderbyout( $orderby );
 $pagenavarg = "page=filelist&amp;cid=".$cid."&amp;orderby=".$orderby4pagenav."&amp;perpage=".$select_perpage."&amp;intree=".$intree ;
 $pagenav = new My_PageNav( $total, $select_perpage, $current_start, 'start', $pagenavarg ) ;
@@ -91,15 +93,15 @@ $xoopsTpl->assign( 'orderby' , $orderby4pagenav ) ;
 
 $xoopsOption['template_main'] = $mydirname.'_main_filelist.html' ;
 
-// “o˜^Œ”‚ðƒAƒTƒCƒ“
+// ï¿½oï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Tï¿½Cï¿½ï¿½
 $xoopsTpl->assign( 'download_total_num' , $total_num  ) ;
 
-// ‰{——‰Â”\‚ÈƒJƒeƒSƒŠ‚ÌƒŠƒXƒg‚ð SELECTƒ{ƒbƒNƒX—p‚ÉŽæ“¾
+// ï¿½{ï¿½ï¿½ï¿½Â”\ï¿½ÈƒJï¿½eï¿½Sï¿½ï¿½ï¿½Ìƒï¿½ï¿½Xï¿½gï¿½ï¿½ SELECTï¿½{ï¿½bï¿½Nï¿½Xï¿½pï¿½ÉŽæ“¾
 $all = array( 0 => 'ALL' ) ;
 $category = d3download_makecache_for_selbox( $mydirname, $whr_cat, 0, 1 ) ;
 $category4assin = $all + $category ;
 
-// ‰{——‰Â”\‚È“o˜^ƒf[ƒ^‚ðŽæ“¾
+// ï¿½{ï¿½ï¿½ï¿½Â”\ï¿½È“oï¿½^ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½æ“¾
 $download4assign = $mydownload->get_downdata_for_filelist( $cid, $whr_cat4read, $orderby, $select_perpage, $current_start, $intree ) ;
 
 $mod_url = XOOPS_URL.'/modules/'.$mydirname ;
@@ -128,5 +130,3 @@ $xoopsTpl->assign( array(
 ) ) ;
 // display
 include XOOPS_ROOT_PATH.'/footer.php';
-
-?>

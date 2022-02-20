@@ -94,14 +94,14 @@ if( ! class_exists( 'Post_Check' ) )
 			return $result;
 		}
 
-		// ‹ó”’
+		// ï¿½ï¿½
 		function voidCheck( $value )
 		{
 			$result = ( $value != "" ) ? true : false;
 			return $result;
 		}
 
-		// ƒ[ƒ‹ƒAƒhƒŒƒX
+		// ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Aï¿½hï¿½ï¿½ï¿½X
 		function mailCheck( $value )
 		{
 			$result = ( preg_match('`^([a-z0-9_]|\-|\.|\+)+@(([a-z0-9_]|\-)+\.)+[a-z]{2,6}$`i', $value ) ) ? true : false;
@@ -165,42 +165,42 @@ if( ! class_exists( 'Post_Check' ) )
 			}
 		}
 
-		// ƒAƒ‹ƒtƒ@ƒxƒbƒg
+		// ï¿½Aï¿½ï¿½ï¿½tï¿½@ï¿½xï¿½bï¿½g
 		function alphaCheck( $value )
 		{
 			$result = ( ctype_alpha( $value ) ) ? true : false;
 			return $result;
 		}
 
-		// ƒAƒ‹ƒtƒ@ƒxƒbƒgE”š
+		// ï¿½Aï¿½ï¿½ï¿½tï¿½@ï¿½xï¿½bï¿½gï¿½Eï¿½ï¿½ï¿½ï¿½
 		function alnumCheck( $value )
 		{
 			$result = ( ctype_alnum( $value ) ) ? true : false;
 			return $result;
 		}
 
-		// ”š
+		// ï¿½ï¿½ï¿½ï¿½
 		function numericCheck( $value )
 		{
 			$result = ( is_numeric( $value ) ) ? true : false;
 			return $result;
 		}
 
-		// ®”
+		// ï¿½ï¿½ï¿½ï¿½
 		function integerCheck( $value )
 		{
 			$result = ( preg_match( '`^[0-9]+$`' , $value ) ) ? true : false;
 			return $result;
 		}
 
-		// “¯‚¶’l
+		// ï¿½ï¿½ï¿½ï¿½ï¿½l
 		function sameValueCheck( $values )
 		{
 			$result = ( strcmp( $values[0], $values[1] ) == 0 ) ? true : false;
 			return $result;
 		}
 
-		// ’·‚³
+		// ï¿½ï¿½ï¿½ï¿½
 		function lengthEqualCheck( $values )
 		{
 			$result = ( strlen( $values[0] ) == $values[1] ) ? true : false;
@@ -218,7 +218,7 @@ if( ! class_exists( 'Post_Check' ) )
 			return $result;
 		}
 
-		// ³‹K•\Œ»
+		// ï¿½ï¿½ï¿½Kï¿½\ï¿½ï¿½
 		function formatCheck( $values )
 		{
 			$result = ( preg_match( $values[1] , $values[0] ) ) ? true : false;

@@ -4,8 +4,8 @@
 
 if( ! class_exists( 'block_download' ) )
 {
-	include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
-	require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+	include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
+	require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 
 	class block_download extends MyDownload
 	{
@@ -44,10 +44,10 @@ if( ! class_exists( 'block_download' ) )
 		var $category ;
 		var $downdata=array();
 
-		function block_download( $mydirname )
+		function __construct($mydirname )
 		{
 			global $xoopsUser ;
-			include_once dirname( dirname(__FILE__) ).'/include/mytable.php' ;
+			include_once dirname(__FILE__, 2) .'/include/mytable.php' ;
 
 			$this->db =& Database::getInstance();
 			$this->myts =& d3downloadsTextSanitizer::sGetInstance() ;
@@ -200,5 +200,3 @@ if( ! class_exists( 'block_download' ) )
 		}
 	}
 }
-
-?>

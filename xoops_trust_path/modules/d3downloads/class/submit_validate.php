@@ -4,10 +4,10 @@
 
 if( ! class_exists( 'Submit_Validate' ) )
 {
-	include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
-	require_once dirname( dirname(__FILE__) ).'/class/post_check.php' ;
-	require_once dirname( dirname(__FILE__) ).'/class/user_access.php' ;
-	require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+	include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
+	require_once dirname(__FILE__, 2) .'/class/post_check.php' ;
+	require_once dirname(__FILE__, 2) .'/class/user_access.php' ;
+	require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 
 	class Submit_Validate extends MyDownload
 	{
@@ -59,7 +59,7 @@ if( ! class_exists( 'Submit_Validate' ) )
 		var $visible ;
 		var $cancomment ;
 
-		function Submit_Validate( $mydirname="", $mode="" )
+		function __construct($mydirname="", $mode="" )
 		{
 			if( ! empty( $mydirname ) ) $this->mydirname = $mydirname ;
 			if( ! empty( $mode ) ) $this->mode = $mode ;
@@ -421,7 +421,7 @@ if( ! class_exists( 'Submit_Validate' ) )
 		function htmlpr_except()
 		{
 			if( $this->xoops_isuser ) {
-				return ( count( array_intersect( $this->xoops_groups , @$this->mod_config['use_htmlpurifier'] ) ) > 0 ) ? false : true ;
+				return !((count(array_intersect($this->xoops_groups, @$this->mod_config['use_htmlpurifier'])) > 0));
 			} else {
 				return true ;
 			}
@@ -430,7 +430,7 @@ if( ! class_exists( 'Submit_Validate' ) )
 		function htmlpr_on_off()
 		{
 			if( $this->xoops_isuser ) {
-				return ( empty( $this->mod_config['use_htmlpurifier'] ) ) ? false : true ;
+				return !empty($this->mod_config['use_htmlpurifier']);
 			} else {
 				return true ;
 			}
@@ -661,5 +661,3 @@ if( ! class_exists( 'Submit_Validate' ) )
 		}
 	}
 }
-
-?>

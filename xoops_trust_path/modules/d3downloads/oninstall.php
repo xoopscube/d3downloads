@@ -122,5 +122,3 @@ function d3downloads_message_append_oninstall( &$module_obj , &$log )
 }
 
 }
-
-?>

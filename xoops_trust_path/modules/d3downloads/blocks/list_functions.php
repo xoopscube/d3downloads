@@ -82,5 +82,3 @@ if (! function_exists('b_d3downloads_list_edit') ) {
 		return $tpl->fetch( 'db:'.$mydirname.'_blockedit_list.html' ) ;
 	}
 }
-
-?>

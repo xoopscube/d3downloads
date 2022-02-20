@@ -106,5 +106,3 @@ if (! function_exists('b_d3downloads_pickup_edit') ) {
 		return $tpl->fetch( 'db:'.$mydirname.'_blockedit_pickup.html' ) ;
 	}
 }
-
-?>

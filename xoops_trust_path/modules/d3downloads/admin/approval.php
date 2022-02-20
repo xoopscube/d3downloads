@@ -56,7 +56,7 @@ $formtitle = _MD_D3DOWNLOADS_SUBMIT_APPROVAL ;
 $mod_url = XOOPS_URL.'/modules/'.$mydirname ;
 $downdata = $unapproval->get_unapprovaldata( $requestid, $category );
 
-// ‘¶Ý‚µ‚È‚¢ aprovalid ‚Ìê‡ƒŠƒ_ƒCƒŒƒNƒg
+// ï¿½ï¿½ï¿½Ý‚ï¿½ï¿½È‚ï¿½ aprovalid ï¿½Ìê‡ï¿½ï¿½ï¿½_ï¿½Cï¿½ï¿½ï¿½Nï¿½g
 if( empty( $downdata ) ) {
 	redirect_header( XOOPS_URL."/modules/$mydirname/admin/index.php?page=approvalmanager" , 2 , _MD_D3DOWNLOADS_NOMATCH ) ;
 	exit();
@@ -143,6 +143,5 @@ $tpl->assign( array(
 	'gticket_hidden' => $xoopsGTicket->getTicketHtml( __LINE__ , 1800 , 'd3downloads') ,
 ) ) ;
 $tpl->display( 'db:'.$mydirname.'_admin_approval.html' ) ;
-xoops_cp_footer();
 
-?>
+xoops_cp_footer();

@@ -2,8 +2,8 @@
 
 if( ! class_exists( 'user_access' ) )
 {
-	include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
-	require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+	include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
+	require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 
 	class user_access extends MyCategory
 	{
@@ -13,10 +13,10 @@ if( ! class_exists( 'user_access' ) )
 		var $cat_ids;
 		var $whr4cat;
 
-		function user_access( $mydirname )
+		function __construct($mydirname )
 		{
 			global $xoopsUser ;
-			include_once dirname( dirname(__FILE__) ).'/include/mytable.php' ;
+			include_once dirname(__FILE__, 2) .'/include/mytable.php' ;
 
 			$this->db =& Database::getInstance() ;
 			$this->myts =& d3downloadsTextSanitizer::sGetInstance() ;
@@ -975,5 +975,3 @@ if( ! class_exists( 'user_access' ) )
 		}
 	}
 }
-
-?>

@@ -3,8 +3,8 @@
 if (! function_exists('b_d3downloads_download_show') ) {
 	function b_d3downloads_download_show( $options )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
-		include_once dirname( dirname(__FILE__) ).'/class/user_access.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
+		include_once dirname(__FILE__, 2) .'/class/user_access.php' ;
 
 		$mydirname = empty( $options[0] ) ? 'd3downloads' : $options[0] ;
 		$download_id = intval( @$options[1] ) ;
@@ -102,6 +102,3 @@ if (! function_exists('b_d3downloads_download_edit') ) {
 		return $tpl->fetch( 'db:'.$mydirname.'_blockedit_download.html' ) ;
 	}
 }
-
-
-?>

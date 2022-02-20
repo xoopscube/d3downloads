@@ -4,8 +4,8 @@
 
 if( ! class_exists( 'Item_build' ) )
 {
-	include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
-	require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+	include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
+	require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 
 	class Item_build extends MyDownload
 	{
@@ -28,7 +28,7 @@ if( ! class_exists( 'Item_build' ) )
 		function Item_build( $mydirname )
 		{
 			global $xoopsUser ;
-			include_once dirname( dirname(__FILE__) ).'/include/mytable.php' ;
+			include_once dirname(__FILE__, 2) .'/include/mytable.php' ;
 
 			$this->db =& Database::getInstance();
 			$this->myts =& d3downloadsTextSanitizer::sGetInstance() ;
@@ -56,7 +56,7 @@ if( ! class_exists( 'Item_build' ) )
 
 		function get_Item( $category_option, $intree=0, $limit=0, $offset=0, $rss=0, $mylink=0 )
 		{
-			require_once dirname( dirname(__FILE__) ).'/class/user_access.php';
+			require_once dirname(__FILE__, 2) .'/class/user_access.php';
 			$user_access = new user_access( $this->mydirname ) ;
 
 			$item = array() ;
@@ -121,7 +121,7 @@ if( ! class_exists( 'Item_build' ) )
 
 		function return_category_title( $category_option )
 		{
-			include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+			include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 			$mycategory = new MyCategory( $this->mydirname, 'Show', $category_option ) ;
 			$ret = array() ;
 			$ret[0]['cat_name'] = $mycategory->return_title() ;
@@ -158,5 +158,3 @@ if( ! class_exists( 'Item_build' ) )
 		}
 	}
 }
-
-?>

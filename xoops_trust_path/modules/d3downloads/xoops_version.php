@@ -4,17 +4,17 @@
 $langmanpath = XOOPS_TRUST_PATH.'/libs/altsys/class/D3LanguageManager.class.php' ;
 if( ! file_exists( $langmanpath ) ) die( 'install the latest altsys' ) ;
 require_once( $langmanpath ) ;
-$langman =& D3LanguageManager::getInstance() ;
+$langman = D3LanguageManager::getInstance() ;
 $langman->read( 'modinfo.php' , $mydirname , $mytrustdirname , false ) ;
 
 $constpref = '_MI_' . strtoupper( $mydirname ) ;
 
 $modversion['name'] = $mydirname ;
-$modversion['version'] = 1.50 ;
-$modversion['detailed_version'] = "1.50.0" ;
+$modversion['version'] = 2.31 ;
+$modversion['detailed_version'] = "2.3.1" ;
 $modversion['description'] = constant($constpref.'_DESC') ;
-$modversion['credits'] = "Xoops X(ten) Team and photosite";
-$modversion['author'] = "Xoops X(ten) Team based by photosite(http://www.photositelinks.com/)" ;
+$modversion['credits'] = "Xoops X(ten) Team and photosite. Gigamaster XCL PHP7";
+$modversion['author'] = "Xoops X(ten) Team based on photosite(http://www.photositelinks.com/)" ;
 $modversion['help'] = "" ;
 $modversion['license'] = "GPL" ;
 $modversion['official'] = 0 ;
@@ -636,4 +636,3 @@ if( ! defined( 'XOOPS_CUBE_LEGACY' ) && substr( XOOPS_VERSION , 6 , 3 ) < 2.1 &&
 	include dirname(__FILE__).'/include/x20_keepblockoptions.inc.php' ;
 }
 
-?>

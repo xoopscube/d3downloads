@@ -10,7 +10,7 @@ if( ! class_exists( 'feed_maker' ) )
 		var $data = array() ;
 		var $xsl_file = 'rss2html.xsl';
 
-		function feed_maker( $mydirname )
+		function __construct($mydirname )
 		{
 			global $xoopsModule;
 
@@ -304,7 +304,7 @@ if( ! class_exists( 'feed_maker' ) )
 		{
 			if( XOOPS_USE_MULTIBYTES == 1 ) {
 				if ( ! extension_loaded( 'mbstring' ) && ! class_exists( 'HypMBString' ) ) {
-					require_once dirname( dirname( __FILE__ ) ).'/class/mbemulator/mb-emulator.php' ;
+					require_once dirname(__FILE__, 2) .'/class/mbemulator/mb-emulator.php' ;
 				}
 				$out = str_replace("\0", '', mb_convert_encoding( $out, $encode, _CHARSET ) );
 			} else {
@@ -318,7 +318,7 @@ if( ! class_exists( 'feed_maker' ) )
 		function make_context( $text, $words=array(), $l=255 ) 
 		{
 			if ( ! extension_loaded( 'mbstring' ) && ! class_exists( 'HypMBString' ) ) {
-				require_once dirname( dirname( __FILE__ ) ).'/class/mbemulator/mb-emulator.php' ;
+				require_once dirname(__FILE__, 2) .'/class/mbemulator/mb-emulator.php' ;
 			}
 			static $strcut = "";
 			if ( ! $strcut )
@@ -352,5 +352,3 @@ if( ! class_exists( 'feed_maker' ) )
 		}
 	}
 }
-
-?>

@@ -75,5 +75,3 @@ if( ! function_exists( 'd3downloads_global_search_base' ) ) {
 		return $ret ;
 	}
 }
-
-?>

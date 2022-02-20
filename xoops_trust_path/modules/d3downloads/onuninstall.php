@@ -73,5 +73,3 @@ function d3downloads_message_append_onuninstall( &$module_obj , &$log )
 }
 
 }
-
-?>

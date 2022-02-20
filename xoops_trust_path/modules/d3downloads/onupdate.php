@@ -228,5 +228,3 @@ function d3downloads_message_append_onupdate( &$module_obj , &$log )
 }
 
 }
-
-?>

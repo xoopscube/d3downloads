@@ -31,8 +31,10 @@ if( ! class_exists( 'history_download' ) )
 		var $history_int = array( 'lid' ,'cid' , 'date', 'size' ) ;
 		var $history_txt =  array( 'title' , 'url' , 'filename' , 'ext' , 'file2' , 'filename2' , 'ext2' , 'version' , 'description' , 'extra' ) ;
 
-		function history_download( $mydirname, $id= 0 )
+        //function history_download( $mydirname, $id= 0 )
+		function __construct($mydirname, $id= 0 )
 		{
+
 			include_once dirname( dirname(__FILE__) ).'/include/mytable.php' ;
 			$this->db =& Database::getInstance();
 			$this->myts =& d3downloadsTextSanitizer::sGetInstance() ;
@@ -275,5 +277,3 @@ if( ! class_exists( 'history_download' ) )
 		}
 	}
 }
-
-?>

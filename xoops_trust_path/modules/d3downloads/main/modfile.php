@@ -35,13 +35,13 @@ $shots_help =  $preview_title = $preview_body = $error_message =  '' ;
 if( ! empty( $_GET['cid'] ) ) $cid = intval( $_GET['cid'] ) ;
 elseif( ! empty( $_POST['cid'] ) ) $cid = intval( $_POST['cid'] ) ;
 
-// “o˜^‚Í CID ‚ÌŽw’è‚ð•K—v‚Æ‚µ‚Ü‚·
+// ï¿½oï¿½^ï¿½ï¿½ CID ï¿½ÌŽwï¿½ï¿½ï¿½Kï¿½vï¿½Æ‚ï¿½ï¿½Ü‚ï¿½
 if( empty( $cid ) ){
 	redirect_header(XOOPS_URL.'/modules/'.$mydirname.'/index.php',3, _MD_D3DOWNLOADS_NO_CID );
 	exit();
 }
 
-// •ÒWŒ ŒÀ‚ðƒ`ƒFƒbƒN(ŠÇ—ŽÒ‚Íœ‚­)
+// ï¿½ÒWï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½Fï¿½bï¿½N(ï¿½Ç—ï¿½ï¿½Ò‚Íï¿½ï¿½ï¿½)
 $user_access = new user_access( $mydirname ) ;
 $whr_cat4edit = "cid IN (".implode(",", $user_access->can_edit() ).")" ;
 $permissions = $user_access->permissions_of_current_user( $cid ) ;
@@ -51,44 +51,44 @@ if( empty( $can_edit ) ) {
 	exit();
 }
 
-// Ž©“®³”F‚Ìƒ`ƒFƒbƒN(ŠÇ—ŽÒ‚Íœ‚­)
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Fï¿½Ìƒ`ï¿½Fï¿½bï¿½N(ï¿½Ç—ï¿½ï¿½Ò‚Íï¿½ï¿½ï¿½)
 $auto_approved = $permissions['edit_approved'] ;
 
-// HTML‹–‰Â‚Ìƒ`ƒFƒbƒN(“o˜^ƒ†[ƒU[ˆÈŠO‚Í HTML‚ð–³Œø‚Æ‚·‚é)
+// HTMLï¿½ï¿½ï¿½Â‚Ìƒ`ï¿½Fï¿½bï¿½N(ï¿½oï¿½^ï¿½ï¿½ï¿½[ï¿½Uï¿½[ï¿½ÈŠOï¿½ï¿½ HTMLï¿½ð–³Œï¿½ï¿½Æ‚ï¿½ï¿½ï¿½)
 $canhtml = $permissions['can_html'] ;
 
-// ƒAƒbƒvƒ[ƒh‹–‰Â‚Ìƒ`ƒFƒbƒN
+// ï¿½Aï¿½bï¿½vï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½Â‚Ìƒ`ï¿½Fï¿½bï¿½N
 $canupload = $permissions['can_upload'] ;
 
-// íœŒ ŒÀ‚Ìƒ`ƒFƒbƒN(ŠÇ—ŽÒ‚Íœ‚­)
+// ï¿½íœï¿½ï¿½ï¿½ï¿½ï¿½Ìƒ`ï¿½Fï¿½bï¿½N(ï¿½Ç—ï¿½ï¿½Ò‚Íï¿½ï¿½ï¿½)
 $candelete = $permissions['can_delete'] ;
 
-// ŠÇ—ŽÒ‚ÆŠÇ—ŽÒˆÈŠO‚Ìƒeƒ“ƒvƒŒ[ƒg‚ð•ª‚¯‚Äˆ—
+// ï¿½Ç—ï¿½ï¿½Ò‚ÆŠÇ—ï¿½ï¿½ÒˆÈŠOï¿½Ìƒeï¿½ï¿½ï¿½vï¿½ï¿½ï¿½[ï¿½gï¿½ð•ª‚ï¿½ï¿½Äï¿½ï¿½ï¿½
 if( $module_admin ){
 	$xoopsOption['template_main'] = $mydirname.'_admin_submit.html' ;
 } else {
 	$xoopsOption['template_main'] = $mydirname.'_main_submit.html' ;
 }
 
-// ŠÇ—ŽÒˆÈŠO‚Ì“ŠeƒtƒH[ƒ€à–¾•¶‚ðŽæ“¾
+// ï¿½Ç—ï¿½ï¿½ÒˆÈŠOï¿½Ì“ï¿½ï¿½eï¿½tï¿½Hï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾
 $message = d3download_submit_message( $mydirname, $cid ) ;
 $formtitle = _MD_D3DOWNLOADS_SUBMIT_EDIT ;
 
 // GET LID FROM $_GET
 $id = isset( $_GET['lid'] ) ? intval( $_GET['lid'] ) : 0 ;
 
-// •ÒW‰Â”\‚ÈƒJƒeƒSƒŠƒŠƒXƒg‚Ì‚ÝŽæ“¾
+// ï¿½ÒWï¿½Â”\ï¿½ÈƒJï¿½eï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½gï¿½Ì‚ÝŽæ“¾
 if( $module_admin ) $category = d3download_categories_selbox( $mydirname, $whr_cat4edit );
 else  $category = d3download_categories_selbox( $mydirname, $whr_cat4edit, $cid );
 
-// —˜—p‰Â”\‚È OS/ƒ\ƒtƒg“™‚ÌƒŠƒXƒg‚ðŽæ“¾
+// ï¿½ï¿½ï¿½pï¿½Â”\ï¿½ï¿½ OS/ï¿½\ï¿½tï¿½gï¿½ï¿½ï¿½Ìƒï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½æ“¾
 $submit_download = new submit_download( $mydirname ) ;
 $select_platform = $submit_download->Select_Platform() ;
 
-// ƒ‰ƒCƒZƒ“ƒX‚ÌƒŠƒXƒg‚ðŽæ“¾
+// ï¿½ï¿½ï¿½Cï¿½Zï¿½ï¿½ï¿½Xï¿½Ìƒï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½æ“¾
 $select_license = $submit_download->Select_License() ;
 
-// ƒXƒNƒŠ[ƒ“ƒVƒ‡ƒbƒg‰æ‘œ‚ÌŽæ“¾
+// ï¿½Xï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Vï¿½ï¿½ï¿½bï¿½gï¿½æ‘œï¿½ÌŽæ“¾
 $canuseshots = $submit_download->can_useshots() ;
 $usealbum = $submit_download->can_albumselect() ;
 if( ! empty( $canuseshots ) ){
@@ -101,7 +101,7 @@ if( ! empty( $canuseshots ) ){
 $mod_url = XOOPS_URL.'/modules/'.$mydirname ;
 $downdata = $submit_download->get_downdata_for_submit( $id, $category ) ;
 
-// DOWNLOADDATA ‚ðŽæ“¾‚Å‚«‚È‚¢ê‡ƒŠƒ_ƒCƒŒƒNƒg
+// DOWNLOADDATA ï¿½ï¿½ï¿½æ“¾ï¿½Å‚ï¿½ï¿½È‚ï¿½ï¿½ê‡ï¿½ï¿½ï¿½_ï¿½Cï¿½ï¿½ï¿½Nï¿½g
 if( empty( $downdata ) ) {
 	redirect_header( XOOPS_URL."/modules/$mydirname/" , 2 , _MD_D3DOWNLOADS_NOMATCH ) ;
 	exit();
@@ -125,7 +125,7 @@ if( empty( $downdata['downdata']['homepagetitle'] ) && $downdata['downdata']['ho
 
 if( empty( $ispreview ) && empty( $iserror ) ) $download4assign = $downdata['downdata'] ;
 
-// Žæ“¾‚µ‚½ LID ‚Å“ŠeŽÒ–{l‚©‚Ç‚¤‚©‚ðƒ`ƒFƒbƒN
+// ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½ LID ï¿½Å“ï¿½ï¿½eï¿½Ò–{ï¿½lï¿½ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½Fï¿½bï¿½N
 if( $module_admin ) $canedit = 1 ;
 elseif( ! empty( $can_edit ) && $submitter == $xoops_userid &&  $xoops_isuser ) $canedit = 1 ;
 else $canedit = 0 ;
@@ -135,29 +135,30 @@ if( empty( $canedit ) ) {
 	exit();
 }
 
-// ƒpƒ“‚­‚¸•”•ª‚Ìˆ—
+// ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
 $whr_cat = "cid IN (".implode(",", $user_access->can_read() ).")" ;
 $bc[0] = d3download_breadcrumbs( $mydirname ) ;
 $breadcrumbs = array_merge( $bc ,d3download_breadcrumbs_tree( $mydirname, $cid4assign, $whr_cat, '', 1 ) ) ;
 $breadcrumbs[] = array( 'name' => $formtitle.':'.$title4assign ) ;
 
-// ŠÇ—ŽÒ‚Ì“ŠeƒtƒH[ƒ€—p‚É HISTORY DATA ‚ðŽæ“¾
+// ï¿½Ç—ï¿½ï¿½Ò‚Ì“ï¿½ï¿½eï¿½tï¿½Hï¿½[ï¿½ï¿½ï¿½pï¿½ï¿½ HISTORY DATA ï¿½ï¿½ï¿½æ“¾
 $history = new history_download( $mydirname ) ;
 $history4assign = $history->get_history_list( $lid );
 
-// “¯ˆêƒŠƒ“ƒN‚ÌÄ“o˜^‚ð”F‚ß‚é‚©‚Ç‚¤‚©
+// ï¿½ï¿½ï¿½êƒŠï¿½ï¿½ï¿½Nï¿½ÌÄ“oï¿½^ï¿½ï¿½Fï¿½ß‚é‚©ï¿½Ç‚ï¿½ï¿½ï¿½
 $check_url = ! empty( $xoopsModuleConfig['check_url'] ) ? 1 : 0 ;
 
-// maxfilesize(ƒeƒ“ƒvƒŒ[ƒg‚Ö‚ÌƒAƒTƒCƒ“—p)
+// maxfilesize(ï¿½eï¿½ï¿½ï¿½vï¿½ï¿½ï¿½[ï¿½gï¿½Ö‚ÌƒAï¿½Tï¿½Cï¿½ï¿½ï¿½p)
 $upload_max_filesize = d3download_get_maxsize( $mydirname );
 $max_submit_size = sprintf( _MD_D3DOWNLOADS_SUBMIT_MAXFILESIZE , number_format( $upload_max_filesize ) ) ;
 $submit_extension = d3download_get_allowed_extension( $mydirname );
 
-// ŠÂ‹«ƒ`ƒFƒbƒN‚µ error ‚Ìê‡‚ÍƒAƒbƒvƒ[ƒhƒtƒH[ƒ€‚ð‘I‘ð‚Å‚«‚È‚¢‚æ‚¤‚É‚·‚é
+// ï¿½Â‹ï¿½ï¿½`ï¿½Fï¿½bï¿½Nï¿½ï¿½ error ï¿½Ìê‡ï¿½ÍƒAï¿½bï¿½vï¿½ï¿½ï¿½[ï¿½hï¿½tï¿½Hï¿½[ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½Å‚ï¿½ï¿½È‚ï¿½ï¿½æ‚¤ï¿½É‚ï¿½ï¿½ï¿½
 $config_error = d3download_upload_config_check( $mydirname );
 
-// LiveValidation‚É‚æ‚éValidation‚ðƒAƒTƒCƒ“
+// LiveValidationï¿½É‚ï¿½ï¿½Validationï¿½ï¿½ï¿½Aï¿½Tï¿½Cï¿½ï¿½
 require_once dirname( dirname(__FILE__) ).'/include/upload_submit_rules.inc.php' ;
+
 $liveValidator="";
 $liveform = new My_MassValidatePHP( 'makedownloadform', $_POST );
 
@@ -187,28 +188,30 @@ if( isset( $_POST['makedownload_post'] ) || isset( $_POST['makedownload_preview'
 	}
 }
 
-// íœŒ ŒÀ‚ðƒ`ƒFƒbƒN‚µ‚½‚¤‚¦ŠÖ˜Aƒf[ƒ^‚à“¯Žž‚Éíœ
+// ï¿½íœï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½Fï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö˜Aï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éíœ
 if( isset( $_POST['makedownloadform_delete'] ) && ! empty( $candelete ) ) {
 	if ( ! $xoopsGTicket->check( true , 'd3downloads' ) ) {
 		redirect_header(XOOPS_URL.'/modules/'.$mydirname.'/admin/index.php',3,$xoopsGTicket->getErrors());
 	}
 	$delete_lid = isset( $_POST['lid'] ) ? intval( @$_POST['lid'] ) : "" ;
-	require_once dirname( dirname(__FILE__) ).'/class/submit_validate.php' ;
+
+	require_once dirname(__FILE__, 2) .'/class/submit_validate.php' ;
+
 	$submit_validate = new Submit_Validate( $mydirname, 'delete' ) ;
 	if( ! $module_admin ) $submit_validate->Validate_for_delete( $cid, $delete_lid ) ;
-	// u“Še‚ðƒ†[ƒU[‚Ì“Še”‚É”½‰fv‚ª—LŒø‚Èê‡A“Še”‚É”½‰f
+	// ï¿½uï¿½ï¿½ï¿½eï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Uï¿½[ï¿½Ì“ï¿½ï¿½eï¿½ï¿½ï¿½É”ï¿½ï¿½fï¿½vï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½Èê‡ï¿½Aï¿½ï¿½ï¿½eï¿½ï¿½ï¿½É”ï¿½ï¿½f
 	d3download_delete_lid( $mydirname ,$lid );
 	redirect_header( XOOPS_URL."/modules/$mydirname/index.php" , 2 , _MD_D3DOWNLOADS_DELETED ) ;
 	exit();
 }
 
-// ƒtƒ@ƒCƒ‹”j‘¹•ñDATA‚ÌŽæ“¾(ŠÇ—ŽÒ—p)
+// ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½jï¿½ï¿½ï¿½ï¿½DATAï¿½ÌŽæ“¾(ï¿½Ç—ï¿½ï¿½Ò—p)
 $broken_data = d3download_get_broken_data( $mydirname, $lid ) ;
 $totalbroken = $broken_data['totalbroken'] ;
 $total_broken4assign = $broken_data['total_broken4assign'] ;
 $broken = $broken_data['broken'] ;
 
-// VOTE DATA‚ÌŽæ“¾(ŠÇ—ŽÒ—p)
+// VOTE DATAï¿½ÌŽæ“¾(ï¿½Ç—ï¿½ï¿½Ò—p)
 $total_vote4assign = sprintf( _MD_D3DOWNLOADS_TOTAL_VOTE , $totalvotes );
 $user_vote_data = d3download_get_user_vote( $mydirname, $lid ) ;
 $user_vote4assign = $user_vote_data['user_totalvote'] ;
@@ -219,14 +222,14 @@ $guest_vote = $guest_vote_data['guest_vote'] ;
 
 // WYSIWYG
 $wysiwygs = array( 'name' => 'desc' , 'value' => $download4assign['description'] ) ;
-include dirname( dirname(__FILE__) ).'/include/wysiwyg_editors.inc.php' ;
+include dirname(__FILE__, 2) .'/include/wysiwyg_editors.inc.php' ;
 
 // COPY
-include_once dirname( dirname(__FILE__) ).'/class/file_manager.php' ;
+include_once dirname(__FILE__, 2) .'/class/file_manager.php' ;
 $file_manager = new file_manager( $mydirname ) ;
 $copy_select = $file_manager->get_copy_target_modules() ;
 
-// livevalidation.js ‚Æ livevalidation.css ‚ð xoops_module_header ‚ÉƒAƒTƒCƒ“
+// livevalidation.js ï¿½ï¿½ livevalidation.css ï¿½ï¿½ xoops_module_header ï¿½ÉƒAï¿½Tï¿½Cï¿½ï¿½
 $xoops_module_header = d3download_dbmoduleheader( $mydirname );
 $livevalidation_header = d3download_dbmoduleheader_for_livevalidation( $mydirname );
 $xoopsTpl->assign('xoops_module_header', $xoops_module_header . "\n" .$livevalidation_header. "\n" . $wysiwyg_header. "\n" . $xoopsTpl->get_template_vars('xoops_module_header'));
@@ -284,5 +287,3 @@ $xoopsTpl->assign( array(
 ) ) ;
 
 include XOOPS_ROOT_PATH.'/footer.php';
-
-?>

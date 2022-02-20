@@ -27,5 +27,3 @@ $broken_check_config = array(
 	'maxredirect'  =>   0 , // Max redirections for link check.
 	'read_timeout' =>  20 , // Timeout for link check.
 );
-
-?>

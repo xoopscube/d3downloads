@@ -27,7 +27,7 @@
 //  ------------------------------------------------------------------------ //
 //
 //  modify by photosite 2008/03/08 13:21:56 for d3downloads
-//  Marijuana ‚³‚ñ‚Ì mydownloads+ ‚ðŽQl‚É‚³‚¹‚Ä‚¢‚½‚¾‚«AC³‚µ‚Ü‚µ‚½
+//  Marijuana ï¿½ï¿½ï¿½ï¿½ï¿½ mydownloads+ ï¿½ï¿½ï¿½Qï¿½lï¿½É‚ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½
 //
 
 include_once dirname( dirname(__FILE__) ).'/class/user_access.php' ;
@@ -82,5 +82,3 @@ switch( $second ) {
 }
 
 d3download_download( $url, $filename, $ext, 0 ) ;
-
-?>

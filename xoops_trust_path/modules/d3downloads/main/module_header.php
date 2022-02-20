@@ -2,7 +2,7 @@
 
 error_reporting(0) ;
 
-include_once dirname( dirname(__FILE__) ).'/include/module_header.php' ;
+include_once dirname(__FILE__, 2) .'/include/module_header.php' ;
 
 $template = $file_path = $type = '' ;
 
@@ -44,5 +44,3 @@ $tpl->assign( array(
 ) ) ;
 if ( ! empty( $template ) ) $tpl->display( 'db:'.$template ) ;
 exit ;
-
-?>

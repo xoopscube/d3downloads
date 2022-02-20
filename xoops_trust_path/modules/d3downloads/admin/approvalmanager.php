@@ -1,8 +1,8 @@
 <?php
 
-require_once dirname( dirname(__FILE__) ).'/class/gtickets.php' ;
-require_once dirname( dirname(__FILE__) ).'/class/unapproval_download.php' ;
-require_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
+require_once dirname(__FILE__, 2) .'/class/gtickets.php' ;
+require_once dirname(__FILE__, 2) .'/class/unapproval_download.php' ;
+require_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
 
 // THIS PAGE CAN BE CALLED ONLY FROM D3DOWNLOADS
 if( $xoopsModule->getVar('dirname') != $mydirname ) die( 'this page can be called only from '.$mydirname ) ;
@@ -90,6 +90,5 @@ $tpl->assign( array(
 	'gticket_hidden' => $xoopsGTicket->getTicketHtml( __LINE__ , 1800 , 'd3downloads') ,
 ) ) ;
 $tpl->display( 'db:'.$mydirname.'_admin_approvalmanager.html' ) ;
-xoops_cp_footer();
 
-?>
+xoops_cp_footer();

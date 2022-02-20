@@ -56,5 +56,3 @@ switch( $second ) {
 }
 
 d3download_download( $url, $filename, $ext, 1 ) ;
-
-?>

@@ -66,7 +66,7 @@ if ( ! function_exists('d3download_file_error_message') ) {
 	}
 }
 
-// ˆê”ÊÝ’è‚ÌÅ‘åƒtƒ@ƒCƒ‹ƒTƒCƒY‚ðŽæ“¾
+// ï¿½ï¿½ÊÝ’ï¿½ÌÅ‘ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Tï¿½Cï¿½Yï¿½ï¿½ï¿½æ“¾
 if ( ! function_exists('d3download_get_maxsize') ) {
 	function d3download_get_maxsize( $mydirname )
 	{
@@ -84,22 +84,22 @@ if ( ! function_exists('d3download_get_maxsize') ) {
 	}
 }
 
-// ƒAƒbƒvƒ[ƒh‰Â”\‚ÈŠg’£Žq‚ðŽæ“¾
+// ï¿½Aï¿½bï¿½vï¿½ï¿½ï¿½[ï¿½hï¿½Â”\ï¿½ÈŠgï¿½ï¿½ï¿½qï¿½ï¿½ï¿½æ“¾
 if ( ! function_exists('d3download_get_allowed_extension') ) {
 	function d3download_get_allowed_extension( $mydirname )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/upload_validate.php' ;
+		include_once dirname(__FILE__, 2) .'/class/upload_validate.php' ;
 		$upload_validate = new Upload_Validate() ;
 		$allowed_extension = array_diff( $upload_validate->allowed_extension( $mydirname ), $upload_validate->deny_extension() );
 		return sprintf( _MD_D3DOWNLOADS_SUBMIT_EXTENSION , implode( ',',$allowed_extension ) ) ;
 	}
 }
 
-// ƒtƒ@ƒCƒ‹ƒAƒbƒvƒ[ƒhˆ—
+// ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Aï¿½bï¿½vï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½ï¿½
 if ( ! function_exists('d3download_file_upload') ) {
 	function d3download_file_upload( $mydirname, $upload_arr, $maxsize, $id, $uid )
 	{
-		// ŠÂ‹«ƒ`ƒFƒbƒN
+		// ï¿½Â‹ï¿½ï¿½`ï¿½Fï¿½bï¿½N
 		$config_error = "" ;
 		$config_error = d3download_upload_config_check( $mydirname );
 		if( ! empty( $config_error ) ){
@@ -126,26 +126,26 @@ if ( ! function_exists('d3download_file_upload') ) {
 	}
 }
 
-// ƒtƒ@ƒCƒ‹ƒAƒbƒvƒ[ƒhŽÀs
+// ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Aï¿½bï¿½vï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½s
 if ( ! function_exists('d3download_upload_execution') ) {
 	function d3download_upload_execution( $mydirname, $file_name, $file_tmp_name, $file_error, $maxsize, $id, $uid, $second=0 )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/upload_validate.php' ;
+		include_once dirname(__FILE__, 2) .'/class/upload_validate.php' ;
 		$upload_validate = new Upload_Validate( $mydirname ) ;
 
 		$uploads_dir = XOOPS_TRUST_PATH.'/uploads/'.$mydirname.'/';
 
-		// PHP 4.3.6 ˆÈ‘O‚Ìƒo[ƒWƒ‡ƒ“‚Ö‚Ì‘Îô( .. ‚Æ / ‚ªŠÜ‚Ü‚ê‚Ä‚¢‚éê‡‹­§I—¹ )
+		// PHP 4.3.6 ï¿½È‘Oï¿½Ìƒoï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½Ö‚Ì‘Îï¿½( .. ï¿½ï¿½ / ï¿½ï¿½ï¿½Ü‚Ü‚ï¿½Ä‚ï¿½ï¿½ï¿½ê‡ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ )
 		$upload_validate->check_doubledot( $file_name ) ;
 
-		// ƒAƒbƒvƒ[ƒh‚³‚ê‚½ƒtƒ@ƒCƒ‹‚ÍAŠg’£Žq‚Í‚È‚­Aƒtƒ@ƒCƒ‹–¼‚ð•Ï‚¦‚Ä•Û‘¶‚·‚é
+		// ï¿½Aï¿½bï¿½vï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½ê‚½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ÍAï¿½gï¿½ï¿½ï¿½qï¿½Í‚È‚ï¿½ï¿½Aï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï‚ï¿½ï¿½Ä•Û‘ï¿½ï¿½ï¿½ï¿½ï¿½
 		$site_salt = substr( md5( XOOPS_URL ) , -4 ) ;
 		$uploads_filename = $id.'_'.$site_salt.'_'.$uid.'_'.time() ;
 		if ( ! empty( $second ) ) $uploads_filename .= '_1' ;
 		$uploads_path = $uploads_dir.$uploads_filename ;
 		$uploads_url = 'XOOPS_TRUST_PATH/uploads/'.$mydirname.'/'.$uploads_filename ;
 
-		// ƒGƒ‰[ƒ`ƒFƒbƒN
+		// ï¿½Gï¿½ï¿½ï¿½[ï¿½`ï¿½Fï¿½bï¿½N
 		if ( $file_error > 0 ){
 			return array(
 				'file_name'  => $file_name,
@@ -166,27 +166,27 @@ if ( ! function_exists('d3download_upload_execution') ) {
 				exit();
 			}
 
-			// Šg’£Žqƒ`ƒFƒbƒN
+			// ï¿½gï¿½ï¿½ï¿½qï¿½`ï¿½Fï¿½bï¿½N
 			if( ! $upload_validate->check_allowed_extensions( $f_ext ) ){
 				redirect_header( XOOPS_URL."/modules/$mydirname/", 2, sprintf( _MD_D3DOWNLOADS_UPLOADERROR_EXT , $f_ext ) ) ;
 				exit() ;
 			} else {
-				// php ‚È‚ÇŠëŒ¯‚ÈŠg’£Žq‚Ìƒtƒ@ƒCƒ‹‚ÌƒAƒbƒvƒ[ƒh‚ð–h‚®
+				// php ï¿½È‚ÇŠëŒ¯ï¿½ÈŠgï¿½ï¿½ï¿½qï¿½Ìƒtï¿½@ï¿½Cï¿½ï¿½ï¿½ÌƒAï¿½bï¿½vï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½hï¿½ï¿½
 				$upload_validate->check_deny_extensions( $f_ext ) ;
 
-				// multiple dot file ‚Ìƒ`ƒFƒbƒN‚ðs‚¤‚©‚Ç‚¤‚©
+				// multiple dot file ï¿½Ìƒ`ï¿½Fï¿½bï¿½Nï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½
 				$check_multiple_dot = $upload_validate->config_check_multiple_dot() ;
-				// multiple dot file ‚Ìƒ`ƒFƒbƒN
+				// multiple dot file ï¿½Ìƒ`ï¿½Fï¿½bï¿½N
 				if( ! empty( $check_multiple_dot ) ){
 					$upload_validate->check_multiple_dot( $file_name ) ;
 				}
 
-				// ‰æ‘œƒtƒ@ƒCƒ‹‚ð‘ÎÛ‚ÉŠg’£Žq‹U‘¢‚Ìƒ`ƒFƒbƒN
+				// ï¿½æ‘œï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ÎÛ‚ÉŠgï¿½ï¿½ï¿½qï¿½Uï¿½ï¿½ï¿½Ìƒ`ï¿½Fï¿½bï¿½N
 				$upload_validate->check_image_extensions( $f_ext, $file_tmp_name, $file_name ) ;
 
-				// ƒwƒbƒ_‚Ìƒ`ƒFƒbƒN‚ðs‚¤‚©‚Ç‚¤‚©
+				// ï¿½wï¿½bï¿½_ï¿½Ìƒ`ï¿½Fï¿½bï¿½Nï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½
 				$check_of_head = $upload_validate->config_validate_of_head() ;
-				// ƒtƒ@ƒCƒ‹‚Ìæ“ª•”‚ðŠm”F‚µ‚ÄŠg’£Žq‹U‘¢‚Ìƒ`ƒFƒbƒN
+				// ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ìæ“ªï¿½ï¿½ï¿½ï¿½ï¿½mï¿½Fï¿½ï¿½ï¿½ÄŠgï¿½ï¿½ï¿½qï¿½Uï¿½ï¿½ï¿½Ìƒ`ï¿½Fï¿½bï¿½N
 				if( ! empty( $check_of_head ) ){
 					$upload_validate->Validate_of_head( $file_tmp_name, $file_name, $f_ext ) ;
 				}
@@ -215,7 +215,7 @@ if ( ! function_exists('d3download_upload_execution') ) {
 if ( ! function_exists('d3download_convert_for_newid') ) {
 	function d3download_convert_for_newid( $mydirname, $newid, $url, $file2, $uid )
 	{
-		include_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
+		include_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
 		$db =& Database::getInstance() ;
 
 		$uploads_dir = XOOPS_TRUST_PATH.'/uploads/'.$mydirname ;
@@ -261,7 +261,8 @@ if ( ! function_exists('d3download_convert_for_newid') ) {
 if ( ! function_exists('d3download_convert_for_unapproval') ) {
 	function d3download_convert_for_unapproval( $mydirname, $newid, $url, $file2, $uid )
 	{
-		include_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
+		include_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
+
 		$db =& Database::getInstance() ;
 
 		$uploads_dir = XOOPS_TRUST_PATH.'/uploads/'.$mydirname ;
@@ -304,5 +305,3 @@ if ( ! function_exists('d3download_convert_for_unapproval') ) {
 		}
 	}
 }
-
-?>

@@ -89,5 +89,3 @@ if( ! empty( $msgs ) && ! empty( $local_msgs ) && empty( $myblocksadmin_parsed_u
 	$msgs = array_merge( $msgs , $local_msgs ) ;
 	$myblocksadmin_parsed_updateblock = true ;
 }
-
-?>

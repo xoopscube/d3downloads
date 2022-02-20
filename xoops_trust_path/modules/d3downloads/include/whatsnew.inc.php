@@ -19,5 +19,3 @@ if ( ! function_exists('d3downloads_whatsnew_base') ) {
 		return $item_build->get_Item( $category_option, $tree, $limit, $offset ) ;
 	}
 }
-
-?>

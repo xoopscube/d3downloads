@@ -23,7 +23,7 @@ if( ! class_exists( 'file_manager' ) )
 		var $rating ;
 		var $votes ;
 
-		function file_manager( $mydirname )
+		function __construct($mydirname )
 		{
 			include_once dirname( dirname(__FILE__) ).'/include/mytable.php' ;
 			$this->db =& Database::getInstance();
@@ -284,5 +284,3 @@ if( ! class_exists( 'file_manager' ) )
 		}
 	}
 }
-
-?>

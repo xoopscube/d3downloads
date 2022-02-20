@@ -49,5 +49,3 @@ $xoopsTpl->assign( array(
 ) ) ;
 
 include XOOPS_ROOT_PATH.'/footer.php';
-
-?>

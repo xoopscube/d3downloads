@@ -17,12 +17,12 @@ if( ! class_exists( 'spam_check' ) )
 		var $result        =  false ;
 		var $error_message =  _MD_D3DOWNLOADS_CHECK_SPAM ;
 
-		function spam_check( $mydirname )
+		function __construct($mydirname )
 		{
 			global $xoopsUser ;
 
 			$this->myts =& d3downloadsTextSanitizer::sGetInstance() ;
-			$this->xoops_isuser = ( is_object( $xoopsUser ) ) ? true : false ;
+			$this->xoops_isuser = is_object( $xoopsUser );
 			$this->my_session   = $mydirname.'_spam_check' ;
 			$this->str_list     = array_merge( range( 'a', 'z' ), range( 'A', 'Z' ), range( 0, 9 ) ) ;
 			$url_info           = parse_url( XOOPS_URL ) ;
@@ -46,7 +46,7 @@ if( ! class_exists( 'spam_check' ) )
 		function check_by_javascript()
 		{
 			$request = $this->myts->MystripSlashesGPC( @$_POST[ $this->hidden_name ] ) ;
-			return ( strcmp( $request, $this->select_value() ) == 0 ) ? true : false ;
+			return strcmp( $request, $this->select_value() ) == 0;
 		}
 
 		function select_value()
@@ -67,7 +67,7 @@ if( ! class_exists( 'spam_check' ) )
 				}
 			}
 
-			return ( $count == 0 ) ? true : false ;
+			return $count == 0;
 		}
 
 		function check_by_count_url()
@@ -132,5 +132,3 @@ if( ! class_exists( 'spam_check' ) )
 		}
 	}
 }
-
-?>

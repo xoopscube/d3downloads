@@ -4,9 +4,9 @@ global $xoopsUser ;
 
 include XOOPS_ROOT_PATH.'/header.php';
 
-include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
-include_once dirname( dirname(__FILE__) ).'/class/user_access.php' ;
-require_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
+include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
+include_once dirname(__FILE__, 2) .'/class/user_access.php' ;
+require_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
 
 $user_access = new user_access( $mydirname ) ;
 
@@ -14,7 +14,7 @@ $cid = $mypost = $submitter= $can_post4cid = $post_cid = $intree = 0 ;
 $download4assign = $category4assin = $category4post = $submitter_select = array() ;
 $cat_arg = "" ;
 
-// ‰{——E“Še‰Â”\‚ÈƒJƒeƒSƒŠŽæ“¾‚Ì€”õ
+// ï¿½{ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½eï¿½Â”\ï¿½ÈƒJï¿½eï¿½Sï¿½ï¿½ï¿½æ“¾ï¿½Ìï¿½ï¿½ï¿½
 $whr_cat = "cid IN (".implode(",", $user_access->can_read() ).")" ;
 $whr_cat4read = "d.".$whr_cat ;
 $whr_cat4post = "cid IN (".implode(",", $user_access->can_post() ).")" ;
@@ -43,7 +43,7 @@ $bc[0] = d3download_breadcrumbs( $mydirname ) ;
 
 $mydownload = new MyDownload( $mydirname ) ;
 
-// CID ‚ðŽæ“¾‚µ‚½ê‡‚Ìˆ—
+// CID ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½Ìï¿½ï¿½ï¿½
 if ( isset( $_GET['cid'] ) ) {
 	$cid = intval( $_GET['cid'] ) ;
 	if ( ! empty( $_GET['intree'] ) ) $intree = 1 ;
@@ -55,15 +55,15 @@ if ( isset( $_GET['cid'] ) ) {
 	$xoopsTpl->assign( 'select_intree' , $select_intree ) ; 
 	$xoopsTpl->assign( 'intree', $intree );
 
-	// ƒJƒeƒSƒŠ–ˆ‚Ì“o˜^Œ”‚ðŽæ“¾
+	// ï¿½Jï¿½eï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½Ì“oï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾
 	$total = $mydownload->Total_Num( $whr_cat, $cid, 0, 0, $intree ) ;
 	$total_num = sprintf( _MD_D3DOWNLOADS_CATEGORY_NUM , $total )  ;
 
-	// ƒJƒeƒSƒŠ[‚Ìà–¾‚ðŽæ“¾
+	// ï¿½Jï¿½eï¿½Sï¿½ï¿½ï¿½[ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾
 	$cat_description = d3download_cat_description( $mydirname, $cid ) ;
 	$xoopsTpl->assign( 'cat_description', $cat_description ) ;
 
-	// ŠÇ—ŽÒ—p‚É‰{——Œ ŒÀÝ’èó‹µ‚ðƒAƒTƒCƒ“
+	// ï¿½Ç—ï¿½ï¿½Ò—pï¿½É‰{ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý’ï¿½ó‹µ‚ï¿½ï¿½Aï¿½Tï¿½Cï¿½ï¿½
 	if( $module_admin ){
 		$canread_info = $user_access->canread_info( $cid ) ;
 		$group_trs = d3download_group_useraccess_info( $mydirname, $cid ) ;
@@ -75,26 +75,26 @@ if ( isset( $_GET['cid'] ) ) {
 		$xoopsTpl->assign( 'useraccess_edit', $useraccess_edit ) ;
 	}
 
-	// ƒy[ƒWƒ^ƒCƒgƒ‹‚ðƒAƒTƒCƒ“
+	// ï¿½yï¿½[ï¿½Wï¿½^ï¿½Cï¿½gï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Tï¿½Cï¿½ï¿½
 	include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
 	$mycategory = new MyCategory( $mydirname, 'Show', $cid, $whr_cat ) ;
 	$pagetitle4assign = $mycategory->return_title() ;
 
-	// ‰{——‚Å‚«‚È‚¢ƒJƒeƒSƒŠ‚ÍƒŠƒ_ƒCƒŒƒNƒg
+	// ï¿½{ï¿½ï¿½ï¿½Å‚ï¿½ï¿½È‚ï¿½ï¿½Jï¿½eï¿½Sï¿½ï¿½ï¿½Íƒï¿½ï¿½_ï¿½Cï¿½ï¿½ï¿½Nï¿½g
 	$canread = $user_access->user_access_for_cat( $cid, $whr_cat ) ;
 	if( empty( $canread ) ) {
 		redirect_header( XOOPS_URL.'/modules/'.$mydirname.'/',3, _MD_D3DOWNLOADS_NOREADPERM ) ;
 		exit() ;
 	}
 
-	// “Še‰Â”\‚ÈƒJƒeƒSƒŠ‚Ì‚Ý“ŠeƒtƒH[ƒ€‚Ö‚ÌƒŠƒ“ƒN‚ð•\Ž¦
+	// ï¿½ï¿½ï¿½eï¿½Â”\ï¿½ÈƒJï¿½eï¿½Sï¿½ï¿½ï¿½Ì‚Ý“ï¿½ï¿½eï¿½tï¿½Hï¿½[ï¿½ï¿½ï¿½Ö‚Ìƒï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½\ï¿½ï¿½
 	$can_post4cid = $user_access->user_access_for_cat( $cid, $whr_cat4post ) ;
 
-	// ƒpƒ“‚­‚¸•”•ª‚Ìˆ—
+	// ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
 	$breadcrumbs = array_merge( $bc ,d3download_breadcrumbs_tree( $mydirname, $cid, $whr_cat ) ) ;
 
 } elseif ( isset( $_GET['submitter'] ) ) {
-	// uid ‚ðŽæ“¾‚µ‚½ê‡‚Ìˆ—
+	// uid ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½Ìï¿½ï¿½ï¿½
 	$submitter = intval( $_GET['submitter'] ) ;
 
 	$xoopsOption['template_main'] = $mydirname.'_main_viewcat.html' ;
@@ -103,50 +103,50 @@ if ( isset( $_GET['cid'] ) ) {
 	$xoopsTpl->assign( 'mypost', $mypost ) ;
 	$xoopsTpl->assign( 'submitter', $submitter ) ;
 
-	// “ŠeŽÒ–ˆ‚Ì“o˜^Œ”‚ðŽæ“¾
+	// ï¿½ï¿½ï¿½eï¿½Ò–ï¿½ï¿½Ì“oï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾
 	$total = $mydownload->Total_Mypost( $whr_cat, $submitter ) ;
 	$postname = $mydownload->get_postname( $submitter ) ;
 	$total_num = sprintf( _MD_D3DOWNLOADS_MYPOST_NUM , $postname , $total ) ;
 
-	//“o˜^Œ”‚ðŽæ“¾‚Å‚«‚È‚¢ê‡‚ÍƒŠƒ_ƒCƒŒƒNƒg
+	//ï¿½oï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾ï¿½Å‚ï¿½ï¿½È‚ï¿½ï¿½ê‡ï¿½Íƒï¿½ï¿½_ï¿½Cï¿½ï¿½ï¿½Nï¿½g
 	if( empty( $total ) ) {
 		redirect_header( XOOPS_URL.'/modules/'.$mydirname.'/',3, _MD_D3DOWNLOADS_NOMATCH ) ;
 		exit() ;
 	}
 
-	// ƒy[ƒWƒ^ƒCƒgƒ‹‚ðƒAƒTƒCƒ“
+	// ï¿½yï¿½[ï¿½Wï¿½^ï¿½Cï¿½gï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Tï¿½Cï¿½ï¿½
 	$pagetitle4assign = sprintf( _MD_D3DOWNLOADS_MYPOST_TITLE , $postname ) ;
 
 	$submitter_select = $mydownload->submitter_select_box( $whr_cat ) ;
 	$xoopsTpl->assign( 'submitter_select' , $submitter_select  ) ;
 
-	// ƒpƒ“‚­‚¸•”•ª‚Ìˆ—
+	// ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
 	$bc[] = array( 'name' => $pagetitle4assign ) ;
 
 } else {
-	// CID ‚ª‚È‚¢ê‡‚Ìˆ—
+	// CID ï¿½ï¿½ï¿½È‚ï¿½ï¿½ê‡ï¿½Ìï¿½ï¿½ï¿½
 	$xoopsOption['template_main'] = $mydirname.'_main_viewcontent.html' ;
 
-	// ƒy[ƒWƒ^ƒCƒgƒ‹‚ðƒAƒTƒCƒ“
+	// ï¿½yï¿½[ï¿½Wï¿½^ï¿½Cï¿½gï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Tï¿½Cï¿½ï¿½
 	$pagetitle4assign = $xoopsModule->getVar('name') ;
 
-	// ‘S‘Ì“o˜^Œ”‚ðŽæ“¾
+	// ï¿½Sï¿½Ì“oï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾
 	$total = $mydownload->Total_Num( $whr_cat ) ;
 	$total_num = sprintf( _MD_D3DOWNLOADS_TOTAL_NUM , $total ) ;
 
 	if( $module_admin ){
 		include_once dirname( dirname(__FILE__) ).'/class/broken_download.php' ;
 		$broken_download = new broken_download( $mydirname ) ;
-		// ”j‘¹•ñŒ”‚ðƒAƒTƒCƒ“
+		// ï¿½jï¿½ï¿½ï¿½ñŒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Tï¿½Cï¿½ï¿½
 		$broken_num = $broken_download->Broken_Num() ;
 		$xoopsTpl->assign( 'broken_num' , $broken_num['num']  ) ;
 		$xoopsTpl->assign( 'broken_link' , $broken_num['link']  ) ;
-		// ƒAƒbƒvƒ[ƒhƒtƒ@ƒCƒ‹”j‘¹ƒ`ƒFƒbƒN
+		// ï¿½Aï¿½bï¿½vï¿½ï¿½ï¿½[ï¿½hï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½jï¿½ï¿½ï¿½`ï¿½Fï¿½bï¿½N
 		if( ! empty( $_POST['brokencheck'] ) ) {
 			$broken_report = new broken_report( $mydirname ) ;
 			$broken_report->broken_check() ;
 		}
-		// ³”F‘Ò‚¿Œ”‚ðƒAƒTƒCƒ“
+		// ï¿½ï¿½ï¿½Fï¿½Ò‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Tï¿½Cï¿½ï¿½
 		include_once dirname( dirname(__FILE__) ).'/class/unapproval_download.php' ;
 		$unapproval_download = new unapproval_download( $mydirname ) ;
 		$unapproval_num = $unapproval_download->Unapproval_Num() ;
@@ -155,7 +155,7 @@ if ( isset( $_GET['cid'] ) ) {
 	}
 }
 
-// ƒy[ƒWƒiƒr‚È‚Ç‚ðƒAƒTƒCƒ“
+// ï¿½yï¿½[ï¿½Wï¿½iï¿½rï¿½È‚Ç‚ï¿½ï¿½Aï¿½Tï¿½Cï¿½ï¿½
 if( ! empty( $cid ) || ! empty( $mypost ) ){
 	$perpage4assign = d3download_items_perpage() ;
 	$select_perpage = d3download_select_perpage( $mydirname ) ;
@@ -180,11 +180,11 @@ if( ! empty( $orderby4pagenav ) ) $cat_arg .= "&amp;orderby=".$orderby4pagenav ;
 if( ! empty( $intree ) ) $cat_arg .= "&amp;intree=".$intree ;
 $xoopsTpl->assign( 'cat_arg' , $cat_arg ) ; 
 
-// ƒJƒeƒSƒŠ‚Æ“o˜^Œ”‚ðƒAƒTƒCƒ“
+// ï¿½Jï¿½eï¿½Sï¿½ï¿½ï¿½Æ“oï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Tï¿½Cï¿½ï¿½
 $xoopsTpl->assign( 'categories' , d3download_getsub_categories( $mydirname, $cid , $whr_cat ) ) ; 
 $xoopsTpl->assign( 'download_total_num' , $total_num  ) ;
 
-// ”ñŒöŠJŒ”‚ðƒAƒTƒCƒ“
+// ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Tï¿½Cï¿½ï¿½
 $mod_url = XOOPS_URL.'/modules/'.$mydirname ;
 if( $module_admin ){
 	$invisible_num = $mydownload->Invisible_Num( $cid, $intree ) ;
@@ -192,10 +192,10 @@ if( $module_admin ){
 	$xoopsTpl->assign( 'invisible_link' , $invisible_num['link']  ) ;
 }
 
-// ‰{——‰Â”\‚ÈƒJƒeƒSƒŠ‚ÌƒŠƒXƒg‚ð SELECTƒ{ƒbƒNƒX—p‚ÉŽæ“¾
+// ï¿½{ï¿½ï¿½ï¿½Â”\ï¿½ÈƒJï¿½eï¿½Sï¿½ï¿½ï¿½Ìƒï¿½ï¿½Xï¿½gï¿½ï¿½ SELECTï¿½{ï¿½bï¿½Nï¿½Xï¿½pï¿½ÉŽæ“¾
 $category4assin = d3download_makecache_for_selbox( $mydirname, $whr_cat, 0, 1 ) ;
 
-// ‰{——‰Â”\‚È“o˜^ƒf[ƒ^‚ðŽæ“¾
+// ï¿½{ï¿½ï¿½ï¿½Â”\ï¿½È“oï¿½^ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½æ“¾
 if( empty( $cid ) && empty( $mypost ) ){
 	$limit = $xoopsModuleConfig['newdownloads'] ;
 	$download4assign = $mydownload->get_downdata_for_topview( $whr_cat4read, $limit ) ;
@@ -205,10 +205,10 @@ if( empty( $cid ) && empty( $mypost ) ){
 
 $lang_directcatsel = _MD_D3DOWNLOADS_SEL_CATEGORY;
 
-// ƒXƒNƒŠ[ƒ“ƒVƒ‡ƒbƒg‰æ‘œ‚ðŽg—p‚·‚é‚©‚Ç‚¤‚©
+// ï¿½Xï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Vï¿½ï¿½ï¿½bï¿½gï¿½æ‘œï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½é‚©ï¿½Ç‚ï¿½ï¿½ï¿½
 $canuseshots = ! empty( $xoopsModuleConfig['useshots'] ) ? 1 : 0 ;
 
-// “Še‰Â”\‚ÈƒJƒeƒSƒŠƒŠƒXƒg‚Ì‚ÝŽæ“¾
+// ï¿½ï¿½ï¿½eï¿½Â”\ï¿½ÈƒJï¿½eï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½gï¿½Ì‚ÝŽæ“¾
 $category4post = d3download_categories_selbox( $mydirname, $whr_cat4post ) ;
 if( ! empty( $_POST['file_post'] ) && ! empty( $_POST['category_select'] ) ) {
 	$post_cid = intval( $_POST['category_select']) ;
@@ -247,5 +247,3 @@ $xoopsTpl->assign( array(
 ) ) ;
 // display
 include XOOPS_ROOT_PATH.'/footer.php';
-
-?>

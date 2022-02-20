@@ -53,5 +53,3 @@ if( ! function_exists( 'd3downloads_notify_base' ) ) {
 		}
 	}
 }
-
-?>

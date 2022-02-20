@@ -35,20 +35,20 @@ $shots_help = $preview_title = $preview_body = $error_message = '';
 if( ! empty( $_GET['cid'] ) ) $cid = intval( $_GET['cid'] ) ;
 elseif( ! empty( $_POST['cid'] ) ) $cid = intval( $_POST['cid'] ) ;
 
-// “o˜^‚Í CID ‚ÌŽw’è‚ð•K—v‚Æ‚µ‚Ü‚·
+// ï¿½oï¿½^ï¿½ï¿½ CID ï¿½ÌŽwï¿½ï¿½ï¿½Kï¿½vï¿½Æ‚ï¿½ï¿½Ü‚ï¿½
 if( empty( $cid ) ){
 	redirect_header(XOOPS_URL.'/modules/'.$mydirname.'/index.php',3, _MD_D3DOWNLOADS_NO_CID );
 	exit();
 }
 
-// ‘¶Ý‚µ‚È‚¢ CID ‚Ìê‡ƒŠƒ_ƒCƒŒƒNƒg
+// ï¿½ï¿½ï¿½Ý‚ï¿½ï¿½È‚ï¿½ CID ï¿½Ìê‡ï¿½ï¿½ï¿½_ï¿½Cï¿½ï¿½ï¿½Nï¿½g
 $mycategory = new MyCategory( $mydirname, 'Show', $cid ) ;
 if( ! $mycategory->return_cid() ) {
 	redirect_header( XOOPS_URL."/modules/$mydirname/" , 2 , _MD_D3DOWNLOADS_NOREADPERM ) ;
 	exit();
 }
 
-// “ŠeŒ ŒÀ‚ðƒ`ƒFƒbƒN
+// ï¿½ï¿½ï¿½eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½Fï¿½bï¿½N
 $user_access = new user_access( $mydirname ) ;
 $permissions = $user_access->permissions_of_current_user( $cid ) ;
 if( empty( $permissions['can_post'] ) ) {
@@ -56,42 +56,42 @@ if( empty( $permissions['can_post'] ) ) {
 	exit();
 }
 
-// Ž©“®³”F‚Ìƒ`ƒFƒbƒN(ŠÇ—ŽÒ‚Íœ‚­)
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Fï¿½Ìƒ`ï¿½Fï¿½bï¿½N(ï¿½Ç—ï¿½ï¿½Ò‚Íï¿½ï¿½ï¿½)
 $auto_approved = $permissions['auto_approved'] ;
 
-// HTML‹–‰Â‚Ìƒ`ƒFƒbƒN(“o˜^ƒ†[ƒU[ˆÈŠO‚Í HTML‚ð–³Œø‚Æ‚·‚é)
+// HTMLï¿½ï¿½ï¿½Â‚Ìƒ`ï¿½Fï¿½bï¿½N(ï¿½oï¿½^ï¿½ï¿½ï¿½[ï¿½Uï¿½[ï¿½ÈŠOï¿½ï¿½ HTMLï¿½ð–³Œï¿½ï¿½Æ‚ï¿½ï¿½ï¿½)
 $canhtml = $permissions['can_html'] ;
 
-// ƒAƒbƒvƒ[ƒh‹–‰Â‚Ìƒ`ƒFƒbƒN
+// ï¿½Aï¿½bï¿½vï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½Â‚Ìƒ`ï¿½Fï¿½bï¿½N
 $canupload = $permissions['can_upload'] ;
 
-// ŠÇ—ŽÒ‚ÆŠÇ—ŽÒˆÈŠO‚Ìƒeƒ“ƒvƒŒ[ƒg‚ð•ª‚¯‚Äˆ—
+// ï¿½Ç—ï¿½ï¿½Ò‚ÆŠÇ—ï¿½ï¿½ÒˆÈŠOï¿½Ìƒeï¿½ï¿½ï¿½vï¿½ï¿½ï¿½[ï¿½gï¿½ð•ª‚ï¿½ï¿½Äï¿½ï¿½ï¿½
 if( $module_admin ){
 	$xoopsOption['template_main'] = $mydirname.'_admin_submit.html' ;
 } else {
 	$xoopsOption['template_main'] = $mydirname.'_main_submit.html' ;
 }
 
-// ƒpƒ“‚­‚¸•”•ª‚Ìˆ—
+// ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
 $whr_cat = "cid IN (".implode(",", $user_access->can_read() ).")" ;
 $bc[0] = d3download_breadcrumbs( $mydirname ) ;
 $breadcrumbs = array_merge( $bc ,d3download_breadcrumbs_tree( $mydirname, $cid, $whr_cat, '', 1 ) ) ;
 $formtitle = _MD_D3DOWNLOADS_SUBMIT_NEW ;
 $breadcrumbs[] = array( 'name' => $formtitle ) ;
 
-// “Še‰Â”\‚ÈƒJƒeƒSƒŠƒŠƒXƒg‚Ì‚ÝŽæ“¾
+// ï¿½ï¿½ï¿½eï¿½Â”\ï¿½ÈƒJï¿½eï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½gï¿½Ì‚ÝŽæ“¾
 $whr_cat4post = "cid IN (".implode(",", $user_access->can_post() ).")" ;
 if( $module_admin ) $category = d3download_categories_selbox( $mydirname, $whr_cat4post );
 else $category = d3download_categories_selbox( $mydirname, $whr_cat4post, $cid );
 
-// —˜—p‰Â”\‚È OS/ƒ\ƒtƒg“™‚ÌƒŠƒXƒg‚ðŽæ“¾
+// ï¿½ï¿½ï¿½pï¿½Â”\ï¿½ï¿½ OS/ï¿½\ï¿½tï¿½gï¿½ï¿½ï¿½Ìƒï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½æ“¾
 $submit_download = new submit_download( $mydirname ) ;
 $select_platform = $submit_download->Select_Platform() ;
 
-// ƒ‰ƒCƒZƒ“ƒX‚ÌƒŠƒXƒg‚ðŽæ“¾
+// ï¿½ï¿½ï¿½Cï¿½Zï¿½ï¿½ï¿½Xï¿½Ìƒï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½æ“¾
 $select_license = $submit_download->Select_License() ;
 
-// ƒXƒNƒŠ[ƒ“ƒVƒ‡ƒbƒg‰æ‘œ‚ÌŽæ“¾
+// ï¿½Xï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Vï¿½ï¿½ï¿½bï¿½gï¿½æ‘œï¿½ÌŽæ“¾
 $canuseshots = $submit_download->can_useshots() ;
 $usealbum = $submit_download->can_albumselect() ;
 if( ! empty( $canuseshots ) ){
@@ -103,18 +103,18 @@ if( ! empty( $canuseshots ) ){
 $defalthp = XOOPS_URL.'/' ;
 $defaltsitename = $xoopsConfig['sitename'] ;
 
-// ƒJƒeƒSƒŠ–ˆ‚Ì“ŠeƒtƒH[ƒ€à–¾•¶‚ª‚ ‚ê‚ÎŽæ“¾
+// ï¿½Jï¿½eï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½Ì“ï¿½ï¿½eï¿½tï¿½Hï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎŽæ“¾
 $message = d3download_submit_message( $mydirname , $cid );
 
-// “¯ˆêƒŠƒ“ƒN‚ÌÄ“o˜^‚ð‹–‰Â‚·‚é‚©‚Ç‚¤‚©
+// ï¿½ï¿½ï¿½êƒŠï¿½ï¿½ï¿½Nï¿½ÌÄ“oï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½é‚©ï¿½Ç‚ï¿½ï¿½ï¿½
 $check_url = ! empty( $xoopsModuleConfig['check_url']) ? 1 : 0 ;
 
-// maxfilesize(ƒeƒ“ƒvƒŒ[ƒg‚Ö‚ÌƒAƒTƒCƒ“—p)
+// maxfilesize(ï¿½eï¿½ï¿½ï¿½vï¿½ï¿½ï¿½[ï¿½gï¿½Ö‚ÌƒAï¿½Tï¿½Cï¿½ï¿½ï¿½p)
 $upload_max_filesize = d3download_get_maxsize( $mydirname );
 $max_submit_size = sprintf( _MD_D3DOWNLOADS_SUBMIT_MAXFILESIZE , number_format( $upload_max_filesize ) );
 $submit_extension = d3download_get_allowed_extension( $mydirname );
 
-// ŠÂ‹«ƒ`ƒFƒbƒN‚µ error ‚Ìê‡‚ÍƒAƒbƒvƒ[ƒhƒtƒH[ƒ€‚ð‘I‘ð‚Å‚«‚È‚¢‚æ‚¤‚É‚·‚é
+// ï¿½Â‹ï¿½ï¿½`ï¿½Fï¿½bï¿½Nï¿½ï¿½ error ï¿½Ìê‡ï¿½ÍƒAï¿½bï¿½vï¿½ï¿½ï¿½[ï¿½hï¿½tï¿½Hï¿½[ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½Å‚ï¿½ï¿½È‚ï¿½ï¿½æ‚¤ï¿½É‚ï¿½ï¿½ï¿½
 $config_error = d3download_upload_config_check( $mydirname );
 
 // set content4assign as initial data
@@ -133,7 +133,7 @@ if( empty( $ispreview ) && empty( $iserror ) ) $download4assign = array(
 	'filters' => $submit_download->get_MyFilter() ,
 ) ;
 
-// LiveValidation‚É‚æ‚éValidation‚ðƒAƒTƒCƒ“
+// LiveValidationï¿½É‚ï¿½ï¿½Validationï¿½ï¿½ï¿½Aï¿½Tï¿½Cï¿½ï¿½
 require_once dirname( dirname(__FILE__) ).'/include/upload_submit_rules.inc.php' ;
 $liveValidator="";
 $liveform = new My_MassValidatePHP( 'makedownloadform', $_POST );
@@ -168,7 +168,7 @@ if( isset( $_POST['makedownload_post'] ) || isset( $_POST['makedownload_preview'
 $wysiwygs = array( 'name' => 'desc' , 'value' => $download4assign['description'] ) ;
 include dirname( dirname(__FILE__) ).'/include/wysiwyg_editors.inc.php' ;
 
-// livevalidation.js ‚Æ livevalidation.css ‚ð xoops_module_header ‚ÉƒAƒTƒCƒ“
+// livevalidation.js ï¿½ï¿½ livevalidation.css ï¿½ï¿½ xoops_module_header ï¿½ÉƒAï¿½Tï¿½Cï¿½ï¿½
 $xoops_module_header = d3download_dbmoduleheader( $mydirname );
 $livevalidation_header = d3download_dbmoduleheader_for_livevalidation( $mydirname );
 $xoopsTpl->assign('xoops_module_header', $xoops_module_header . "\n" .$livevalidation_header. "\n" . $wysiwyg_header. "\n" . $xoopsTpl->get_template_vars('xoops_module_header'));
@@ -214,5 +214,3 @@ $xoopsTpl->assign( array(
 // DISPLAY STAGE
 
 include XOOPS_ROOT_PATH.'/footer.php';
-
-?>

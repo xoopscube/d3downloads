@@ -1,6 +1,7 @@
 <?php
 
-require_once dirname(dirname(__FILE__)).'/class/gtickets.php' ;
+require_once dirname(__FILE__, 2) .'/class/gtickets.php' ;
+
 $db =& Database::getInstance() ;
 
 // THIS PAGE CAN BE CALLED ONLY FROM D3DOWNLOADS
@@ -44,6 +45,5 @@ $tpl->assign( array(
 	'gticket_hidden' => $xoopsGTicket->getTicketHtml( __LINE__ , 1800 , 'd3downloads') ,
 ) ) ;
 $tpl->display( 'db:'.$mydirname.'_admin_import.html' ) ;
-xoops_cp_footer();
 
-?>
+xoops_cp_footer();

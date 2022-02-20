@@ -141,5 +141,3 @@ $GLOBALS['d3download_tables'] = array(
 		'date' ,
 	) ,
 ) ;
-
-?>

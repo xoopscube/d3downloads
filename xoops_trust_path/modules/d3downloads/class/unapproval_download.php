@@ -4,8 +4,8 @@
 
 if( ! class_exists( 'unapproval_download' ) )
 {
-	include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
-	require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+	include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
+	require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 
 	class unapproval_download extends MyDownload
 	{
@@ -44,9 +44,9 @@ if( ! class_exists( 'unapproval_download' ) )
 		var $category;
 		var $downdata=array();
 
-		function unapproval_download( $mydirname, $id= 0 )
+		function __construct($mydirname, $id= 0 )
 		{
-			include_once dirname( dirname(__FILE__) ).'/include/mytable.php' ;
+			include_once dirname(__FILE__, 2) .'/include/mytable.php' ;
 
 			$this->db =& Database::getInstance();
 			$this->myts =& d3downloadsTextSanitizer::sGetInstance() ;
@@ -298,5 +298,3 @@ if( ! class_exists( 'unapproval_download' ) )
 		}
 	}
 }
-
-?>

@@ -1,8 +1,8 @@
 <?php
 
-require_once dirname( dirname(__FILE__) ).'/class/gtickets.php' ;
-require_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
-require_once dirname( dirname(__FILE__) ).'/include/import_functions.php' ;
+require_once dirname(__FILE__, 2) .'/class/gtickets.php' ;
+require_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
+require_once dirname(__FILE__, 2) .'/include/import_functions.php' ;
 
 // uploads_dir config check
 $uploads_dir_error = 0;
@@ -102,6 +102,5 @@ $tpl->assign( array(
 	'gticket_hidden' => $xoopsGTicket->getTicketHtml( __LINE__ , 1800 , 'd3downloads') ,
 ) ) ;
 $tpl->display( 'db:'.$mydirname.'_admin_import.html' ) ;
-xoops_cp_footer();
 
-?>
+xoops_cp_footer();

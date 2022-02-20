@@ -31,13 +31,13 @@
 
 include XOOPS_ROOT_PATH.'/header.php';
 
-include_once dirname( dirname(__FILE__) ).'/class/user_access.php' ;
-require_once dirname( dirname(__FILE__) ).'/class/broken_download.php' ;
-require_once dirname( dirname(__FILE__) ).'/class/post_check.php' ;
-require_once dirname( dirname(__FILE__) ).'/class/spam_check.php' ;
-require_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
-require_once dirname( dirname(__FILE__) ).'/include/transact_functions.php' ;
-require_once dirname( dirname(__FILE__) ).'/include/broken_file_rules.inc.php' ;
+include_once dirname(__FILE__, 2) .'/class/user_access.php' ;
+require_once dirname(__FILE__, 2) .'/class/broken_download.php' ;
+require_once dirname(__FILE__, 2) .'/class/post_check.php' ;
+require_once dirname(__FILE__, 2) .'/class/spam_check.php' ;
+require_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
+require_once dirname(__FILE__, 2) .'/include/transact_functions.php' ;
+require_once dirname(__FILE__, 2) .'/include/broken_file_rules.inc.php' ;
 
 $xoopsOption['template_main'] = $mydirname.'_main_brokenfile.html';
 
@@ -115,4 +115,3 @@ $xoopsTpl->assign( array(
 
 include_once XOOPS_ROOT_PATH.'/footer.php';
 
-?>

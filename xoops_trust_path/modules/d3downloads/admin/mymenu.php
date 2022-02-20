@@ -5,9 +5,6 @@
 // Deny direct access
 if( preg_replace( '/[^a-zA-Z0-9_-]/' , '' , @$_GET['page'] ) == 'mymenu' ) exit ;
 
-// Skip for ORETEKI XOOPS
-if( defined( 'XOOPS_ORETEKI' ) ) return ;
-
 global $xoopsModule ;
 if( ! is_object( $xoopsModule ) ) die( '$xoopsModule is not set' )  ;
 
@@ -16,7 +13,7 @@ if( ! is_object( $xoopsModule ) ) die( '$xoopsModule is not set' )  ;
 $langmanpath = XOOPS_TRUST_PATH.'/libs/altsys/class/D3LanguageManager.class.php' ;
 if( ! file_exists( $langmanpath ) ) die( 'install the latest altsys' ) ;
 require_once( $langmanpath ) ;
-$langman =& D3LanguageManager::getInstance() ;
+$langman = D3LanguageManager::getInstance() ;
 $langman->read( 'modinfo.php' , $mydirname , $mytrustdirname ) ;
 
 include dirname(dirname(__FILE__)).'/admin_menu.php' ;
@@ -61,5 +58,3 @@ $tpl->assign( array(
 	'adminmenu' => $adminmenu ,
 ) ) ;
 $tpl->display( 'db:altsys_inc_mymenu.html' ) ;
-
-?>
