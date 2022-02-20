@@ -6,9 +6,7 @@
     <html>
     <head>
         <title><xsl:value-of select="title"/></title>
-                
         <!--<link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml" />-->
-        
         <style type="text/css">
         <![CDATA[
         

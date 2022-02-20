@@ -1,8 +1,8 @@
 <?php
 
 // === option begin ===
-// $category_option  ‚É•\Ž¦‚·‚éƒJƒeƒSƒŠ”Ô†‚ðƒJƒ“ƒ}(,)‚Å‹æØ‚Á‚Ä‹L“üB‹ó—“‚È‚ç‘SƒJƒeƒSƒŠ[•\Ž¦B
-// $intree ‚ð '1' ‚É‚·‚é‚ÆA”z‰º‚ÌƒTƒuƒJƒeƒSƒŠ‚à•\Ž¦‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B 
+// $category_option  ï¿½É•\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½eï¿½Sï¿½ï¿½ï¿½Ôï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½}(,)ï¿½Å‹ï¿½Ø‚ï¿½ï¿½Ä‹Lï¿½ï¿½ï¿½Bï¿½ó—“‚È‚ï¿½Sï¿½Jï¿½eï¿½Sï¿½ï¿½ï¿½[ï¿½\ï¿½ï¿½ï¿½B
+// $intree ï¿½ï¿½ '1' ï¿½É‚ï¿½ï¿½ï¿½ÆAï¿½zï¿½ï¿½ï¿½ÌƒTï¿½uï¿½Jï¿½eï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½é‚±ï¿½Æ‚ï¿½ï¿½Å‚ï¿½ï¿½Ü‚ï¿½ï¿½B 
 $category_option = '' ;
 $intree = '0' ;
 
@@ -10,10 +10,8 @@ $intree = '0' ;
 
 if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'set XOOPS_TRUST_PATH into mainfile.php' ) ;
 
-$mydirname = basename( dirname(  dirname( __FILE__ ) ) ) ;
-$mydirpath = dirname( dirname( __FILE__ ) ) ;
+$mydirname = basename(dirname(__FILE__, 2)) ;
+$mydirpath = dirname(__FILE__, 2);
 require $mydirpath.'/mytrustdirname.php' ; // set $mytrustdirname
 
 require XOOPS_TRUST_PATH.'/modules/'.$mytrustdirname.'/include/whatsnew.inc.php' ;
-
-?>
