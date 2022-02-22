@@ -1,5 +1,9 @@
+<div class="ui-dev-mode"><{$smarty.template}></div>
+
 <h3><{$mod_name}></h3>
-<h2 class="head"><{$smarty.const._MD_D3DOWNLOADS_H2_IMPORTFROM}></h2>
+
+<h3 class="head"><{$smarty.const._MD_D3DOWNLOADS_H2_IMPORTFROM}></h3>
+
 <form name="importfrom" action="<{$mod_url}>/admin/index.php?page=import" method="post">
 	<{$gticket_hidden}>
 	<label for="import_mid"><{$smarty.const._MD_D3DOWNLOADS_LABEL_SELECTMODULE}></label>
@@ -12,8 +16,11 @@
 		<{$uploadfile_info}>
 	</div>
 </form>
-<br />
-<h2 class="head"><{$smarty.const._MD_D3DOWNLOADS_H2_UPDATEFROM}></h2>
+
+<hr>
+
+<h3 class="head"><{$smarty.const._MD_D3DOWNLOADS_H2_UPDATEFROM}></h3>
+
 <form name="importfrom" action="<{$mod_url}>/admin/index.php?page=update" method="post">
 	<{$gticket_hidden}>
 	<input type="submit" name="update" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_UPDATE}>" />

@@ -25,7 +25,7 @@ $error_message = '' ;
 $mycategory = new MyCategory( $mydirname, 'Show' ) ;
 $user_access = new user_access( $mydirname ) ;
 
-// ƒy[ƒWƒiƒr‚Ìˆ—
+// ï¿½yï¿½[ï¿½Wï¿½iï¿½rï¿½Ìï¿½ï¿½ï¿½
 $total = $mycategory->category_sum() ;
 $select_perpage = d3download_select_perpage( $mydirname ) ;
 $current_start = isset($_GET['start']) ? intval( $_GET['start'] ) : 0 ;

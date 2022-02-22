@@ -10,29 +10,29 @@
 
 .d3downloads_outer
 {
-	border: 1px solid #EEE;
+	border: 1px solid #333;
 }
 
 .d3downloads_head
 {
 	padding: 5px;
 	color: inherit;
-	border-bottom: 1px solid #CACACA;
-	background: #F2F2F2;
+	border-bottom: 1px solid #333;
+	/*background: #F2F2F2;*/
 }
 .d3downloads_even
 {
 	padding: 2px;
 	color: inherit;
-	border-bottom: 1px solid #CACACA;
-	background: #F7F7F7;
+	border-bottom: 1px solid #333;
+	/*background: #F7F7F7;*/
 }
 .d3downloads_odd
 {
 	padding: 2px;
 	color: inherit;
-	border-bottom: 1px solid #CACACA;
-	background: #FAFAFA;
+	border-bottom: 1px solid #333;
+	/*background: #FAFAFA;*/
 }
 .d3downloads_foot
 {
@@ -43,40 +43,40 @@
 tr.d3downloads_even td
 {
 	padding: 2px;
-	border-bottom: 1px solid #CACACA;
+	border-bottom: 1px solid #333;
 }
 
 tr.d3downloads_odd td
 {
 	padding: 2px;
-	border-bottom: 1px solid #CACACA;
+	border-bottom: 1px solid #333;
 }
 
 tr.d3downloads_even
 {
 	color: inherit;
-	background: #F7F7F7;
+	/*background: #F7F7F7;*/
 }
 
 tr.d3downloads_odd
 {
 	color: inherit;
-	background: #FAFAFA;
+	/*background: #FAFAFA;*/
 }
 
 tr.d3downloads_odd:hover, tr.even:hover
 {
 	color: #000;
-	border-bottom: 1px solid #CACACA;
-	background: #DFDFDF;
+	border-bottom: 1px solid #333;
+	/*background: #DFDFDF;*/
 }
 
 td.d3downloads_submitlink
 {
 	padding: 5px;
 	color: inherit;
-	border-bottom: 1px solid #CACACA;
-	background: #F7F7F7;
+	border-bottom: 1px solid #333;
+	/*background: #F7F7F7;*/
 	text-align:right;
 }
 
@@ -84,8 +84,8 @@ td.d3downloads_admin_link
 {
 	padding: 2px;
 	color: inherit;
-	border-bottom: 1px solid #CACACA;
-	background: #F7F7F7;
+	border-bottom: 1px solid #333;
+	/*background: #F7F7F7;*/
 	text-align:right;
 }
 
@@ -93,7 +93,7 @@ td.d3downloads_single_frame_title
 {
 	padding: 2px;
 	color: inherit;
-	background: #F7F7F7;
+	/*background: #F7F7F7;*/
 	text-align:left;
 	vertical-align:top;
 	line-height: 190%;
@@ -103,8 +103,8 @@ td.d3downloads_single_frame_gifimage
 {
 	padding: 2px;
 	color: inherit;
-	border-bottom: 1px solid #CACACA;
-	background: #F7F7F7;
+	border-bottom: 1px solid #333;
+	/*background: #F7F7F7;*/
 	text-align:left;
 	vertical-align:bottom;
 }
@@ -113,15 +113,15 @@ td.d3downloads_single_frame_version
 {
 	padding: 2px;
 	color: inherit;
-	border-bottom: 1px solid #CACACA;
-	background: #F7F7F7;
+	border-bottom: 1px solid #333;
+	/*background: #F7F7F7;*/
 	text-align:right;
 	vertical-align:bottom;
 }
 
 div.d3downloads_single_frame_description
 {
-	color: #000000;
+	/*color: #000000;*/
 	margin:  1px;
 	padding: 3px;
 	text-align: left;
@@ -145,7 +145,7 @@ div.d3downloads_single_frame_description
 
 div.d3downloads_md5_line
 {
-	background: #EFEFEF;
+	/*background: #EFEFEF;*/
 	color:inherit;
 	border: 1px inset #CCC;
 	padding: 2px;
@@ -180,7 +180,7 @@ hr.d3downloads_extra_infomation {
 	height: 1px;
 	padding-top: 3px;
 	padding-bottom: 3px;
-	background: #F7F7F7;
+	/*background: #F7F7F7;*/
 	border: 0;
 }
 
@@ -256,8 +256,8 @@ div.d3downloads_cat_description
 {
 	margin: 5 2px 3px;
 	padding: 5px;
-	border: 1px solid #CCC;
-	background:#FFF;
+	border: 1px solid #333;
+	/*background:#FFF;*/
 	color:inherit;
 }
 
@@ -266,9 +266,9 @@ div.d3downloads_cat_description
 div.d3downloads_submit_help
 {
 	/*font-size:  90%; */
-	background: #EFEFEF;
+	/*background: #EFEFEF;*/
 	color:inherit;
-	border: 1px inset #CCC;
+	border: 1px inset #333;
 	padding: 2px;
 	width: 90%;
 }
@@ -302,7 +302,7 @@ div.d3downloads_breadcrumbs
 	margin: 10px;
 	padding: 0;
 	white-space: nowrap;
-	color: #999;
+	/*color: #999;*/
 	text-align:center; 
 }
 
@@ -315,16 +315,16 @@ div.d3downloads_breadcrumbs
 	font-weight: bold;
 	margin: 0;
 	padding: 0;
-	background-color: #fff;
+	/*background-color: #fff;*/
 }
 
 .d3downloads_pagenav li.currentpage
 {
 	margin:0 6px 0 2px;
 	padding: 2px 8px 2px 8px;
-	background:#eee;
+	/*background:#eee;*/
 	color:#808080;
-	border: 1px solid #c0c0c0;
+	border: 1px solid #333;
 }
 
 .d3downloads_pagenav li.prepage
@@ -336,9 +336,9 @@ div.d3downloads_breadcrumbs
 {
 	margin:0 6px 0 2px;
 	padding: 2px 8px 2px 8px;
-	background:#fff;
+	/*background:#fff;*/
 	color:#808080;
-	border: 1px solid #c0c0c0;
+	border: 1px solid #333;
 }
 
 .d3downloads_pagenav a
@@ -347,31 +347,31 @@ div.d3downloads_breadcrumbs
 	padding: 2px 8px 2px 8px;
 	text-decoration:none;
 	color:#808080;
-	border: 1px solid #c0c0c0;
+	border: 1px solid #333;
 }
 
 .d3downloads_pagenav a:hover
 {
 	color:#FF9900;
-	background:#eee;
+	/*background:#eee;*/
 }
 
 .d3downloads_pagenav li.prepage a {
-	background: #fff url(<{$mod_url}>/index.php?page=module_header&src=prepage.gif) 10% 50% no-repeat;
+	background: #444 url(<{$mod_url}>/index.php?page=module_header&src=prepage.gif) 10% 50% no-repeat;
 	padding-left: 15px;
 }
 
 .d3downloads_pagenav li.prepage a:hover {
-	background: #fff url(<{$mod_url}>/index.php?page=module_header&src=prepage.gif) 10% 50% no-repeat;
+	background: #444 url(<{$mod_url}>/index.php?page=module_header&src=prepage.gif) 10% 50% no-repeat;
 }
 
 .d3downloads_pagenav li.nextpage a {
-	background: #fff url(<{$mod_url}>/index.php?page=module_header&src=nextpage.gif) 90% 50% no-repeat;
+	background: #444 url(<{$mod_url}>/index.php?page=module_header&src=nextpage.gif) 90% 50% no-repeat;
 	padding-right: 15px;
 }
 
 .d3downloads_pagenav li.nextpage a:hover {
-	background: #fff url(<{$mod_url}>/index.php?page=module_header&src=nextpage.gif) 90% 50% no-repeat;
+	background: #444 url(<{$mod_url}>/index.php?page=module_header&src=nextpage.gif) 90% 50% no-repeat;
 }
 
 /* ------------ for canread_info ------------ */
@@ -379,9 +379,9 @@ div.d3downloads_breadcrumbs
 div.d3downloads_canread_info
 { 
 	/*font-size:  90%; */
-	background: #EFEFEF;
+	/*background: #EFEFEF;*/
 	color:inherit;
-	border: 1px inset #CCC;
+	border: 1px inset #444;
 	padding: 2px;
 	text-align: right;
 }
@@ -456,9 +456,9 @@ div.d3downloads_error_message
 
 .d3downloads_submit
 {
-	color: #000000;
-	background: #ffffff;
-	border: 1px solid #000000;
+	/*color: #000000;*/
+	/*background: #ffffff;*/
+	border: 1px solid #444;
 }
 
 /* ------------ for editor_selector -------------------- */
@@ -466,8 +466,8 @@ div.d3downloads_error_message
 .d3downloads_editor_selector {
 	float: left;
 	width: auto;
-	color: #000000;
-	background: #ffffff;
+	/*color: #000000;*/
+	/*background: #ffffff;*/
 	font-size: 11px;
 	margin-top: 10px;
 	margin-right: 1px;
@@ -485,8 +485,8 @@ div.d3downloads_error_message
 /* ------------ for textarea -------------------- */
 
 div.grippie {
-	background:#EEEEEE url(<{$mod_url}>/index.php?page=module_header&src=grippie.png) no-repeat scroll center 2px;
-	border-color:#DDDDDD;
+	background:#444 url(<{$mod_url}>/index.php?page=module_header&src=grippie.png) no-repeat scroll center 2px;
+	border-color:#555;
 	border-style:solid;
 	border-width:0pt 1px 1px;
 	cursor:s-resize;
@@ -501,7 +501,7 @@ div.grippie {
 /* ------------ for lightbox -------------------- */
 
 #lightbox {
-	background-color: #eee;
+	/*background-color: #eee;*/
 	padding: 10px;
 	border-bottom: 1px solid #666;
 	border-right: 1px solid #666;
@@ -512,7 +512,7 @@ div.grippie {
 }
 #lightboxCaption {
 	color: #333;
-	background-color: #eee;
+	/*background-color: #eee;*/
 	font-size: 90%;
 	text-align: center;
 	border-bottom: 1px solid #666;
@@ -526,7 +526,7 @@ div.grippie {
 }
 * html #lightboxOverallView,
 * html #overlay {
-	background-color: #000;
+	background-color: #333;
 	background-image: url(<{$mod_url}>/index.php?page=module_header&src=blank.gif);
 	filter: Alpha(opacity=50);
 }

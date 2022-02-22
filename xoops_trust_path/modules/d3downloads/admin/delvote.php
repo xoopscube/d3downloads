@@ -42,5 +42,3 @@ if( ! empty( $_POST['delvote']) ){
 	redirect_header( XOOPS_URL."/modules/$mydirname/index.php?page=modfile&amp;cid=$cid&amp;lid=$lid" , 2 , _MD_D3DOWNLOADS_NONDELETED ) ;
 	exit();
 }
-
-?>

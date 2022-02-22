@@ -51,10 +51,16 @@ foreach( array_keys( $adminmenu ) as $i ) {
 	}
 }
 
+// Returns module dir name with the first character capitalized
+// Assign to template for Admin Breadcrumbs
+$dirname = ucfirst( $mydirname );
+
 // display
 require_once XOOPS_ROOT_PATH.'/class/template.php' ;
 $tpl = new XoopsTpl() ;
 $tpl->assign( array(
 	'adminmenu' => $adminmenu ,
+    'dirname'   => $dirname,
 ) ) ;
-$tpl->display( 'db:altsys_inc_mymenu.html' ) ;
+
+$tpl->display( 'db:altsys_inc_menu.html' ) ;

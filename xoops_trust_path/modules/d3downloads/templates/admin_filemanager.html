@@ -1,15 +1,21 @@
-<script type="text/javascript" src="<{$mod_url}>/index.php?page=module_header&src=jquery.js"></script>
+<div class="ui-dev-mode"><{$smarty.template}></div>
+
+
+<!--<script type="text/javascript" src="<{$mod_url}>/index.php?page=module_header&src=jquery.js"></script>-->
 <script type="text/javascript" src="<{$mod_url}>/index.php?page=module_header&src=d3downloads.js"></script>
-<h2><{$smarty.const._MD_D3DOWNLOADS_H2FILEMANAGER}> ( <{$total_num}> )
+
+<h3><{$smarty.const._MD_D3DOWNLOADS_H2FILEMANAGER}> ( <{$total_num}> )
 	<{if $invisible_num && ! $invisible}>
 		<{$invisible_link}>
 	<{/if}>
-</h2>
+</h3>
+
 <{if $iserror}>
-	<div style="color: #CC0000;font-size:100%;font-weight:bold;margin:5px;padding:5px;border-width:1px;border-style:solid;border-color:#808080;">
+	<div class="error">
 		<{$error_message}>
 	</div>
 <{/if}>
+
 <form name="filemanager" id="filemanager" action="<{$mod_url}>/admin/index.php?page=<{$page}>" method="post">
 	<{$gticket_hidden}>
 	<input name="page" value="<{$mod_url}>/admin/index.php?page=<{$page}>" type="hidden">
@@ -43,7 +49,11 @@
 			</div>
 		<{/if}>
 	</div>
+
+	<hr>
+
 <table class="outer">
+	<thead>
 	<tr>
 		<th style="text-align:center;font-size: small;">
 			<<{$smarty.const._MD_D3DOWNLOADS_TH_ID}>
@@ -82,6 +92,8 @@
 			<input type="checkbox" onclick="col_check_on_off( this, 'col_action_' )">
 		</th>
 	</tr>
+	</thead>
+	<tbody>
 	<{foreach from=$download item="file"}>
 		<tr class="<{cycle values="even,odd"}>">
 			<td style="text-align:center;">
@@ -134,13 +146,15 @@
 			</td>
 		</tr>
 	<{/foreach}>
+	</tbody>
+	<tfoot>
 	<tr>
 		<td colspan="11" align="center" class="head">
 			<input type="submit" name="filemanager_update" id="filemanager_update" value="<{$smarty.const._SUBMIT}>" tabindex="0" />
 		</td>
 	</tr>
 	<tr>
-		<th colspan="11" style="text-align:right;">
+		<th colspan="11">
 			<{$smarty.const._MD_D3DOWNLOADS_LABEL_FILECHECKED}>
 			<input type="submit" name="delete" id="delete" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_DELETE}>" /> 
 			<{if $moveselect|@count > 1}>
@@ -167,10 +181,12 @@
 			<{/if}>
 		</th>
 	</tr>
+	</tfoot>
 </table>
 </form>
 
-<div align="right"><{$pagenav}></div><br />
+<div align="right"><{$pagenav}></div>
+<br />
 <{if $category_tree}>
 	<div style="color:inherit;border: 1px inset #CCC;padding: 6px;with: 80%;font-size: small;">
 		<{$category_tree}>

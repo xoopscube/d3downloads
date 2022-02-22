@@ -15,6 +15,9 @@ if( ! class_exists( 'user_access' ) )
 
 		function __construct($mydirname )
 		{
+            // TODO gigamaster parent construct
+            parent::__construct($mydirname);
+
 			global $xoopsUser ;
 			include_once dirname(__FILE__, 2) .'/include/mytable.php' ;
 

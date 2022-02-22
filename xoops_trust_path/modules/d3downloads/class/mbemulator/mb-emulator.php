@@ -32,7 +32,7 @@ function mb_language($language='') {
 
 if (! function_exists('mb_internal_encoding')) {
 function mb_internal_encoding($encoding = '') {
-	$mb =& HypMBString::getInstance();
+    $mb =& HypMBString::getInstance();
 	return $mb->mb_internal_encoding($encoding);
 }
 }

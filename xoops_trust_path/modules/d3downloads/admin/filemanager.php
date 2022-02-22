@@ -107,7 +107,7 @@ if( ! empty( $_POST['delete'] ) ) {
 		foreach( $_POST['action_selects'] as $id => $value ) {
 			if( empty( $value ) ) continue ;
 			$lid = intval( $id ) ;
-			// u“Še‚ğƒ†[ƒU[‚Ì“Še”‚É”½‰fv‚ª—LŒø‚Èê‡A“Še”‚É”½‰f
+			// ï¿½uï¿½ï¿½ï¿½eï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Uï¿½[ï¿½Ì“ï¿½ï¿½eï¿½ï¿½ï¿½É”ï¿½ï¿½fï¿½vï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½Èê‡ï¿½Aï¿½ï¿½ï¿½eï¿½ï¿½ï¿½É”ï¿½ï¿½f
 			d3download_delete_lid( $mydirname ,$lid );
 		}
 		redirect_header( XOOPS_URL."/modules/$mydirname/admin/index.php?page=filemanager&amp;cid=$category_select" , 2 , _MD_D3DOWNLOADS_DELETED ) ;

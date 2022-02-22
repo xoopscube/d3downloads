@@ -59,8 +59,11 @@ if( ! class_exists( 'Submit_Validate' ) )
 		var $visible ;
 		var $cancomment ;
 
-		function __construct($mydirname="", $mode="" )
+		function __construct( $mydirname="", $mode="" )
 		{
+            // TODO gigamaster parent construct
+            //parent::__construct($mydirname);
+
 			if( ! empty( $mydirname ) ) $this->mydirname = $mydirname ;
 			if( ! empty( $mode ) ) $this->mode = $mode ;
 

@@ -28,7 +28,7 @@ $error_message = '' ;
 $cid = isset( $_GET['cid'] ) ? intval( $_GET['cid'] ) : 0 ;
 $mycategory = new MyCategory( $mydirname, 'Show', $cid ) ;
 
-// ‘¶Ý‚µ‚È‚¢ CID ‚Ìê‡ƒŠƒ_ƒCƒŒƒNƒg
+// ï¿½ï¿½ï¿½Ý‚ï¿½ï¿½È‚ï¿½ CID ï¿½Ìê‡ï¿½ï¿½ï¿½_ï¿½Cï¿½ï¿½ï¿½Nï¿½g
 if( $cid != 0 && ! $mycategory->return_cid() ) {
 	redirect_header( XOOPS_URL."/modules/$mydirname/admin/index.php?page=categorymanager" , 2 , _MD_D3DOWNLOADS_NOREADPERM ) ;
 	exit();
@@ -109,7 +109,7 @@ if( isset( $_POST['categoryform_post'] ) || isset( $_POST['category_update'] ) |
 	if( empty( $iserror ) ){
 		if ( ! empty( $edit_id ) && ( $pid != $old_pid ) ) $category_edit->pid_select_check( $edit_id, $pid, $old_pid, 1 ) ;
 
-		include_once dirname( dirname(__FILE__) ).'/class/db_download.php' ;
+		include_once dirname(__FILE__, 2) .'/class/db_download.php' ;
 		$post_cat = new db_download( $db->prefix( $mydirname."_cat" ) , "cid", $edit_id ) ;
 
 		// SET4SQL
@@ -129,7 +129,10 @@ if( isset( $_POST['categoryform_post'] ) || isset( $_POST['category_update'] ) |
 				'CAT_TITLE' => $title ,
 				'CAT_URL' => XOOPS_URL . '/modules/' . $mydirname . '/index.php?cid=' . $new_cid ,
 			) ;
-			d3download_main_trigger_event( $mydirname , 'global' , 0 , 'newcategory' , $tags, 0 ) ;
+
+			// TODO fix this Notification !
+			//d3download_main_trigger_event( $mydirname , 'global' , 0 , 'newcategory' , $tags, 0 ) ;
+
 		} elseif ( ! empty( $edit_id ) ) {
 			// DOES THE LINK ALREADY EXIST? -- UPDATE SQL
 			$sql = "SELECT COUNT(*) FROM ".$db->prefix( $mydirname."_cat" )." WHERE cid='".$edit_id."'";

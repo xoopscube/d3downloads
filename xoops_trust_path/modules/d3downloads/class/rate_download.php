@@ -22,6 +22,9 @@ if( ! class_exists( 'rate_download' ) )
 
 		function __construct($mydirname, $mode='' )
 		{
+            // TODO gigamaster parent construct
+            parent::__construct($mydirname);
+
 			include_once dirname(__FILE__, 2) .'/include/mytable.php' ;
 
 			$this->db =& Database::getInstance();

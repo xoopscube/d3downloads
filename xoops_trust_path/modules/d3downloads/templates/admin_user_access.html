@@ -1,93 +1,136 @@
 <script type="text/javascript" src="<{$mod_url}>/index.php?page=module_header&src=jquery.js"></script>
 <script type="text/javascript" src="<{$mod_url}>/index.php?page=module_header&src=d3downloads.js"></script>
+
 <h2><{$formtitle}></h2>
+
 <{if $iserror}>
-	<div style="color: #CC0000;font-size:100%;font-weight:bold;margin:5px;padding:5px;border-width:1px;border-style:solid;border-color:#808080;">
+	<div class="error">
 		<{$error_message}>
 	</div>
 <{/if}>
+
 <form name="user_access" id="user_access" action="<{$mod_url}>/admin/index.php?page=<{$page}>" method="post">
 	<{$gticket_hidden}>
-	<div style="text-align:right;color:inherit;border: 1px inset #CCC;padding: 2px;font-size: small;">
-		<a href="<{$mod_url}>/admin/index.php?page=categoryedit&amp;cid=0"><{$smarty.const._MD_D3DOWNLOADS_ADMIN_NEWCATEGORY}></a> |
-		<a href="<{$mod_url}>/admin/index.php?page=categoryedit&amp;cid=0&amp;pid=<{$select_cid}>"><{$smarty.const._MD_D3DOWNLOADS_MAKESUBCATEGORY}></a> |
-		<a href="<{$mod_url}>/admin/index.php?page=categoryedit&amp;cid=<{$select_cid}>"><{$smarty.const._MD_D3DOWNLOADS_CAT_EDIT}></a> |
-		<a href="<{$mod_url}>/index.php?cid=<{$select_cid}>"><{$smarty.const._MD_D3DOWNLOADS_CAT_VISIBLE}></a> |
-		<span style="font-weight: bold;"><{$smarty.const._MD_D3DOWNLOADS_SEL_CATEGORY}></span>
-		<select name="category_select" onchange="submit();">
-			<{html_options options=$categoryselect selected=$select_cid}>
-		</select>
-	</div>
-	<{if $parentid != 0}>
-		<br />
-		<div style="color:inherit;border: 1px inset #CCC;padding: 6px;with: 80%;font-size: small;">
+
+	<div layout="row center-justify" class="control-action">
+
+		<div>
+			<{$smarty.const._MD_D3DOWNLOADS_SEL_CATEGORY}>
+			<select name="category_select" onchange="submit();">
+				<{html_options options=$categoryselect selected=$select_cid}>
+			</select>
+		</div>
+
+		<div class="control-view">
+
+			<a class="ui-btn" href="<{$mod_url}>/admin/index.php?page=categoryedit&amp;cid=0">
+				<{$smarty.const._MD_D3DOWNLOADS_ADMIN_NEWCATEGORY}></a>
+			<a class="ui-btn" href="<{$mod_url}>/admin/index.php?page=categoryedit&amp;cid=0&amp;pid=<{$select_cid}>">
+				<{$smarty.const._MD_D3DOWNLOADS_MAKESUBCATEGORY}></a>
+			<a class="ui-btn" href="<{$mod_url}>/admin/index.php?page=categoryedit&amp;cid=<{$select_cid}>">
+				<{$smarty.const._MD_D3DOWNLOADS_CAT_EDIT}></a>
+			<a class="ui-btn" href="<{$mod_url}>/index.php?cid=<{$select_cid}>">
+				<{$smarty.const._MD_D3DOWNLOADS_CAT_VISIBLE}></a>
+
+			<{if $parentid != 0}>
 			<{$smarty.const._MD_D3DOWNLOADS_HELP_USERACCESS_PID}>
-		</div>
-		<div align="right">
 			<a href="<{$mod_url}>/admin/index.php?page=<{$page}>&amp;cid=<{$maincid}>"><{$smarty.const._MD_D3DOWNLOADS_MAINCAT_USERACCESS_EDIT}></a>
+			<{/if}>
+
+			<button id="list" class="ui-btn" data-id="1" type="button" title="View List">
+				<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24">
+					<path d="M9 5v4h12V5M9 19h12v-4H9m0-1h12v-4H9M4 9h4V5H4m0 14h4v-4H4m0-1h4v-4H4v4z" fill="currentColor"></path></svg>
+			</button>
+
+			<button id="grid" class="ui-btn" data-id="2" type="button" title="View Grid">
+				<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24">
+					<path d="M16 5v6h5V5m-11 6h5V5h-5m6 13h5v-6h-5m-6 6h5v-6h-5m-6 6h5v-6H4m0-1h5V5H4v6z" fill="currentColor"></path></svg>
+			</button>
+
+			<button id="filter" class="ui-btn" type="button" data-id="3" onclick="slideToggle('.user-filter', this)" title="View Filter">
+				<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+					<path d="M7 11h10v2H7zM4 7h16v2H4zm6 8h4v2h-4z" fill="currentColor"></path></svg>
+			</button>
+
+			<button class="help-admin ui-btn" type="button" data-id="5" data-module="user" data-help-article="#help-users" title="Help">
+				<span class="ui-icon ui-icon-help"></span>
+			</button>
 		</div>
+
+	</div>
+
+	<{if $parentid == 0}>
+	<div class="tips">
+		<{$smarty.const._MD_D3DOWNLOADS_HELP_USERACCESS}>
+	</div>
 	<{/if}>
+
 	<table class="outer">
+		<thead>
 		<tr>
 			<th colspan="2" style="text-align:center;">
-				<span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_TH_GROUPNAME}></span>
+				<{$smarty.const._MD_D3DOWNLOADS_TH_GROUPNAME}>
 			</th>
 			<th style="text-align:center;">
-				<span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_TH_CAN_READ}></span>
+				<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_READ}>
 				<{if $parentid == 0}>
 					<input type="checkbox" onclick="col_check_on_off( this, 'gcol_1_' )">
 				<{/if}>
 			</th>
 			<th style="text-align:center;">
-				<span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_TH_CAN_POST}></span>
+				<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_POST}>
 				<{if $parentid == 0}>
 					<input type="checkbox" onclick="col_check_on_off( this, 'gcol_2_' )">
 				<{/if}>
 			</th>
 			<th style="text-align:center;">
-				<span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_TH_CAN_EDIT}></span>
+				<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_EDIT}>
 				<{if $parentid == 0}>
 					<input type="checkbox" onclick="col_check_on_off( this, 'gcol_3_' )">
 				<{/if}>
 			</th>
 			<th style="text-align:center;">
-				<span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_TH_CAN_DELETE}></span>
+				<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_DELETE}>
 				<{if $parentid == 0}>
 					<input type="checkbox" onclick="col_check_on_off( this, 'gcol_4_' )">
 				<{/if}>
 			</th>
 			<th style="text-align:center;">
-				<span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_TH_POST_AUTO_APPROVED}></span>
+				<{$smarty.const._MD_D3DOWNLOADS_TH_POST_AUTO_APPROVED}>
 				<{if $parentid == 0}>
 					<input type="checkbox" onclick="col_check_on_off( this, 'gcol_5_' )">
 				<{/if}>
 			</th>
 			<th style="text-align:center;">
-				<span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_TH_EDIT_AUTO_APPROVED}></span>
+				<{$smarty.const._MD_D3DOWNLOADS_TH_EDIT_AUTO_APPROVED}>
 				<{if $parentid == 0}>
 					<input type="checkbox" onclick="col_check_on_off( this, 'gcol_6_' )">
 				<{/if}>
 			</th>
 			<th style="text-align:center;">
-				<span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_TH_CAN_HTML}></span>
+				<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_HTML}>
 				<{if $parentid == 0}>
 					<input type="checkbox" onclick="col_check_on_off( this, 'gcol_7_' )">
 				<{/if}>
 			</th>
 			<th style="text-align:center;">
-				<span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_TH_CAN_UPLOAD}></span>
+				<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_UPLOAD}>
 				<{if $parentid == 0}>
 					<input type="checkbox" onclick="col_check_on_off( this, 'gcol_8_' )">
 				<{/if}>
 			</th>
 			<{if $parentid == 0 && $copy_select|@count > 1}>
-				<th style="text-align:right;">
-					<span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_SEL_GROUP}></span>
+				<th style="text-align:center;">
+					<{$smarty.const._MD_D3DOWNLOADS_SEL_GROUP}>
 					<input type="checkbox" onclick="col_check_on_off( this, 'col_action_g_' )">
 				</th>
 			<{/if}>
 		</tr>
+		</thead>
+		<tbody>
 			<{$group_trs}>
+		</tbody>
+		<tfoot>
 		<{if $parentid == 0}>
 			<tr>
 				<td colspan="11" align="center" class="head">
@@ -108,110 +151,117 @@
 				</tr>
 			<{/if}>
 		<{/if}>
+		</tfoot>
 	</table>
-	<br />
-	<{if $parentid == 0}>
-		<div style="color:inherit;border: 1px inset #CCC;padding: 6px;with: 80%;font-size: small;">
-			<{$smarty.const._MD_D3DOWNLOADS_HELP_USERACCESS}>
-		</div>
-		<br />
-	<{/if}>
+
+
+
 	<{if $parentid == 0 || ( $parentid != 0 && $user_trs)}>
+	<h3>User</h3>
+
+	<{if $parentid == 0}>
+	<div class="tips">
+		<{$smarty.const._MD_D3DOWNLOADS_HELP_USERACCESS_USER}>
+	</div>
+	<{else}>
+	<{if $user_trs}><hr><{/if}>
+	<div style="color:inherit;border: 1px inset #CCC;padding: 6px;with: 80%;font-size: small;">
+		<{$category_tree}>
+	</div>
+	<{/if}>
+
 		<table class="outer">
+			<thead>
 			<tr>
-				<th style="text-align:center;"><span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_TH_UID}></span></th>
-				<th colspan="2" style="text-align:center;"><span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_TH_UNAME}></span></th>
-				<th style="text-align:center;">
-					<span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_TH_CAN_READ}></span>
+				<th><{$smarty.const._MD_D3DOWNLOADS_TH_UID}></th>
+				<th colspan="2"><{$smarty.const._MD_D3DOWNLOADS_TH_UNAME}></th>
+				<th>
+					<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_READ}>
 					<{if $parentid == 0}>
 						<input type="checkbox" onclick="col_check_on_off( this, 'ucol_1_' );col_check_on_off( this, 'ncol_1_' );">
 					<{/if}>
 				</th>
-				<th style="text-align:center;">
-					<span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_TH_CAN_POST}></span>
+				<th>
+					<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_POST}>
 					<{if $parentid == 0}>
 						<input type="checkbox" onclick="col_check_on_off( this, 'ucol_2_' );col_check_on_off( this, 'ncol_2_' );">
 					<{/if}>
 				</th>
-				<th style="text-align:center;">
-					<span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_TH_CAN_EDIT}></span>
+				<th>
+					<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_EDIT}>
 					<{if $parentid == 0}>
 						<input type="checkbox" onclick="col_check_on_off( this, 'ucol_3_' );col_check_on_off( this, 'ncol_3_' );">
 					<{/if}>
 				</th>
-				<th style="text-align:center;">
-					<span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_TH_CAN_DELETE}></span>
+				<th>
+					<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_DELETE}>
 					<{if $parentid == 0}>
 						<input type="checkbox" onclick="col_check_on_off( this, 'ucol_4_' );col_check_on_off( this, 'ncol_4_' );">
 					<{/if}>
 				</th>
-				<th style="text-align:center;">
-					<span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_TH_POST_AUTO_APPROVED}></span>
+				<th>
+					<{$smarty.const._MD_D3DOWNLOADS_TH_POST_AUTO_APPROVED}>
 					<{if $parentid == 0}>
 						<input type="checkbox" onclick="col_check_on_off( this, 'ucol_5_' );col_check_on_off( this, 'ncol_5_' );">
 					<{/if}>
 				</th>
-				<th style="text-align:center;">
-					<span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_TH_EDIT_AUTO_APPROVED}></span>
+				<th>
+					<{$smarty.const._MD_D3DOWNLOADS_TH_EDIT_AUTO_APPROVED}>
 					<{if $parentid == 0}>
 						<input type="checkbox" onclick="col_check_on_off( this, 'ucol_6_' );col_check_on_off( this, 'ncol_6_' );">
 					<{/if}>
 				</th>
-				<th style="text-align:center;">
-					<span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_TH_CAN_HTML}></span>
+				<th>
+					<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_HTML}>
 					<{if $parentid == 0}>
 						<input type="checkbox" onclick="col_check_on_off( this, 'ucol_7_' );col_check_on_off( this, 'ncol_7_' );">
 					<{/if}>
 				</th>
-				<th style="text-align:center;">
-					<span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_TH_CAN_UPLOAD}></span>
+				<th>
+					<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_UPLOAD}>
 					<{if $parentid == 0}>
 						<input type="checkbox" onclick="col_check_on_off( this, 'ucol_8_' );col_check_on_off( this, 'ncol_8_' );">
 					<{/if}>
 				</th>
 				<{if $parentid == 0 && $copy_select|@count > 1}>
 					<th style="text-align:right;">
-						<span style="font-size: small;"><{$smarty.const._MD_D3DOWNLOADS_SEL_USER}></span>
+						<{$smarty.const._MD_D3DOWNLOADS_SEL_USER}>
 						<input type="checkbox" onclick="col_check_on_off( this, 'col_action_u_' );col_check_on_off( this, 'new_col_action_u_' );">
 					</th>
 				<{/if}>
 			</tr>
+			</thead>
+			<tbody>
 			<{$user_trs}>
+			</tbody>
+			<tfoot>
 			<{if $parentid == 0}>
 				<{$newuser_trs}>
 				<tr>
 					<td colspan="12" align="center" class="head">
-						<input type="submit" name="user_update" value="<{$smarty.const._SUBMIT}>" />
+						<input type="submit" name="user_update" value="<{$smarty.const._SUBMIT}>">
 					</td>
 				</tr>
 				<{if $copy_select|@count > 1}>
 					<tr>
-						<th colspan="12" style="text-align:right;">
+						<th colspan="12">
 							<{$smarty.const._MD_D3DOWNLOADS_LABEL_USER_CHECKED}>
-							<input type="submit" name="all_user_copy" id="all_user_copy" value="<{$smarty.const._MD_D3DOWNLOADS_ALL_USERACCESS_COPY}>" /> |
-							<input type="submit" name="user_copy" id="user_copy" value="<{$smarty.const._MD_D3DOWNLOADS_USERACCESS_COPY}>" /> 
+							<br>
+							<input type="submit" name="all_user_copy" id="all_user_copy" value="<{$smarty.const._MD_D3DOWNLOADS_ALL_USERACCESS_COPY}>">
+							<input type="submit" name="user_copy" id="user_copy" value="<{$smarty.const._MD_D3DOWNLOADS_USERACCESS_COPY}>">
 							<{$smarty.const._MD_D3DOWNLOADS_SEL_CATEGORY}>
 							<select name="copy_select_user" id="copy_select_user">
 								<{html_options options=$copy_select}>
-							</select><br />
+							</select>
 						</th>
 					</tr>
 				<{/if}>
 			<{/if}>
+			</tfoot>
 		</table>
 	<{/if}>
 </form>
-<{if $parentid == 0}>
-	<br />
-	<div style="color:inherit;border: 1px inset #CCC;padding: 6px;with: 80%;font-size: small;">
-		<{$smarty.const._MD_D3DOWNLOADS_HELP_USERACCESS_USER}>
-	</div>
-<{else}>
-	<{if $user_trs}><br /><{/if}>
-	<div style="color:inherit;border: 1px inset #CCC;padding: 6px;with: 80%;font-size: small;">
-		<{$category_tree}>
-	</div>
-<{/if}>
+
 
 <script type="text/javascript">
 <!--//

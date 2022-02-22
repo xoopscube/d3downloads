@@ -251,5 +251,3 @@ echo '</ul>';
 echo '</div>';
 
 xoops_cp_footer();
-
-?>

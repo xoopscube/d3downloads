@@ -214,7 +214,7 @@ if ( ! function_exists('d3download_convertorderbyout') ) {
 if ( ! function_exists('d3download_get_categories_list') ) {
 	function d3download_get_categories_list( $mydirname, $top=0 )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/block_download.php' ;
+		require_once dirname(__FILE__, 2) .'/class/block_download.php' ;
 		$block_download = new block_download( $mydirname ) ;
 		return $block_download->get_categories_list( $top ) ;
 	}
@@ -223,7 +223,7 @@ if ( ! function_exists('d3download_get_categories_list') ) {
 if ( ! function_exists('d3download_get_downloads_title') ) {
 	function d3download_get_downloads_title( $mydirname )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/block_download.php' ;
+		require_once dirname(__FILE__, 2) .'/class/block_download.php' ;
 		$block_download = new block_download( $mydirname ) ;
 		return $block_download->get_downloads_list() ;
 	}
@@ -232,7 +232,7 @@ if ( ! function_exists('d3download_get_downloads_title') ) {
 if ( ! function_exists('d3download_can_albumselect') ) {
 	function d3download_can_albumselect( $mydirname, $myalbum_dirname='' )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/submit_download.php' ;
+		include_once dirname(__FILE__, 2) .'/class/submit_download.php' ;
 		$submit_download = new submit_download( $mydirname ) ;
 		return $submit_download->can_albumselect( $myalbum_dirname ) ;
 	}
@@ -242,7 +242,7 @@ if ( ! function_exists('d3download_delcat') ) {
 	function d3download_delcat( $mydirname, $cid )
 	{
 		$db =& Database::getInstance() ;
-		include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 
 		$mycategory = new MyCategory( $mydirname, 'Show' ) ;
 		$module_handler =& xoops_gethandler('module');
@@ -500,11 +500,11 @@ if ( ! function_exists('d3download_canread_info') ) {
 
 // trigger event for D3
 if ( ! function_exists('d3download_main_trigger_event') ) {
-	function d3download_main_trigger_event( $mydirname , $category , $item_id, $event, $extra_tags=array(), $user_list=array(), $omit_user_id=null )
+	function d3download_main_trigger_event( $mydirname, $category, $item_id, $event, $extra_tags = [], $user_list = [], $omit_user_id = null )
 	{
 		require_once XOOPS_TRUST_PATH.'/libs/altsys/class/D3NotificationHandler.class.php' ;
-		$mytrustdirpath = dirname(__FILE__, 2);
-		$mytrustdirname = basename( $mytrustdirpath );
+		$trustdirpath = dirname(__FILE__, 2);
+		$mytrustdirname = basename( $trustdirpath );
 		$not_handler = D3NotificationHandler::getInstance() ;
 		$not_handler->triggerEvent( $mydirname , $mytrustdirname , $category , $item_id , $event , $extra_tags , $user_list , $omit_user_id ) ;
 	}

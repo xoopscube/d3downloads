@@ -48,7 +48,7 @@ if (! function_exists('b_d3downloads_list_show') ) {
 if (! function_exists('b_d3downloads_list_edit') ) {
 	function b_d3downloads_list_edit( $options )
 	{
-		require_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
+		require_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
 
 		$mydirname = empty( $options[0] ) ? 'd3downloads' : $options[0] ;
 		$categories = trim( @$options[1] ) === '' ? array() : array_map( 'intval' , explode( ',' , $options[1] ) ) ;

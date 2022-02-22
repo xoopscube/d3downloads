@@ -25,8 +25,10 @@ if( ! class_exists( 'Item_build' ) )
 		var $comments ;
 		var $category ;
 
-		function Item_build( $mydirname )
+		function __construct($mydirname )
 		{
+            // TODO gigamaster parent construct
+            //parent::__construct($mydirname);
 			global $xoopsUser ;
 			include_once dirname(__FILE__, 2) .'/include/mytable.php' ;
 

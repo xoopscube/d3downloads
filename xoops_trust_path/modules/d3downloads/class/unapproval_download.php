@@ -44,8 +44,11 @@ if( ! class_exists( 'unapproval_download' ) )
 		var $category;
 		var $downdata=array();
 
-		function __construct($mydirname, $id= 0 )
+		function __construct( $mydirname, $id= 0 )
 		{
+            // TODO gigamaster parent construct
+            parent::__construct($mydirname);
+
 			include_once dirname(__FILE__, 2) .'/include/mytable.php' ;
 
 			$this->db =& Database::getInstance();
@@ -68,8 +71,8 @@ if( ! class_exists( 'unapproval_download' ) )
 				$this->GetMyDownload( '', $id ) ;
 			}
 		}
-
-		function GetMyDownload( $whr='', $lid )
+        function GetMyDownload( $lid, $whr = '' )
+		//function GetMyDownload( $whr='', $lid )
 		{
 			$sql = "SELECT $this->columns  FROM ".$this->table."  WHERE requestid='".$id."'";
 			$result = $this->db->query( $sql );

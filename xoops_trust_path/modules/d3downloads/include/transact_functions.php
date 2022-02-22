@@ -164,7 +164,7 @@ if ( ! function_exists('d3download_submit_execution') ) {
 						$check_url_result = $submit_validate->Validate_check_url( $url, $lid ) ;
 						break ;
 				}
-				if( ! empty( $check_url_result ) ) $error_message .= $check_url_result . '<br />' ;
+				if( ! empty( $check_url_result ) ) $error_message .= $check_url_result . '<br>' ;
 			}
 
 			// 承認待ちの再登録はお断り
@@ -176,17 +176,17 @@ if ( ! function_exists('d3download_submit_execution') ) {
 					$check_unapproval_result =  $submit_validate->Validate_check_unapproval( $url, $lid ) ;
 					break ;
 			}
-			if( ! empty( $check_unapproval_result ) ) $error_message .= $check_unapproval_result . '<br />' ;
+			if( ! empty( $check_unapproval_result ) ) $error_message .= $check_unapproval_result . '<br>' ;
 		} 
 
 		// LiveValidationによるValidation が有効にならない環境を考慮し、ここでも入力チェック
 		if( $mode != 'approval' ) $validate_result = $submit_validate->Validate( $url, $filename, $file2, $filename2 ) ;
 		else $validate_result = $submit_validate->Validate( $post_url, $post_filename, $post_file2, $post_filename2, 1 ) ;
 		if( $mode != 'approval' ){
-			if( ! empty( $upload_result[0]['error'] ) ) $error_message .= $upload_result[0]['error'] . '( ' .$upload_result[0]['file_name']. ' )<br />' ;
-			if( ! empty( $upload_result[1]['error'] ) ) $error_message .= $upload_result[1]['error'] . '( ' .$upload_result[1]['file_name']. ' )<br />' ;
+			if( ! empty( $upload_result[0]['error'] ) ) $error_message .= $upload_result[0]['error'] . '( ' .$upload_result[0]['file_name']. ' )<br>' ;
+			if( ! empty( $upload_result[1]['error'] ) ) $error_message .= $upload_result[1]['error'] . '( ' .$upload_result[1]['file_name']. ' )<br>' ;
 		}
-		if( ! empty( $validate_result ) ) $error_message .= implode( '<br />' , $validate_result['message'] ) ;
+		if( ! empty( $validate_result ) ) $error_message .= implode( '<br>' , $validate_result['message'] ) ;
 		if( ! empty( $error_message ) ) $iserror = true;
 
 		if( isset( $_POST['makedownload_preview'] ) ) $ispreview = true;
@@ -277,7 +277,7 @@ if ( ! function_exists('d3download_submit_insertdb') ) {
 		}
 
 		// Category title
-		include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 		$mycategory = new MyCategory( $mydirname, 'Show', $cid ) ;
 		$ctitle = $mycategory->return_title() ;
 
@@ -293,9 +293,10 @@ if ( ! function_exists('d3download_submit_insertdb') ) {
 			'WAITING_URL' => XOOPS_URL . '/modules/' . $mydirname . '/admin/index.php?page=approvalmanager' ,
 		) ;
 		if( ! empty( $auto_approved ) ) {
-			d3download_main_trigger_event( $mydirname , 'global' , 0 , 'newpost' , $tags, 0 ) ;
-			d3download_main_trigger_event( $mydirname , 'category' , $cid , 'newpost' , $tags, 0 ) ;
-			d3download_main_trigger_event( $mydirname , 'category' , $cid , 'newpostfull' , $tags, 0 ) ;
+            // TODO gigamaster fix notification
+			//d3download_main_trigger_event( $mydirname , 'global' , 0 , 'newpost' , $tags, 0 ) ;
+			//d3download_main_trigger_event( $mydirname , 'category' , $cid , 'newpost' , $tags, 0 ) ;
+			//d3download_main_trigger_event( $mydirname , 'category' , $cid , 'newpostfull' , $tags, 0 ) ;
 
 			// Increment Post
 			if( is_object( $xoopsUser ) && ! empty( $xoopsModuleConfig['plus_posts'] ) ) $xoopsUser->incrementPost() ;
@@ -309,7 +310,8 @@ if ( ! function_exists('d3download_submit_insertdb') ) {
 			}
 			exit();
 		} else {
-			d3download_main_trigger_event( $mydirname , 'global' , 0 , 'waiting' , $tags , 0 ) ;
+			// TODO gigamaster fix notification
+            //d3download_main_trigger_event( $mydirname , 'global' , 0 , 'waiting' , $tags , 0 ) ;
 			if ( ! empty( $notify ) ) {
 				include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
 				$notification_handler =& xoops_gethandler('notification');
@@ -415,7 +417,7 @@ if ( ! function_exists('d3download_approval_insertdb') ) {
 			d3download_convert_for_newid( $mydirname, $newid, $post_url, $post_file2, $submitter );
 
 			// Category title
-			include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+			include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 			$mycategory = new MyCategory( $mydirname, 'Show', $cid ) ;
 			$ctitle = $mycategory->return_title() ;
 
@@ -459,7 +461,8 @@ if ( ! function_exists('d3download_approval_insertdb') ) {
 						'POST_TITLE' => $title ,
 						'POST_URL' => XOOPS_URL . '/modules/' . $mydirname . '/index.php?page=singlefile&cid=' . $cid . '&lid=' . $lid,
 					) ;
-					d3download_main_trigger_event( $mydirname , 'global' , $lid , 'approve' , $tags, 0 ) ;
+                    // TODO gigamaster fix notification !
+					//d3download_main_trigger_event( $mydirname , 'global' , $lid , 'approve' , $tags, 0 ) ;
 				}
 			}
 		}
@@ -566,7 +569,7 @@ if ( ! function_exists('d3download_categorymanager_data_update') ) {
 if ( ! function_exists('d3download_submit_message') ) {
 	function d3download_submit_message( $mydirname, $cid )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 		$mycategory = new MyCategory( $mydirname, 'Show', $cid ) ;
 		$submit_message = $mycategory->return_submit_message() ;
 		if( ! empty( $submit_message ) ){

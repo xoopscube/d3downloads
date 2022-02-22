@@ -163,7 +163,7 @@ if( ! class_exists( 'file_manager' ) )
 
 		function copy_execution( $taget_mid, $taget_category , $id )
 		{
-			include_once dirname( dirname(__FILE__) ).'/include/mytable.php' ;
+			include_once dirname(__FILE__, 2) .'/include/mytable.php' ;
 
 			$module_handler =& xoops_gethandler( 'module' ) ;
 			$to_module =& $module_handler->get( $taget_mid ) ;

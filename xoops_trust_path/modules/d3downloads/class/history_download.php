@@ -4,8 +4,8 @@
 
 if( ! class_exists( 'history_download' ) )
 {
-	include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
-	require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+	include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
+	require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 
 	class history_download extends MyDownload
 	{
@@ -31,9 +31,10 @@ if( ! class_exists( 'history_download' ) )
 		var $history_int = array( 'lid' ,'cid' , 'date', 'size' ) ;
 		var $history_txt =  array( 'title' , 'url' , 'filename' , 'ext' , 'file2' , 'filename2' , 'ext2' , 'version' , 'description' , 'extra' ) ;
 
-        //function history_download( $mydirname, $id= 0 )
 		function __construct($mydirname, $id= 0 )
 		{
+            // TODO gigamaster parent construct
+            parent::__construct($mydirname);
 
 			include_once dirname( dirname(__FILE__) ).'/include/mytable.php' ;
 			$this->db =& Database::getInstance();
@@ -59,7 +60,9 @@ if( ! class_exists( 'history_download' ) )
 			}
 		}
 
-		function GetMyDownload( $id )
+
+        function GetMyDownload( $lid, $whr = '' )
+		//function GetMyDownload( $id )
 		{
 			$sql = "SELECT $this->columns FROM ".$this->table." h LEFT JOIN ".$this->cat_table." c ON h.cid=c.cid WHERE h.id='".$id."'";
 			$result = $this->db->query( $sql );

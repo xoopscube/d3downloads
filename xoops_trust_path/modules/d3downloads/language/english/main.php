@@ -31,7 +31,7 @@ define("_MD_D3DOWNLOADS_RATINGSCALE","The scale is 1 - 10, with 1 being poor and
 define("_MD_D3DOWNLOADS_BEOBJECTIVE","Please be objective, if everyone receives a 1 or a 10, the ratings will not be very useful.");
 define("_MD_D3DOWNLOADS_DONOTVOTE","Do not vote for your own resource.");
 define("_MD_D3DOWNLOADS_NORATING","No rating selected.");
-define("_MD_D3DOWNLOADS_CANTVOTEOWN","You cannot vote on the resource you submitted.<br />All votes are logged and reviewed.");
+define("_MD_D3DOWNLOADS_CANTVOTEOWN","You cannot vote on the resource you submitted.<br>All votes are logged and reviewed.");
 define("_MD_D3DOWNLOADS_VOTEONCE2","Please do not vote for the same resource more than once.");
 define("_MD_D3DOWNLOADS_RATEIT","Rate It!");
 define("_MD_D3DOWNLOADS_NOMATCH","No matches found to your query");

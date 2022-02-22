@@ -47,7 +47,7 @@ if( ! class_exists( 'LiveValidationPHP' ) )
 		var $parentData;
 		var $display;
 
-		function LiveValidationPHP($data=array(),$elementID="",$args=array(),$display="")
+		function __construct($data=array(), $elementID="", $args=array(), $display="")
 		{
 			$this->parentData=$data;
 			$this->elementID="";
@@ -110,9 +110,10 @@ if( ! class_exists( 'LiveValidationPHP' ) )
 			$argsKeys=count(array_keys($this->args));
 			$counter=0;
 			if($argsKeys>0) $html.= ", { ";
-
-			while($element=each($this->args))
-			{
+            // Fix gigamaster deprecated
+			//while($element=each($this->args))
+            foreach($this->args as list($element))
+            {
 				$key=trim($element["key"]);
 				$value=$element["value"];
 

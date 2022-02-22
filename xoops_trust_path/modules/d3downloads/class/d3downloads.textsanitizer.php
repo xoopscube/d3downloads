@@ -205,10 +205,13 @@ if( ! class_exists( 'd3downloadsTextSanitizer' ) )
 
 		function InputHTMLPurify( $text )
 		{
-			require_once dirname( dirname( __FILE__ ) ).'/class/HTMLPurifier/HTMLPurifier.standalone.php' ;
+			require_once dirname(__FILE__, 2) .'/class/HTMLPurifier/HTMLPurifier.standalone.php' ;
 
 			$config = HTMLPurifier_Config::createDefault() ;
-			$config->set( 'Cache', 'SerializerPath', XOOPS_ROOT_PATH.'/cache' ) ;
+
+            // TODO gigamaster set cache
+			$config->set( 'Cache', 'SerializerPath', XOOPS_TRUST_PATH.'/cache' ) ;
+
 			$config->set( 'Core', 'Encoding', _CHARSET ) ;
 			$config->set( 'Attr', 'AllowedFrameTargets', array( '_blank' , '_self' , '_top' ) ) ;
 			$config->set( 'Attr', 'AllowedRel', array( 'lightbox[]' ) ) ;
@@ -218,7 +221,7 @@ if( ! class_exists( 'd3downloadsTextSanitizer' ) )
 
 		function InputMyHtmlFilter( $text )
 		{
-			require_once dirname( dirname( __FILE__ ) ).'/class/MyHtmlFilter/htmLawed.php' ;
+			require_once dirname(__FILE__, 2) .'/class/MyHtmlFilter/htmLawed.php' ;
 
 			$config = $this->SetMyConfig() ;
 			$filter = new MyHtmlFilter( $config ) ;

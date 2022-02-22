@@ -28,7 +28,7 @@ $history = new history_download( $mydirname ) ;
 $historydata = array() ;
 $historydata = $history->get_history_data( $id );
 
-// ‘¶Ý‚µ‚È‚¢ LID ‚Ìê‡ƒŠƒ_ƒCƒŒƒNƒg
+// ï¿½ï¿½ï¿½Ý‚ï¿½ï¿½È‚ï¿½ LID ï¿½Ìê‡ï¿½ï¿½ï¿½_ï¿½Cï¿½ï¿½ï¿½Nï¿½g
 if( empty( $historydata ) ) {
 	redirect_header( XOOPS_URL."/modules/$mydirname/" , 2 , _MD_D3DOWNLOADS_NOMATCH ) ;
 	exit();
@@ -90,5 +90,3 @@ $tpl->assign( array(
 ) ) ;
 $tpl->display( 'db:'.$mydirname.'_admin_history.html' ) ;
 xoops_cp_footer();
-
-?>
