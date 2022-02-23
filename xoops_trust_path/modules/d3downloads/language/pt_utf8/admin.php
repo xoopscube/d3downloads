@@ -141,7 +141,7 @@ define('_MD_D3DOWNLOADS_CATEGORY_TREE','Arvore da Categoria');
 define('_MD_D3DOWNLOADS_SUBCATEGORY_SUM','Numero de sub categorias');
 define('_MD_D3DOWNLOADS_FILES_SUM','Numero de registros');
 define('_MD_D3DOWNLOADS_MAKESUBCATEGORY','Adicionar uma nova sub categoria');
-define('_MD_D3DOWNLOADS_MYTPLSFORM_BTN_MODIFYCONT','Refletir');
+define('_MD_D3DOWNLOADS_MYTPLSFORM_BTN_MODIFYCONT','Modificar');
 define('_MD_D3DOWNLOADS_CATEGORY_MOVE','Move como sub categoria da categoria da qual �selecionada');
 define('_MD_D3DOWNLOADS_CONFIRMCATEGORY_MOVE','Truly, moving as sub category it may, is?');
 define('_MD_D3DOWNLOADS_CATEGORY_TOP_MOVE','It makes top category');

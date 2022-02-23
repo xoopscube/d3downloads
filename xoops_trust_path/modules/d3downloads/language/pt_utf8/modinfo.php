@@ -10,10 +10,10 @@ if( defined( 'FOR_XOOPS_LANG_CHECKER' ) || ! defined( $constpref.'_LOADED' ) ) {
 define( $constpref.'_LOADED' , 1 ) ;
 
 // The name of this module
-define($constpref."_NAME","Modulo Duplic��el V3(D3) para downloads");
+define($constpref."_NAME","Modulo Duplicável V3(D3) para downloads");
 
 // A brief description of this module
-define($constpref."_DESC","Cria uma se��o de downloads onde os usuarios podem baixar, enviar e avaliar os diversos arquivos.");
+define($constpref."_DESC","Cria uma categoria de downloads onde os usuarios podem baixar, enviar e avaliar os diversos arquivos.");
 
 // admin menus
 define($constpref.'_ADMENU_FILEMANAGER',"Downloads") ;

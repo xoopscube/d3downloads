@@ -421,13 +421,13 @@ if ( ! function_exists('d3download_useraccess_edit_info') ) {
 	{
 		$pid = empty( $parentid ) ? d3download_cat_pid( $mydirname, $cid ) : $parentid ;
 		if( ! empty( $cid ) && $pid == 0 ){
-			$info = '<a href="'.XOOPS_URL.'/modules/'.$mydirname.'/admin/index.php?page=user_access&amp;cid='.$cid.'">'._MD_D3DOWNLOADS_USERACCESS_EDIT.'</a>' ;
+			$info = '<a class="ui-button" href="'.XOOPS_URL.'/modules/'.$mydirname.'/admin/index.php?page=user_access&amp;cid='.$cid.'">'._MD_D3DOWNLOADS_USERACCESS_EDIT.'</a>' ;
 		} elseif( empty( $cid ) && $pid > 0 ){
 			$maincid = d3download_maincat_cid( $mydirname, $pid ) ;
-			$info = '<a href="'.XOOPS_URL.'/modules/'.$mydirname.'/admin/index.php?page=user_access&amp;cid='.$maincid.'">'._MD_D3DOWNLOADS_MAINCAT_USERACCESS_EDIT.'</a>' ;
+			$info = '<a class="ui-button" href="'.XOOPS_URL.'/modules/'.$mydirname.'/admin/index.php?page=user_access&amp;cid='.$maincid.'">'._MD_D3DOWNLOADS_MAINCAT_USERACCESS_EDIT.'</a>' ;
 		} else {
 			$maincid = d3download_maincat_cid( $mydirname, $cid ) ;
-			$info = '<a href="'.XOOPS_URL.'/modules/'.$mydirname.'/admin/index.php?page=user_access&amp;cid='.$maincid.'">'._MD_D3DOWNLOADS_MAINCAT_USERACCESS_EDIT.'</a>' ;
+			$info = '<a class="ui-button" href="'.XOOPS_URL.'/modules/'.$mydirname.'/admin/index.php?page=user_access&amp;cid='.$maincid.'">'._MD_D3DOWNLOADS_MAINCAT_USERACCESS_EDIT.'</a>' ;
 		}
 		return $info ;
 	}

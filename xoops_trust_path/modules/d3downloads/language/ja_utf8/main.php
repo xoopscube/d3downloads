@@ -68,7 +68,7 @@ define('_MD_D3DOWNLOADS_BCAT_TOTAL','Total:');
 define('_MD_D3DOWNLOADS_CAT_EDIT','カテゴリ編集');
 define('_MD_D3DOWNLOADS_CAT_VISIBLE','カテゴリ表示');
 define('_MD_D3DOWNLOADS_USERACCESS_EDIT','アクセス権限設定');
-define('_MD_D3DOWNLOADS_MAINCAT_USERACCESS_EDIT','親カテゴリのアクセス権限設定');
+define('_MD_D3DOWNLOADS_MAINCAT_USERACCESS_EDIT','親カテゴリの権限');
 define('_MD_D3DOWNLOADS_FILELIST_MAIN','ファイル一覧');
 define('_MD_D3DOWNLOADS_FILELIST','一覧');
 define('_MD_D3DOWNLOADS_ID','ID');

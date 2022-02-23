@@ -52,4 +52,3 @@ define('_MB_D3DOWNLOADS_MD5','[ File Name ] %s  [ MD5 checksum ] %s');
 define('_MB_D3DOWNLOADS_COLS', 'Cols');
 define('_MB_D3DOWNLOADS_TOTAL','Total:');
 
-?>

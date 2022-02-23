@@ -233,7 +233,7 @@ define('_MD_D3DOWNLOADS_MODFILE_ONCE','A aceitação de seu arquivo ou script n�
 define('_MD_D3DOWNLOADS_RESTOREDONE','A restauração foi concluida');
 define('_MD_D3DOWNLOADS_CAT_VISIBLE','Mostrar categoria');
 define('_MD_D3DOWNLOADS_USERACCESS_EDIT','Configuração das permissões da categoria');
-define('_MD_D3DOWNLOADS_MAINCAT_USERACCESS_EDIT','Configurações das permissões da categoria pai');
+define('_MD_D3DOWNLOADS_MAINCAT_USERACCESS_EDIT','Permissões dos ascendentes');
 define('_MD_D3DOWNLOADS_CAN_READ_INFO','Ler');
 define('_MD_D3DOWNLOADS_CAN_POST_INFO','Postar');
 define('_MD_D3DOWNLOADS_CAN_EDIT_INFO','Editar');

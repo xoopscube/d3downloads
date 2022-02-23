@@ -163,6 +163,4 @@ define($constpref.'_LIVE_URI','URI of CSS file for livevalidation');
 define($constpref.'_LIVE_URIDSC','relative or absolute path can be set. default: {mod_url}/index.php?page=module_header&src=livevalidation.css');
 define($constpref.'_HTMLPR_EXCEPT','Groups can avoid purification by HTML Filter');
 define($constpref.'_HTMLPR_EXCEPTDSC','Post from users who are not belonged these groups will be forced to purified as sanitized HTML by HTML Filter');
-
 }
-?>

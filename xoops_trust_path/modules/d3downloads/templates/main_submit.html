@@ -1,12 +1,24 @@
+<div class="ui-dev-mode"><{$smarty.template}></div>
+
 <{if $mod_config.show_breadcrumbs}>
 	<{include file="db:`$mydirname`_inc_breadcrumbs.html"}>
 <{/if}>
-<h2 id="form_title"><{if ! $preview_title && ! $preview_body}><{$formtitle}><{else}><{$smarty.const._PREVIEW}><{/if}> <{if $download.title}>: <{$download.title}><{/if}></h2>
+
+<h2 id="form_title">
+	<{if ! $preview_title && ! $preview_body}>
+	<{$formtitle}>
+		<{else}>
+		<{$smarty.const._PREVIEW}>
+	<{/if}>
+	<{if $download.title}>: <{$download.title}><{/if}>
+</h2>
+
 <{if $iserror}>
 	<div class="d3downloads_error_message">
 		<{$error_message}>
 	</div>
 <{/if}>
+
 <{if $preview_title || $preview_body}>
 	<dl id="post_preview" class="d3downloads_outer">
 		<{if $preview_title}>
@@ -17,20 +29,22 @@
 		<{/if}>
 	</dl>
 <{/if}>
+
 <form name="makedownloadform" id="makedownloadform" action="<{$mod_url}>/index.php?page=<{$page}>&amp;cid=<{$download.cid}>&amp;lid=<{$download.lid}>" method="post" enctype="multipart/form-data">
 	<{$gticket_hidden}>
-	<input type="hidden" name="lid" value="<{$download.lid}>" />
-	<input type="hidden" name="submitter" value="<{$download.submitter}>" />
-	<input type="hidden" name="filename" value="<{$download.filename}>" />
-	<input type="hidden" name="ext" value="<{$download.ext}>" />
-	<input type="hidden" name="logourl" value="<{$download.logourl}>" />
-	<input type="hidden" name="visible" value="<{$download.visible}>" />
-	<input type="hidden" name="comment" value="<{$download.cancomment}>" />
-	<input type="hidden" name="file2" value="<{$download.file2}>" />
-	<input type="hidden" name="filename2" value="<{$download.filename2}>" />
-	<input type="hidden" name="ext2" value="<{$download.ext2}>" />
-	<input type="hidden" name="myencode" value="<{$smarty.const._MD_D3DOWNLOADS_CHARSET}>" />
-	<input type="hidden" name="ajax_url" id="ajax_url" value="<{$mod_url}>/index.php?page=ajax_load" />
+	<input type="hidden" name="lid" value="<{$download.lid}>">
+	<input type="hidden" name="submitter" value="<{$download.submitter}>">
+	<input type="hidden" name="filename" value="<{$download.filename}>">
+	<input type="hidden" name="ext" value="<{$download.ext}>">
+	<input type="hidden" name="logourl" value="<{$download.logourl}>">
+	<input type="hidden" name="visible" value="<{$download.visible}>">
+	<input type="hidden" name="comment" value="<{$download.cancomment}>">
+	<input type="hidden" name="file2" value="<{$download.file2}>">
+	<input type="hidden" name="filename2" value="<{$download.filename2}>">
+	<input type="hidden" name="ext2" value="<{$download.ext2}>">
+	<input type="hidden" name="myencode" value="<{$smarty.const._MD_D3DOWNLOADS_CHARSET}>">
+	<input type="hidden" name="ajax_url" id="ajax_url" value="<{$mod_url}>/index.php?page=ajax_load">
+
 	<table class="d3downloads_outer">
 	<{if ! $preview_title && ! $preview_body}>
 		<tr valign="top" align="left">
@@ -288,6 +302,7 @@
 		</tr>
 	</table>
 </form>
+
 <{if ! $config_error && $canupload}>
 <script type="text/javascript">
 <!--//
