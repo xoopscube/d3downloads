@@ -1,16 +1,18 @@
 <?php
 
-require_once dirname( dirname(__FILE__) ).'/class/gtickets.php' ;
-require_once dirname( dirname(__FILE__) ).'/class/user_access.php' ;
-require_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
-include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
-require_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
-require_once dirname( dirname(__FILE__) ).'/include/transact_functions.php' ;
+require_once dirname(__FILE__, 2) .'/class/gtickets.php' ;
+require_once dirname(__FILE__, 2) .'/class/user_access.php' ;
+require_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
+include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
+require_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
+require_once dirname(__FILE__, 2) .'/include/transact_functions.php' ;
 
 $db =& Database::getInstance() ;
 
 // THIS PAGE CAN BE CALLED ONLY FROM D3DOWNLOADS
-if( $xoopsModule->getVar('dirname') != $mydirname ) die( 'this page can be called only from '.$mydirname ) ;
+if( $xoopsModule->getVar('dirname') != $mydirname ) {
+    die('this page can be called only from ' . $mydirname);
+}
 
 // PERMISSION ERROR
 $module_handler =& xoops_gethandler( 'module' ) ;
@@ -28,7 +30,7 @@ $error_message = '' ;
 $cid = isset( $_GET['cid'] ) ? intval( $_GET['cid'] ) : 0 ;
 $mycategory = new MyCategory( $mydirname, 'Show', $cid ) ;
 
-// ���݂��Ȃ� CID �̏ꍇ���_�C���N�g
+// Redirect for nonexistent CID
 if( $cid != 0 && ! $mycategory->return_cid() ) {
 	redirect_header( XOOPS_URL."/modules/$mydirname/admin/index.php?page=categorymanager" , 2 , _MD_D3DOWNLOADS_NOREADPERM ) ;
 	exit();
@@ -36,13 +38,21 @@ if( $cid != 0 && ! $mycategory->return_cid() ) {
 
 // GET CATEGORY DATA
 $category_edit = new MyCategory( $mydirname,'Edit' ) ;
-if( empty( $iserror ) ) $categorydata = $category_edit->MyCategory_for_Edit( $cid ) ;
+if( empty( $iserror ) ) {
+    $categorydata = $category_edit->MyCategory_for_Edit($cid);
+}
 $pid = $categorydata['pid'] ;
 $useshots = d3download_can_useshots( $mydirname ) ;
 $usealbum = d3download_can_albumselect( $mydirname ) ;
 
-if( ! empty( $useshots ) && empty( $usealbum ) ) $can_selectshotsdir = 1 ;
-$shots_dir = XOOPS_ROOT_PATH.'/modules/'.$mydirname.'/images/shots/' ;
+if( ! empty( $useshots ) && empty( $usealbum ) ) {
+    $can_selectshotsdir = 1;
+}
+
+// TODO @gigamaster dirname shots change to /uploads
+// TODO SCREENSHOT
+// $shots_dir = XOOPS_ROOT_PATH.'/modules/'.$mydirname.'/images/shots/' ;
+$shots_dir = XOOPS_ROOT_PATH.'/uploads/' ;
 $shotsdirhelp = sprintf( _MD_D3DOWNLOADS_CATEGORYSHOTSDIRHELP , $shots_dir ) ;
 
 $mydownload = new MyDownload( $mydirname ) ;
@@ -52,9 +62,9 @@ $select_imgurl = $mydownload->shots_img_ar( $cid, $my_shots_dir ) ;
 // GET CATEGORY TITLE
 $title = $mycategory->return_title() ;
 $formtitle = ( $title ) ? sprintf( _MD_D3DOWNLOADS_CATEGORYEDITTITLE , $title ) : _MD_D3DOWNLOADS_NEWCATEGORYEDITTITLE ; 
-if( $cid == 0 ) $title_useraccess = ( $title ) ? sprintf( _MD_D3DOWNLOADS_H2USERACCESS , $title ) : _MD_D3DOWNLOADS_NEWCID_USERACCESS ;
-elseif( $pid == 0 ) $title_useraccess = ( $title ) ? sprintf( _MD_D3DOWNLOADS_H2USERACCESS , $title ) : _MD_D3DOWNLOADS_NEWCID_USERACCESS ;
-else $title_useraccess = ( $title ) ? sprintf( _MD_D3DOWNLOADS_H2USERACCESS_INFO , $title ) : _MD_D3DOWNLOADS_NEWCID_USERACCESS_INFO ;
+if( $cid == 0 ) $title_useraccess = ( $title ) ? sprintf( _MD_D3DOWNLOADS_H2GROUPACCESS , $title ) : _MD_D3DOWNLOADS_NEWCID_USERACCESS ;
+elseif( $pid == 0 ) $title_useraccess = ( $title ) ? sprintf( _MD_D3DOWNLOADS_H2GROUPACCESS , $title ) : _MD_D3DOWNLOADS_NEWCID_USERACCESS ;
+else $title_useraccess = ( $title ) ? sprintf( _MD_D3DOWNLOADS_H2USERACCESS , $title ) : _MD_D3DOWNLOADS_NEWCID_USERACCESS_INFO ;
 
 // MAIN CATEGORY LIST
 $maincategory = $category_edit->categories_selbox( '', 0, 0, 1, '------', 0, $cid ) ;
@@ -90,7 +100,7 @@ if( isset( $_POST['categoryform_post'] ) || isset( $_POST['category_update'] ) |
 	$validate_result = $category_edit->Validate() ;
 	if( ! empty( $validate_result ) ){
 		$iserror = $validate_result['error'];
-		$error_message = implode( '<br />' , $validate_result['message'] ) ;
+		$error_message = implode( '<br>' , $validate_result['message'] ) ;
 	}
 
 	// for after iserror edit
@@ -125,13 +135,12 @@ if( isset( $_POST['categoryform_post'] ) || isset( $_POST['category_update'] ) |
 				exit();
 			}
 			// Define tags for notification message
+            $tags = array();
 			$tags = array(
 				'CAT_TITLE' => $title ,
 				'CAT_URL' => XOOPS_URL . '/modules/' . $mydirname . '/index.php?cid=' . $new_cid ,
 			) ;
-
-			// TODO fix this Notification !
-			//d3download_main_trigger_event( $mydirname , 'global' , 0 , 'newcategory' , $tags, 0 ) ;
+			d3download_main_trigger_event( $mydirname , 'global' , 0 , 'newcategory' , $tags, 0 ) ;
 
 		} elseif ( ! empty( $edit_id ) ) {
 			// DOES THE LINK ALREADY EXIST? -- UPDATE SQL
@@ -182,7 +191,7 @@ if( isset( $_POST['categoryform_delete'] ) ) {
 	exit();
 }
 
-// DISPLAY STAGE
+// RENDER
 
 xoops_cp_header();
 include dirname(__FILE__).'/mymenu.php' ;
@@ -209,5 +218,3 @@ $tpl->assign( array(
 ) ) ;
 $tpl->display( 'db:'.$mydirname.'_admin_category_edit.html' ) ;
 xoops_cp_footer();
-
-?>

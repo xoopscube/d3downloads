@@ -32,6 +32,7 @@ if( empty( $_SESSION["{$mydirname}_uri4return"] ) && ! empty( $_SERVER['HTTP_REF
 $xoops_module_header = d3download_dbmoduleheader( $mydirname, array( 'jquery.js' , 'd3downloads.js' ) );
 $xoopsTpl->assign('xoops_module_header', $xoops_module_header . "\n" . $xoopsTpl->get_template_vars('xoops_module_header'));
 
+// RENDER
 $xoopsTpl->assign( array(
 	'mydirname' => $mydirname ,
 	'mod_url' => XOOPS_URL.'/modules/'.$mydirname ,
@@ -47,5 +48,4 @@ $xoopsTpl->assign( array(
 	'xoops_breadcrumbs' => $breadcrumbs ,
 	'mod_config' => $xoopsModuleConfig ,
 ) ) ;
-
 include XOOPS_ROOT_PATH.'/footer.php';

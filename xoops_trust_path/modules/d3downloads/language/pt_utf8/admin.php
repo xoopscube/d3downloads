@@ -2,7 +2,6 @@
 //  ------------------------------------------------------------------------ //
 // $Id: admin.php 0003 12:31 2008/04/09 avtx30 $
 // Tradu��o para o Brasil: Miraldo Antoninho Ohse
-// Site: http://investbizu.com
 //  ------------------------------------------------------------------------ //
 
 // D3DOWNLOADS FILEMANAGER
@@ -15,6 +14,7 @@ define("_MD_D3DOWNLOADS_TH_BROKEN","Arquivo com erro");
 define("_MD_D3DOWNLOADS_TH_HITS","Hits");
 define("_MD_D3DOWNLOADS_TH_RATING","Avaliação");
 define("_MD_D3DOWNLOADS_TH_COMMENTS","Comentários");
+define("_MD_D3DOWNLOADS_VIEW","Ver");
 define("_MD_D3DOWNLOADS_VOTES"," votos");
 define("_MD_D3DOWNLOADS_LABEL_FILECHECKED","Downloads checados");
 define("_MD_D3DOWNLOADS_CONFIRM_DELETE","Tem a certeza que deseja deletar?");
@@ -22,8 +22,8 @@ define("_MD_D3DOWNLOADS_LABEL_CATEGORYSELECT","Selecionar a categoria");
 define("_MD_D3DOWNLOADS_TOTAL_FIlE_NUM","Existem %s relatorios totais");
 define("_MD_D3DOWNLOADS_CATEGORY_FIlE_NUM","Existem %s downloads sob esta categoria");
 define("_MD_D3DOWNLOADS_BTN_MOVE","Mover");
-define("_MD_D3DOWNLOADS_MOVEED","Mudança feita");
-define("_MD_D3DOWNLOADS_NO_MOVEED","Selecionar a categoria de destino");
+define("_MD_D3DOWNLOADS_MOVEED","Movido");
+define("_MD_D3DOWNLOADS_NO_MOVED","Selecionar a categoria de destino");
 define("_MD_D3DOWNLOADS_CONFIRM_MOVE","Você tem certeza que deseja mover? Note que, se você usar este item, você tem de mover manualmente o screenshot da categoria. ");
 
 // D3DOWNLOADS APPROVALMANAGER
@@ -32,7 +32,7 @@ define("_MD_D3DOWNLOADS_H2MODFILELIST","Downloads editados aguardando aprovaçã
 define("_MD_D3DOWNLOADS_APPROVAL","Aprovação");
 define("_MD_D3DOWNLOADS_SUBMIT_APPROVAL","Download para aprovação");
 define("_MD_D3DOWNLOADS_SUBMIT_APPROVED","Aprovados");
-define("_MD_D3DOWNLOADS_UNAPROVALNUM","Downloads não aprovados: %s");
+define("_MD_D3DOWNLOADS_UNAPROVALNUM","Não aprovados");
 define("_MD_D3DOWNLOADS_NOWDATA","Conteção antes da aprovação");
 
 // D3DOWNLOADS CATEGORY MANAGER
@@ -49,7 +49,7 @@ define("_MD_D3DOWNLOADS_CATEGORYTITLE","Titulo");
 define("_MD_D3DOWNLOADS_CATEGORYIMGURL","URL da imagem da categoria");
 define("_MD_D3DOWNLOADS_CATEGORYIMGURLDESC","A largura da Imagem será configurada para 70 pixels.");
 define("_MD_D3DOWNLOADS_CATEGORYSHOTSDIR","Diretorio para screenshots");
-define("_MD_D3DOWNLOADS_CATEGORYSHOTSDIRDESC","Configurar o percurso depois da  url do XOOPS.<br>Por exemplo: images/shots/ (sem o primeiro /, com o ultimo /)");
+define("_MD_D3DOWNLOADS_CATEGORYSHOTSDIRDESC","Configurar a partir du url publico.<br>Por exemplo: images/shots/ (sem o primeiro /, com o ultimo /)");
 define("_MD_D3DOWNLOADS_CATEGORYSHOTSDIRHELP","Opcional. Se pular, as imagens sob o diretorio %s serão usadas como screenshots.");
 define("_MD_D3DOWNLOADS_CATWEIGHT","Peso");
 define("_MD_D3DOWNLOADS_MAINCATEGORY","Categoria Principal");
@@ -59,7 +59,8 @@ define("_MD_D3DOWNLOADS_SUBMIT_MESSAGE","Descrição do formulario de envio");
 define("_MD_D3DOWNLOADS_SUBMIT_MESSAGE_HELP","Informe a descrição que será mostrada no topo do formulario de envio pelos usuarios que não sejam webmasters. A informação é opcional. Se você deixar em branco, a descrição padrão será mostrada.");
 
 // D3DOWNLOADS USER ACCESS
-define("_MD_D3DOWNLOADS_H2USERACCESS","Permissçãs da Categoria");
+define("_MD_D3DOWNLOADS_H2GROUPACCESS","Permissões de grupo : %s ");
+define("_MD_D3DOWNLOADS_H2USERACCESS","Permissões de Utilizador");
 define("_MD_D3DOWNLOADS_TH_GROUPID","ID do Grupo");
 define("_MD_D3DOWNLOADS_TH_GROUPNAME","Nome do Grupo");
 define("_MD_D3DOWNLOADS_TH_CAN_READ","Ler");
@@ -133,7 +134,7 @@ define("_MD_D3DOWNLOADS_CACHEDIR_NOT_MKDIR","Não foi possivel criar o diretorio
 define("_MD_D3DOWNLOADS_CACHEDIR_NOT_IS_WRITEABLE","Não foi possivel escrever no diretorio de cache. Por favor, check as permissões de escrita");
 define('_MD_D3DOWNLOADS_TABLE_CHECK','Checar tabela');
 define('_MD_D3DOWNLOADS_NOLINK_CHECK','Enviar arquivos que não estejam lincados');
-define('_MD_D3DOWNLOADS_HELP_BROKENCHECK','Nota: Não no ambiente que pode usar cron, é possivel a checagem de um arquivo ou link regular errado checado na linha de comando. <br>[ Exemplo de configuração de crontab ] :<br /><ul><li>0 0 1 * * /usr/local/bin/php php -q -f home/***/html/modules/(dirname)/bin/broken_check.sh pass=password limit=100 offset=0</li><li>A senha pode ser configurada e alterada indispensavelmente nas preferencias. Por favor, configure o limite e offset, se necessário indispensavelmente. </li></ul>');
+define('_MD_D3DOWNLOADS_HELP_BROKENCHECK','Nota: Não no ambiente que pode usar cron, é possivel a checagem de um arquivo ou link regular errado checado na linha de comando. <br>[ Exemplo de configuração de crontab ] :<br><ul><li>0 0 1 * * /usr/local/bin/php php -q -f home/***/html/modules/(dirname)/bin/broken_check.sh pass=password limit=100 offset=0</li><li>A senha pode ser configurada e alterada indispensavelmente nas preferencias. Por favor, configure o limite e offset, se necessário indispensavelmente. </li></ul>');
 define('_MD_D3DOWNLOADS_HISTORY_RESTORE','Os conteudos registrados são reconstruidos com esses conteudos');
 define('_MD_D3DOWNLOADS_CONFIRM_HISTORY_RESTORE','Possivel reconstrução com este conteudo? Quando isto for executado, o presente conteudoo registrado será reconstruido depois de retaining, como ultimo registro. No entanto, não é o caso disto poder restaurar todos os dados. Após a execução, por favor verifique se o conteudo registrado está corretode acordo com a necessidade.');
 define('_MD_D3DOWNLOADS_NEWCATEGORYEDITTITLE','Adicionar nova categoria');
@@ -149,7 +150,7 @@ define('_MD_D3DOWNLOADS_CONFIRMCATEGORY_TOP_MOVE','Verdadeiramente, é possivel 
 define('_MD_D3DOWNLOADS_H2USERACCESS_INFO','Permissões da Categoria ( %s )');
 define('_MD_D3DOWNLOADS_NEWCID_USERACCESS','Permissões da Categoria');
 define('_MD_D3DOWNLOADS_NEWCID_USERACCESS_INFO','Permissões da Categoria');
-define('_MD_D3DOWNLOADS_HELP_USERACCESS_USER','Nota: Por favor, informe cada uid ou uname quando você adicionar o novo usuario.<br />O usuario pode apagar ele da lista, removendo a leitura. ');
+define('_MD_D3DOWNLOADS_HELP_USERACCESS_USER','Nota: Por favor, informe cada uid ou uname quando você adicionar o novo usuario.<br>O usuario pode apagar ele da lista, removendo a leitura. ');
 define('_MD_D3DOWNLOADS_USERACCESS_COPY','Copiar esta configuração de permissão em outra categoria');
 define('_MD_D3DOWNLOADS_CONFIRM_USERACCESS_COPY','Copiando, é possivel?');
 define('_MD_D3DOWNLOADS_COPYDONE','A copia foi concluida');
@@ -158,7 +159,7 @@ define('_MD_D3DOWNLOADS_CONFIRM_ALL_USERACCESS_COPY','Copiando verdadeiramente �
 define('_MD_D3DOWNLOADS_HISTORY_DELETE','O registro anterior foi deletado');
 define('_MD_D3DOWNLOADS_CATEGORYIMG','Imagem da Categoria');
 define('_MD_D3DOWNLOADS_SEL_SUBMITTER','Selecionar quem envia');
-define('_MD_D3DOWNLOADS_ERROR_SEL_FILSE','Selecionar o arquivo de destino');
+define('_MD_D3DOWNLOADS_ERROR_SEL_FALSE','Selecionar o arquivo de destino');
 define('_MD_D3DOWNLOADS_CATEGORY_CHECK','Execute isso se as suas categorias mostrarem informações contraditoria.');
 define('_MD_D3DOWNLOADS_CATEGORY_CHECK_DONE','Processamento concluido');
 define('_MD_D3DOWNLOADS_SEL_GROUP','Selecionar grupo');

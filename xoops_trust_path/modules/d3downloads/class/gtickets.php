@@ -29,7 +29,7 @@ class XoopsGTicket {
 			'err_nopair' => 'No valid ticket-stub pair found' ,
 			'err_timeout' => 'Time out' ,
 			'err_areaorref' => 'Invalid area or referer' ,
-			'fmt_prompt4repost' => 'error(s) found:<br /><span style="background-color:red;font-weight:bold;color:white;">%s</span><br />Confirm it.<br />And do you want to post again?' ,
+			'fmt_prompt4repost' => 'error(s) found:<br><span style="background-color:red;font-weight:bold;color:white;">%s</span><br>Confirm it.<br>And do you want to post again?' ,
 			'btn_repost' => 'repost' ,
 		) ;
 	}
@@ -37,7 +37,7 @@ class XoopsGTicket {
 	// render form as plain html
 	function getTicketHtml( $salt = '' , $timeout = 1800 , $area = '' )
 	{
-		return '<input type="hidden" name="XOOPS_G_TICKET" value="'.$this->issue( $salt , $timeout , $area ).'" />' ;
+		return '<input type="hidden" name="XOOPS_G_TICKET" value="'.$this->issue( $salt , $timeout , $area ).'">' ;
 	}
 
 	// returns an object of XoopsFormHidden including theh ticket
@@ -211,11 +211,11 @@ class XoopsGTicket {
 					$val = stripslashes( $val ) ;
 				}
 				$table .= '<tr><th>'.htmlspecialchars($key,ENT_QUOTES).'</th><td>'.htmlspecialchars($val,ENT_QUOTES).'</td></tr>'."\n" ;
-				$form .= '<input type="hidden" name="'.htmlspecialchars($key,ENT_QUOTES).'" value="'.htmlspecialchars($val,ENT_QUOTES).'" />'."\n" ;
+				$form .= '<input type="hidden" name="'.htmlspecialchars($key,ENT_QUOTES).'" value="'.htmlspecialchars($val,ENT_QUOTES).'">'."\n" ;
 			}
 		}
 		$table .= '</table>' ;
-		$form .= $this->getTicketHtml(__LINE__,300,$area).'<input type="submit" value="'.$this->messages['btn_repost'].'" /></form>' ;
+		$form .= $this->getTicketHtml(__LINE__,300,$area).'<input type="submit" value="'.$this->messages['btn_repost'].'"></form>' ;
 
 		echo '<html><head><title>'.$this->messages['err_general'].'</title><style>table,td,th {border:solid black 1px; border-collapse:collapse;}</style></head><body>' . sprintf( $this->messages['fmt_prompt4repost'] , $this->getErrors() ) . $table . $form . '</body></html>' ;
 	}
@@ -236,7 +236,7 @@ class XoopsGTicket {
 					$val = stripslashes( $val ) ;
 				}
 				$table .= '<tr><th>'.$key_name.'['.htmlspecialchars($key,ENT_QUOTES).']</th><td>'.htmlspecialchars($val,ENT_QUOTES).'</td></tr>'."\n" ;
-				$form .= '<input type="hidden" name="'.$key_name.'['.htmlspecialchars($key,ENT_QUOTES).']" value="'.htmlspecialchars($val,ENT_QUOTES).'" />'."\n" ;
+				$form .= '<input type="hidden" name="'.$key_name.'['.htmlspecialchars($key,ENT_QUOTES).']" value="'.htmlspecialchars($val,ENT_QUOTES).'">'."\n" ;
 			}
 		}
 		return array( $table , $form ) ;
@@ -267,7 +267,7 @@ class XoopsGTicket {
 		if( $ashtml ) {
 			$ret = '' ;
 			foreach( $this->_errors as $msg ) {
-				$ret .= "$msg<br />\n" ;
+				$ret .= "$msg<br>\n" ;
 			}
 		} else {
 			$ret = $this->_errors ;

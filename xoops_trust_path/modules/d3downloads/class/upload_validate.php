@@ -25,7 +25,7 @@ if( ! class_exists( 'Upload_Validate' ) )
 			}
 		}
 
-		// �A�b�v���[�h��������g���q
+        // Extensions allowed for upload
 		function allowed_extension( $mydirname )
 		{
 			$module_handler =& xoops_gethandler('module');
@@ -42,19 +42,19 @@ if( ! class_exists( 'Upload_Validate' ) )
 			return $allowed_extension ;
 		}
 
-		// �A�b�v���[�h�������Ȃ��g���q
+        // Extensions not allowed to upload
 		function deny_extension()
 		{
 			return array( 'php' , 'phtml' , 'phtm' , 'php3' , 'php4' , 'cgi' , 'pl' , 'asp' ) ;
 		}
 
-		// �g���q�U�����`�F�b�N����摜�t�@�C��
+        // Image files to be checked for extension forgery
 		function image_extensions()
 		{
-			return array( 1 => 'gif', 2 => 'jpg', 3 => 'png', 4 => 'swf', 5 => 'psd', 6 => 'bmp', 7 => 'tif', 8 => 'tif', 9 => 'jpc', 10 => 'jp2', 11 => 'jpx', 12 => 'jb2', 13 => 'swc', 14 => 'iff', 15 => 'wbmp', 16 => 'xbm' ) ;
+			return array( 1 => 'gif', 2 => 'jpg', 3 => 'png', 4 => 'svg', 5 => 'psd', 6 => 'bmp', 7 => 'tif', 8 => 'tif', 9 => 'jpc', 10 => 'jp2', 11 => 'jpx', 12 => 'jb2', 13 => 'swc', 14 => 'iff', 15 => 'wbmp', 16 => 'xbm' ) ;
 		}
 
-		// �e�g���q�̐擪�����ł̐��K�\��
+        // Regular expression at the beginning of each extension
 		function extension_head()
 		{
 			return array(
@@ -89,7 +89,7 @@ if( ! class_exists( 'Upload_Validate' ) )
 			) ;
 		}
 
-		// �g���q�̃`�F�b�N
+        // Check extension
 		function check_allowed_extensions( $ext )
 		{
 			if( ! $this->mydirname ){
@@ -103,7 +103,7 @@ if( ! class_exists( 'Upload_Validate' ) )
 			}
 		}
 
-		// php �ȂǊ댯�Ȋg���q�̃t�@�C���̃A�b�v���[�h��h��
+        // Prevent uploading files with dangerous extensions such as php
 		function check_deny_extensions( $ext )
 		{
 			if( ! $this->mydirname ){
@@ -115,7 +115,7 @@ if( ! class_exists( 'Upload_Validate' ) )
 			}
 		}
 
-		// PHP 4.3.6 �ȑO�̃o�[�W�����ւ̑΍�( .. �� / ���܂܂�Ă���ꍇ�����I��)
+        // Countermeasure for PHP previous versions ( . and / are included)
 		function check_doubledot( $file_name )
 		{
 			if( strstr( $file_name, '..' ) ){
@@ -126,9 +126,9 @@ if( ! class_exists( 'Upload_Validate' ) )
 			}
 		}
 
-		// multiple dot file �̃`�F�b�N���s�����ǂ���
-		// protector �������Ă��Ȃ������l�����āAmultiple dot file �̃`�F�b�N������
-		// �����A��F�������邩������܂���̂ŁA��ʐݒ�őI���ł���悤�ɂ��܂���
+        // whether to check for multiple dot files
+        // check for multiple dot files to account for environments without protector
+        // However, there may be some erroneous identification, so we made it selectable in the general settings.
 		function config_check_multiple_dot()
 		{
 			if( ! $this->mydirname ){
@@ -143,7 +143,7 @@ if( ! class_exists( 'Upload_Validate' ) )
 			}
 		}
 
-		// multiple dot file �̃`�F�b�N
+        // check for multiple dot file
 		function check_multiple_dot( $file_name )
 		{
 			if( count( explode( '.' , str_replace( '.tar.gz' , '.tgz' , $file_name ) ) ) > 2 ) {
@@ -151,7 +151,7 @@ if( ! class_exists( 'Upload_Validate' ) )
 			}
 		}
 
-		// �摜�t�@�C����ΏۂɊg���q�U���̃`�F�b�N
+        // Check for extension forgery for image files
 		function check_image_extensions( $ext, $tmp_name, $file_name )
 		{
 			if( ! $this->mydirname ){
@@ -168,7 +168,7 @@ if( ! class_exists( 'Upload_Validate' ) )
 			}
 		}
 
-		// �w�b�_�̃`�F�b�N���s�����ǂ���
+        // Whether to check headers
 		function config_validate_of_head()
 		{
 			if( ! $this->mydirname ){
@@ -183,8 +183,8 @@ if( ! class_exists( 'Upload_Validate' ) )
 			}
 		}
 
-		// �e�g���q�̐擪�����ł̐��K�\�����`���Ă���ꍇ�͂��̃`�F�b�N
-		// ��`����Ă��Ȃ��g���q�ɂ��ẮA�擪������ <?php �܂��� <script ���܂܂�Ă��Ȃ����`�F�b�N
+        // Check for regular expressions defined at the beginning of each extension, if any
+        // For extensions that are not defined, check for <?php or <script in the leading part
 		function Validate_of_head( $filepath, $file_name, $ext )
 		{
 			$error = 0 ;
@@ -201,7 +201,7 @@ if( ! class_exists( 'Upload_Validate' ) )
 				$handle = @fopen( $filepath, 'rb' );
 			}
 			if ( $handle ) {
-				$file_line = fgets( $handle, 255 );
+				$file_line = fgets( $handle, 191 );
 			}
 			fclose( $handle );
 			if( ! empty( $head ) ){

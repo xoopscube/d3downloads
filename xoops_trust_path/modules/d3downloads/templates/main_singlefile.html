@@ -1,12 +1,15 @@
+<div class="ui-dev-mode"><{$smarty.template}></div>
+
+
 <{if $mod_config.show_breadcrumbs}>
 	<{include file="db:`$mydirname`_inc_breadcrumbs.html"}>
 <{/if}>
 
 
-<form name="cid_select" action="<{$mod_url}>/index.php?page=<{$page}>" method="get" style="margin:0px;text-align:center;">
+<form name="cid_select" action="<{$mod_url}>/index.php?page=<{$page}>" method="get">
 	<select name="cid" onchange="submit();">
 	<option value=""><{$lang_directcatsel}></option>
-		<{html_options options=$category}><br />
+		<{html_options options=$category}>
 	</select> &nbsp; &nbsp;
 	<{$download_total_num}>
 </form>
@@ -25,6 +28,6 @@
 <{/if}>
 
 
-<hr class="notification">
+<hr>
 
 <{include file='db:system_notification_select.html'}>

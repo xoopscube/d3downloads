@@ -1,42 +1,42 @@
 
-if ( typeof jQuery == 'function' ) var $j = jQuery.noConflict() ;
+// if ( typeof jQuery == 'function' ) var $ = jQuery.noConflict() ;
 
 function $dom( id ){
-	return $j( '#' + id ) ;
+	return $( '#' + id ) ;
 }
 
 function $id( id ){
-	return $j( '#' + id ).get(0) ;
+	return $( '#' + id ).get(0) ;
 }
 
 function $value( id ){
-	return $j( '#' + id ).val() ;
+	return $( '#' + id ).val() ;
 }
 
 function $id_filter( target, filter ){
-	return $j( '#[ id' + filter + target + ']' ) ;
+	return $('*[ id' + filter + target + ']' );
 }
 
 function set_show( params ){
-	$j.each( arguments, function(){
+	$.each( arguments, function(){
 		$dom( this ).show() ;
 	});
 }
 
 function set_hide( params ){
-	$j.each( arguments, function(){
+	$.each( arguments, function(){
 		$dom( this ).hide() ;
 	});
 }
 
 function change_show_hide( params ){
-	$j.each( arguments, function(){
+	$.each( arguments, function(){
 		$dom( this ).toggle() ;
 	});
 }
 
 function change_by_fade_Out( params ){
-	$j.each( arguments, function(){
+	$.each( arguments, function(){
 		var targetDom = $dom( this ) ;
 		var elestyle  = ( targetDom.css( 'display' ) == '' ) ? 'block' : targetDom.css( 'display' ) ;
 
@@ -46,19 +46,19 @@ function change_by_fade_Out( params ){
 }
 
 function disabled_true( params ){
-	$j.each( arguments, function(){
+	$.each( arguments, function(){
 		$dom( this ).prop( 'disabled', true ) ;
 	});
 }
 
 function disabled_false( params ){
-	$j.each( arguments, function(){
+	$.each( arguments, function(){
 		$dom( this ).prop( 'disabled', false ) ;
 	});
 }
 
 function disabled_on_off( params ){
-	$j.each( arguments, function(){
+	$.each( arguments, function(){
 		var targetDom = $dom( this ) ;
 		var elevalue  = ( targetDom.prop( 'disabled' ) == '' ) ? false : targetDom.prop( 'disabled' ) ;
 		var value     = ( elevalue == true ) ? false : true ;
@@ -67,13 +67,13 @@ function disabled_on_off( params ){
 }
 
 function fade_In( params ){
-	$j.each( arguments, function(){
+	$.each( arguments, function(){
 		$dom( this ).fadeIn( 'slow' ) ;
 	});
 }
 
 function fade_Out( params ){
-	$j.each( arguments, function(){
+	$.each( arguments, function(){
 		$dom( this ).fadeOut( 'slow' ) ;
 	});
 }
@@ -83,7 +83,7 @@ function focus_in( id ){
 		focus().
 		addClass( 'd3downloads_focus' ).
 		blur( function(){
-			$j( this ).removeClass( 'd3downloads_focus' ) ;
+			$( this ).removeClass( 'd3downloads_focus' ) ;
 		});
 }
 
@@ -197,15 +197,15 @@ function album_load( url,imgDom, selected_val ){
 		}
 	} ;
 
-    $j.ajax({ type: 'GET', url: url, data: parameter, dataType : 'xml', success : successCallback }) ;
+    $.ajax({ type: 'GET', url: url, data: parameter, dataType : 'xml', success : successCallback }) ;
 }
 
 function get_item_from_xml( xml, item , key ){
-	if( key == 0 ) return $j( item, xml ).text() ;
+	if( key == 0 ) return $( item, xml ).text() ;
 	var item_text = '' ;
-	$j( xml ).find( item ).each(function(i){
+	$( xml ).find( item ).each(function(i){
 		if( i == key ){
-			item_text = $j( this ).text() ;
+			item_text = $( this ).text() ;
 			return false ;
 		}
 	}) ;
@@ -233,7 +233,7 @@ function appendCode_by_shots_dir( shots_dir, targetId, selected_val, align ){
 		var addCode = '[siteimg align=' + align + ']' + shots_dir + selected_val + '[/siteimg]' ;
 		d3downloadsInsertText( $id( targetId ), addCode ) ;
 	} else if ( typeof FCKeditorAPI == 'object' || typeof CKEDITOR == 'object') {
-		var addCode = '<img src="'+ xoopsUrl + '/' + shots_dir + selected_val +'" align="' + align + '" />' ;
+		var addCode = '<img src="'+ xoopsUrl + '/' + shots_dir + selected_val +'" align="' + align + '">' ;
 		fckeditor_insert( addCode ) ;
 	}
 }
@@ -244,7 +244,7 @@ function appendCode_by_album( targetId, selected_val, align ){
 			var addCode = '[siteurl=' + photo + '][siteimg align=' + align + ']' + thumb + '[/siteimg][/siteurl]' ;
 		   	d3downloadsInsertText( $id( targetId ), addCode ) ;
 		} else if ( typeof FCKeditorAPI == 'object' || typeof CKEDITOR == 'object' ) {
-			var addCode = '<a href="' + xoopsUrl + '/' + photo + '" target="_blank" rel="lightbox[]"><img src="' + xoopsUrl + '/' + thumb + '" align="' + align + '" /></a>' ;
+			var addCode = '<a href="' + xoopsUrl + '/' + photo + '" target="_blank" rel="lightbox[]"><img src="' + xoopsUrl + '/' + thumb + '" align="' + align + '"></a>' ;
 			fckeditor_insert( addCode ) ;
 		}
 	}
@@ -255,11 +255,11 @@ function str_load( url, tagetid ){
 		if ( status != 'error' ) $id( tagetid ).value = ( response != '' ) ? response : '' ;
 	} ;
 
-    $j.ajax({ type: 'GET', url: url, data: 'type=str_load', async : false, success : successCallback }) ;
+    $.ajax({ type: 'GET', url: url, data: 'type=str_load', async : false, success : successCallback }) ;
 }
 
 function cansel_btn( url ){
-	$j.get( url, 'type=cansel', function( request, status ) {
+	$.get( url, 'type=cansel', function( request, status ) {
 		if ( status != 'error' ) {
 			location.href = ( request != '' ) ? request : document.referrer ;
 			return ;
@@ -278,7 +278,7 @@ function select_imgurl( imgId, selectId, targetId ){
 			css( target_style() ).
 			val( $id( imgId ).src ).
 			blur( function(){
-				$j( this ).css( { border: eleborder, background: elesbackgroundColor } ) ;
+				$( this ).css( { border: eleborder, background: elesbackgroundColor } ) ;
 			});
 		return ;
 	}
@@ -300,7 +300,7 @@ function validate_by_ajax( value, type ){
 		}
 	} ;
 
-    $j.ajax({ type: 'GET', url: ajax_url, data: parameter, async : false, success : successCallback }) ;
+    $.ajax({ type: 'GET', url: ajax_url, data: parameter, async : false, success : successCallback }) ;
 	return ( validate_error == 0 ) ? true : false ;
 }
 
@@ -314,7 +314,7 @@ function check_url( url, lid, ajax_url, type ){
 		}
 	} ;
 
-    $j.ajax({ type: 'GET', url: ajax_url, data: parameter, async : false, success : successCallback }) ;
+    $.ajax({ type: 'GET', url: ajax_url, data: parameter, async : false, success : successCallback }) ;
 }
 
 function info_set_empty( infoDom ){
@@ -355,7 +355,7 @@ function category_form_validate( targetId, info, message ){
 		}
 	} ;
 
-    $j.ajax({ type: 'GET', url: ajax_url, data: parameter, async : false, success : successCallback }) ;
+    $.ajax({ type: 'GET', url: ajax_url, data: parameter, async : false, success : successCallback }) ;
 	return validate_error ;
 }
 
@@ -379,7 +379,7 @@ function ratelink_info( targetId, message ){
 	targetDom.css( { border: '' , background: '' } ) ;
 
 	if( targetDom.val() <= 0 || targetDom.val() > 10 ) {
-		targetDom.css( { border: 'solid 2px #CC0000' , background: '#FFFFCC' } ) ;
+		// targetDom.css( { border: 'solid 2px #CC0000' , background: '#FFFFCC' } ) ;
 		popup_info( message ) ;
 		validate_error++ ;
 	}
@@ -391,16 +391,16 @@ function ratelink_info( targetId, message ){
 		}
 	} ;
 
-    $j.ajax({ type: 'GET', url: ajax_url, data: parameter, async : false, success : successCallback }) ;
+    $.ajax({ type: 'GET', url: ajax_url, data: parameter, async : false, success : successCallback }) ;
 	return ( validate_error == 0 ) ? true : false ;
 }
 
 function infoDom_initialize(){
-	if ( typeof $id( 'popup_info' ) == 'object' ) $j( '#popup_info' ).remove() ;
+	if ( typeof $id( 'popup_info' ) == 'object' ) $( '#popup_info' ).remove() ;
 }
 
 function make_popup(){
-	$j( 'body' ).append(
+	$( 'body' ).append(
 		'<div id="popup_info">' +
 			'<div id="popup_close"></div>' +
 			'<div id="popup_message"></div>' +
@@ -410,8 +410,8 @@ function make_popup(){
 
 function popup_info( message ){
 	make_popup() ;
-	var infoDom = $j( '#popup_info' ) ;
-	var textDom = $j( '#popup_message' ) ;
+	var infoDom = $( '#popup_info' ) ;
+	var textDom = $( '#popup_message' ) ;
 	var text    = ( textDom.html() == '' ) ? 
 						'<ul>' + li_style() + message + '</li></ul>' :
 						textDom.html().replace( /<\/ul>/ig, '' ) + li_style() + message + '</li></ul>' ;
@@ -425,10 +425,10 @@ function popup_info( message ){
 	textDom.
 		html( text ).
 		css( { 'margin-right': '20px' } ) ;
-	$j( '#popup_close' ).
+	$( '#popup_close' ).
 		css( { 'float': 'right' , 'cursor': 'pointer' } ).
 		text( 'x' ) ;
-	$j( 'body' ).keypress( function( event ) {
+	$( 'body' ).keypress( function( event ) {
 		if( event.keyCode == 27 ) infoDom.trigger( 'click' ) ;
 	}) ;
 }
@@ -436,18 +436,18 @@ function popup_info( message ){
 function col_check_on_off( checkbox, target ){
 	var check_val = ( checkbox.checked ) ? true : false ;
 
-	$j.each( $id_filter( target , '*=' ), function(){
+	$.each( $id_filter( target , '*=' ), function(){
 		this.checked = check_val ;
-		$j( this ).css( checkbox_style( check_val ) ) ;
+		$( this ).css( checkbox_style( check_val ) ) ;
 	});
 }
 
 function col_action_check( target ){
 	validate_checked = 0 ;
 
-	$j.each( arguments, function(){
-		$j.each( $id_filter( this , '^=' ), function(){
-			$j( this ).css( checkbox_style( this.checked ) ) ;
+	$.each( arguments, function(){
+		$.each( $id_filter( this , '^=' ), function(){
+			$( this ).css( checkbox_style( this.checked ) ) ;
 			if( this.checked ) validate_checked++ ;
 		});
 	});
@@ -456,9 +456,9 @@ function col_action_check( target ){
 }
 
 function col_action_check_info( target ){
-	$j.each( arguments, function(){
-		$j.each( $id_filter( this , '^=' ), function(){
-			$j( this ).css( { border: 'solid 3px #CC0000' , outline: 'solid 3px #CC0000' } ) ;
+	$.each( arguments, function(){
+		$.each( $id_filter( this , '^=' ), function(){
+			$( this ).css( { border: 'solid 1px #CC0000' , outline: 'solid 2px #CC0000' } ) ;
 		});
 	});
 }
@@ -466,12 +466,12 @@ function col_action_check_info( target ){
 function select_check( target ){
 	validate_selected = 0 ;
 
-	$j.each( arguments, function(){
-		$j.each( $id_filter( this , '^=' ), function(){
-			$j( this ).css( selectbox_style() ) ;
-			switch( $j( this ).val() ) {
+	$.each( arguments, function(){
+		$.each( $id_filter( this , '^=' ), function(){
+			$( this ).css( selectbox_style() ) ;
+			switch( $( this ).val() ) {
 				case  '0' :
-					$j( this ).css( { border: 'solid 2px #CC0000' , background: '#FFFFCC' } ) ;
+					$( this ).css( { border: 'solid 1px #CC0000' , background: '#FFFFCC' } ) ;
 					break ;
 				default :
 					validate_selected++ ;
@@ -481,7 +481,7 @@ function select_check( target ){
 }
 
 function sel_submitter_line_initialize(){
-	switch(  $j( '#sel_submitter' ).prop( 'checked' ) ) {
+	switch(  $( '#sel_submitter' ).prop( 'checked' ) ) {
 		case false :
 			set_hide( 'submitter_select_line' ) ;
 			disabled_true( 'submitter' ) ;
@@ -509,14 +509,14 @@ function category_edit_form_initialize(){
 function select_box_showhide( selectId, showhideId ){
 	var selected_val = $value( selectId ) ;
 
-	$j.each( $id_filter( showhideId , '^=' ), function(){
+	$.each( $id_filter( showhideId , '^=' ), function(){
 		var style = ( this.id == showhideId + selected_val ) ? 'inline' : 'none' ;
 		this.style.display = style ;
 	});
 }
 
 function ime_mode_disabled( params ){
-	$j.each( arguments, function(){
+	$.each( arguments, function(){
 		if ( typeof $id( this ) == 'object' ) $dom( this ).css( { 'ime-mode' : 'disabled' } ) ;
 	});
 }
@@ -526,14 +526,14 @@ function change_fckeditor( value, id ){
 	var height    = ( typeof XpWiki == 'object' ) ? '100%' : $dom( id ).height() + 200 ;
 	var parameter = 'type=change_editor&value=' + encodeURIComponent( value ) + '&id=' + encodeURIComponent( id ) + '&height=' + encodeURIComponent( height ) ;
 
-	$j.get( ajax_url, parameter, function( request, status ) {
+	$.get( ajax_url, parameter, function( request, status ) {
 		if ( status != 'error' && request != '' ){
 			desc_line_showhide( id ) ;
-			$j( 'body' ).append( '<div id="_WYSIWYG">'+ request +'</div>' ) ;
-			$j( '#html' ).
+			$( 'body' ).append( '<div id="_WYSIWYG">'+ request +'</div>' ) ;
+			$( '#html' ).
 				attr( 'checked',  true ).
 				css( checkbox_style( true ) ) ;
-			$j( '#br' ).
+			$( '#br' ).
 				attr( 'checked',  false ).
 				css( checkbox_style( false ) ) ;
 			if ( typeof XpWiki == 'object' ) {
@@ -551,7 +551,7 @@ function show_fckeditor( id ){
 	textarea.hide() ;
 	desc_line_showhide( id ) ;
 	oEditor.SetHTML( textarea.val() ) ;
-	if ( typeof XpWiki != 'object' ) $j( '#' + id + '___Frame' ).height( textarea.height() + 200 ) ;
+	if ( typeof XpWiki != 'object' ) $( '#' + id + '___Frame' ).height( textarea.height() + 200 ) ;
 }
 
 function show_xoopsdhtml( id ){
@@ -561,18 +561,18 @@ function show_xoopsdhtml( id ){
 	textarea.
 		show().
 		val( fckeditor_value() ) ;
-	if ( typeof XpWiki != 'object' ) textarea.height( $j( '#' + id + '___Frame' ).height() - 200 ) ;
+	if ( typeof XpWiki != 'object' ) textarea.height( $( '#' + id + '___Frame' ).height() - 200 ) ;
 	desc_line_showhide( id ) ;
 }
 
 function desc_line_showhide( id ){
 	if ( is_fckeditor_frame() ) {
-		if ( ! $j.support.noCloneEvent ) fckeditor_remove() ;
-		else $j( '#' + id + '___Frame' ).toggle() ;
+		if ( ! $.support.noCloneEvent ) fckeditor_remove() ;
+		else $( '#' + id + '___Frame' ).toggle() ;
 	}
 	change_show_hide( id + '_bbcode_buttons_pre' , id + '_bbcode_buttons_post' , 'xoopsdhtmll' ) ;
-	$j( '#' + id +' ~ .grippie' ).toggle() ;
-	$j( '.xoopsOptSmaillies' ).toggle() ;
+	$( '#' + id +' ~ .grippie' ).toggle() ;
+	$( '.xoopsOptSmaillies' ).toggle() ;
 }
 
 function fckeditor_value(){
@@ -604,24 +604,24 @@ function fckeditor_insert( value ){
 	}
 }
 
-function fckeditor_sethtml(){
-	$j( "input[id^='makedownload_']" ).click(function() {
-		var id = description_id() ;
-		var oEditor = FCKeditorAPI.GetInstance( id ) ;
-		if ( is_xoopsdhtml( id ) ) oEditor.SetHTML( $value( id ) ) ;
-   });
-}
+// function fckeditor_sethtml(){
+// 	$( "input[id^='makedownload_']" ).click(function() {
+// 		var id = description_id() ;
+// 		var oEditor = FCKeditorAPI.GetInstance( id ) ;
+// 		if ( is_xoopsdhtml( id ) ) oEditor.SetHTML( $value( id ) ) ;
+//    });
+// }
 
-function fckeditor_remove(){
-	if ( is_fckeditor_frame() ) $j( '#' + description_id() + '___Frame' ).remove() ;
-	if ( typeof $id( '_WYSIWYG' ) == 'object' ) $j( '#_WYSIWYG' ).remove() ;
-}
+// function fckeditor_remove(){
+// 	if ( is_fckeditor_frame() ) $( '#' + description_id() + '___Frame' ).remove() ;
+// 	if ( typeof $id( '_WYSIWYG' ) == 'object' ) $( '#_WYSIWYG' ).remove() ;
+// }
 
 function editor_selector_initialize(){
 	if (typeof CKEDITOR == 'object') return;
 	var ajax_url = $value( 'ajax_url' ) ;
-	$j.get( ajax_url, 'type=is_fckeditor', function( request, status ) {
-		var selector = $j( '#editor_selector' ) ;
+	$.get( ajax_url, 'type=is_fckeditor', function( request, status ) {
+		var selector = $( '#editor_selector' ) ;
 		if ( status != 'error' && request == 1 ) show_editor_selector( selector ) ;
 		else selector.remove() ;
 	});
@@ -646,8 +646,8 @@ function description_id(){
 	if ( typeof FCKobj == 'object' ) return FCKobj.Name ;
 	else return ( typeof $id( 'makedownloadform' ) == 'object' ) ? 'desc' : 'description' ;
 }
-
-$j( function($){
+$(function(){
+// $( function($){
     $( '#extra_InsertText' ).click( function(){
 	 	 extra_InsertText( 'extra' , 'extra_add_title', 'extra_add_desc') ;
     });
@@ -753,14 +753,7 @@ $j( function($){
 		Y = event.pageY ;
 	});
 
-    if ( typeof $.fn.TextAreaResizer == 'function' && $( 'textarea' ).length && typeof XpWiki != 'object' ) {
-		if ( typeof fckeditor_exec != 'function' ) {
-			$( 'textarea' ).addClass( 'resizable' ) ;
-		} else {
-			$( 'textarea:not( #desc )' ).addClass( 'resizable' ) ;
-		}
-		$( 'textarea.resizable:not( .processed )' ).TextAreaResizer() ;
-	}
+
 
 	ime_mode_disabled( 'size' , 'cat_weight' ) ;
 	$id_filter( 'col_weight_' , '^=' ).css( { 'ime-mode' : 'disabled' } ) ;
@@ -857,7 +850,7 @@ function info_style(){
 function popup_style( infoDom ){
 	var height = ( infoDom.height() == 0 ) ? 30 : infoDom.height() + 15 ;
 	var width  = 390 ;
-	var top    = ( ( Y + height ) > $j( window ).height() ) ? Y - ( height * 2 ) : Y + 10 ;
+	var top    = ( ( Y + height ) > $( window ).height() ) ? Y - ( height * 2 ) : Y + 10 ;
 	var left   = ( X - ( width + 10 ) > 0 ) ? X - ( width + 10 ) : X + 15 ;
 
 	return {
@@ -889,10 +882,10 @@ function li_style(){
 
 function checkbox_style( check_val ){
 	return ( check_val ) ? 
-				{ border: 'solid 2px greenyellow' , outline: 'solid 1px greenyellow' } :
+				{ border: 'solid 1px greenyellow' , outline: 'solid 1px greenyellow' } :
 				{ border: 'solid 1px #CCCCCC' , outline: 'solid 1px #CCCCCC' } ;
 }
 
 function selectbox_style(){
-	return { 'border': 'solid 1px #000000' , 'background': '#FFFFFF' } ;
+	// return { 'border': 'solid 1px #000000' , 'background': '#FFFFFF' } ;
 }

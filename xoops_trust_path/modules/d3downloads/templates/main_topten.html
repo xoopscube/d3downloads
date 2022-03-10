@@ -1,62 +1,63 @@
+<div class="ui-dev-mode"><{$smarty.template}></div>
+
+
 <{if $mod_config.show_breadcrumbs}>
 	<{include file="db:`$mydirname`_inc_breadcrumbs.html"}>
 <{/if}>
 
-<table class="outer">
-	<tr valign="top" align="left">
-		<td class="d3downloads_head">
-			<form name="cid_select" action="<{$mod_url}>/index.php?page=<{$page}>" method="get" style="margin:0px;text-align:center;">
-				<select name="cid" onchange="submit();">
-					<option value=""><{$lang_directcatsel}></option>
-					<{html_options options=$category}><br />
-				</select> &nbsp; &nbsp;
-				<{$download_total_num}>
-			</form>
-		</td>
-	</tr>
-</table>
+
+<div layout="row center-justify p-2 my-4 sm-column" class="activity">
+
+	<div self="px-2">
+		<form name="cid_select" action="<{$mod_url}>/index.php?page=<{$page}>" method="get">
+			<select name="cid" onchange="submit();">
+				<option value=""><{$lang_directcatsel}></option>
+				<{html_options options=$category}><br>
+			</select> &nbsp; &nbsp;
+			<{$download_total_num}>
+		</form>
+	</div>
+</div>
 
 <hr>
 
-<!-- Start ranking loop -->
+<{* ----- Start ranking loop ----- *}>
 <{foreach item="ranking" from=$rankings}>
-	<table class="d3downloads_outer">
-		<tr>
-			<th colspan="6" align="center">
-				<{$ranking.title}> (<{$lang_sortby}>)
-			</th>
-		</tr>
-		<tr>
-			<td width="5%" class="d3downloads_head" style="text-align:center;">
+
+	<h3><{$ranking.title}> (<{$lang_sortby}>)</h3>
+	<table class="outer">
+		<thead>
+		<tr style="text-align:center;">
+			<td width="5%">
 				<{$lang_rank}>
 			</td>
-			<td width="40%" class="d3downloads_head" style="text-align:center;">
+			<td width="40%">
 				<{$lang_title}>
 			</td>
-			<td width="28%" class="d3downloads_head" style="text-align:center;">
+			<td width="28%">
 				<{$lang_category}>
 			</td>
-			<td width="10%" class="d3downloads_head" style="text-align:center;">
+			<td width="10%">
 				<{$lang_hits}>
 			</td>
-			<td width="9%" class="d3downloads_head" style="text-align:center;">
+			<td width="9%">
 				<{$lang_rating}>
 			</td>
-			<td width="8%" class="d3downloads_head" style="text-align:center;">
+			<td width="8%">
 				<{$lang_vote}>
 			</td>
 		</tr>
-
-		<!-- Start files loop -->
+		</thead>
+		<tbody>
 		<{foreach item="file" from=$ranking.file}>
 			<tr>
-				<td class="d3downloads_even" style="text-align:center;">
+				<td style="text-align:center;">
 					<{$file.rank}>
 				</td>
-				<td class="d3downloads_odd">
+				<td>
 					<a href="<{$mod_url}>/index.php?page=singlefile&amp;cid=<{$file.cid}>&amp;lid=<{$file.id}>"><{$file.title}></a>
 				</td>
-				<td class="d3downloads_even">
+				<td>
 					<{foreach item="category" key="count" from=$file.category name="category"}>
 						<{$category}>
 						<{if ( $count + 1 ) < $smarty.foreach.category.total}>
@@ -64,10 +65,10 @@
 						<{/if}>
 					<{/foreach}>
 				</td>
-				<td class="d3downloads_odd" align="center">
+				<td>
 					<{$file.hits}>
 				</td>
-				<td class="d3downloads_even" align="center">
+				<td>
 					<{$file.rating}>
 				</td>
 				<td  style="text-align:center;">
@@ -75,9 +76,9 @@
 				</td>
 			</tr>
 		<{/foreach}>
-		<!-- End links loop-->
-
+		</tbody>
 	</table>
-	<br />
+
+	<hr>
 <{/foreach}>
-<!-- End ranking loop -->
+<{* ----- End ranking loop ----- *}>

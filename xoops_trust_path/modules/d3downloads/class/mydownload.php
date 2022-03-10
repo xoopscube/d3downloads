@@ -742,7 +742,7 @@ if( ! class_exists( 'MyDownload' ) )
 
 		function get_downdata_for_topten( $whr, $order )
 		{
-			include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+			include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 			$mycategory = new MyCategory( $this->mydirname, 'Show' ) ;
 
 			$e = 0 ;
@@ -842,11 +842,11 @@ if( ! class_exists( 'MyDownload' ) )
 			}
 
 			switch( true ) {
-				case ( ! empty( $url ) && $url != 'http://' && ! empty( $title ) ) :
+				case ( ! empty( $url ) && $url != 'https://' && ! empty( $title ) ) :
 					return '<a href="'.$url.'" target="_blank" title="'.$title.'" >'.$title.'</a>' ;
-				case ( ! empty( $url ) && $url != 'http://' && empty( $title ) ) :
+				case ( ! empty( $url ) && $url != 'https://' && empty( $title ) ) :
 					return '<a href="'.$url.'" target="_blank" title="'.$url.'" >'.$url.'</a>' ;
-				case ( ( empty( $url ) || $url == 'http://' ) && ! empty( $title ) ) :
+				case ( ( empty( $url ) || $url == 'https://' ) && ! empty( $title ) ) :
 					return $title ;
 				default :
 					return '' ;
@@ -895,7 +895,7 @@ if( ! class_exists( 'MyDownload' ) )
 		function division_by_pagebreak( $id, $cid, $text, $block=0 )
 		{
 			list( $str ) = explode( '[pagebreak]', $text , 2 ) ;
-			$text  = $str.'<br /><div align="right"><a href="'.$this->mod_url.'/index.php?page=singlefile&amp;cid='.$cid.'&lid='.$id.'">' ;
+			$text  = $str.'<br><div align="right"><a href="'.$this->mod_url.'/index.php?page=singlefile&amp;cid='.$cid.'&lid='.$id.'">' ;
 			$text .= ( empty( $block ) ) ? _MD_D3DOWNLOADS_SHOWSINGLEFILE : _MB_D3DOWNLOADS_LANG_SHOWSINGLEFILE ;
 			$text .= '</a></div>' ;
 
@@ -988,10 +988,10 @@ if( ! class_exists( 'MyDownload' ) )
 		{
 			if( $ext == 'gz' ) $ext = 'tgz' ;
 			elseif( $ext == 'tbz' ) $ext = 'bz2' ;
-
+            // 'zip|tgz|lzh|cab|bz2|xls|xlsx|xls|ods|odt|doc|docx|pdf|epub' ,
 			switch( $ext ) {
 				case 'zip':
-					return 'zip.gif' ;
+					return 'zip.svg' ;
 				case 'lzh':
 					return 'lzh.gif' ;
 				case 'tgz':
@@ -1001,17 +1001,33 @@ if( ! class_exists( 'MyDownload' ) )
 				case 'bz2':
 					return 'bz2.gif' ;
 				case 'xls':
-					return 'xls.gif' ;
+					return 'xls.svg' ;
+                case 'xlsx':
+                    return 'xlsx.svg' ;
 				case 'doc':
-					return 'doc.gif' ;
+					return 'doc.svg' ;
+                case 'docx':
+                    return 'docx.svg' ;
+                case 'odt':
+                    return 'odt.svg' ;
+                case 'ppt':
+                    return 'ppt.svg' ;
+                case 'pptx':
+                    return 'pptx.svg' ;
+                case 'odp':
+                    return 'odp.svg' ;
 				case 'pdf':
-					return 'pdf.gif' ;
+					return 'pdf.svg' ;
 			}
-			
-			$image_path = XOOPS_ROOT_PATH.'/modules/'.$this->mydirname.'/images/'. $ext .'.gif';
 
-			if( file_exists( $image_path ) ) return $ext .'.gif' ;
-			else return 'download.gif' ;
+            // TODO @gigamaster default images/icons
+			//$image_path = XOOPS_ROOT_PATH.'/modules/'.$this->mydirname.'/images/'. $ext .'.gif';
+			$image_path = XOOPS_ROOT_PATH.'/modules/'.$this->mydirname.'/images/'. $ext .'.svg';
+
+//			if( file_exists( $image_path ) ) return $ext .'.gif' ;
+//			else return 'download.gif' ;
+			if( file_exists( $image_path ) ) return $ext .'.svg' ;
+			else return 'blank-file.svg' ;
 		}
 
 		function newdownloadgraphic( $time, $id, $block=0 )
@@ -1026,13 +1042,13 @@ if( ! class_exists( 'MyDownload' ) )
 
 			if ( $startdate < $time ) {
 				if( empty( $count ) ){
-					$new = '&nbsp;<img src="'.$this->mod_url.'/images/newred.gif"';
+					$new = '&nbsp;<img class="svg" src="'.$this->mod_url.'/images/newred.svg"';
 					$newthisweek = ( empty( $block ) ) ? _MD_D3DOWNLOADS_NEWTHISWEEK : _MB_D3DOWNLOADS_NEWTHISWEEK ;
-					$new .= ' alt="'.$newthisweek.'" title="'.$newthisweek.'" />';
+					$new .= ' with="1em" height="1em" alt="'.$newthisweek.'" title="'.$newthisweek.'">';
 				} else {
-					$new = '&nbsp;<img src="'.$this->mod_url.'/images/update.gif"';
+					$new = '&nbsp;<img class="svg" src="'.$this->mod_url.'/images/update.svg"';
 					$upthisweek = ( empty( $block ) ) ? _MD_D3DOWNLOADS_UPTHISWEEK : _MB_D3DOWNLOADS_UPTHISWEEK ;
-					$new .= ' alt="'.$upthisweek.'" title="'.$upthisweek.'" />';
+					$new .= ' width="1em" height="1em" alt="'.$upthisweek.'" title="'.$upthisweek.'">';
 				}
 			}
 
@@ -1044,9 +1060,9 @@ if( ! class_exists( 'MyDownload' ) )
 			$pop = '';
 
 			if ( $hits >= $this->mod_config['popular'] ) {
-				$pop = '&nbsp;<img src ="'.$this->mod_url.'/images/pop.gif"';
+				$pop = '&nbsp;<img class="svg" src="'.$this->mod_url.'/images/pop.svg"';
 				$popular = ( empty( $block ) ) ? _MD_D3DOWNLOADS_POPULAR : _MB_D3DOWNLOADS_POPULAR ;
-				$pop .= ' alt="'.$popular.'" title="'.$popular.'" />';
+				$pop .= ' width="1em" height="1em" alt="'.$popular.'" title="'.$popular.'">';
 			}
 
 			return $pop;
@@ -1068,7 +1084,7 @@ if( ! class_exists( 'MyDownload' ) )
 
 			if ( ! preg_match("`^(https?|ftp)://`i", $url ) ) {
 				if( ! $this->check_file( $url ) ){
-					// �t�@�C���j���̏ꍇ�̓����N��\�����Ȃ�
+                    // Do not show links in case of file corruption
 					$broken_link = 1 ;
 					$gif_image = "" ;
 				} else {
@@ -1091,7 +1107,8 @@ if( ! class_exists( 'MyDownload' ) )
 							break ;
 					}
 
-					$gif_image = ( ! empty( $ext ) ) ? $this->return_gif_image( $ext ) : 'download.gif' ;
+					//$gif_image = ( ! empty( $ext ) ) ? $this->return_gif_image( $ext ) : 'download.gif' ;
+					$gif_image = ( ! empty( $ext ) ) ? $this->return_gif_image( $ext ) : 'file-download.svg' ;
 					$md5       = $this->get_md5_hash( $url, $filename, $block ) ;
 				}
 			} elseif ( preg_match('`('.$exception.')$`i', $url ) ) {
@@ -1103,17 +1120,19 @@ if( ! class_exists( 'MyDownload' ) )
 						$filelink =  '<a href="'.$visit_url.'">' ;
 						break ;
 				}
-				$gif_image = 'download.gif';
+				// $gif_image = 'download.gif';
+				$gif_image = 'file-download.svg';
 			} else {
 				switch( $novisit ) {
 					case false :
 						$filelink =  '<a href="'.$visit.'" target="_blank" title="'.$title.'" >' ;
 						break ;
 					case true :
-						$filelink =  '<a href="'.$visit_url.'" target="_blank">' ;
+						$filelink =  '<a href="'.$visit_url.'" target="_blank" rel="noopener noreferrer nofollow">' ;
 						break ;
 				}
-				$gif_image = 'download.gif';
+				// $gif_image = 'download.gif';
+				$gif_image = 'file-download.svg';
 			}
 
 			return array(
@@ -1135,7 +1154,8 @@ if( ! class_exists( 'MyDownload' ) )
 
 		function check_file( $file )
 		{
-			return ( ! is_file( $file ) || filesize( $file ) == 0 ) ? false : true ;
+			//return ( ! is_file( $file ) || filesize( $file ) == 0 ) ? false : true ;
+			return !((!is_file($file) || filesize($file) == 0));
 		}
 
 		function title_attribute( $title, $ext, $block )
@@ -1190,14 +1210,16 @@ if( ! class_exists( 'MyDownload' ) )
 			$myalbum_dirname = $this->myalbum_dirname() ;
 			$usealbum = $this->can_albumselect( $myalbum_dirname ) ;
 
-			if( preg_match ('/(\.gif|\.jpe?g|\.png)$/i', $logourl ) ){
+			if( preg_match ('/(\.gif|\.jpe?g|\.svg|\.png)$/i', $logourl ) ){
 				$shots_link = $this->shots_img_link( $cid, $url, $filelink, $logourl, $maxwidth ) ;
 			} elseif ( ! empty( $logourl ) &&  ! empty( $usealbum ) ){
 				$shots_link = $this->get_album_link( $myalbum_dirname, $logourl, $maxwidth ) ;
 			} elseif( empty( $logourl ) && preg_match('/('.$exception.')$/i', $url ) ) {
 				$shots_link = '';
 			} elseif( ! empty( $this->mod_config['shotselect'] ) && preg_match ('/^https?:\/\/.+\..+/i', $url ) ) {
-				$shots_link = $filelink.'<img src="http://mozshot.nemui.org/shot/large?'.$url.'" class="d3downloads_imgurl_frame" width="'.$maxwidth.'" height="'.$maxwidth.'" align="left"></a>';
+				// TODO local-first and cache
+				//$shots_link = $filelink.'<img src="https://mozshot.nemui.org/shot/large?'.$url.'" class="d3downloads_imgurl_frame" width="'.$maxwidth.'" height="'.$maxwidth.'" align="left"></a>';
+				$shots_link = $filelink.'<img src="https://blinky.nemui.org/shot/large?'.$url.'" class="d3downloads_imgurl_frame" width="'.$maxwidth.'" height="'.$maxwidth.'"></a>';
 			} else {
 				$shots_link = '';
 			}
@@ -1207,7 +1229,7 @@ if( ! class_exists( 'MyDownload' ) )
 
 		function shots_img_link( $cid, $url, $filelink, $logourl, $maxwidth )
 		{
-			include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+			include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 			$mycategory = new MyCategory( $this->mydirname, 'Show', $cid ) ;
 
 			$cate_shotsdir = $mycategory->return_shotsdir() ;
@@ -1221,7 +1243,7 @@ if( ! class_exists( 'MyDownload' ) )
 
 			if ( file_exists( $shots_path ) ){
 				list( $width , $height ) = $this->get_imagesize( $shots_path, $maxwidth ) ;
-				return $filelink.'<img src="'.$shots_dir.'" class="d3downloads_imgurl_frame" width="'.$width.'" height="'.$height.'" align="left"></a>';
+				return $filelink.'<img src="'.$shots_dir.'" class="d3downloads_imgurl_frame" width="'.$width.'" height="'.$height.'"></a>';
 			}
 		}
 
@@ -1232,7 +1254,7 @@ if( ! class_exists( 'MyDownload' ) )
 			if ( empty( $maxwidth ) ) $maxwidth = intval( $this->mod_config['shotwidth'] ) ;
 
 			$width  = ( ! empty( $file_width ) ) ? intval( $file_width ) : $maxwidth ;
-			$height = ( ! empty( $file_height ) ) ? intval( $file_height ) : 0 ;
+			$height = ( ! empty( $file_height ) ) ? intval( $file_height ) : 1 ;
 			if ( $width > $maxwidth ){
 				$showsize = $maxwidth / $width ;
 				$width    = $width * $showsize ;
@@ -1407,7 +1429,8 @@ if( ! class_exists( 'MyDownload' ) )
 
 			$image_target = ( $mode != 'webphoto' ) ? $photos_url .'/'. $id .'.'. $ext : $this->myts->makeTboxData4URLShow( $photo['file_url'] ) ;
 			$thumbs_path  = ( $mode != 'webphoto' ) ? $thumbs_dir .'/'. $id .'.'. $ext : $this->myts->makeTboxData4Show( $photo['thumbs_path'] ) ;
-			if( $mode != 'webphoto' ) $icons_path = $myalbum_path .'/icons/'. $ext .'.gif' ;
+			// if( $mode != 'webphoto' ) $icons_path = $myalbum_path .'/icons/'. $ext .'.gif' ;
+			if( $mode != 'webphoto' ) $icons_path = $myalbum_path .'/icons/'. $ext .'.svg' ;
 
 			if ( file_exists( $thumbs_path ) ){
 				$image_url = ( $mode != 'webphoto' ) ? $thumbs_url .'/'. $id .'.'. $ext : $this->myts->makeTboxData4Show( $photo['thumbs_url'] ) ;
@@ -1422,13 +1445,14 @@ if( ! class_exists( 'MyDownload' ) )
 						break ;
 				}
 
-				$link .= '<img src="'.$image_url.'" class="d3downloads_imgurl_frame" width="'.$width.'" height="'.$height.'" alt="'.$title.'" title="'.$title.'" align="left" /></a>';
+				$link .= '<img src="'.$image_url.'" class="d3downloads_imgurl_frame" width="'.$width.'" height="'.$height.'" alt="'.$title.'" title="'.$title.'"></a>';
 				return $link ;
 			} elseif ( file_exists( $icons_path ) && $mode != 'webphoto' ){
-				$image_url = XOOPS_URL .'/modules/'. $dirname.'/icons/'. $ext .'.gif' ;
+				// $image_url = XOOPS_URL .'/modules/'. $dirname.'/icons/'. $ext .'.gif' ;
+				$image_url = XOOPS_URL .'/modules/'. $dirname.'/icons/'. $ext .'.svg' ;
 
 				list( $width , $height ) = $this->get_imagesize( $icons_path, $maxwidth ) ;
-				return '<a href="'.$image_target.'" target="_blank"><img src="'.$image_url.'" class="d3downloads_imgurl_frame" width="'.$width.'" height="'.$height.'" alt="'.$title.'" title="'.$title.'" align="left" /></a>';
+				return '<a href="'.$image_target.'" target="_blank" title="'.$title.'"><img class="svg" src="'.$image_url.'" class="d3downloads_imgurl_frame" width="'.$width.'" height="'.$height.'" alt="'.$title.'"></a>';
 			}
 		}
 
@@ -1449,7 +1473,7 @@ if( ! class_exists( 'MyDownload' ) )
 
 		function config_d3comment()
 		{
-			// �R�����g�����̐ݒ�����Ă��Ȃ��ꍇ�́u�R�����g�v�̃����N��\�����Ȃ�
+            // Do not show "Comment" link if comment integration is not set up
 			if ( ! empty ( $this->mod_config['comment_dirname'] ) && ! empty ( $this->mod_config['comment_forum_id'] ) ){
 				return true ;
 			} else {
@@ -1481,22 +1505,7 @@ if( ! class_exists( 'MyDownload' ) )
 
 			return rawurlencode( $text ) ;
 		}
-/*
-		function PrettySize( $size, $block=0 )
-		{
-			$mb = 1024 * 1024;
-			if ( $size > $mb ) {
-				$mysize = sprintf ("%01.2f",$size/$mb) . " MB" ;
-			} elseif ( $size >= 1024 ) {
-				$mysize = sprintf ("%01.2f",$size/1024) . " KB" ;
-			} else {
-				$numbytes = ( empty( $block ) ) ? _MD_D3DOWNLOADS_NUMBYTES : _MB_D3DOWNLOADS_NUMBYTES ;
-				$mysize = sprintf( $numbytes , $size ) ;
-			}
 
-			return $mysize ;
-		}
-*/
 		function PrettySize( $size, $block=0 )
 		{
 			$gb = 1024 * 1024 * 1024;
@@ -1517,7 +1526,8 @@ if( ! class_exists( 'MyDownload' ) )
 
 		function is_sameValue( $str1, $str2 )
 		{
-			 return ( strcmp( $str1, $str2 ) == 0 ) ? true : false ;
+            //return ( strcmp( $str1, $str2 ) == 0 ) ? true : false ;
+            return strcmp( $str1, $str2 ) == 0;
 		}
 
 		function extra_array( $text, $single=0, $block=0, $forpreview=0 )
@@ -1557,12 +1567,13 @@ if( ! class_exists( 'MyDownload' ) )
 
 		function mylink_cookie()
 		{
-			return isset( $_COOKIE[ $this->mylink_cookie_name() ] ) ? $_COOKIE[ $this->mylink_cookie_name() ] : '' ;
+			//return isset( $_COOKIE[ $this->mylink_cookie_name() ] ) ? $_COOKIE[ $this->mylink_cookie_name() ] : '' ;
+            return $_COOKIE[$this->mylink_cookie_name()] ?? '';
 		}
 
 		function cookie_path()
 		{
-			$cookie_path = defined( 'XOOPS_COOKIE_PATH' ) ? XOOPS_COOKIE_PATH : preg_replace( '?http://[^/]+(/.*)$?' , "$1" , XOOPS_URL ) ;
+			$cookie_path = defined( 'XOOPS_COOKIE_PATH' ) ? XOOPS_COOKIE_PATH : preg_replace( '?https://[^/]+(/.*)$?' , "$1" , XOOPS_URL ) ;
 			if( $cookie_path == XOOPS_URL ) $cookie_path = '/' ;
 			return $cookie_path ;
 		}
@@ -1829,7 +1840,8 @@ if( ! class_exists( 'MyDownload' ) )
 
 			return array(
 				'num' => $invisible_num ,
-				'link' => '<a href="'.$this->mod_url.'/admin/index.php?page=filemanager&amp;cid='.$cid.'&amp;invisible=1">'.sprintf( _MD_D3DOWNLOADS_INVISIBLE_NUM , $invisible_num ).'</a>' ,
+				//'link' => '<a href="'.$this->mod_url.'/admin/index.php?page=filemanager&amp;cid='.$cid.'&amp;invisible=1">'.sprintf( _MD_D3DOWNLOADS_INVISIBLE_NUM , $invisible_num ).'</a>' ,
+                'link' => $this->mod_url.'/admin/index.php?page=filemanager&amp;cid='.$cid.'&amp;invisible=1' ,
 			) ;
 		}
 
@@ -1880,8 +1892,8 @@ if( ! class_exists( 'MyDownload' ) )
 
 			if ( ! preg_match("`^(https?|ftp)://`i", $url ) ) {
 				if( ! $this->check_file( $url ) ){
-					$filelink = '( <span class="d3downloads_broken_message">broken file !!</span> )';
-					$filenamelink = $filename.'&nbsp;&nbsp;( <span class="d3downloads_broken_message">broken file !!</span> )';
+					$filelink = '<span class="d3downloads_broken_message" aria-label="File Link">'._MD_D3DOWNLOADS_BROKEN_FILE.'</span>';
+					$filenamelink = $filename.'<span class="d3downloads_broken_message" aria-label="Filename Link">'._MD_D3DOWNLOADS_BROKEN_FILE.'</span>';
 				} else {
 					switch( $second ) {
 						case false :
@@ -2000,7 +2012,7 @@ if( ! class_exists( 'MyDownload' ) )
 			$dirname = $this->myalbum_dirname() ;
 			$usealbum = $this->can_albumselect( $dirname ) ;
 
-			if( preg_match ('/(\.gif|\.jpe?g|\.png)$/i', $logourl ) ) return $this->shots_img_link_for_post( $cid, $logourl ) ;
+			if( preg_match ('/(\.gif|\.jpe?g|\.svg|\.png)$/i', $logourl ) ) return $this->shots_img_link_for_post( $cid, $logourl ) ;
 			elseif ( ! empty( $logourl ) &&  ! empty( $usealbum ) ) return $this->get_album_link_for_post( $dirname, $logourl ) ;
 		}
 
@@ -2011,7 +2023,7 @@ if( ! class_exists( 'MyDownload' ) )
 
 		function shots_dir( $cid )
 		{
-			include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+			include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 			$mycategory = new MyCategory( $this->mydirname, 'Show', $cid ) ;
 
 			$cate_shotsdir = $mycategory->return_shotsdir() ;
@@ -2119,7 +2131,8 @@ if( ! class_exists( 'MyDownload' ) )
 				if( $mode != 'webphoto' ) return  $thumbs_url .'/'. $id .'.'. $ext ;
 				else return $this->myts->makeTboxData4URLShow( $photo['file_url'] ) ;
 			} elseif ( file_exists( $icons_path ) && $mode != 'webphoto' ){
-				return  XOOPS_URL .'/modules/'. $dirname.'/icons/'. $ext .'.gif' ;
+				//return  XOOPS_URL .'/modules/'. $dirname.'/icons/'. $ext .'.gif' ;
+				return  XOOPS_URL .'/modules/'. $dirname.'/icons/'. $ext .'.svg' ;
 			}
 		}
 
@@ -2157,7 +2170,7 @@ if( ! class_exists( 'MyDownload' ) )
 
 			if ( $handle = opendir( $dirname ) ) {
 				while ( false !== ( $file = readdir( $handle ) ) ) {
-					if ( ! preg_match( "/^[\.]{1,2}$/", $file ) && preg_match( "/(\.gif|\.jpe?g|\.png)$/i",$file ) ) {
+					if ( ! preg_match( "/^[\.]{1,2}$/", $file ) && preg_match( "/(\.gif|\.jpe?g|\.svg|\.png)$/i",$file ) ) {
 						$file = $prefix . $file ;
 						$filelist[ $file ] = $file ;
 					}
@@ -2328,7 +2341,8 @@ if( ! class_exists( 'MyDownload' ) )
 			if( $mode != 'webphoto' ) {
 				$id = $this->myts->makeTboxData4Show( $photo['id'] ) ;
 				$ext = $this->myts->makeTboxData4Show( $photo['ext'] ) ;
-				$icons_path = XOOPS_ROOT_PATH .'/modules/'.$dirname  .'/icons/'. $ext .'.gif' ;
+				//$icons_path = XOOPS_ROOT_PATH .'/modules/'.$dirname  .'/icons/'. $ext .'.gif' ;
+				$icons_path = XOOPS_ROOT_PATH .'/modules/'.$dirname  .'/icons/'. $ext .'.svg' ;
 			}
 
 			$thumbs_path = ( $mode != 'webphoto' ) ? $thumbs_dir .'/'. $id .'.'. $ext : XOOPS_ROOT_PATH .$this->myts->makeTboxData4Show( $photo['thumbs_path'] ) ;
@@ -2343,7 +2357,8 @@ if( ! class_exists( 'MyDownload' ) )
 					$photo = $this->myts->makeTboxData4Show( substr( $photo['file_path'] , 1 ) ) ;
 					break ;
 			} elseif ( file_exists( $icons_path ) && $mode != 'webphoto' ) {
-				$thumb = 'modules/'. $dirname.'/icons/'. $ext .'.gif' ;
+				// $thumb = 'modules/'. $dirname.'/icons/'. $ext .'.gif' ;
+				$thumb = 'modules/'. $dirname.'/icons/'. $ext .'.svg' ;
 				$photo = $photodir .'/'. $id .'.'. $ext ;
 			}
 
@@ -2392,5 +2407,3 @@ if( ! class_exists( 'MyDownload' ) )
 		}
 	}
 }
-
-?>

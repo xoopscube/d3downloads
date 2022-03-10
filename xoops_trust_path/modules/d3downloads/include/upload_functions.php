@@ -1,20 +1,20 @@
 <?php
 
 if ( ! function_exists('d3download_return_bytes') ) {
-	function d3download_return_bytes( $val )
-	{
-	    $val = trim( $val );
-		$last = strtolower( substr( $val, -1, 1 ) );
-		switch( $last ) {
-			case 'g':
-				$val *= 1024;
-			case 'm':
-				$val *= 1024;
-			case 'k':
-				$val *= 1024;
-		}
-		return intval( $val );
-	}
+    function d3download_return_bytes( $val )
+    {
+        $val = trim( $val );
+        $last = strtolower( substr( $val, -1, 1 ) );
+        switch( $last ) {
+            case 'g':
+                $val *= 1024;
+            case 'm':
+                $val *= 1024;
+            case 'k':
+                $val *= 1024;
+        }
+        return intval( $val );
+    }
 }
 
 if ( ! function_exists('d3download_upload_config_check') ) {
@@ -46,6 +46,8 @@ if ( ! function_exists('d3download_upload_config_check') ) {
 	}
 }
 
+
+
 if ( ! function_exists('d3download_file_error_message') ) {
 	function d3download_file_error_message( $file_error )
 	{
@@ -68,21 +70,22 @@ if ( ! function_exists('d3download_file_error_message') ) {
 
 // ��ʐݒ�̍ő�t�@�C���T�C�Y���擾
 if ( ! function_exists('d3download_get_maxsize') ) {
-	function d3download_get_maxsize( $mydirname )
-	{
-		$module_handler =& xoops_gethandler('module');
-		$config_handler =& xoops_gethandler('config');
-		$module =& $module_handler->getByDirname( $mydirname );
-		$mod_config =& $config_handler->getConfigsByCat( 0, $module->getVar('mid') );
+    function d3download_get_maxsize( $mydirname )
+    {
+        $module_handler =& xoops_gethandler('module');
+        $config_handler =& xoops_gethandler('config');
+        $module =& $module_handler->getByDirname( $mydirname );
+        $mod_config =& $config_handler->getConfigsByCat( 0, $module->getVar('mid') );
 
-		if( empty( $mod_config['maxfilesize'] ) ) {
-			$maxsize = 1000 * 1024 ;
-		} else {
-			$maxsize = intval( $mod_config['maxfilesize'] ) * 1024 ;
-		}
-		return $maxsize ;
-	}
+        if( empty( $mod_config['maxfilesize'] ) ) {
+            $maxsize = 1000 * 1024 ;
+        } else {
+            $maxsize = intval( $mod_config['maxfilesize'] ) * 1024 ;
+        }
+        return $maxsize ;
+    }
 }
+
 
 // �A�b�v���[�h�\�Ȋg���q���擾
 if ( ! function_exists('d3download_get_allowed_extension') ) {

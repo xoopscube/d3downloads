@@ -241,7 +241,8 @@ if ( ! function_exists('d3download_can_albumselect') ) {
 if ( ! function_exists('d3download_delcat') ) {
 	function d3download_delcat( $mydirname, $cid )
 	{
-		$db =& Database::getInstance() ;
+		//$db =& Database::getInstance() ;
+        $db =& XoopsDatabaseFactory::getDatabaseConnection();
 		include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 
 		$mycategory = new MyCategory( $mydirname, 'Show' ) ;
@@ -305,7 +306,7 @@ if ( ! function_exists('d3download_delete_lid') ) {
 			$file2 = htmlspecialchars( $fil2 , ENT_QUOTES ) ;
 			$submitter = intval( $uid ) ;
 
-			// �u���e�����[�U�[�̓��e���ɔ��f�v���L���ȏꍇ�A���e���ɔ��f
+            // Reflected in the number of posts if "Reflect posts in user's post count" is enabled
 			if( $submitter > 0 && ! empty( $mod_config['plus_posts'] ) ) {
 				d3download_decrementPost( $submitter ) ;
 			}
@@ -505,10 +506,16 @@ if ( ! function_exists('d3download_main_trigger_event') ) {
 		require_once XOOPS_TRUST_PATH.'/libs/altsys/class/D3NotificationHandler.class.php' ;
 		$trustdirpath = dirname(__FILE__, 2);
 		$mytrustdirname = basename( $trustdirpath );
+
+        // TODO Fix Notification !!!
+        if ( empty( $user_list ) ) {
+            $user_list = [ 0 ];
+        }
 		$not_handler = D3NotificationHandler::getInstance() ;
 		$not_handler->triggerEvent( $mydirname , $mytrustdirname , $category , $item_id , $event , $extra_tags , $user_list , $omit_user_id ) ;
 	}
 }
+
 
 if ( ! function_exists('d3download_submenu') ) {
 	function d3download_submenu( $mydirname, $submenu_option )

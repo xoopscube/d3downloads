@@ -158,7 +158,9 @@ if( ! class_exists( 'broken_download' ) )
 			$broken_num = $this->Total_Num() ;
 			return array(
 				'num' => $broken_num ,
-				'link' => '<a href="'.$this->mod_url.'/admin/index.php?page=brokenmanager">'.sprintf( _MD_D3DOWNLOADS_BROKEN_NUM , $broken_num ).'</a>' ,
+				//'link' => '<a href="'.$this->mod_url.'/admin/index.php?page=brokenmanager">'.sprintf( _MD_D3DOWNLOADS_BROKEN_NUM , $broken_num ).'</a>' ,
+                //'link' => '<a href="'.$this->mod_url.'/admin/index.php?page=brokenmanager">'._MD_D3DOWNLOADS_BROKEN_NUM.'</a>' ,
+                'link' => $this->mod_url.'/admin/index.php?page=brokenmanager' ,
 			) ;
 		}
 
@@ -264,9 +266,9 @@ if( ! class_exists( 'broken_download' ) )
 
 if( ! class_exists( 'broken_report' ) )
 {
-	include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
-	require_once dirname( dirname(__FILE__) ).'/class/my_http.php' ;
-	require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+	include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
+	require_once dirname(__FILE__, 2) .'/class/my_http.php' ;
+	require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 
 	class broken_report extends MyDownload
 	{
@@ -603,7 +605,7 @@ if( ! class_exists( 'broken_report' ) )
 
 		function set_trigger_event( $title )
 		{
-			require_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
+			require_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
 			$tags = array(
 				'POST_TITLE' => $this->myts->makeTboxData4Show( $title ) ,
 				'BROKENREPORTS_URL' => XOOPS_URL . '/modules/'.$this->mydirname.'/admin/index.php?page=brokenmanager' ,

@@ -72,7 +72,7 @@ define($constpref.'_REFERERS',"Sites que podem linkar diretamente para seus arqu
 define($constpref.'_PER_HISTORY',"Numero de gerações para o historico");
 define($constpref.'_EXTENSION',"Extensõess permitidadas");
 define($constpref.'_EXTENSIONDSC',"Listar as extensões permitidas separadas por |. Letras pequenas sem espaços ou pontos. php ou html será ignorado.");
-define($constpref.'_MAXFILESIZE',"Tamanho máximo do arquivo para envio (in bytes)");
+define($constpref.'_MAXFILESIZE',"Tamanho máximo do arquivo para envio (in bytes). 1 MB = 1,000,000 Bytes or 1,048,576 Bytes (binary)");
 define($constpref.'_MULTIDOT',"Verifica multi-dot quando do envio");
 define($constpref.'_MULTIDOTDSC',"Configurar permissão de envio para nome do arquivos com multiplos pontos (nome de aquivos com dois ou mais pontos). Por padrão, arquivos com múltiplos pontos serão apagados razões de segurança.");
 define($constpref.'_CHECKHEAD',"Verificar o cabeçalho do arquivo quando do envio");

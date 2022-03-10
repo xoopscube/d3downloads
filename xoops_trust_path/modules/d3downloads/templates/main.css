@@ -40,37 +40,6 @@
 	font-weight: bold;
 }
 
-tr.d3downloads_even td
-{
-	padding: 2px;
-	border-bottom: 1px solid #333;
-}
-
-tr.d3downloads_odd td
-{
-	padding: 2px;
-	border-bottom: 1px solid #333;
-}
-
-tr.d3downloads_even
-{
-	color: inherit;
-	/*background: #F7F7F7;*/
-}
-
-tr.d3downloads_odd
-{
-	color: inherit;
-	/*background: #FAFAFA;*/
-}
-
-tr.d3downloads_odd:hover, tr.even:hover
-{
-	color: #000;
-	border-bottom: 1px solid #333;
-	/*background: #DFDFDF;*/
-}
-
 td.d3downloads_submitlink
 {
 	padding: 5px;
@@ -131,14 +100,12 @@ div.d3downloads_single_frame_description
 {
 	margin: 0 2px 3px 0;
 	padding: 5px;
-	border: 1px solid #CCC;
 }
 
 .d3downloads_link_single_frame_description img
 {
 	margin: 0 2px 3px 0;
 	padding: 5px;
-	border: 1px solid #CCC;
 }
 
 /* ------------ for md5_line ------- */
@@ -147,7 +114,6 @@ div.d3downloads_md5_line
 {
 	/*background: #EFEFEF;*/
 	color:inherit;
-	border: 1px inset #CCC;
 	padding: 2px;
 }
 
@@ -157,21 +123,18 @@ table.d3downloads_extra {
 	margin-top: 0.2em;
 	margin-bottom: 1em;
 	border-collapse: collapse;
-	border: solid 1px #999;
 	font-size: 100%;
 }
 
 table.d3downloads_extra td.title {
 	text-align: center;
 	vertical-align:middle;
-	border: solid 1px #999;
 	font-size: 110%;
 	font-weight: bolder;
 }
 
 table.d3downloads_extra td.desc {
 	text-align: left;
-	border: solid 1px #999;
 	padding: 4px 6px;
 	vertical-align:middle;
 }
@@ -180,7 +143,6 @@ hr.d3downloads_extra_infomation {
 	height: 1px;
 	padding-top: 3px;
 	padding-bottom: 3px;
-	/*background: #F7F7F7;*/
 	border: 0;
 }
 
@@ -234,9 +196,6 @@ div.d3downloads_top_message
 {
 	margin:	3px;
 	padding: 3px;
-	border-width: 1px;
-	border-style: dotted;
-	border-color: #808080;
 }
 
 /* ------------ for cat_description ------- */
@@ -245,19 +204,14 @@ div.d3downloads_cat_description
 {
 	margin:  3px;
 	padding: 3px;
-	border-width: 1px;
-	border-style: dotted;
-	border-color: #808080;
 }
 
 /* ------------ for cat_imgurl ------- */
 
 .d3downloads_imgurl_frame
 {
-	margin: 5 2px 3px;
+	margin: 5px 2px 3px;
 	padding: 5px;
-	border: 1px solid #333;
-	/*background:#FFF;*/
 	color:inherit;
 }
 
@@ -302,7 +256,6 @@ div.d3downloads_breadcrumbs
 	margin: 10px;
 	padding: 0;
 	white-space: nowrap;
-	/*color: #999;*/
 	text-align:center; 
 }
 
@@ -315,16 +268,12 @@ div.d3downloads_breadcrumbs
 	font-weight: bold;
 	margin: 0;
 	padding: 0;
-	/*background-color: #fff;*/
 }
 
 .d3downloads_pagenav li.currentpage
 {
 	margin:0 6px 0 2px;
 	padding: 2px 8px 2px 8px;
-	/*background:#eee;*/
-	color:#808080;
-	border: 1px solid #333;
 }
 
 .d3downloads_pagenav li.prepage
@@ -336,9 +285,6 @@ div.d3downloads_breadcrumbs
 {
 	margin:0 6px 0 2px;
 	padding: 2px 8px 2px 8px;
-	/*background:#fff;*/
-	color:#808080;
-	border: 1px solid #333;
 }
 
 .d3downloads_pagenav a
@@ -346,8 +292,6 @@ div.d3downloads_breadcrumbs
 	margin:0 2px;
 	padding: 2px 8px 2px 8px;
 	text-decoration:none;
-	color:#808080;
-	border: 1px solid #333;
 }
 
 .d3downloads_pagenav a:hover
@@ -415,21 +359,6 @@ div.d3downloads_brokenlink_form
 
 /* ------------ for ratelink ------------ */
 
-div.d3downloads_ratelink_frame
-{
-	margin:  5px;
-	padding: 5px;
-	border-width: 1px;
-	border-style: solid;
-	border-color: #808080;
-}
-
-div.d3downloads_ratelink_form
-{
-	margin:  0px;
-	padding: 3px;
-	text-align: center;
-}
 
 /* ------------ for error_message ------------ */
 
@@ -492,10 +421,6 @@ div.grippie {
 	cursor:s-resize;
 	height:9px;
 	overflow:hidden;
-}
-.resizable-textarea textarea {
-	display:block;
-	margin-bottom:0pt;
 }
 
 /* ------------ for lightbox -------------------- */

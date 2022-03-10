@@ -37,6 +37,8 @@ if( ! empty( $_POST['update'] ) ) {
 	redirect_header( XOOPS_URL."/modules/$mydirname/admin/index.php?page=import" , 3 , _MD_D3DOWNLOADS_UPDATEDONE ) ;
 	exit ;
 }
+
+// RENDER
 xoops_cp_header();
 include dirname(__FILE__).'/mymenu.php' ;
 require_once XOOPS_ROOT_PATH.'/class/template.php' ;

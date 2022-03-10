@@ -1,17 +1,36 @@
 <div class="ui-dev-mode"><{$smarty.template}></div>
 
-<script type="text/javascript" src="<{$mod_url}>/index.php?page=module_header&src=jquery.js"></script>
-
-<script type="text/javascript" src="<{$mod_url}>/index.php?page=module_header&src=jquery.textarearesizer.js"></script>
 <script type="text/javascript" src="<{$mod_url}>/index.php?page=module_header&src=d3downloads.js"></script>
 
-<h3><{$formtitle}></h3>
+
+<h2><{$formtitle}></h2>
+
 
 <{if $iserror}>
 	<div id="error_message" class="error">
 		<{$error_message}>
 	</div>
 <{/if}>
+
+
+<div layout="row center-justify" class="control-action">
+
+	<div>
+		<h3><{$categorydata.title}></h3>
+	</div>
+	<div class="control-view">
+		<a class="ui-btn" href="<{$mod_url}>/admin/index.php?page=categoryedit&amp;cid=0">
+		<{$smarty.const._MD_D3DOWNLOADS_ADMIN_NEWCATEGORY}></a>
+		<a class="ui-btn" href="<{$mod_url}>/index.php?cid=<{$categorydata.cid}>">
+			<{$smarty.const._MD_D3DOWNLOADS_CAT_VISIBLE}></a>
+		<button class="help-admin ui-btn" type="button" data-id="5" data-module="d3downloads" data-help-article="#help-category-edit" title="Help">
+			<span class="ui-icon ui-icon-help"></span>
+		</button>
+	</div>
+
+</div>
+
+
 
 <form name="user_access" id="user_access" action="<{$mod_url}>/admin/index.php?page=<{$page}>&amp;cid=<{$categorydata.cid}>" method="post">
 	<{$gticket_hidden}>
@@ -23,7 +42,7 @@
 		<tr>
 			<td class="head"><label for="title"><{$smarty.const._MD_D3DOWNLOADS_CATEGORYTITLE}></label></td>
 			<td class="even">
-				<input type="text" name="title" id="title" size="50" maxlength="50" value="<{$categorydata.title}>" />
+				<input type="text" name="title" id="title" size="50" maxlength="50" value="<{$categorydata.title}>">
 				<div id="info" style="display:none;color: #CC0000;font-size:100%;font-weight:bold;margin:2px;padding:2px;"></div>
 			</td>
 		</tr>
@@ -39,19 +58,19 @@
 				<{if $categorydata.imgurl}>
 					<input type="text" name="imgurl" id="imgurl" size="100" maxlength="150" value="<{$categorydata.imgurl}>">
 				<{else}>
-					<input type="text" name="imgurl" id="imgurl" size="100" maxlength="150" value="http://">
+					<input type="text" name="imgurl" id="imgurl" size="100" maxlength="150" value="https://">
 				<{/if}>
 				<div id="imgurl_info" style="display:none;color: #CC0000;font-size:100%;font-weight:bold;margin:2px;padding:2px;"></div>
-				<{if $categorydata.imgurl|regex_replace:'/^(https?|ftp):\/\/.+(\.gif|\.jpe?g|\.png)$/i':'imgurl' eq 'imgurl'}>
+				<{if $categorydata.imgurl|regex_replace:'/^(https?|ftp):\/\/.+(\.gif|\.jpe?g|\.svg|\.png)$/i':'imgurl' eq 'imgurl'}>
 					<br>
-				<img src="<{$categorydata.imgurl}>" width="70">
+				<img src="<{$categorydata.imgurl}>" width="1em" height="1em" alt="category image">
 				<{/if}>
 			</td>
 		</tr>
 		<tr>
 			<td class="head">
 				<label for="select_imgurl"><{$smarty.const._MD_D3DOWNLOADS_SELECT_IMGURL}></label>
-				<br />
+				<br>
 				<span style="font-size: small;">
 					<{$smarty.const._MD_D3DOWNLOADS_SELECT_IMGURLDESC}>
 				</span>
@@ -69,13 +88,13 @@
 		</tr>
 		<{if $can_selectshotsdir}>
 			<tr>
-				<td class="head"><label for="shotsdir"><{$smarty.const._MD_D3DOWNLOADS_CATEGORYSHOTSDIR}></label><br />
+				<td class="head"><label for="shotsdir"><{$smarty.const._MD_D3DOWNLOADS_CATEGORYSHOTSDIR}></label><br>
 					<span style="font-size: small;">
 						<{$smarty.const._MD_D3DOWNLOADS_CATEGORYSHOTSDIRDESC}></label>
 					</span>
 				</td>
 				<td class="even">
-					<input type="text" name="shotsdir" id="shotsdir" size="100" maxlength="150" value="<{$categorydata.shotsdir}>" /><br />
+					<input type="text" name="shotsdir" id="shotsdir" size="100" maxlength="150" value="<{$categorydata.shotsdir}>"><br>
 					<div id="shotsdir_info" style="display:none;color: #CC0000;font-size:100%;font-weight:bold;margin:2px;padding:2px;"></div>
 					<span style="font-size: small;">
 						<{$shotsdirhelp}>
@@ -86,34 +105,34 @@
 		<tr>
 			<td class="head"><label for="cat_weight"><{$smarty.const._MD_D3DOWNLOADS_CATWEIGHT}></label></td>
 			<td class="even">
-				<input type="text" name="cat_weight" id="cat_weight" size="5" maxlength="5" value="<{$categorydata.cat_weight}>" />
+				<input type="text" name="cat_weight" id="cat_weight" size="5" maxlength="5" value="<{$categorydata.cat_weight}>">
 			</td>
 		</tr>
 		<tr>
 			<td class="head"><label for="maincategory"><{$smarty.const._MD_D3DOWNLOADS_MAINCATEGORY}></label></td>
 			<td class="even">
-				<select name="pid" id="pid"><br />
-					<{html_options options=$maincategory selected=$categorydata.pid}><br />
+				<select name="pid" id="pid"><br>
+					<{html_options options=$maincategory selected=$categorydata.pid}><br>
 				</select>
 			</td>
 		</tr>
 		<tr>
-			<td class="head"><label for="description"><{$smarty.const._MD_D3DOWNLOADS_CATDESCRIPTION}></label><br />
+			<td class="head"><label for="description"><{$smarty.const._MD_D3DOWNLOADS_CATDESCRIPTION}></label><br>
 			</td>
 			<td class="even">
-				<textarea name="description" id="description" cols="60" rows="10"><{$categorydata.description}></textarea>
+				<{xoops_dhtmltarea name=description id=description cols=60 rows=4 value=$categorydata.description editor=bbcode}>
 			</td>
 		</tr>
 		<tr>
 			<td class="head">
 				<label for="submit_message"><{$smarty.const._MD_D3DOWNLOADS_SUBMIT_MESSAGE}></label>
-				<br />
+				<br>
 				<span style="font-size: small;">
 					<{$smarty.const._MD_D3DOWNLOADS_SUBMIT_MESSAGE_HELP}>
 				</span>
 			</td>
 			<td class="even">
-				<textarea name="submit_message" id="submit_message" cols="60" rows="10"><{$categorydata.submit_message}></textarea>
+				<{xoops_dhtmltarea name=submit_message id=submit_message cols=60 rows=4 value=$categorydata.submit_message editor=bbcode}>
 			</td>
 		</tr>
 		<tfoot>
@@ -127,13 +146,21 @@
 
 	<h2><{$title_useraccess}></h2>
 
+	<{if $categorydata.cid == 0 || $categorydata.pid == 0}>
+	<div class="tips">
+		<{$smarty.const._MD_D3DOWNLOADS_HELP_USERACCESS}>
+	</div>
+	<{/if}>
+
+
 	<div style="display: inline;" id="user_access_edit">
 
 		<{if $categorydata.cid > 0 && $categorydata.pid != 0}>
 			<div class="tips">
 				<{$smarty.const._MD_D3DOWNLOADS_HELP_USERACCESS_PID}>
 			</div>
-			<div align="right">
+		<{* ----- Button Parent Permissions ----- *}>
+			<div>
 				<{$useraccess_edit_info}>
 			</div>
 		<{/if}>
@@ -209,110 +236,115 @@
 			<{/if}>
 		</table>
 
+
+
+
 		<{if $categorydata.cid == 0 || $categorydata.pid == 0}>
+
+		<h2><{$smarty.const._MD_D3DOWNLOADS_H2USERACCESS}></h2>
+
+		<div class="tips">
+			<{$smarty.const._MD_D3DOWNLOADS_HELP_USERACCESS_USER}>
+		</div>
+		<{/if}>
+
+		<{if $categorydata.cid == 0}>
+		<div style="display: none;" id="useraccess_edit_info">
 			<div class="tips">
-				<{$smarty.const._MD_D3DOWNLOADS_HELP_USERACCESS}>
+				<{$smarty.const._MD_D3DOWNLOADS_HELP_USERACCESS_PID}>
 			</div>
+		</div>
 		<{/if}>
 
 		<{if $categorydata.cid == 0 || $categorydata.pid == 0 || ( $categorydata.pid != 0 && $user_trs)}>
 
 			<table class="outer">
+				<thead>
 				<tr>
 					<th><{$smarty.const._MD_D3DOWNLOADS_TH_UID}></th>
 					<th colspan="2"><{$smarty.const._MD_D3DOWNLOADS_TH_UNAME}></th>
 					<th>
-						<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_READ}>
+						<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_READ}><br>
 						<{if $categorydata.cid == 0 || $categorydata.pid == 0}>
 							<input type="checkbox" onclick="col_check_on_off( this, 'ucol_1_' );col_check_on_off( this, 'ncol_1_' );">
 						<{/if}>
 					</th>
 					<th>
-						<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_POST}>
+						<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_POST}><br>
 						<{if $categorydata.cid == 0 || $categorydata.pid == 0}>
 							<input type="checkbox" onclick="col_check_on_off( this, 'ucol_2_' );col_check_on_off( this, 'ncol_2_' );">
 						<{/if}>
 					</th>
 					<th>
-						<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_EDIT}>
+						<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_EDIT}><br>
 						<{if $categorydata.cid == 0 || $categorydata.pid == 0}>
 							<input type="checkbox" onclick="col_check_on_off( this, 'ucol_3_' );col_check_on_off( this, 'ncol_3_' );">
 						<{/if}>
 					</th>
 					<th>
-						<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_DELETE}>
+						<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_DELETE}><br>
 						<{if $categorydata.cid == 0 || $categorydata.pid == 0}>
 							<input type="checkbox" onclick="col_check_on_off( this, 'ucol_4_' );col_check_on_off( this, 'ncol_4_' );">
 						<{/if}>
 					</th>
 					<th>
-						<{$smarty.const._MD_D3DOWNLOADS_TH_POST_AUTO_APPROVED}>
+						<{$smarty.const._MD_D3DOWNLOADS_TH_POST_AUTO_APPROVED}><br>
 						<{if $categorydata.cid == 0 || $categorydata.pid == 0}>
 							<input type="checkbox" onclick="col_check_on_off( this, 'ucol_5_' );col_check_on_off( this, 'ncol_5_' );">
 						<{/if}>
 					</th>
 					<th>
-						<{$smarty.const._MD_D3DOWNLOADS_TH_EDIT_AUTO_APPROVED}>
+						<{$smarty.const._MD_D3DOWNLOADS_TH_EDIT_AUTO_APPROVED}><br>
 						<{if $categorydata.cid == 0 || $categorydata.pid == 0}>
 							<input type="checkbox" onclick="col_check_on_off( this, 'ucol_6_' );col_check_on_off( this, 'ncol_6_' );">
 						<{/if}>
 					</th>
 					<th>
-						<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_HTML}>
+						<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_HTML}><br>
 						<{if $categorydata.cid == 0 || $categorydata.pid == 0}>
 							<input type="checkbox" onclick="col_check_on_off( this, 'ucol_7_' );col_check_on_off( this, 'ncol_7_' );">
 						<{/if}>
 					</th>
 					<th>
-						<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_UPLOAD}>
+						<{$smarty.const._MD_D3DOWNLOADS_TH_CAN_UPLOAD}><br>
 						<{if $categorydata.cid == 0 || $categorydata.pid == 0}>
 							<input type="checkbox" onclick="col_check_on_off( this, 'ucol_8_' );col_check_on_off( this, 'ncol_8_' );">
 						<{/if}>
 					</th>
 				</tr>
-
+				</thead>
+				<tbody>
 				<{$user_trs}>
-
+				</tbody>
+				<!-- if tr -->
 				<{if $categorydata.cid == 0 || $categorydata.pid == 0}>
 					<{$newuser_trs}>
+				<{/if}>
+				<tfoot>
 					<tr>
-						<td colspan="11" align="center" class="head">
+						<td colspan="11">
 							<input type="submit" name="user_update" value="<{$smarty.const._SUBMIT}>">
 						</td>
 					</tr>
-				<{/if}>
-			</table>
-		<{/if}>
+					<tr>
+						<td colspan="11">
+							<{$smarty.const._MD_D3DOWNLOADS_LABEL_USER_CHECKED}><br>
+							<input type="submit" class="button-cancel" name="back" id="cancel" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_CANCEL}>">
+							<{if $categorydata.cid != 0}>
+							<input type="submit" class="button-delete" name="categoryform_delete" id="categoryform_delete" value="<{$smarty.const._DELETE}>">
+							<{/if}>
+							<input type="submit" class="formButton" name="categoryform_post" id="categoryform_post" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_SUBMITEDITING}>">
+						</td>
+					</tr>
+				</tfoot>
 
-		<{if $categorydata.cid == 0 || $categorydata.pid == 0}>
-			<div class="tips">
-				<{$smarty.const._MD_D3DOWNLOADS_HELP_USERACCESS_USER}>
-			</div>
+			</table>
 		<{/if}>
 
 	</div>
 
-	<{if $categorydata.cid == 0}>
-		<div style="display: none;" id="useraccess_edit_info">
-			<div style="color:inherit;border: 1px inset #CCC;padding: 6px;with: 80%;font-size: small;">
-				<{$smarty.const._MD_D3DOWNLOADS_HELP_USERACCESS_PID}>
-			</div>
-		</div>
-	<{/if}>
-
-	<table class="outer">
-		<tr valign="top" align="center">
-			<td colspan="5" class="even">
-				<input type="submit" class="formButton" name="categoryform_post" id="categoryform_post" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_SUBMITEDITING}>" />
-				<{if $categorydata.cid != 0}>
-					<input type="submit" name="categoryform_delete" id="categoryform_delete" value="<{$smarty.const._DELETE}>" />
-				<{/if}>
-				<input name="back" type="button" id="cansel" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_CANSEL}>" />
-			</td>
-		</tr>
-	</table>
-
 </form>
+
 
 <script type="text/javascript">
 category_edit_form_initialize() ;
@@ -324,7 +356,8 @@ jQuery( function($){
 		error += form_validate_contentform( 'title','info', info ) ;
 		error += category_form_validate( 'imgurl', 'imgurl_info', '<{$smarty.const._MD_D3DOWNLOADS_IMGURL_CHECK}>' ) ;
  		error += category_form_validate( 'shotsdir', 'shotsdir_info', '<{$smarty.const._MD_D3DOWNLOADS_SHOTSDIR_CHECK}>' ) ;
-		return ( error == 0 ) ? true : false ;
+		// return ( error == 0 ) ? true : false ;
+		return (error == 0) ;
     });
 
     $( '#categoryform_delete' ).click( function(){
@@ -352,10 +385,6 @@ div.grippie {
 	cursor:s-resize;
 	height:9px;
 	overflow:hidden;
-}
-.resizable-textarea textarea {
-	display:block;
-	margin-bottom:0pt;
 }
 </style>
 

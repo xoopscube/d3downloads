@@ -2,7 +2,6 @@
 //  ------------------------------------------------------------------------ //
 // $Id: blocks_common.php 0003 12:31 2008/04/09 avtx30 $
 // Traduzido para o Brasil por: Miraldo Antoninho Ohse
-// Site: http://investbizu.com
 //  ------------------------------------------------------------------------ //
 
 // definitions for editing blocks
@@ -50,6 +49,6 @@ define('_MB_D3DOWNLOADS_BROKEN_FILE','arquivo errado !!');
 define('_MB_D3DOWNLOADS_SELECT_CAT','Selecionar categoria') ;
 define("_MB_D3DOWNLOADS_SELECT_LIDDSC","Nota: Informe o id do download separado com virgula.") ;
 define('_MB_D3DOWNLOADS_SELECT_LID','Selecionar download') ;
-define('_MB_D3DOWNLOADS_MD5','[ File Name ] %s  [ MD5 checksum ] %s');
+define('_MB_D3DOWNLOADS_MD5','[ File Name ] %s  <br>[ MD5 checksum ] %s');
 define('_MB_D3DOWNLOADS_COLS', 'Colunas');
 define('_MB_D3DOWNLOADS_TOTAL','Total:');

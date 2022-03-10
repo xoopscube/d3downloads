@@ -12,7 +12,7 @@ if( ! class_exists( 'My_PageNav' ) )
 		var $perpage ;
 		var $current ;
 
-		function My_PageNav( $total_items, $items_perpage, $current_start, $start_name='start', $extra_arg='' )
+		function __construct($total_items, $items_perpage, $current_start, $start_name='start', $extra_arg='' )
 		{
 			$this->total   = intval( $total_items ) ;
 			$this->perpage = intval( $items_perpage ) ;
@@ -50,5 +50,3 @@ if( ! class_exists( 'My_PageNav' ) )
 		}
 	}
 }
-
-?>

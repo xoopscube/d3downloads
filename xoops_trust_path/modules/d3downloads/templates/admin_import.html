@@ -1,12 +1,17 @@
 <div class="ui-dev-mode"><{$smarty.template}></div>
 
-<h3><{$mod_name}> : <{$smarty.const._MD_D3DOWNLOADS_H2_IMPORTFROM}></h3>
+
+<h2>
+	<{$mod_name|ucfirst}> : <{$smarty.const._MD_D3DOWNLOADS_H2_IMPORTFROM}>
+</h2>
+
 
 <div class="tips">
 	<{$smarty.const._MD_D3DOWNLOADS_HELP_IMPORTFROM}>
 	<br>
 	<{$uploadfile_info}>
 </div>
+
 
 <form name="importfrom" action="<{$mod_url}>/admin/index.php?page=import" method="post">
 	<div class="ui-card-full">

@@ -32,7 +32,7 @@ else $cid = $user_access->get_top_weightid( 1 ) ;
 // GET CATEGORY TITLE
 $mycategory = new MyCategory( $mydirname, 'Show', $cid ) ;
 $title = $mycategory->return_title() ;
-$formtitle = ( $title ) ? sprintf( _MD_D3DOWNLOADS_H2USERACCESS , $title ) : _MD_D3DOWNLOADS_NEWCID_USERACCESS ;
+$formtitle = ( $title ) ? sprintf( _MD_D3DOWNLOADS_H2GROUPACCESS , $title ) : _MD_D3DOWNLOADS_NEWCID_USERACCESS ;
 
 $parentid = $mycategory->return_pid() ;
 $maincid = ( $parentid != 0 ) ? $mycategory->get_my_maincid( $cid ) : 0 ;
@@ -85,7 +85,7 @@ if( ! empty( $_POST['group_copy'] ) ) {
 	if( empty( $_POST['action_selects'] ) ) $message[] = _MD_D3DOWNLOADS_ERROR_SEL_GROUP ;
 	if( ! empty( $message ) ){
 		$iserror = 1 ;
-		$error_message = implode( '<br />' , $message ) ;
+		$error_message = implode( '<br>' , $message ) ;
 		$group_trs = $user_access->get_group_form( $cid, $parentid, 0, 1 ) ;
 	}
 	if( empty( $iserror ) ) {
@@ -108,7 +108,7 @@ if( ! empty( $_POST['all_group_copy'] ) ) {
 	if( empty( $_POST['action_selects'] ) ) $message[] = _MD_D3DOWNLOADS_ERROR_SEL_GROUP ;
 	if( ! empty( $message ) ){
 		$iserror = 1 ;
-		$error_message = implode( '<br />' , $message ) ;
+		$error_message = implode( '<br>' , $message ) ;
 		$group_trs = $user_access->get_group_form( $cid, $parentid, 0, 1 ) ;
 	}
 	if( empty( $iserror ) ) {
@@ -134,7 +134,7 @@ if( ! empty( $_POST['user_copy'] ) ) {
 	if( ( is_array( @$_POST['can_read_user'] ) && empty( $_POST['action_selects_u']  ) ) && ( is_array( @$_POST['new_uids'] ) && empty( $_POST['new_action_selects_u']  ) ) ) $message[] = _MD_D3DOWNLOADS_ERROR_SEL_USER ;
 	if( ! empty( $message ) ){
 		$iserror = 1 ;
-		$error_message = implode( '<br />' , $message ) ;
+		$error_message = implode( '<br>' , $message ) ;
 		$user_trs = $user_access->get_user_form( $cid, $parentid, 0, 1  ) ;
 		$newuser_trs = $user_access->get_newuser_form( $cid, 1 ) ;
 	}
@@ -154,7 +154,7 @@ if( ! empty( $_POST['all_user_copy'] ) ) {
 	if( ( is_array( @$_POST['can_read_user'] ) && empty( $_POST['action_selects_u']  ) ) && ( is_array( @$_POST['new_uids'] ) && empty( $_POST['new_action_selects_u']  ) ) ) $message[] = _MD_D3DOWNLOADS_ERROR_SEL_USER ;
 	if( ! empty( $message ) ){
 		$iserror = 1 ;
-		$error_message = implode( '<br />' , $message ) ;
+		$error_message = implode( '<br>' , $message ) ;
 		$user_trs = $user_access->get_user_form( $cid, $parentid, 0, 1  ) ;
 		$newuser_trs = $user_access->get_newuser_form( $cid, 1 ) ;
 	}
@@ -166,8 +166,7 @@ if( ! empty( $_POST['all_user_copy'] ) ) {
 	}
 }
 
-// DISPLAY STAGE
-
+// RENDER
 xoops_cp_header();
 include dirname(__FILE__).'/mymenu.php' ;
 require_once XOOPS_ROOT_PATH.'/class/template.php' ;

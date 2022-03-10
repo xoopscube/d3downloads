@@ -29,7 +29,7 @@ if( ! class_exists( 'd3downloadsComment' ) )
 			$uri = XOOPS_URL.'/modules/'.$mydirname.'/index.php?page=singlefile&cid='.$cid.'&lid='.$lid ;
 			$filters = $myts->makeTboxData4Show( $myrow['filters'] ) ;
 			$str = strip_tags( $myts->displayTarea( strip_tags( $myrow['description'] ), 0, 1, 1, 1, 1, $filters ) ) ;
-			$summary = xoops_substr( $str , 0 , 255 ) ;
+			$summary = xoops_substr( $str , 0 , 191 ) ;
 
 			return array(
 				'dirname' => $mydirname ,

@@ -13,6 +13,7 @@ $module_handler =& xoops_gethandler( 'module' ) ;
 $module =& $module_handler->getByDirname( $mydirname ) ;
 $moduleperm_handler =& xoops_gethandler( 'groupperm' ) ;
 $mid = $module->getVar('mid') ;
+
 if( ! is_object( @$xoopsUser ) || ! $moduleperm_handler->checkRight( 'module_admin' , $mid , $xoopsUser->getGroups() ) ) {
 	die( 'Only administrator can use this feature.' ) ;
 }

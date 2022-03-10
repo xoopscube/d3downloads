@@ -211,7 +211,8 @@ if( ! class_exists( 'unapproval_download' ) )
 			$unapproval_num = $this->Total_Num() ;
 			return array(
 				'num' => $unapproval_num ,
-				'link' => '<a href="'.$this->mod_url.'/admin/index.php?page=approvalmanager">'.sprintf( _MD_D3DOWNLOADS_UNAPPROVAL_NUM , $unapproval_num ).'</a>' ,
+				//'link' => '<a href="'.$this->mod_url.'/admin/index.php?page=approvalmanager">'.sprintf( _MD_D3DOWNLOADS_UNAPPROVAL_NUM , $unapproval_num ).'</a>' ,
+                'link' => $this->mod_url.'/admin/index.php?page=approvalmanager' ,
 			) ;
 		}
 
@@ -232,8 +233,8 @@ if( ! class_exists( 'unapproval_download' ) )
 			$link = $this->mod_url.'/index.php?page=visit_url&unapproval=1&cid='.$cid.'&id='.$id ;
 			if ( ! preg_match("`^(https?|ftp)://`i", $url ) ) {
 				if( ! $this->check_file( $url ) ){
-					$filelink     = '( <span style="color: #CC0000;font-weight: bold;">broken file !!</span> )';
-					$filenamelink = $filename.'&nbsp;&nbsp;( <span style="color: #CC0000;font-weight: bold;">broken file !!</span> )';
+					$filelink     = '( <span style="color: #CC0000;font-weight: bold;">Broken file !</span> )';
+					$filenamelink = $filename.'&nbsp;&nbsp;( <span style="color: #CC0000;font-weight: bold;">Broken file !</span> )';
 				} else {
 					if( empty( $second ) ){
 						$filelink     = '[<a href="'.$link.'">'._MD_D3DOWNLOADS_SUBMIT_DOWNLOAD.'</a>]' ;
@@ -246,7 +247,7 @@ if( ! class_exists( 'unapproval_download' ) )
 			} elseif ( preg_match('/('.$exception.')$/i', $url ) ) {
 				$filelink = '[<a href="'.$link.'">'._MD_D3DOWNLOADS_SUBMIT_ACCESS_URL.'</a>]' ;
 			} else {
-				$filelink = '[<a href="'.$link.'" target="_blank">'._MD_D3DOWNLOADS_SUBMIT_ACCESS_URL.'</a>]' ;
+				$filelink = '[<a href="'.$link.'" target="_blank" rel="noopener noreferrer nofollow">'._MD_D3DOWNLOADS_SUBMIT_ACCESS_URL.'</a>]' ;
 			}
 			return array(
 				'filelink'     => $filelink ,

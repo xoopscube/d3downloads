@@ -1,229 +1,260 @@
 <div class="ui-dev-mode"><{$smarty.template}></div>
 
 
-<section layout="column mt-6" class="category-top">
+<article layout="column mb-6">
 
-	<h2>
-		<img class="svg folder" src="<{$xoops_url}>/images/icons/folder.svg" width="1em" height="1em" alt="<{$smarty.const._MD_D3DOWNLOADS_CATEGORY}>">
-		 <{$down.category}>
-	</h2>
 
-	<article layout="column" id="0">
-
-		<div layout="rows center-justify">
-			<h3 self="pr-2">
-				<img class="svg user" src="<{$xoops_url}>/images/icons/package.svg" width="1em" height="1em" alt="user">
-					<{if ! $down.broken_link}>
-					<{$down.filelink}><span class="d3downloads_bold"><{$down.title}></span></a><{$down.new}><{$down.pop}>
-					<{else}>
-					<span class="d3downloads_bold"><{$down.title}></span>
-					<{/if}>
-
-				<{if $down.gif_image && $down.gif_image !="download.gif"}>
-				<{$down.filelink}><img src="images/<{$down.gif_image}>" width="110" height="18"></a>
-				<{elseif $down.gif_image}>
-				<{$down.filelink}><img src="images/<{$down.gif_image}>" width="19" height="19"></a>
+	<{* ----- DOWNLOAD TITLE ----- *}>
+	<div layout="rows center-justify">
+		<h3>
+		<{if ! $down.singlelink}>
+			<img class="svg" src="<{$xoops_url}>/images/icons/folder.svg" width="1em" height="1em" alt="<{$smarty.const._MD_D3DOWNLOADS_CATEGORY}>">
+			<{$down.category}> :
+				<{if ! $down.broken_link}>
+					<a href="<{$mod_url}>/index.php?page=singlefile&amp;cid=<{$down.cid}>&amp;lid=<{$down.id}>" title="<{$smarty.const._MD_D3DOWNLOADS_SHOWDETAIL}>">
+					<{$down.title}> <{$down.new}> <{$down.pop}>
+					</a>
 				<{else}>
-				(&nbsp;<span class="d3downloads_broken_message"><{$smarty.const._MD_D3DOWNLOADS_BROKEN_FILE}></span>&nbsp;)
+					<{$down.title}>
+				<{/if}>
+			<{else}>
+			<{$down.title}> <{$down.new}> <{$down.pop}>
+		<{/if}>
+		</h3>
+		<a href="<{$mod_url}>/rss.php?cid=<{$category_id}><{if $intree}>&amp;intree=<{$intree}><{/if}><{if $mylink}>&amp;mylink=<{$mylink}><{/if}>">
+			<img class="svg" src="<{$xoops_url}>/images/icons/rss.svg" width="1em" height="1em" alt="RSS">
+		</a>
+	</div>
+
+
+	<{* ----- ACTIVITY ----- *}>
+	<section layout="row center-justify p-2 my-4" class="activity">
+		<div class="size-x1">
+			<{if $mod_config.show_postname}>
+				<img class="svg" src="<{$xoops_url}>/images/icons/user.svg" width="1em" height="1em" alt="user">
+				<{$smarty.const._MD_D3DOWNLOADS_SUBMIT_POSTNAME}> <{$down.postname}>
+			<{/if}>
+			<img class="svg" src="<{$xoops_url}>/images/icons/date-time.svg" width="1em" height="1em" alt="date">
+			<{$smarty.const._MD_D3DOWNLOADS_DATE}> <span class="badge"><{$down.updated}></span>
+			<{if $down.version}>
+				<{$smarty.const._MD_D3DOWNLOADS_VERSION}> <span class="badge"><{$down.version}></span>
+			<{/if}>
+			<img class="svg" src="images/counter.svg" width="1em" height="1em" alt="<{$smarty.const._MD_D3DOWNLOADS_DOWNSUM}>">
+			<span class="badge" title="<{$smarty.const._MD_D3DOWNLOADS_DOWNSUM}>"><{$down.hits}></span>
+		</div>
+	</section>
+
+
+
+	<{* ----- DESCRIPTION ----- *}>
+	<section layout="column" aria-label="Download Description">
+
+		<div layout="row sm-column">
+
+			<div self="size-1of3 sm-full">
+
+				<div self="size-x1 center-center mx-auto py-2">
+
+				<{if $down.gif_image && $down.gif_image !="blank-file.svg"}>
+						<h4><{$down.filelink}><img class="svg" src="images/<{$down.gif_image}>" width="2em" height="2em" alt="link">
+							<{$smarty.const._MD_D3DOWNLOADS_DIRECT_LINK}></a></h4>
+				<{elseif $down.gif_image}>
+					<h4><{$down.filelink}><img class="svg" src="images/<{$down.gif_image}>" width="2em" height="2em" alt="image">
+						<{$smarty.const._MD_D3DOWNLOADS_DIRECT_LINK}></a></h4>
+				<{else}>
+					<span class="msg-callout msg-warning"><{$smarty.const._MD_D3DOWNLOADS_BROKEN_FILE}></span>
 				<{/if}>
 
 				<{if $down.filelink2}>
-				<{if $down.gif_image2 && $down.gif_image2 !="download.gif"}>
-				<{$down.filelink2}><img src="images/<{$down.gif_image2}>" width="110" height="18"></a>
+				<{if $down.gif_image2 && $down.gif_image2 !="blank-file.svg"}>
+					<h4><{$down.filelink2}><img class="svg" src="images/<{$down.gif_image2}>" width="2em" height="2em">
+						<{$smarty.const._MD_D3DOWNLOADS_DIRECT_LINK}></a></h4>
 				<{elseif $down.gif_image2}>
-				<{$down.filelink2}><img src="images/<{$down.gif_image2}>" width="19" height="19"></a>
+					<h4><{$down.filelink2}><img class="svg" src="images/<{$down.gif_image2}>" width="2em" height="2em">
+						<{$smarty.const._MD_D3DOWNLOADS_DIRECT_LINK}></a></h4>
 				<{else}>
-				(&nbsp;<span class="d3downloads_broken_message"><{$smarty.const._MD_D3DOWNLOADS_BROKEN_FILE}></span>&nbsp;)
+					<span class="msg-callout msg-warning"><{$smarty.const._MD_D3DOWNLOADS_BROKEN_FILE}></span>
 				<{/if}>
 				<{/if}>
-			</h3>
-
-			<a self="ml-2" href="https://xyz.local/xcl/html/modules/docs/index.php?page=rss&amp;cat_id=0">
-				<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="rss" role="img">
-					<path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z" fill="currentColor"></path>
-				</svg></a>
-		</div>
-
-
-		<div layout="row center-justify p-2 my-4" class="activity">
-
-			<div class="size-x1">
-				<{if $mod_config.show_postname}>
-				<img class="svg user" src="<{$xoops_url}>/images/icons/user.svg" width="1em" height="1em" alt="user">
-				<{$smarty.const._MD_D3DOWNLOADS_SUBMIT_POSTNAME}> <{$down.postname}>
-				<{/if}>
-				<img class="svg date-time" src="<{$xoops_url}>/images/icons/date-time.svg" width="1em" height="1em" alt="date time">
-				<{$smarty.const._MD_D3DOWNLOADS_DATE}> <span class="badge"><{$down.updated}></span>
-				<{if $down.version}>
-				<{$smarty.const._MD_D3DOWNLOADS_VERSION}> <span class="badge"><{$down.version}></span>
-				<{/if}>
-				Views: <span class="badge">0</span>
-
-			</div>
-
-		</div>
-
-
-		<div layout="row center-left" class="action-control">
-
-			<img src="images/counter.gif" alt="<{$smarty.const._MD_D3DOWNLOADS_DOWNSUM}>" title="<{$smarty.const._MD_D3DOWNLOADS_DOWNSUM}>"> <{$down.hits}>
-			<{if $down.size}>
-			<img src="images/size.gif" alt="<{$smarty.const._MD_D3DOWNLOADS_SIZE}>" title="<{$smarty.const._MD_D3DOWNLOADS_SIZE}>">&nbsp;<{$down.size}>
-			<{/if}>
-			<{if $down.platform}>
-			<img src="images/platform.gif" alt="<{$smarty.const._MD_D3DOWNLOADS_PLATFORM}>" title="<{$smarty.const._MD_D3DOWNLOADS_PLATFORM}>"> <{$down.platform}>
-			<{/if}>
-			<{if $mod_config.use_license && $down.license}>
-			<img src="images/editicon.gif" alt="<{$smarty.const._MD_D3DOWNLOADS_LICENSE}>" title="<{$smarty.const._MD_D3DOWNLOADS_LICENSE}>"> <{$down.license}>
-			<{/if}>
-			<{if $down.homepage}>
-			<img src="images/home.gif" alt="<{$smarty.const._MD_D3DOWNLOADS_HOMEPAGE}>" title="<{$smarty.const._MD_D3DOWNLOADS_HOMEPAGE}>"><{$down.homepage}>
-			<{/if}>
-
-		</div>
-
-		
-
-		<div self="size-x1 mt-2">
-
-			<h4><{$smarty.const._MD_D3DOWNLOADS_DESCRIPTION}></h4>
-
-			<div class="d3downloads_single_frame_description">
-				<{if $canuseshots &&  ! $down.broken_link}>
-				<{$down.shots}>
-				<{/if}>
-				<{$down.description}>
-			</div>
-
-
-
-
-			<div layout="row center-justify sm-column" aria-label="Vote group">
-
-				<div self="size-1of2 center inline sm-full">
-					<{if $down.md5 || $down.md5_2}>
-					<{if $down.md5}><{$down.md5}>
-					<br>
-					<{/if}>
-					<{if $down.md5_2}><{$down.md5_2}><{/if}>
-					<{/if}>
 				</div>
 
-				<div self="right sm-full" class="content-tags">
-				</div>
+
+
+				<{* ----- SINGLE FILE VIEW ----- *}>
+				<{if $down.singlelink}>
+
+
+					<{* ----- INFORMATION ----- *}>
+					<ul class="component-ref" role="list">
+						<{if $down.size}>
+						<li>
+							<img class="svg" src="images/weight.svg" width="1em" height="1em" alt="<{$smarty.const._MD_D3DOWNLOADS_SIZE}>" title="<{$smarty.const._MD_D3DOWNLOADS_SIZE}>">
+							<{$down.size}></li>
+						<{/if}>
+						<li>
+							<img class="svg" src="images/counter.svg" width="1em" height="1em" alt="counter">
+							<{$smarty.const._MD_D3DOWNLOADS_DOWNSUM}> <span class="badge"><{$down.hits}></span>
+						</li>
+						<{if $down.platform}>
+						<li>
+							<img class="svg" src="images/platform.svg" width="1em" height="1em" alt="<{$smarty.const._MD_D3DOWNLOADS_PLATFORM}>" title="<{$smarty.const._MD_D3DOWNLOADS_PLATFORM}>">
+							<{$down.platform}></li>
+						<{/if}>
+						<{if $mod_config.use_license && $down.license}>
+						<li>
+							<img class="svg" src="images/license.svg" width="1em" height="1em" alt="<{$smarty.const._MD_D3DOWNLOADS_LICENSE}>" title="<{$smarty.const._MD_D3DOWNLOADS_LICENSE}>">
+							<{$down.license}></li>
+						<{/if}>
+						<{if $down.homepage}>
+						<li>
+							<img class="svg" src="images/link.svg" width="1em" height="1em" alt="<{$smarty.const._MD_D3DOWNLOADS_HOMEPAGE}>" title="<{$smarty.const._MD_D3DOWNLOADS_HOMEPAGE}>">
+							<{$down.homepage}></li>
+						<{/if}>
+
+
+						<{* ----- FILE MD5 ----- *}>
+						<{if $down.md5 || $down.md5_2}>
+							<{if $down.md5}>
+								<li><small><{$down.md5}></small></li>
+							<{/if}>
+							<{if $down.md5_2}>
+								<li><small><{$down.md5_2}></small></li>
+							<{/if}>
+						<{/if}>
+
+					</ul>
+
+
+				<{/if}>
+				<{* ----- SINGLE FILE VIEW ----- *}>
+
 			</div>
 
 
-			<{* ----- Vote and Author *}>
+			<div self="size-2of3 sm-full">
 
-			<div layout="row center-justify sm-column" aria-label="Vote group">
+				<div class="d3downloads_single_frame_description">
 
-				<div self="size-1of2 center inline sm-full">
 
-					<a class="ui-button" href="<{$mod_url}>/index.php?page=ratefile&amp;cid=<{$down.cid}>&amp;lid=<{$down.id}>">
-						<img class="svg heart-like" src="<{$xoops_url}>/images/icons/heart.svg" alt="rate">
-						<span self="sm-hide"><{$smarty.const._MD_D3DOWNLOADS_RATE}></span>
-					</a>
+					<{* ----- SCREENSHOT ----- *}>
+					<{if $canuseshots &&  ! $down.broken_link}>
+					<div self="size-x1 mb-6 sm-full"><{$down.shots}></div>
+					<{/if}>
 
-					<span self="center">
-            	<img class="svg chart" src="<{$xoops_url}>/images/icons/chart.svg" width="1em" height="1em" alt="votes">
 
-				 <{$smarty.const._MD_D3DOWNLOADS_VOTEC}> <span class="badge"><{$down.votes}></span>
+					<{* ----- DESCRIPTION ----- *}>
+					<h4>description: <{$smarty.const._MD_D3DOWNLOADS_DESCRIPTION}></h4>
+					<div self="size-x1 mb-6 sm-full"><{$down.description}></div>
+
+
+					<{* ----- EXTRA DATA ----- *}>
+					<{if $down.extra}>
+			 		<table class="outer">
+						<{foreach item="info" from=$down.extra}>
+						<tbody>
+						<tr>
+							<td class="title" width="20%">
+								<{$info.title}>
+							</td>
+							<td class="desc" width="80%">
+								<{$info.desc}>
+							</td>
+						</tr>
+						<{/foreach}>
+						</tbody>
+					</table>
+					<{/if}>
+
+
+				</div>
+
+			</div>
+
+
+
+
+		</div>
+
+
+	<{* ----- VOTE RATE ----- *}>
+	<div layout="row center-justify sm-column" aria-label="Vote group">
+
+		<div self="size-1of2 center inline sm-full">
+
+			<a class="ui-button" href="<{$mod_url}>/index.php?page=ratefile&amp;cid=<{$down.cid}>&amp;lid=<{$down.id}>">
+				<img class="svg heart-like" src="<{$xoops_url}>/images/icons/heart.svg" alt="rate">
+				<span self="sm-hide"><{$smarty.const._MD_D3DOWNLOADS_RATE}></span>
+			</a>
+
+			<span self="center">
+				<img class="svg chart" src="<{$xoops_url}>/images/icons/chart.svg" width="1em" height="1em" alt="votes">
+
+				<{$smarty.const._MD_D3DOWNLOADS_VOTEC}> <span class="badge"><{$down.votes}></span>
 				<span><{$smarty.const._MD_D3DOWNLOADS_RATINGC}></span> <span class="badge"><{$down.rating}></span>
 			</span>
 
-				</div>
-
-				<{if $mod_config.show_postname && ! $mypost}>
-				<div self="right sm-full" class="content-tags">
-			<span self="mr-1">
-				<img class="avatar" src="<{$down.mypost_more|xoops_user_avatarize}>" width="20px" height="20px" alt="author"> <{$down.mypost_more}>
-			</span>
-				</div>
-				<{/if}>
-
-			</div>
-
-			<{* Action control *}>
-
-			<div layout="row center-left" class="action-control">
-
-				<{if $down.canedit}>
-				<a self="mr-2 center-left" class="ui-button" href="<{$mod_url}>/index.php?page=modfile&amp;cid=<{$down.cid}>&amp;lid=<{$down.id}>">
-					<img class="svg file-edit" src="<{$xoops_url}>/images/icons/file-edit.svg" width="1em" height="1em" alt="file-edit">
-					<{$smarty.const._MD_D3DOWNLOADS_MODIFY}></a>
-				<{/if}>
-
-				<a self="mr-2 center-left" class="ui-button" href="<{$mod_url}>/index.php?page=brokenfile&amp;cid=<{$down.cid}>&amp;lid=<{$down.id}>">
-					<img class="svg file-edit" src="<{$xoops_url}>/images/icons/file-edit.svg" width="1em" height="1em" alt="file-edit">
-					<{$smarty.const._MD_D3DOWNLOADS_REPORTBROKEN}>
-				</a>
-
-				<a self="mr-2 center-left" class="ui-button" target="_top" href="<{$down.mail_link}>">
-					<img class="svg file-edit" src="<{$xoops_url}>/images/icons/file-edit.svg" width="1em" height="1em" alt="file-edit">
-					<{$smarty.const._MD_D3DOWNLOADS_TELLAFRIEND}>
-				</a>
-
-				<{if $down.d3comment && $down.cancomment}>
-				<a self="mr-2 center-left" class="ui-button" href="<{$mod_url}>/index.php?page=singlefile&amp;cid=<{$down.cid}>&amp;lid=<{$down.id}>#comment">
-					<{$smarty.const._MD_D3DOWNLOADS_COMMENTS}> (<{$down.comments}>)</a>
-				<{elseif ! $down.singlelink}>
-				<a class="ui-button" href="<{$mod_url}>/index.php?page=singlefile&amp;cid=<{$down.cid}>&amp;lid=<{$down.id}>">
-					<{$smarty.const._MD_D3DOWNLOADS_SHOWDETAIL}></a>
-				<{/if}>
-
-				<form name="mylinkform" id="mylinkform" action="<{$mod_url}>/index.php?page=mylink" method="post">
-					<{if ! $down.is_mylink}>
-					<input class="ui-button" type="submit" name="add_mylink" id="add_mylink" value="<{$smarty.const._MD_D3DOWNLOADS_ADD_MYLINK}>">
-					<{else}>
-					<input class="ui-button" type="submit" name="del_mylink" id="del_mylink" value="<{$smarty.const._MD_D3DOWNLOADS_DEL_MYLINK}>" onclick="return confirm('<{$smarty.const._MD_D3DOWNLOADS_MSG_CONFIRMDELETECONTENT}>')">
-					<{/if}>
-					<input type="hidden" name="lid" value="<{$down.id}>">
-				</form>
-
-			</div>
-
-
-
-
-
-
 		</div>
 
 
+		<{* ----- AUTHOR LINK ----- *}>
+		<{if $mod_config.show_postname && ! $mypost}>
+		<div self="right sm-full" class="content-tags">
+			<span self="mr-1">
+				<img class="avatar" src="<{$down.mypost_more|xoops_user_avatarize}>" width="20px" height="20px" alt="author">
+				<{$down.mypost_more}>
+			</span>
+		</div>
+		<{/if}>
 
 
-
-	</article>
-
-
-</section>
+	</div>
 
 
-<article layout="column" id="docs_container">
+	<{* ----- ADMIN CONTROL ----- *}>
+	<div layout="row center-justify sm-column" class="action-control">
+
+		<div aria-label="action">
+		<{if $down.canedit}>
+		<a self="mr-2 center-left" class="ui-button" href="<{$mod_url}>/index.php?page=modfile&amp;cid=<{$down.cid}>&amp;lid=<{$down.id}>">
+			<img class="svg file-edit" src="<{$xoops_url}>/images/icons/file-edit.svg" width="1em" height="1em" alt="file-edit">
+			<{$smarty.const._MD_D3DOWNLOADS_MODIFY}></a>
+		<{/if}>
+
+		<a self="mr-2 center-left" class="ui-button" href="<{$mod_url}>/index.php?page=brokenfile&amp;cid=<{$down.cid}>&amp;lid=<{$down.id}>">
+			<img class="svg file-edit" src="<{$xoops_url}>/images/icons/file-edit.svg" width="1em" height="1em" alt="file-edit">
+			<{$smarty.const._MD_D3DOWNLOADS_REPORTBROKEN}>
+		</a>
+
+		<a self="mr-2 center-left" class="ui-button" target="_top" href="<{$down.mail_link}>">
+			<img class="svg file-edit" src="<{$xoops_url}>/images/icons/file-edit.svg" width="1em" height="1em" alt="file-edit">
+			<{$smarty.const._MD_D3DOWNLOADS_TELLAFRIEND}>
+		</a>
+
+		<{if $down.d3comment && $down.cancomment}>
+		<a self="mr-2 center-left" class="ui-button" href="<{$mod_url}>/index.php?page=singlefile&amp;cid=<{$down.cid}>&amp;lid=<{$down.id}>#comment">
+			<{$smarty.const._MD_D3DOWNLOADS_COMMENTS}> (<{$down.comments}>)</a>
+		<{/if}>
+		</div>
+
+		<div aria-label="My Link">
+		<form name="mylinkform" id="mylinkform" action="<{$mod_url}>/index.php?page=mylink" method="post">
+			<{if ! $down.is_mylink}>
+			<input class="ui-button" type="submit" name="add_mylink" id="add_mylink" value="<{$smarty.const._MD_D3DOWNLOADS_ADD_MYLINK}>">
+			<{else}>
+			<input class="ui-button" type="submit" name="del_mylink" id="del_mylink" value="<{$smarty.const._MD_D3DOWNLOADS_DEL_MYLINK}>" onclick="return confirm('<{$smarty.const._MD_D3DOWNLOADS_MSG_CONFIRMDELETECONTENT}>')">
+			<{/if}>
+			<input type="hidden" name="lid" value="<{$down.id}>">
+		</form>
+		</div>
+
+	</div>
 
 
-	<{if $down.extra}>
-	<hr>
-
-	<table class="outer d3downloads_extra">
-		<{foreach item="info" from=$down.extra}>
-		<tbody><tr>
-			<td class="title" width="20%">
-				<{$info.title}>
-			</td>
-			<td class="desc" width="80%">
-				<{$info.desc}>
-			</td>
-		</tr>
-		<{/foreach}>
-		</tbody>
-	</table>
-	<{/if}>
-
+	</section>
 
 
 </article>
+
 
 
 

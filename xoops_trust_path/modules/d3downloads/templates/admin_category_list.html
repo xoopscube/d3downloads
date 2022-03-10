@@ -1,9 +1,9 @@
 <div class="ui-dev-mode"><{$smarty.template}></div>
 
-<script type="text/javascript" src="<{$mod_url}>/index.php?page=module_header&src=jquery.js"></script>
 <script type="text/javascript" src="<{$mod_url}>/index.php?page=module_header&src=d3downloads.js"></script>
 
-<h3><{$smarty.const._MD_D3DOWNLOADS_H2CATEGORYMANAGER}></h3>
+<h2><{$smarty.const._MD_D3DOWNLOADS_H2CATEGORYMANAGER}></h2>
+
 
 <{if $iserror}>
 	<div class="error">
@@ -11,40 +11,27 @@
 	</div>
 <{/if}>
 
+
+<div class="tips">
+	<{$smarty.const._MD_D3DOWNLOADS_HELP_CATEGORY_DEL}>
+</div>
+
+
 <form name="categorymanager" id="categorymanager" action="<{$mod_url}>/admin/index.php?page=<{$page}>" method="post">
 <{$gticket_hidden}>
 
 	<div layout="row center-justify" class="control-action">
-
 		<div>
-			<a  class="ui-btn ui-btn small" href="<{$mod_url}>/admin/index.php?page=categoryedit&amp;cid=0">
-				<{$smarty.const._MD_D3DOWNLOADS_NEWCATEGORYEDITTITLE}>
-			</a>
-		</div>
-
-		<div class="control-view">
-
-			<{$smarty.const._MD_D3DOWNLOADS_LABEL_PERPAGE}>&nbsp;
+			<{$smarty.const._MD_D3DOWNLOADS_LABEL_PERPAGE}>
 			<select name="perpage" onchange="submit();">
 				<{html_options options=$perpage selected=$select_perpage}>
 			</select>
-
-<!--			<button id="list" class="ui-btn" data-id="1" type="button" title="View List">-->
-<!--				<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24">-->
-<!--					<path d="M9 5v4h12V5M9 19h12v-4H9m0-1h12v-4H9M4 9h4V5H4m0 14h4v-4H4m0-1h4v-4H4v4z" fill="currentColor"></path></svg>-->
-<!--			</button>-->
-
-<!--			<button id="grid" class="ui-btn" data-id="2" type="button" title="View Grid">-->
-<!--				<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24">-->
-<!--					<path d="M16 5v6h5V5m-11 6h5V5h-5m6 13h5v-6h-5m-6 6h5v-6h-5m-6 6h5v-6H4m0-1h5V5H4v6z" fill="currentColor"></path></svg>-->
-<!--			</button>-->
-
-<!--			<button id="filter" class="ui-btn" type="button" data-id="3" onclick="slideToggle('.user-filter', this)" title="View Filter">-->
-<!--				<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">-->
-<!--					<path d="M7 11h10v2H7zM4 7h16v2H4zm6 8h4v2h-4z" fill="currentColor"></path></svg>-->
-<!--			</button>-->
-
-			<button class="help-admin ui-btn" type="button" data-id="5" data-module="user" data-help-article="#help-users" title="Help">
+		</div>
+		<div class="control-view">
+			<a class="ui-btn ui-btn small" href="<{$mod_url}>/admin/index.php?page=categoryedit&amp;cid=0">
+				<{$smarty.const._MD_D3DOWNLOADS_NEWCATEGORYEDITTITLE}>
+			</a>
+			<button class="help-admin ui-btn" type="button" data-id="5" data-module="user" data-help-article="#help-category" title="Help">
 				<span class="ui-icon ui-icon-help"></span>
 			</button>
 		</div>
@@ -86,12 +73,12 @@
 	</thead>
 	<tbody>
 	<{foreach from=$category item="mycategory"}>
-		<tr class="<{cycle values="even,odd"}>">
+		<tr style="text-align:center">
 			<td>
 				<{$mycategory.cid}>
 			</td>
 			<td nowrap="nowrap">
-				<input type="text" size="35" maxlength="255" name="title[<{$mycategory.cid}>]" id="col_title_<{$mycategory.cid}>" value="<{$mycategory.title}>">
+				<input type="text" size="35" maxlength="191" name="title[<{$mycategory.cid}>]" id="col_title_<{$mycategory.cid}>" value="<{$mycategory.title}>">
 				<div id="title_info_<{$mycategory.cid}>" style="display:none;color: #CC0000;font-size:100%;font-weight:bold;margin:2px;padding:2px;"></div>
 			</td>
 			<td>
@@ -107,23 +94,25 @@
 				<{if $mycategory.parentid}>
 					<a href="<{$mod_url}>/admin/index.php?page=categoryedit&amp;cid=<{$mycategory.parentid}>"><{$mycategory.parent_cat}></a>
 				<{else}>
-					<div alighn="center">-----</div>
+					<span>-----</span>
 				<{/if}>
 			</td>
 			<td>
 				<{if $mycategory.imgurl != ""}>
 					<img src="<{$mycategory.imgurl}>" width="70">
 				<{else}>
-					<img src="<{$mod_url}>/images/folder.gif" width="18" height="14">
+					<img class="svg" src="<{$xoops_url}>/images/icons/folder.svg" width="20" height="20" alt="folder">
 				<{/if}>
 			</td>
 			<td nowrap="nowrap">
-				<a href="<{$mod_url}>/index.php?cid=<{$mycategory.cid}>"><{$smarty.const._MD_D3DOWNLOADS_VISIBLE}></a>
+				<input type="checkbox" name="action_selects[<{$mycategory.cid}>]" id="col_action_<{$mycategory.cid}>" value="1">
 				<a href="<{$mod_url}>/admin/index.php?page=categoryedit&amp;cid=<{$mycategory.cid}>"><{$smarty.const._EDIT}></a>
-				<input type="checkbox" name="action_selects[<{$mycategory.cid}>]" id="col_action_<{$mycategory.cid}>" value="1"><br>
+				<br>
 				<span style="font-size: small;">
 					<a href="<{$mod_url}>/admin/index.php?page=categoryedit&amp;cid=0&amp;pid=<{$mycategory.cid}>">
 					<{$smarty.const._MD_D3DOWNLOADS_MAKESUBCATEGORY}></a>
+					<br>
+					<a href="<{$mod_url}>/index.php?cid=<{$mycategory.cid}>"><{$smarty.const._MD_D3DOWNLOADS_VIEW}></a>
 				</span>
 			</td>
 		</tr>
@@ -138,9 +127,8 @@
 	<tr>
 		<th colspan="8">
 			<{$smarty.const._MD_D3DOWNLOADS_LABEL_CATEGORYCHECKED}>
-			<br>
-			<input type="submit" name="delete" id="delete" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_DELETE}>"> |
-			<input type="submit" name="category_top_move" id="category_top_move" value="<{$smarty.const._MD_D3DOWNLOADS_CATEGORY_TOP_MOVE}>"> |
+			<input type="submit" class="button-delete" name="delete" id="delete" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_DELETE}>">
+			<input type="submit" name="category_top_move" id="category_top_move" value="<{$smarty.const._MD_D3DOWNLOADS_CATEGORY_TOP_MOVE}>">
 			<input type="submit" name="category_move" id="category_move" value="<{$smarty.const._MD_D3DOWNLOADS_CATEGORY_MOVE}>">
 			<{$smarty.const._MD_D3DOWNLOADS_SEL_CATEGORY}>
 			<select name="move_select" id="move_select">
@@ -151,10 +139,6 @@
 	</tfoot>
 </table>
 
-	<div class="error">
-		<{$smarty.const._MD_D3DOWNLOADS_HELP_CATEGORY_DEL}>
-	</div>
-
 	<div class="tips">
 		<{$smarty.const._MD_D3DOWNLOADS_CATEGORY_CHECK}>
 		<input type="submit" name="category_check" value="<{$smarty.const._SUBMIT}>">
@@ -162,7 +146,7 @@
 
 </form>
 
-<div align="right"><{$pagenav}></div>
+<div class="pagination"><{$pagenav}></div>
 
 <{if $sitemap}>
 	<h3><{$smarty.const._MD_D3DOWNLOADS_CATEGORY_TREE}></h3>
@@ -171,24 +155,20 @@
 		<tr>
 			<{foreach from=$sitemap.parent item="parent" key="count"}>
 				<td style="width:33%">
-<!--					<div style="border:dotted 1px #c0c0c0;padding:2px">-->
-<!--						<div style="border:dotted 1px #808080;padding:10px">-->
-							<div>
-								<img src="<{$mod_url}>/images/folder.gif" width="18" height="14">
-								&nbsp;<a href="<{$mod_url}>/<{$parent.url}>"><{$parent.title}></a>
-								&nbsp;<span style="font-size:smaller;">( <{$parent.files}> )</span>
-							</div>
-							<{foreach from=$parent.child item="child"}>
-								<div>
-									&nbsp;<a href="<{$mod_url}>/<{$child.url}>"><{$child.title}></a>
-									&nbsp;<span style="font-size:smaller;">( <{$child.files}> )</span>
-								</div>
-							<{/foreach}>
-							<div style="font-size:smaller;">
-								( <{$smarty.const._MD_D3DOWNLOADS_BCAT_TOTAL}><{$parent.total_files}> )
-							</div>
-<!--						</div>-->
-<!--					</div>-->
+					<div>
+						<img src="<{$mod_url}>/images/folder.gif" width="18" height="14">
+						<a href="<{$mod_url}>/<{$parent.url}>"><{$parent.title}></a>
+						<span style="font-size:smaller;">( <{$parent.files}> )</span>
+					</div>
+					<{foreach from=$parent.child item="child"}>
+						<div>
+							<a href="<{$mod_url}>/<{$child.url}>"><{$child.title}></a>
+							<span style="font-size:smaller;">( <{$child.files}> )</span>
+						</div>
+					<{/foreach}>
+					<div style="font-size:smaller;">
+						( <{$smarty.const._MD_D3DOWNLOADS_BCAT_TOTAL}><{$parent.total_files}> )
+					</div>
 				</td>
 		<{if ($count+1) is div by 3}>
 				</tr>

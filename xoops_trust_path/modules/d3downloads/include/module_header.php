@@ -29,7 +29,7 @@ if ( ! function_exists('d3download_get_module_header_request') ) {
 					}
 					break ;
 				case 'js' :
-					$array = array( 'livevalidation' , 'lightbox_plus' , 'spica' , 'jquery' , 'jquery.textarearesizer' , 'seekAttention.jquery' , 'd3downloads' ) ;
+					$array = array( 'livevalidation' , 'lightbox_plus' , 'spica' , 'jquery' , 'seekAttention.jquery' , 'd3downloads' ) ;
 					if( in_array( $file, $array ) ) switch( true ) {
 						case ( $file === 'lightbox_plus' ) :
 							$file_path = d3download_make_cashe_for_lightbox( $mydirname, 'lightbox_plus' ) ;
@@ -37,7 +37,7 @@ if ( ! function_exists('d3download_get_module_header_request') ) {
 						case ( $file === 'spica' ) :		
 							$file_path = $mytrustdirpath.'/include/js/lightbox/js/'. $my_file ;
 						break 2 ;
-						case ( $file === 'jquery' || $file === 'jquery.textarearesizer' || $file === 'seekAttention.jquery' ) :
+						case ( $file === 'jquery' || $file === 'seekAttention.jquery' ) :
 							$file_path = $mytrustdirpath.'/include/js/lib/'. $my_file ;
 						break 2 ;
 						default :	
@@ -150,7 +150,7 @@ if ( ! function_exists('d3download_make_module_header') ) {
 	{
 		switch( $type ) {
 			case 'css' :
-				return '<link rel="stylesheet" type="text/css" media="all" href="'.d3download_replace_css_uri( $mydirname, $name ).'" />' ;
+				return '<link rel="stylesheet" type="text/css" media="all" href="'.d3download_replace_css_uri( $mydirname, $name ).'">' ;
 			case 'js' :
 				return '<script type="text/javascript" src="'.XOOPS_URL.'/modules/'.$mydirname.'/index.php?page=module_header&src='.$name.'"></script>';
 		}
@@ -298,7 +298,7 @@ if ( ! function_exists('d3download_ratefile_check') ) {
 		$lid = intval( $_GET['lid'] ) ;
 		if( ! empty( $lid ) ) {
 			$check_result = $rate_download->Ratefile_check( $lid ) ;
-			echo ( ! empty( $check_result ) ) ? str_replace( '<br />', '', $check_result ) : '' ;
+			echo ( ! empty( $check_result ) ) ? str_replace( '<br>', '', $check_result ) : '' ;
 		}
 	}
 }
@@ -310,12 +310,12 @@ if ( ! function_exists('d3download_category_form_validate') ) {
 		$imgurl   = ( ! empty( $_GET['imgurl'] ) ) ?   @$_GET['imgurl']   : '' ;
 		$shotsdir = ( ! empty( $_GET['shotsdir'] ) ) ? @$_GET['shotsdir'] : '' ;
 
-		require_once dirname( dirname(__FILE__) ).'/class/post_check.php' ;
+		require_once dirname(__FILE__, 2) .'/class/post_check.php' ;
 		$post_check = new Post_Check() ;
 
 		switch( true ) {
 			case ( ! empty( $imgurl ) ) :
-				if( $imgurl != 'http://' ) {
+				if( $imgurl != 'https://' ) {
 					if ( ! $post_check->imgurlCheck( $imgurl ) ) $result = 'invalid' ;
 				}
 				break ;

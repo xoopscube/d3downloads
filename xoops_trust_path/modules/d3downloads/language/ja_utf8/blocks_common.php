@@ -44,9 +44,7 @@ define('_MB_D3DOWNLOADS_FILE','ファイル');
 define('_MB_D3DOWNLOADS_SUBMIT_POSTNAME','投稿者');
 define('_MB_D3DOWNLOADS_MYPOST_MORE','%s さんの投稿をもっと!');
 define('_MB_D3DOWNLOADS_SEL_INTREE','下層カテゴリも表示');
-define('_MB_D3DOWNLOADS_BROKEN_FILE','broken file !!');
-define('_MB_D3DOWNLOADS_MD5','[ ファイル名 ] %s  [ MD5 checksum ] %s');
+define('_MB_D3DOWNLOADS_BROKEN_FILE','Broken file !!');
+define('_MB_D3DOWNLOADS_MD5','[ ファイル名 ] %s <br>[ MD5 checksum ] %s');
 define('_MB_D3DOWNLOADS_COLS', '列数');
 define('_MB_D3DOWNLOADS_TOTAL','Total:');
-
-?>

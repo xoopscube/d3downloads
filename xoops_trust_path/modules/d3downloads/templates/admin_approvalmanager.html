@@ -1,9 +1,8 @@
 <div class="ui-dev-mode"><{$smarty.template}></div>
 
-<script type="text/javascript" src="<{$mod_url}>/index.php?page=module_header&src=jquery.js"></script>
 <script type="text/javascript" src="<{$mod_url}>/index.php?page=module_header&src=d3downloads.js"></script>
 
-<h3><{$smarty.const._MD_D3DOWNLOADS_H2APROVALLIST}> ( <{$unaproval_sum}> )</h3>
+<h2><{$smarty.const._MD_D3DOWNLOADS_H2APROVALLIST}></h2>
 
 <{if $iserror}>
 	<div class="error">
@@ -11,6 +10,24 @@
 	</div>
 <{/if}>
 
+
+
+<div layout="row center-justify" class="control-action">
+
+	<div>
+		<{$smarty.const._MD_D3DOWNLOADS_UNAPPROVAL_NUM}> <{$unaproval_sum}>
+	</div>
+
+	<div class="control-view">
+		<a class="ui-btn" href="<{$mod_url}>/admin/index.php?page=categoryedit&amp;cid=0">
+			<{$smarty.const._MD_D3DOWNLOADS_ADMIN_NEWCATEGORY}>
+		</a>
+		<button class="help-admin ui-btn" type="button" data-id="5" data-module="d3downloads" data-help-article="#help-approval" title="Help">
+			<span class="ui-icon ui-icon-help"></span>
+		</button>
+	</div>
+
+</div>
 <form name="approvalmanager" id="approvalmanager" action="<{$mod_url}>/admin/index.php?page=<{$page}>" method="post">
 <{$gticket_hidden}>
 <table class="outer">
@@ -70,8 +87,9 @@
 <form name="modfilemanager" id="modfilemanager" action="<{$mod_url}>/admin/index.php?page=<{$page}>" method="post">
 <{$gticket_hidden}>
 
-	<h3><{$smarty.const._MD_D3DOWNLOADS_H2MODFILELIST}> ( <{$modfile_sum}> )</h3>
+	<h2><{$smarty.const._MD_D3DOWNLOADS_H2MODFILELIST}></h2>
 
+	<h3><{$smarty.const._MD_D3DOWNLOADS_UNAPROVALNUM}> <{$modfile_sum}></h3>
 	<table class="outer">
 		<thead>
 		<tr>
@@ -125,15 +143,14 @@
 </form>
 
 <script type="text/javascript">
-<!--//
-jQuery( function($){
+$(function (){
 	$( '#unapproval_delete' ).click( function(){
 		infoDom_initialize() ;
 		col_action_check( 'col_action_u_' ) ;
 		if( validate_checked > 0 ){
 			return confirm('<{$smarty.const._MD_D3DOWNLOADS_CONFIRM_DELETE}>') ;
 		} else {
-			popup_info( '<{$smarty.const._MD_D3DOWNLOADS_ERROR_SEL_FILSE}>' )
+			popup_info( '<{$smarty.const._MD_D3DOWNLOADS_ERROR_SEL_FALSE}>' )
 			return false ;
 		}
     });
@@ -144,10 +161,9 @@ jQuery( function($){
 		if( validate_checked > 0 ){
 			return confirm('<{$smarty.const._MD_D3DOWNLOADS_CONFIRM_DELETE}>') ;
 		} else {
-			popup_info( '<{$smarty.const._MD_D3DOWNLOADS_ERROR_SEL_FILSE}>' )
+			popup_info( '<{$smarty.const._MD_D3DOWNLOADS_ERROR_SEL_FALSE}>' )
 			return false ;
 		}
     });
 });
-//-->
 </script>

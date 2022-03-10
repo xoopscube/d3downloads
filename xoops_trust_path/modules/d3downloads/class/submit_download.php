@@ -47,9 +47,13 @@ if( ! class_exists( 'submit_download' ) )
 
 		function __construct($mydirname )
 		{
+            //parent::__construct($mydirname);
+
 			include_once dirname(__FILE__, 2) .'/include/mytable.php' ;
 
-			$this->db =& Database::getInstance();
+
+            //$this->db =& Database::getInstance();
+            $this->db =& XoopsDatabaseFactory::getDatabaseConnection();
 			$this->myts =& d3downloadsTextSanitizer::sGetInstance() ;
 			$this->table = $this->db->prefix( "{$mydirname}_downloads" ) ;
 			$this->mydirname = $mydirname ;

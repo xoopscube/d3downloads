@@ -101,7 +101,7 @@ $mod_url = XOOPS_URL.'/modules/'.$mydirname ;
 $xoops_module_header = d3download_dbmoduleheader( $mydirname ) ;
 $xoopsTpl->assign( 'xoops_module_header', $xoops_module_header . "\n" . $xoopsTpl->get_template_vars('xoops_module_header' ) ) ;
 
-// assign
+// RENDER
 $xoopsTpl->assign( array(
 	'mydirname' => $mydirname ,
 	'mod_url' => $mod_url ,
@@ -119,5 +119,4 @@ $xoopsTpl->assign( array(
 	'xoops_pagetitle' => $pagetitle ,
 	'xoops_breadcrumbs' => $breadcrumbs ,
 ) ) ;
-// display
 include XOOPS_ROOT_PATH.'/footer.php';

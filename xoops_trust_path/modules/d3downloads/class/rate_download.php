@@ -51,7 +51,11 @@ if( ! class_exists( 'rate_download' ) )
 			}
 		}
 
-		function Get_User_vote( $lid )
+        /**
+         * @param $lid
+         * @return array|string[]
+         */
+        function Get_User_vote($lid )
 		{
 			global $xoopsConfig ;
 
@@ -93,7 +97,11 @@ if( ! class_exists( 'rate_download' ) )
 			) ;
 		}
 
-		function Get_Guest_vote( $lid )
+        /**
+         * @param $lid
+         * @return array|string[]
+         */
+        function Get_Guest_vote($lid )
 		{
 			global $xoopsConfig ;
 
@@ -148,7 +156,7 @@ if( ! class_exists( 'rate_download' ) )
 			include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 			$mycategory = new MyCategory( $this->mydirname, 'Show' ) ;
 			$mycategory->delete_cache_of_categories() ;
-			$message = _MD_D3DOWNLOADS_VOTEAPPRE."<br />".sprintf( _MD_D3DOWNLOADS_THANKURATE , $xoopsConfig['sitename'] ) ;
+			$message = _MD_D3DOWNLOADS_VOTEAPPRE."<br>".sprintf( _MD_D3DOWNLOADS_THANKURATE , $xoopsConfig['sitename'] ) ;
 			$this->redirect_message( $message ) ;
 			exit ;
 		}

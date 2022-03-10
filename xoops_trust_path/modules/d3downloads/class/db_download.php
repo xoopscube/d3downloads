@@ -1,6 +1,6 @@
 <?php
 
-// for DB_insert , DB_update , DB_delete etc.
+// DB CRUD Operations
 
 if( ! class_exists( 'db_download' ) )
 {

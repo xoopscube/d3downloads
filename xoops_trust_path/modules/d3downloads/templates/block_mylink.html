@@ -1,10 +1,11 @@
 <{if $block.type eq 3}>
-	<table cellspacing="1" class="outer">
+	<table class="outer">
+		<thead>
 		<tr>
-			<th align="center"><{$block.lang_category}></th>
-			<th align="center"><{$block.lang_title}></th>
-			<th align="center"><{$block.lang_postname}></th>
-			<th align="center">
+			<th><{$block.lang_category}></th>
+			<th><{$block.lang_title}></th>
+			<th><{$block.lang_postname}></th>
+			<th>
 				<{if $block.selected_order=='d.hits' || $block.selected_order=='d.hits DESC'}>
 					<{$block.lang_hits}>
 				<{elseif $block.selected_order=='d.rating' || $block.selected_order=='d.rating DESC'}>
@@ -15,9 +16,12 @@
 					<{$block.lang_hits}>
 				<{/if}>
 			</th>
-			<th align="center"><{$block.lang_updated}></th>
+			<th><{$block.lang_updated}></th>
+		</tr>
+		</thead>
+		<tbody>
 			<{foreach  from=$block.download item=down}>
-				<tr class="<{cycle values="odd,even"}>" valign="middle">
+			<tr>
 				<td>
 					<a href="<{$block.mod_url}>/index.php?cid=<{$down.cid}>"><{$down.category}></a>
 				</td>
@@ -27,7 +31,7 @@
 				<td>
 					<{$down.postname}>
 				</td>
-				<td align="center">
+				<td>
 					<{if $block.selected_order=='d.hits' || $block.selected_order=='d.hits DESC'}>
 						<{$down.hits}>
 					<{elseif $block.selected_order=='d.rating' || $block.selected_order=='d.rating DESC'}>
@@ -38,22 +42,29 @@
 						<{$down.hits}>
 					<{/if}>
 				</td>
-				<td align="center">
+				<td>
 					<{$down.updated}>
 				</td>
-		</tr>
+			</tr>
 			<{/foreach}>
+		</tbody>
 	</table>
 <{elseif $block.type eq 2}>
 	<ul class="d3downloads__block_ul">
-		<{foreach  from=$block.download item=down}>
-			<li><a href="<{$block.mod_url}>/index.php?page=singlefile&amp;cid=<{$down.cid}>&amp;lid=<{$down.lid}>"><{$down.title}></a>(<{$down.hits}>) <{$down.postname}> <{$down.updated}></li>
+		<{foreach from=$block.download item=down}>
+			<li>
+				<a href="<{$block.mod_url}>/index.php?page=singlefile&amp;cid=<{$down.cid}>&amp;lid=<{$down.lid}>"><{$down.title}></a>
+				<span class="badge"><{$down.hits}></span> <{$down.postname}> <span class="badge"><{$down.updated}></span>
+			</li>
 		<{/foreach}>
 	</ul>
 <{else}>
 	<ul class="d3downloads__block_ul">
-		<{foreach  from=$block.download item=down}>
-			<li><a href="<{$block.mod_url}>/index.php?page=singlefile&amp;cid=<{$down.cid}>&amp;lid=<{$down.lid}>"><{$down.title}></a>(<{$down.updated}>)</li>
+		<{foreach from=$block.download item=down}>
+			<li>
+				<span class="badge"><{$down.updated}></span>
+				<a href="<{$block.mod_url}>/index.php?page=singlefile&amp;cid=<{$down.cid}>&amp;lid=<{$down.lid}>"><{$down.title}></a>
+			</li>
 		<{/foreach}>
 	</ul>
 <{/if}>

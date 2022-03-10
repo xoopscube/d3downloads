@@ -15,26 +15,26 @@ if ( ! function_exists('d3downloads_xpwiki') ) {
 		if( ! class_exists( 'XpWiki' ) ) die( 'xpWiki is not installed correctly' ) ;
 
 		// Get instance. option is xpWiki module's directory name.
-		// �����ϡ�xpWiki�򥤥󥹥ȡ��뤷���ǥ��쥯�ȥ�̾�Ǥ���
+        // argument is the name of the directory where xpWiki is installed.
 		$wiki =& XpWiki::getSingleton( 'xpwiki' );
-	
-		// xpWiki ��ư�����ꤹ�������ͤ��ѹ��Ǥ��ޤ���
+
+        // You can change the configuration values that determine the behavior of xpWiki.
 		// $wiki->setIniConst( '[KEY]' , '[VALUE]' ); // $wiki->root->[KEY] = [VALUE];
 		// $wiki->setIniRoot( '[KEY]' , '[VALUE]' );  // $wiki->cont->[KEY] = [VALUE];
-	
-		// ex, ���Ԥ�ͭ���ˤ���
+
+        // ex, enable line breaks
 		$wiki->setIniRoot( 'line_break' , 1 );
-		// ex. ������󥰥���å���򤹤�
+        // ex. rendering cache.
 		$wiki->setIniRoot( 'render_use_cache' , 1 );
-		// ex. ������󥰥���å����ͭ�����¤Ͽ����˥ڡ��������������ޤ�
-		$wiki->setIniRoot( 'render_cache_min' , 0 ); // ����å���ͭ������(ʬ)
-		// ex. ������󥯤� target °�� '_blank'
+        // ex. render cache expires until a new page is created
+		$wiki->setIniRoot( 'render_cache_min' , 0 ); // Cache validity time (min)
+        // ex. target attribute '_blank' for external link
 		$wiki->setIniRoot( 'link_target' , '_blank' );
 	
 		if ($html != 1) {
- 			// ��������ϡ�xpWiki��CSS��Ŭ�Ѥ��뤿���DIV���饹̾
-			// �̾磻�󥹥ȡ��뤷���ǥ��쥯�ȥ�̾�Ǥ���
-			// CSS ��Ŭ�Ѥ��ʤ����϶��� '' ��OK��
+            // Second argument is the DIV class name to apply xpWiki's CSS
+            // usually the name of the directory where it was installed.
+            // If CSS is not applied, a blank '' is OK.
 			$text = $wiki->transform( $text , 'xpwiki' ) ;
 		} else {
 			$text = $myts->codePreConv( $text, $xcode ) ;

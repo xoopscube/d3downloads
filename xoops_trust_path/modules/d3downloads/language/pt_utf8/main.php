@@ -2,10 +2,10 @@
 //  ------------------------------------------------------------------------ //
 // $Id: main.php 0003 12:31 2008/04/09 avtx30 $
 // tradu��o para o Brasil: Miraldo Antoninho Ohse
-// site: http://investbizu.com
 //  ------------------------------------------------------------------------ //
 
 // mainview
+define('_MD_D3DOWNLOADS_DIRECT_LINK','Direct Download');
 define("_MD_D3DOWNLOADS_TOTAL_NUM","Existem %s downloads");
 define("_MD_D3DOWNLOADS_CATEGORY_NUM","Existem %s downloads");
 define("_MD_D3DOWNLOADS_SEL_CATEGORY","Selecione a categoria");
@@ -41,8 +41,8 @@ define("_MD_D3DOWNLOADS_THANKSFORHELP","Obrigado por nos ajudar a manter este di
 define("_MD_D3DOWNLOADS_FORSECURITY","Por razões de segurança seu nome de usuario e endereço de IP serão também gravados temporariamente.");
 define("_MD_D3DOWNLOADS_THANKSFORINFO","Obrigado pela informação. Não analisaremos sua solicitação o mais breve possivel.");
 define("_MD_D3DOWNLOADS_THANKSSUBMIT","Agradecemos pelo seu envio!");
-define("_MD_D3DOWNLOADS_THANKSSUBMIT_CHANGED","Obrigado pelo seu envio. Seu arquivo foi salvo com a extensção '.changed'.");
-define("_MD_D3DOWNLOADS_ALREADYREPORTED","Você j'a enviou uma informação de erro para este item.");
+define("_MD_D3DOWNLOADS_THANKSSUBMIT_CHANGED","Obrigado pelo seu envio. Seu arquivo foi salvo com a extensão '.changed'.");
+define("_MD_D3DOWNLOADS_ALREADYREPORTED","Você já enviou uma informação de erro para este item.");
 define("_MD_D3DOWNLOADS_LABEL_PERPAGE","Downloads por página");
 define("_MD_D3DOWNLOADS_MAIN","TOP");
 define("_MD_D3DOWNLOADS_SORTBY","Ordenar por:");
@@ -59,11 +59,11 @@ define("_MD_D3DOWNLOADS_RATINGLTOH","Avaliação (Do escore mais baixo para o ma
 define("_MD_D3DOWNLOADS_RATINGHTOL","Avaliação (Do escore mais alto para o mais baixo)");
 define("_MD_D3DOWNLOADS_SHOWDETAIL","Mostrar detalhe");
 define("_MD_D3DOWNLOADS_SHOWSINGLEFILE","Ler mais...");
-define("_MD_D3DOWNLOADS_NEWTHISWEEK","New this week");
+define("_MD_D3DOWNLOADS_NEWTHISWEEK","Novo esta semana");
 define("_MD_D3DOWNLOADS_UPTHISWEEK","Atualizado nesta semana");
 define("_MD_D3DOWNLOADS_POPULAR","Popular");
-define("_MD_D3DOWNLOADS_INTARTFOUND","Foi encontrado um download interessante no site %s");
-define("_MD_D3DOWNLOADS_INTARTICLE","Foi encontrada uma interessante informação para download no site %s");
+define("_MD_D3DOWNLOADS_INTARTFOUND","Encontrei um download interessante no site %s");
+define("_MD_D3DOWNLOADS_INTARTICLE","Encontrei uma informação interessante para download no site %s");
 define("_MD_D3DOWNLOADS_ADMIN_NEWCATEGORY","Nova Categoria");
 
 // SUBMIT
@@ -101,7 +101,7 @@ define("_MD_D3DOWNLOADS_SUBMIT_SMILEY","Habilitar smileys");
 define("_MD_D3DOWNLOADS_SUBMIT_BR","Habilitar nova linha automática");
 define("_MD_D3DOWNLOADS_SUBMIT_XCODE","Permitir BBCode");
 define("_MD_D3DOWNLOADS_BTN_SUBMITEDITING","Enviar");
-define("_MD_D3DOWNLOADS_BTN_CANSEL","Cancelar");
+define("_MD_D3DOWNLOADS_BTN_CANCEL","Cancelar");
 define("_MD_D3DOWNLOADS_MSG_CONFIRMDELETECONTENT","Você tem certeza que deseja deletar?");
 define("_MD_D3DOWNLOADS_NO_DATA","Não existe dado para salvar");
 define("_MD_D3DOWNLOADS_TITLE_OK","Obrigado pelo titulo");
@@ -189,7 +189,7 @@ define("_MD_D3DOWNLOADS_ERROR_MESSEAGE","Existe um erro ID: %s");
 define("_MD_D3DOWNLOADS_ERROR_MESSEAGE_NOID","Existe um erro");
 
 // add photosite
-define("_MD_D3DOWNLOADS_NOPERMISETOLINK", "Este arquivo não pode fazer parte do site de onde veio<br>Por favor, informe o webmaster do site de onde de onde ele veio sobre isso e diga a ele:   <br /><b>NAO SEJA PARASITA USANDO LINKS DE OUTROS SITES!!</b> <br /><b>Definição de um parasita:</b> Alguem que é preguiçoso e utiliza links de outros site para seu próprio servidor ou rouba o trabalho duro de outras pessoas e faz isso parecer como seu prórrio trabalho <br>  Seu endereço de IP <b>está sendo logado</b>.");
+define("_MD_D3DOWNLOADS_NOPERMISETOLINK", "Este arquivo não pode fazer parte do site de onde veio<br>Por favor, informe o webmaster do site de onde de onde ele veio sobre isso e diga a ele:   <br><b>NAO SEJA PARASITA USANDO LINKS DE OUTROS SITES!!</b> <br><b>Definição de um parasita:</b> Alguem que é preguiçoso e utiliza links de outros site para seu próprio servidor ou rouba o trabalho duro de outras pessoas e faz isso parecer como seu prórrio trabalho <br>  Seu endereço de IP <b>está sendo logado</b>.");
 define('_MD_D3DOWNLOADS_BCAT_TOTAL','Total:');
 define('_MD_D3DOWNLOADS_CAT_EDIT','Editar Categoria');
 define("_MD_D3DOWNLOADS_HOMEPAGE_TOOLONG","Por favor, informe a URL da home page com o comprimento máximo de caracteres %s");
@@ -204,7 +204,7 @@ define('_MD_D3DOWNLOADS_FILELIST_MAIN','Lista de arquivos');
 define('_MD_D3DOWNLOADS_FILELIST','Lista');
 define('_MD_D3DOWNLOADS_ID','ID');
 define('_MD_D3DOWNLOADS_SUMMARY','Sumário');
-define('_MD_D3DOWNLOADS_INVISIBLE_NUM','[Itens Privados %s]');
+define('_MD_D3DOWNLOADS_INVISIBLE_NUM','Itens Privados');
 define('_MD_D3DOWNLOADS_VISIBLE','Visivel');
 define('_MD_D3DOWNLOADS_SUBMIT_HOMEPAGETITLE','Tituulo da Home Page');
 define('_MD_D3DOWNLOADS_HOMEPAGETITLE_OK','Obrigado pelo titulo da home page');
@@ -215,12 +215,12 @@ define('_MD_D3DOWNLOADS_LICENSE_OK','Obrigado pela licença');
 define('_MD_D3DOWNLOADS_LICENSE_TOOLONG','Por favor, informe a licença com o máximo de caracteres %s');
 define('_MD_D3DOWNLOADS_CAN_READ','Ler');
 define('_MD_D3DOWNLOADS_CANNOT_READ','Não pode ser lido');
-define('_MD_D3DOWNLOADS_BROKEN_NUM','[%s itens de arquivos com erro]');
+define('_MD_D3DOWNLOADS_BROKEN_NUM','Itens quebrados');
 define('_MD_D3DOWNLOADS_BROKENCHECK','Checar erros dos arquivos enviado');
 define('_MD_D3DOWNLOADS_LABEL_BROKENCHECKDONE','Checar erros dos arquivos enviados feito');
 define('_MD_D3DOWNLOADS_CONFIRM_BROKENCHECK','Você tem certeza que deseja checar o envio dos arquivos? é possivel checar apenas um arquivo enviado neste modulo. ');
 define('_MD_D3DOWNLOADS_NO_CATEGORY','Novos registros não pode ser feitas, porque não há categorias');
-define('_MD_D3DOWNLOADS_UNAPPROVAL_NUM','[%s itens aguardando]');
+define('_MD_D3DOWNLOADS_UNAPPROVAL_NUM','Itens aguardando');
 define('_MD_D3DOWNLOADS_SUBMIT_FILTERS','Filtros');
 define("_MD_D3DOWNLOADS_SUBMIT_FILENAME2","Nome do Arquivo No.2");
 define('_MD_D3DOWNLOADS_SUBMIT_FILE1','Arquivo No.1 : ');
@@ -269,14 +269,14 @@ define('_MD_D3DOWNLOADS_CATEGORY_MYLINK','Existem %s meus Link');
 define('_MD_D3DOWNLOADS_MYLINK_INFO',"Link de novidades disponivel com seu registro em um leitor de RSS.");
 define('_MD_D3DOWNLOADS_BROKEN_FILE','arquivo errado !!');
 define('_MD_D3DOWNLOADS_SUBMIT_DELIMITER','Delimitador');
-define('_MD_D3DOWNLOADS_SUBMIT_SPASE','Espaço');
+define('_MD_D3DOWNLOADS_SUBMIT_SPACE','Espaço');
 define('_MD_D3DOWNLOADS_SUBMIT_DESCRIPTION_IMAGE','Inserir a figura na descriãoo');
 define('_MD_D3DOWNLOADS_LEFT','Esquerdo');
 define('_MD_D3DOWNLOADS_CENTER','centro');
 define('_MD_D3DOWNLOADS_RIGHT','Direito');
 define('_MD_D3DOWNLOADS_SUBMIT_EXTRA','Adicionar mais informação');
 define('_MD_D3DOWNLOADS_SUBMIT_EXTRA_DESC','Informe desta forma <span style="font-weight: bold;">&lt;&lt;title&gt;&gt;Description</span><br>Quando é informado na caixa de texto que está abaixo, automaticamente o tipo é especificado.<br>Na descrição <span style="font-weight: bold;">BBCode</span>,<span style="font-weight: bold;">[title]</span>,<span style="font-weight: bold;">[filename]</span>,<span style="font-weight: bold;">[filename2]</span>,<span style="font-weight: bold;">[expired]</span>,<span style="font-weight: bold;">[pagebreak]</span> estão disponiveis.');
-define("_MD_D3DOWNLOADS_SUBMIT_EXTRA_SAMPLE","Exemplo<br />&lt;&lt;Expired&gt;&gt;[expired]<br>&lt;&lt;Price&gt;&gt;$50<br><br>Note: [expired]'s transformação automaticamente");
+define("_MD_D3DOWNLOADS_SUBMIT_EXTRA_SAMPLE","Exemplo<br>&lt;&lt;Expired&gt;&gt;[expired]<br>&lt;&lt;Price&gt;&gt;$50<br><br>Note: [expired]'s transformação automaticamente");
 define('_MD_D3DOWNLOADS_SUBMIT_INSERT','Adicionar');
 define('_MD_D3DOWNLOADS_EXTRA_TITLE','Titulo:');
 define('_MD_D3DOWNLOADS_EXTRA_DESC','Descrição:');
@@ -294,6 +294,6 @@ define('_MD_D3DOWNLOADS_NAME_TOOLONG','Por favor, informe seu nome com o máximo
 define('_MD_D3DOWNLOADS_EMAIL_THANKS','Obrigado pelo endereço de e-mail');
 define('_MD_D3DOWNLOADS_EMAIL_CHECK','O endereço de e-mail não é válido');
 define('_MD_D3DOWNLOADS_EMAIL_TOOLONG','Por favor, informe o endreço de e-mail com o máximo de caracteres %s');
-define('_MD_D3DOWNLOADS_MD5','[ File Name ] %s  [ MD5 checksum ] %s');
+define('_MD_D3DOWNLOADS_MD5','[ File Name ] %s <br>[ MD5 checksum ] %s');
 define('_MD_D3DOWNLOADS_CHECK_SPAM','Embora isso possa causar problemas, por favor me de novas contribuições depois de configurar o JavaScript como "efetivo."');
 

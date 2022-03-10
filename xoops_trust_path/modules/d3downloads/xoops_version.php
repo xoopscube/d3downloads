@@ -2,9 +2,13 @@
 
 // language file (modinfo.php)
 $langmanpath = XOOPS_TRUST_PATH.'/libs/altsys/class/D3LanguageManager.class.php' ;
-if( ! file_exists( $langmanpath ) ) die( 'install the latest altsys' ) ;
-require_once( $langmanpath ) ;
+
+if ( ! file_exists( $langmanpath ) ) {
+	die( 'install the module AltSys UI-Components' );
+}
+
 $langman = D3LanguageManager::getInstance() ;
+
 $langman->read( 'modinfo.php' , $mydirname , $mytrustdirname , false ) ;
 
 $constpref = '_MI_' . strtoupper( $mydirname ) ;
@@ -14,12 +18,14 @@ $modversion['version'] = 2.31 ;
 $modversion['detailed_version'] = "2.3.1" ;
 $modversion['description'] = constant($constpref.'_DESC') ;
 $modversion['credits'] = "Xoops X(ten) Team and photosite. Gigamaster XCL PHP7";
-$modversion['author'] = "Xoops X(ten) Team based on photosite(http://www.photositelinks.com/)" ;
-$modversion['help'] = "" ;
+$modversion['author'] = "Xoops X(ten) Team based on photosite(photositelinks.com)" ;
+$modversion['help'] = "help.html" ;
 $modversion['license'] = "GPL" ;
 $modversion['official'] = 0 ;
 $modversion['image'] = file_exists( $mydirpath.'/module_icon.png' ) ? 'module_icon.png' : 'module_icon.php' ;
 $modversion['dirname'] = $mydirname ;
+$modversion['trust_dirname'] = $mytrustdirname;
+$modversion['read_any']      = true;
 
 // Any tables can't be touched by modulesadmin.
 $modversion['sqlfile'] = false ;
@@ -342,7 +348,8 @@ $modversion['config'][] = array(
 	'description'	=> $constpref.'_EXTENSIONDSC' ,
 	'formtype'		=> 'textbox' ,
 	'valuetype'		=> 'text' ,
-	'default'		=> 'zip|tgz|lzh|cab|bz2|xls|doc|pdf' ,
+	//'default'		=> 'zip|tgz|lzh|cab|bz2|xls|doc|pdf' ,
+    'default'		=> 'zip|tgz|lzh|cab|bz2|xls|xlsx|xls|ods|odt|doc|docx|pdf|epub' ,
 	'options'		=> array()
 ) ;
 $modversion['config'][] = array(
@@ -414,7 +421,7 @@ $modversion['config'][] = array(
 	'description'	=> $constpref.'_PLATFORMDSC' ,
 	'formtype'		=> 'textarea' ,
 	'valuetype'		=> 'text' ,
-	'default'		=> 'Windows|Unix|Mac|Xoops 2.0x|XOOPS Cube Legacy 2.1x' ,
+	'default'		=> 'Cross-platform|Linux|Mac|Windows|XOOPSCube XCL' ,
 	'options'		=> array()
 ) ;
 $modversion['config'][] = array(
@@ -432,7 +439,7 @@ $modversion['config'][] = array(
 	'description'	=> $constpref.'_LICENSEDSC' ,
 	'formtype'		=> 'textarea' ,
 	'valuetype'		=> 'text' ,
-	'default'		=> 'BSD License|Common Public License|GPL v. 1.0|GPL v. 2.0|LGPL v. 2.1|LGPL v. 2.0' ,
+	'default'		=> 'BSD License|GPL v2.0|MIT License|CC Attribution 4|CC Attribution-ShareAlike 4|Proprietary Software License|Subscription' ,
 	'options'		=> array()
 ) ;
 $modversion['config'][] = array(
@@ -632,7 +639,7 @@ $modversion['onUpdate'] = 'onupdate.php' ;
 $modversion['onUninstall'] = 'onuninstall.php' ;
 
 // keep block's options
-if( ! defined( 'XOOPS_CUBE_LEGACY' ) && substr( XOOPS_VERSION , 6 , 3 ) < 2.1 && ! empty( $_POST['fct'] ) && ! empty( $_POST['op'] ) && $_POST['fct'] == 'modulesadmin' && $_POST['op'] == 'update_ok' && $_POST['dirname'] == $modversion['dirname'] ) {
-	include dirname(__FILE__).'/include/x20_keepblockoptions.inc.php' ;
-}
+/*if (!defined('XOOPS_CUBE_LEGACY') && substr(XOOPS_VERSION, 6, 3) < 2.1 && !empty($_POST['fct']) && !empty($_POST['op']) && 'modulesadmin' === $_POST['fct'] && 'update_ok' === $_POST['op'] && $_POST['dirname'] === $modversion['dirname']) {
+	include __DIR__ . '/include/x20_keepblockoptions.inc.php';
+}*/
 

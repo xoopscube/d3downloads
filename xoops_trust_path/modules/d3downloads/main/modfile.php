@@ -35,13 +35,13 @@ $shots_help =  $preview_title = $preview_body = $error_message =  '' ;
 if( ! empty( $_GET['cid'] ) ) $cid = intval( $_GET['cid'] ) ;
 elseif( ! empty( $_POST['cid'] ) ) $cid = intval( $_POST['cid'] ) ;
 
-// �o�^�� CID �̎w���K�v�Ƃ��܂�
+// Registration requires CID specification
 if( empty( $cid ) ){
 	redirect_header(XOOPS_URL.'/modules/'.$mydirname.'/index.php',3, _MD_D3DOWNLOADS_NO_CID );
 	exit();
 }
 
-// �ҏW�������`�F�b�N(�Ǘ��҂͏���)
+// Check for edit permissions (except administrator)
 $user_access = new user_access( $mydirname ) ;
 $whr_cat4edit = "cid IN (".implode(",", $user_access->can_edit() ).")" ;
 $permissions = $user_access->permissions_of_current_user( $cid ) ;
@@ -51,44 +51,44 @@ if( empty( $can_edit ) ) {
 	exit();
 }
 
-// �������F�̃`�F�b�N(�Ǘ��҂͏���)
+// Automatic approval checks (except for administrators)
 $auto_approved = $permissions['edit_approved'] ;
 
-// HTML���̃`�F�b�N(�o�^���[�U�[�ȊO�� HTML�𖳌��Ƃ���)
+// Check HTML permissions (disable HTML for non-registered users)
 $canhtml = $permissions['can_html'] ;
 
-// �A�b�v���[�h���̃`�F�b�N
+// Check upload permissions
 $canupload = $permissions['can_upload'] ;
 
-// �폜�����̃`�F�b�N(�Ǘ��҂͏���)
+// Check delete permissions (except administrator)
 $candelete = $permissions['can_delete'] ;
 
-// �Ǘ��҂ƊǗ��҈ȊO�̃e���v���[�g�𕪂��ď���
+// Separate processing for admin and non-admin templates
 if( $module_admin ){
 	$xoopsOption['template_main'] = $mydirname.'_admin_submit.html' ;
 } else {
 	$xoopsOption['template_main'] = $mydirname.'_main_submit.html' ;
 }
 
-// �Ǘ��҈ȊO�̓��e�t�H�[�����������擾
+// Get non-admin submission form description
 $message = d3download_submit_message( $mydirname, $cid ) ;
 $formtitle = _MD_D3DOWNLOADS_SUBMIT_EDIT ;
 
 // GET LID FROM $_GET
 $id = isset( $_GET['lid'] ) ? intval( $_GET['lid'] ) : 0 ;
 
-// �ҏW�\�ȃJ�e�S�����X�g�̂ݎ擾
+// Get only editable category list
 if( $module_admin ) $category = d3download_categories_selbox( $mydirname, $whr_cat4edit );
 else  $category = d3download_categories_selbox( $mydirname, $whr_cat4edit, $cid );
 
-// ���p�\�� OS/�\�t�g���̃��X�g���擾
+// Get a list of available OS/software, etc.
 $submit_download = new submit_download( $mydirname ) ;
 $select_platform = $submit_download->Select_Platform() ;
 
-// ���C�Z���X�̃��X�g���擾
+// Get a list of licenses
 $select_license = $submit_download->Select_License() ;
 
-// �X�N���[���V���b�g�摜�̎擾
+// Get screenshot image
 $canuseshots = $submit_download->can_useshots() ;
 $usealbum = $submit_download->can_albumselect() ;
 if( ! empty( $canuseshots ) ){
@@ -101,7 +101,7 @@ if( ! empty( $canuseshots ) ){
 $mod_url = XOOPS_URL.'/modules/'.$mydirname ;
 $downdata = $submit_download->get_downdata_for_submit( $id, $category ) ;
 
-// DOWNLOADDATA ���擾�ł��Ȃ��ꍇ���_�C���N�g
+// Redirect if DOWNLOADDATA cannot be obtained
 if( empty( $downdata ) ) {
 	redirect_header( XOOPS_URL."/modules/$mydirname/" , 2 , _MD_D3DOWNLOADS_NOMATCH ) ;
 	exit();
@@ -125,7 +125,7 @@ if( empty( $downdata['downdata']['homepagetitle'] ) && $downdata['downdata']['ho
 
 if( empty( $ispreview ) && empty( $iserror ) ) $download4assign = $downdata['downdata'] ;
 
-// �擾���� LID �œ��e�Җ{�l���ǂ������`�F�b�N
+// Check if the submitter is the person himself/herself with the obtained LID
 if( $module_admin ) $canedit = 1 ;
 elseif( ! empty( $can_edit ) && $submitter == $xoops_userid &&  $xoops_isuser ) $canedit = 1 ;
 else $canedit = 0 ;
@@ -135,28 +135,28 @@ if( empty( $canedit ) ) {
 	exit();
 }
 
-// �p�����������̏���
+// Processing the breadcrumb section
 $whr_cat = "cid IN (".implode(",", $user_access->can_read() ).")" ;
 $bc[0] = d3download_breadcrumbs( $mydirname ) ;
 $breadcrumbs = array_merge( $bc ,d3download_breadcrumbs_tree( $mydirname, $cid4assign, $whr_cat, '', 1 ) ) ;
 $breadcrumbs[] = array( 'name' => $formtitle.':'.$title4assign ) ;
 
-// �Ǘ��҂̓��e�t�H�[���p�� HISTORY DATA ���擾
+// Get HISTORY DATA for admin submission form
 $history = new history_download( $mydirname ) ;
 $history4assign = $history->get_history_list( $lid );
 
-// ���ꃊ���N�̍ēo�^��F�߂邩�ǂ���
+// Whether to allow re-registration of the same link
 $check_url = ! empty( $xoopsModuleConfig['check_url'] ) ? 1 : 0 ;
 
-// maxfilesize(�e���v���[�g�ւ̃A�T�C���p)
+// maxfilesize (for assignment to templates)
 $upload_max_filesize = d3download_get_maxsize( $mydirname );
 $max_submit_size = sprintf( _MD_D3DOWNLOADS_SUBMIT_MAXFILESIZE , number_format( $upload_max_filesize ) ) ;
 $submit_extension = d3download_get_allowed_extension( $mydirname );
 
-// ���`�F�b�N�� error �̏ꍇ�̓A�b�v���[�h�t�H�[����I���ł��Ȃ��悤�ɂ���
+// Check the environment and disable the upload form if it is an error
 $config_error = d3download_upload_config_check( $mydirname );
 
-// LiveValidation�ɂ��Validation���A�T�C��
+// Assign Validation by LiveValidation
 require_once dirname( dirname(__FILE__) ).'/include/upload_submit_rules.inc.php' ;
 
 $liveValidator="";
@@ -188,7 +188,7 @@ if( isset( $_POST['makedownload_post'] ) || isset( $_POST['makedownload_preview'
 	}
 }
 
-// �폜�������`�F�b�N���������֘A�f�[�^�������ɍ폜
+// Check delete permissions and delete related data at the same time
 if( isset( $_POST['makedownloadform_delete'] ) && ! empty( $candelete ) ) {
 	if ( ! $xoopsGTicket->check( true , 'd3downloads' ) ) {
 		redirect_header(XOOPS_URL.'/modules/'.$mydirname.'/admin/index.php',3,$xoopsGTicket->getErrors());
@@ -199,19 +199,19 @@ if( isset( $_POST['makedownloadform_delete'] ) && ! empty( $candelete ) ) {
 
 	$submit_validate = new Submit_Validate( $mydirname, 'delete' ) ;
 	if( ! $module_admin ) $submit_validate->Validate_for_delete( $cid, $delete_lid ) ;
-	// �u���e�����[�U�[�̓��e���ɔ��f�v���L���ȏꍇ�A���e���ɔ��f
+    // Reflected in the number of posts if "Reflect posts in user's post count" is enabled
 	d3download_delete_lid( $mydirname ,$lid );
 	redirect_header( XOOPS_URL."/modules/$mydirname/index.php" , 2 , _MD_D3DOWNLOADS_DELETED ) ;
 	exit();
 }
 
-// �t�@�C���j����DATA�̎擾(�Ǘ��җp)
+// Get file corruption report DATA (for administrator)
 $broken_data = d3download_get_broken_data( $mydirname, $lid ) ;
 $totalbroken = $broken_data['totalbroken'] ;
 $total_broken4assign = $broken_data['total_broken4assign'] ;
 $broken = $broken_data['broken'] ;
 
-// VOTE DATA�̎擾(�Ǘ��җp)
+// Obtaining VOTE DATA (for administrators)
 $total_vote4assign = sprintf( _MD_D3DOWNLOADS_TOTAL_VOTE , $totalvotes );
 $user_vote_data = d3download_get_user_vote( $mydirname, $lid ) ;
 $user_vote4assign = $user_vote_data['user_totalvote'] ;
@@ -229,12 +229,12 @@ include_once dirname(__FILE__, 2) .'/class/file_manager.php' ;
 $file_manager = new file_manager( $mydirname ) ;
 $copy_select = $file_manager->get_copy_target_modules() ;
 
-// livevalidation.js �� livevalidation.css �� xoops_module_header �ɃA�T�C��
+// Assign livevalidation.js and livevalidation.css to xoops_module_header
 $xoops_module_header = d3download_dbmoduleheader( $mydirname );
 $livevalidation_header = d3download_dbmoduleheader_for_livevalidation( $mydirname );
 $xoopsTpl->assign('xoops_module_header', $xoops_module_header . "\n" .$livevalidation_header. "\n" . $wysiwyg_header. "\n" . $xoopsTpl->get_template_vars('xoops_module_header'));
 
-// assign
+// RENDER
 $xoopsTpl->assign( array(
 	'mydirname' => $mydirname ,
 	'mod_url' => $mod_url ,

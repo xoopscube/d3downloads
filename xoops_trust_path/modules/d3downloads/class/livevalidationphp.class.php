@@ -184,7 +184,7 @@ if( ! class_exists('Validation') )
 		var $elementID;
 		var $display;
 
-		function Validation($data,$type="Validate.Presence",$args=array(),$parentData=array(),$elementID="",$display="")
+		function __construct($data, $type="Validate.Presence", $args=array(), $parentData=array(), $elementID="", $display="")
 		{
 			$this->elementID=$elementID;
 			$this->display=$this->elementID;
@@ -730,7 +730,7 @@ if( ! class_exists('LiveValidationMassValidatePHP') )
 		var $varname;
 		var $rules;
 
-		function LiveValidationMassValidatePHP($formID="",$data=array())
+		function __construct($formID="", $data=array())
 		{
 			$this->data=$data;
 			$this->formID=trim(stripslashes(strip_tags($formID)));

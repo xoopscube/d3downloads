@@ -306,7 +306,7 @@ LiveValidation.prototype = {
       if(!this.element.disabled){
 		var isValid = this.doValidations();
 		//add photosite
-		if(this.element.id =='homepage' && this.element.value=='http://') return true;
+		if(this.element.id =='homepage' && this.element.value=='https://') return true;
 		//end photosite
 		if(isValid){
 			this.onValid();

@@ -25,7 +25,7 @@ $error_message = '' ;
 $mycategory = new MyCategory( $mydirname, 'Show' ) ;
 $user_access = new user_access( $mydirname ) ;
 
-// �y�[�W�i�r�̏���
+// TOTAL ITEMS PAGE
 $total = $mycategory->category_sum() ;
 $select_perpage = d3download_select_perpage( $mydirname ) ;
 $current_start = isset($_GET['start']) ? intval( $_GET['start'] ) : 0 ;
@@ -59,7 +59,7 @@ if( ! empty( $_POST['delete'] ) ) {
 	if( empty( $_POST['action_selects'] ) ) $message[] = _MD_D3DOWNLOADS_ERROR_SEL_CATEGORY ;
 	if( ! empty( $message ) ){
 		$iserror = 1 ;
-		$error_message = implode( '<br />' , $message ) ;
+		$error_message = implode( '<br>' , $message ) ;
 	}
 	if( empty( $iserror ) ) {
 		foreach( $_POST['action_selects'] as $id => $value ) {
@@ -82,7 +82,7 @@ if( ! empty( $_POST['category_top_move'] ) ) {
 	if( empty( $_POST['action_selects'] ) ) $message[] = _MD_D3DOWNLOADS_ERROR_SEL_CATEGORY ;
 	if( ! empty( $message ) ){
 		$iserror = 1 ;
-		$error_message = implode( '<br />' , $message ) ;
+		$error_message = implode( '<br>' , $message ) ;
 	}
 	if( empty( $iserror ) ) {
 		foreach( $_POST['action_selects'] as $id => $value ) {
@@ -109,7 +109,7 @@ if( ! empty( $_POST['category_move'] ) ) {
 	if( empty( $_POST['action_selects'] ) ||  empty( $select_pid ) ) $message[] = _MD_D3DOWNLOADS_ERROR_SEL_CATEGORY ;
 	if( ! empty( $message ) ){
 		$iserror = 1 ;
-		$error_message = implode( '<br />' , $message ) ;
+		$error_message = implode( '<br>' , $message ) ;
 	}
 	if( empty( $iserror ) ) {
 		foreach( $_POST['action_selects'] as $id => $value ) {
@@ -142,7 +142,7 @@ if( ! empty( $_POST['category_check'] ) ) {
 	exit();
 }
 
-// display stage
+// RENDER
 xoops_cp_header();
 include dirname(__FILE__).'/mymenu.php' ;
 require_once XOOPS_ROOT_PATH.'/class/template.php' ;
@@ -162,5 +162,3 @@ $tpl->assign( array(
 ) ) ;
 $tpl->display( 'db:'.$mydirname.'_admin_category_list.html' ) ;
 xoops_cp_footer();
-
-?>

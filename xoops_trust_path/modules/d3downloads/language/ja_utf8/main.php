@@ -1,5 +1,6 @@
 <?php
 // mainview
+define('_MD_D3DOWNLOADS_DIRECT_LINK','Direct Download');
 define('_MD_D3DOWNLOADS_TOTAL_NUM','当サイトのデータベースには %s 件のファイルがあります');
 define('_MD_D3DOWNLOADS_CATEGORY_NUM','このカテゴリには %s 件のファイルがあります');
 define('_MD_D3DOWNLOADS_SEL_CATEGORY','カテゴリ選択');
@@ -28,8 +29,8 @@ define('_MD_D3DOWNLOADS_RATINGSCALE','評価は 1 から 10 までです： 1 �
 define('_MD_D3DOWNLOADS_BEOBJECTIVE','客観的な評価をお願いします。点数が1か10のみだと順位付けの意味がありません');
 define('_MD_D3DOWNLOADS_DONOTVOTE','自分が登録したダウンロード情報には投票できません。');
 define('_MD_D3DOWNLOADS_NORATING','評価が選択されてません。');
-define('_MD_D3DOWNLOADS_CANTVOTEOWN','自分が登録したダウンロード情報には投票できません。<br />投票には全て目を通します');
-define('_MD_D3DOWNLOADS_VOTEONCE2','選択したダウンロード情報への投票は一度だけにお願いします。<br />投票にはすべて目を通します。');
+define('_MD_D3DOWNLOADS_CANTVOTEOWN','自分が登録したダウンロード情報には投票できません。<br>投票には全て目を通します');
+define('_MD_D3DOWNLOADS_VOTEONCE2','選択したダウンロード情報への投票は一度だけにお願いします。<br>投票にはすべて目を通します。');
 define('_MD_D3DOWNLOADS_RATEIT','投票する!');
 define('_MD_D3DOWNLOADS_NOMATCH','ダウンロード情報がありません');
 define('_MD_D3DOWNLOADS_THANKSFORHELP','<li>情報をお寄せいただきありがとうございます。後ほど当サイトスタッフが確認いたします。</li>');
@@ -63,7 +64,7 @@ define('_MD_D3DOWNLOADS_INTARTFOUND','%sで興味深いダウンロード情報�
 define('_MD_D3DOWNLOADS_INTARTICLE','%sで見つけた興味深いダウンロード情報');
 define('_MD_D3DOWNLOADS_MAILTOENCODING','Shift_JIS');// don't define it for singlebyte
 define('_MD_D3DOWNLOADS_ADMIN_NEWCATEGORY','カテゴリ新規作成');
-define('_MD_D3DOWNLOADS_NOPERMISETOLINK','このファイルはあなたがアクセスしたサイト内にあるものではありません。<br />そのサイトの管理者に直リンクを張らないように連絡してあげて下さい。<br />直リンクとは: 他人のファイルをあたかも自分のもののようにサイト内にリンクする事を言います。IPアドレスは記録されました。');
+define('_MD_D3DOWNLOADS_NOPERMISETOLINK','このファイルはあなたがアクセスしたサイト内にあるものではありません。<br>そのサイトの管理者に直リンクを張らないように連絡してあげて下さい。<br>直リンクとは: 他人のファイルをあたかも自分のもののようにサイト内にリンクする事を言います。IPアドレスは記録されました。');
 define('_MD_D3DOWNLOADS_BCAT_TOTAL','Total:');
 define('_MD_D3DOWNLOADS_CAT_EDIT','カテゴリ編集');
 define('_MD_D3DOWNLOADS_CAT_VISIBLE','カテゴリ表示');
@@ -73,9 +74,9 @@ define('_MD_D3DOWNLOADS_FILELIST_MAIN','ファイル一覧');
 define('_MD_D3DOWNLOADS_FILELIST','一覧');
 define('_MD_D3DOWNLOADS_ID','ID');
 define('_MD_D3DOWNLOADS_SUMMARY','概要');
-define('_MD_D3DOWNLOADS_INVISIBLE_NUM','[非公開 %s 件]');
-define('_MD_D3DOWNLOADS_BROKEN_NUM','[破損報告 %s 件]');
-define('_MD_D3DOWNLOADS_UNAPPROVAL_NUM','[承認待ち %s 件]');
+define('_MD_D3DOWNLOADS_INVISIBLE_NUM','非公開 件');
+define('_MD_D3DOWNLOADS_BROKEN_NUM','破損報告 件');
+define('_MD_D3DOWNLOADS_UNAPPROVAL_NUM','承認待ち');
 define('_MD_D3DOWNLOADS_VISIBLE','表示');
 define('_MD_D3DOWNLOADS_CAN_READ','閲覧可');
 define('_MD_D3DOWNLOADS_CANNOT_READ','閲覧不可');
@@ -110,7 +111,7 @@ define('_MD_D3DOWNLOADS_MYLINK_TITLE','%s さんのマイリンク');
 define('_MD_D3DOWNLOADS_TOTAL_MYLINK','当サイトのデータベースには %s 件のマイリンクがあります');
 define('_MD_D3DOWNLOADS_CATEGORY_MYLINK','このカテゴリには %s 件のマイリンクがあります');
 define('_MD_D3DOWNLOADS_MYLINK_INFO','RSSリーダーなどに登録することでマイリンクの新着情報を受け取ることができます');
-define('_MD_D3DOWNLOADS_BROKEN_FILE','broken file !!');
+define('_MD_D3DOWNLOADS_BROKEN_FILE','Broken file !');
 define('_MD_D3DOWNLOADS_BROKEN_MESSAGE','[管理者へのメッセージ](必要があればご記入ください)');
 define('_MD_D3DOWNLOADS_BROKEN_NAME','[お名前](任意)');
 define('_MD_D3DOWNLOADS_BROKEN_EMAIL','[メールアドレス](任意)');
@@ -120,7 +121,7 @@ define('_MD_D3DOWNLOADS_NAME_TOOLONG','お名前は半角で  %s 字まででお
 define('_MD_D3DOWNLOADS_EMAIL_THANKS','メールアドレスの入力をありがとうございます');
 define('_MD_D3DOWNLOADS_EMAIL_CHECK','メールアドレスの入力が正しくありません');
 define('_MD_D3DOWNLOADS_EMAIL_TOOLONG','メールアドレスは半角で  %s 字まででお願いします');
-define('_MD_D3DOWNLOADS_MD5','[ ファイル名 ] %s  [ MD5 checksum ] %s');
+define('_MD_D3DOWNLOADS_MD5','[ ファイル名 ] %s <br>[ MD5 checksum ] %s');
 define('_MD_D3DOWNLOADS_CHECK_SPAM','お手数をおかけして申し訳ありませんが、JavaScript を「有効」に設定したうえで、再度投稿をお願いします。');
 
 // SUBMIT
@@ -158,15 +159,15 @@ define('_MD_D3DOWNLOADS_SUBMIT_BYTE','byte');
 define('_MD_D3DOWNLOADS_SUBMIT_PLATFORM','利用可能なOS/ソフト等');
 define('_MD_D3DOWNLOADS_SUBMIT_LICENSE','ライセンス');
 define('_MD_D3DOWNLOADS_SUBMIT_DESCRIPTION','説明');
-define('_MD_D3DOWNLOADS_SUBMIT_DESCRIPTION_DESC','<span style="font-weight: bold;">[pagebreak]</span> タグを本文内に記入することでページ区切りを挿入することができます。<br />また、<span style="font-weight: bold;">[title]</span>、<span style="font-weight: bold;">[filename]</span>、<span style="font-weight: bold;">[filename2]</span>、<span style="font-weight: bold;">[expired]</span> で、タイトル、ファイル名、掲載期限を挿入できます。');
+define('_MD_D3DOWNLOADS_SUBMIT_DESCRIPTION_DESC','<span style="font-weight: bold;">[pagebreak]</span> タグを本文内に記入することでページ区切りを挿入することができます。<br>また、<span style="font-weight: bold;">[title]</span>、<span style="font-weight: bold;">[filename]</span>、<span style="font-weight: bold;">[filename2]</span>、<span style="font-weight: bold;">[expired]</span> で、タイトル、ファイル名、掲載期限を挿入できます。');
 define('_MD_D3DOWNLOADS_SUBMIT_LOGOURL','スクリーンショット画像');
-define('_MD_D3DOWNLOADS_SUBMIT_LOGOURL_DESC','スクリーンショット画像には%s<br />ディレクトリ下にあるファイルを使用してください（例 shot.gif）。画像がない場合は何も記入しないで下さい。');
+define('_MD_D3DOWNLOADS_SUBMIT_LOGOURL_DESC','スクリーンショット画像には%s<br>ディレクトリ下にあるファイルを使用してください（例 shot.gif）。画像がない場合は何も記入しないで下さい。');
 define('_MD_D3DOWNLOADS_SUBMIT_HTML','HTMLを有効にする');
 define('_MD_D3DOWNLOADS_SUBMIT_SMILEY','顔アイコンを有効にする');
 define('_MD_D3DOWNLOADS_SUBMIT_BR','改行を有効にする');
 define('_MD_D3DOWNLOADS_SUBMIT_XCODE','XOOPSコードを有効にする');
 define('_MD_D3DOWNLOADS_BTN_SUBMITEDITING','登録');
-define('_MD_D3DOWNLOADS_BTN_CANSEL','戻る');
+define('_MD_D3DOWNLOADS_BTN_CANCEL','戻る');
 define('_MD_D3DOWNLOADS_MSG_CONFIRMDELETECONTENT','削除していいですか?');
 define('_MD_D3DOWNLOADS_NO_DATA','保存するデータがありません');
 define('_MD_D3DOWNLOADS_TITLE_OK','タイトルの入力をありがとうございます');
@@ -251,14 +252,14 @@ define('_MD_D3DOWNLOADS_CHARSET','エンコード用のサンプル');
 define('_MD_D3DOWNLOADS_SUBMIT_FILTERS','本文フィルター');
 define('_MD_D3DOWNLOADS_SUBMIT_URL_DESC','XOOPS_TRUST_PATH、XOOPS_ROOT_PATH、XOOPS_URLを入力すると自動的に変換されます。');
 define('_MD_D3DOWNLOADS_SUBMIT_DELIMITER','区切り文字');
-define('_MD_D3DOWNLOADS_SUBMIT_SPASE','スペース');
+define('_MD_D3DOWNLOADS_SUBMIT_SPACE','スペース');
 define('_MD_D3DOWNLOADS_SUBMIT_DESCRIPTION_IMAGE','説明本文に画像を挿入');
 define('_MD_D3DOWNLOADS_LEFT','左');
 define('_MD_D3DOWNLOADS_CENTER','中央');
 define('_MD_D3DOWNLOADS_RIGHT','右');
 define('_MD_D3DOWNLOADS_SUBMIT_EXTRA','追加項目');
-define('_MD_D3DOWNLOADS_SUBMIT_EXTRA_DESC','<span style="font-weight: bold;"><<タイトル>>本文</span> の形式で入力してください。<br />下にあるテキストボックスで入力すると、自動的に所定の形式になります。<br />本文中には <span style="font-weight: bold;">XOOPSコード</span>、<span style="font-weight: bold;">[title]</span>、<span style="font-weight: bold;">[filename]</span>、<span style="font-weight: bold;">[filename2]</span>、<span style="font-weight: bold;">[expired]</span> を利用可能。<br />また、途中で <span style="font-weight: bold;">[pagebreak]</span> タグを入力すると、それ以降は個別ページでのみ表示されるようになります。<br />(<span style="font-weight: bold;">[pagebreak]</span> タグがない場合は、一覧ページでも表示)');
-define('_MD_D3DOWNLOADS_SUBMIT_EXTRA_SAMPLE','記入例<br /><<掲載期限>>[expired]<br /><<価格>>5,000円<br /><br />※ [expired]は自動的に変換');
+define('_MD_D3DOWNLOADS_SUBMIT_EXTRA_DESC','<span style="font-weight: bold;"><<タイトル>>本文</span> の形式で入力してください。<br>下にあるテキストボックスで入力すると、自動的に所定の形式になります。<br>本文中には <span style="font-weight: bold;">XOOPSコード</span>、<span style="font-weight: bold;">[title]</span>、<span style="font-weight: bold;">[filename]</span>、<span style="font-weight: bold;">[filename2]</span>、<span style="font-weight: bold;">[expired]</span> を利用可能。<br>また、途中で <span style="font-weight: bold;">[pagebreak]</span> タグを入力すると、それ以降は個別ページでのみ表示されるようになります。<br>(<span style="font-weight: bold;">[pagebreak]</span> タグがない場合は、一覧ページでも表示)');
+define('_MD_D3DOWNLOADS_SUBMIT_EXTRA_SAMPLE','記入例<br><<掲載期限>>[expired]<br><<価格>>5,000円<br><br>※ [expired]は自動的に変換');
 define('_MD_D3DOWNLOADS_SUBMIT_INSERT','追加');
 define('_MD_D3DOWNLOADS_EXTRA_TITLE','タイトル:');
 define('_MD_D3DOWNLOADS_EXTRA_DESC','本文:');

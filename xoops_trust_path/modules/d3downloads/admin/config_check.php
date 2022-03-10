@@ -19,16 +19,11 @@ if( ! is_object( @$xoopsUser ) || ! $moduleperm_handler->checkRight( 'module_adm
 
 xoops_cp_header();
 include dirname(__FILE__).'/mymenu.php' ;
-// Render View
+// RENDER
 // Configuration Environment Check
 $constpref = ucfirst( $mydirname ) ;
-echo '<h3>'.$constpref.'</h3>';
+echo '<h2>'.$constpref.'</h2>';
 echo '<div class="ui-card-full">';
-
-// maximum filesize
-echo '<h3>'._MD_D3DOWNLOADS_H2_CONFIG_CHECK.'</h3>';
-$maxfilesize = ! empty( $GLOBALS['xoopsModuleConfig']['maxfilesize'] )? intval( $GLOBALS['xoopsModuleConfig']['maxfilesize'] ) * 1024  : 1000 * 1024;
-echo '<div class="tips">📦 '.sprintf( _MD_D3DOWNLOADS_MAXFILESIZE , number_format( $maxfilesize ) ).'</div>';
 
 // upload dir_check
 echo '<h3>📁 '._MD_D3DOWNLOADS_UPLOADDIR_CHECK.'</h3>';
@@ -99,9 +94,13 @@ echo '<li>d3downloads<span style="padding-left:1em">v'.$version.'</span></li>';
 $module4altsys =& $module_handler->getByDirname( 'altsys' );
 $version4altsys =intval( $module4altsys->getVar( 'version' ) ) / 100 ;
 echo '<li>altsys<span style="padding-left:1em">v'.$version4altsys.'</span>';
-echo ( $version4altsys >= 0.61 ) ? '<span style="color:green;font-weight:bold;padding-left:1em;">OK</span></li>':'<span style="color:red;font-weight:bold;padding-left:1em;">NG</span></li>';
+echo ( $version4altsys >= 2.00 ) ? '<span style="color:green;font-weight:bold;padding-left:1em;">OK</span></li>':'<span style="color:red;font-weight:bold;padding-left:1em;">NG</span></li>';
 echo '</ul>';
 
+// maximum filesize
+echo '<h3>'._MD_D3DOWNLOADS_H2_CONFIG_CHECK.'</h3>';
+$maxfilesize = ! empty( $GLOBALS['xoopsModuleConfig']['maxfilesize'] )? intval( $GLOBALS['xoopsModuleConfig']['maxfilesize'] ) * 1024  : 1000 * 1024;
+echo '<div class="tips">📦 '.sprintf( _MD_D3DOWNLOADS_MAXFILESIZE , number_format( $maxfilesize ) ).'</div>';
 
 // php ini_check
 echo '<h3>🛠 '._MD_D3DOWNLOADS_PHPINI_CHECK.'</h3>';
@@ -112,14 +111,16 @@ echo '<li>file_uploads';
 echo ini_get('file_uploads')? '<span style="color:green;font-weight:bold;padding-left:1em;">OK</span></li>' : '<span style="color:red;font-weight:bold;padding-left:1em;">NG</span></li>';
 
 // upload_max_filesize
+//1 MB (MegaByte)	1024 KB or 1,048,576 bytes
+//1 GB (GigaByte)	1024 MB or 1,048,576 KiloBytes
 $upload_max_filesize = d3download_return_bytes( ini_get( 'upload_max_filesize' ) );
-echo '<li>upload_max_filesize<span style="padding-left:1em">'. number_format( $upload_max_filesize ).' byte</span>';
+echo '<li>upload_max_filesize<span style="padding-left:1em">'. number_format( $upload_max_filesize / 1048576 ).' MB</span>';
 echo ( $upload_max_filesize > $maxfilesize )? '<span style="color:green;font-weight:bold;padding-left:1em;">OK</span></li>' : '<span style="color:red;font-weight:bold;padding-left:1em;">NG</span></li>';
 
 // post_max_size
 $post_max_size = d3download_return_bytes( ini_get( 'post_max_size' ) );
 echo '<li>post_max_size<span style="padding-left:1em">';
-echo number_format( $post_max_size ).' byte</span>';
+echo number_format( $post_max_size  / 1048576 ).' MB</span>';
 echo ( $maxfilesize <= $post_max_size ) ? '<span style="color:green;font-weight:bold;padding-left:1em;">OK</span></li>':'<span style="color:red;font-weight:bold;padding-left:1em;">NG</span></li>';
 
 // open_basedir
@@ -249,7 +250,7 @@ echo ( $rs ) ? '<span style="color:green;font-weight:bold;padding-left:1em;">OK 
 
 echo '</ul>';
 
-//echo '<center>---- phpinfo() ----</center><br />';
+//echo '<center>---- phpinfo() ----</center><br>';
 //echo phpinfo();
 
 echo '</div>';

@@ -28,7 +28,7 @@ if( ! class_exists( 'Item_build' ) )
 		function __construct($mydirname )
 		{
             // TODO gigamaster parent construct
-            //parent::__construct($mydirname);
+            parent::__construct($mydirname);
 			global $xoopsUser ;
 			include_once dirname(__FILE__, 2) .'/include/mytable.php' ;
 

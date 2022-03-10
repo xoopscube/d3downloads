@@ -94,13 +94,13 @@ if( ! class_exists( 'Post_Check' ) )
 			return $result;
 		}
 
-		// ��
+        // Blank
 		function voidCheck( $value )
 		{
             return $value != "";
 		}
 
-		// ���[���A�h���X
+        // Email address
 		function mailCheck( $value )
 		{
             return (bool)preg_match('`^([a-z0-9_]|\-|\.|\+)+@(([a-z0-9_]|\-)+\.)+[a-z]{2,6}$`i', $value);
@@ -110,14 +110,15 @@ if( ! class_exists( 'Post_Check' ) )
 		function urlCheck( $value, $schemes = '', $imgurl = '' )
 		{
 			// Set initial data
-			if ( ! is_array( $schemes ) ) $schemes = array( 'http', 'https', 'ftp' );
+			//if ( ! is_array( $schemes ) ) $schemes = array( 'http', 'https', 'ftp' );
+            if ( ! is_array( $schemes ) ) $schemes = array( 'https', 'ftp' );
 			$deprecated = array( 'javascript', 'java script', 'vbscript', 'about', 'data' );
 
 			$allowed_schemes = implode( '|', $schemes );
 			$black_pattern = implode( '|', $deprecated );
 
 			// Check void
-			if ( preg_match("`^http://$`i", $value ) ) {
+			if ( preg_match("`^https://$`i", $value ) ) {
 				return false;
 			}
 
@@ -156,44 +157,44 @@ if( ! class_exists( 'Post_Check' ) )
 		// IMGURL
 		function imgurlCheck( $value, $schemes = '' )
 		{
-			if ( ! preg_match( "`(\.gif|\.jpe?g|\.png)$`i",$value ) ) {
+			if ( ! preg_match( "`(\.gif|\.jpe?g|\.svg|\.png)$`i",$value ) ) {
 				return false;
 			} else {
 				return $this->urlCheck( $value, $schemes, 1 );
 			}
 		}
 
-		// �A���t�@�x�b�g
+        // Alphabetical
 		function alphaCheck( $value )
 		{
             return ctype_alpha( $value );
 		}
 
-		// �A���t�@�x�b�g�E����
+		// Alphanumeric
 		function alnumCheck( $value )
 		{
             return ctype_alnum( $value );
 		}
 
-		// ����
+        // Numbers
 		function numericCheck( $value )
 		{
             return is_numeric( $value );
 		}
 
-		// ����
+        // Integer
 		function integerCheck( $value )
 		{
             return (bool)preg_match('`^[0-9]+$`', $value);
 		}
 
-		// �����l
+        // Same value
 		function sameValueCheck( $values )
 		{
             return strcmp( $values[0], $values[1] ) == 0;
 		}
 
-		// ����
+        // Length
 		function lengthEqualCheck( $values )
 		{
             return strlen( $values[0] ) == $values[1];
@@ -208,7 +209,7 @@ if( ! class_exists( 'Post_Check' ) )
             return strlen( $values[0] ) >= $values[1];
 		}
 
-		// ���K�\��
+        // Regular expression
 		function formatCheck( $values )
 		{
             return (bool)preg_match($values[1], $values[0]);

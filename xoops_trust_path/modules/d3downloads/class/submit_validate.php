@@ -17,18 +17,18 @@ if( ! class_exists( 'Submit_Validate' ) )
 		var $requests_text = array( 'title' , 'url' , 'filename' , 'ext' , 'file2' , 'filename2' , 'ext2' , 'homepage' , 'homepagetitle' , 'version', 'platform', 'license', 'logourl', 'description', 'extra' ) ;
 		var $requests_admin = array( 'visible',  'cancomment' ) ;
 		var $title_length = 100 ;
-		var $url_length = 250 ;
+		var $url_length = 191 ;
 		var $filename_length = 50 ;
 		var $ext_length = 10 ;
-		var $file2_length = 250 ;
+		var $file2_length = 191 ;
 		var $filename2_length = 50 ;
 		var $ext2_length = 10 ;
 		var $homepage_length = 100 ;
-		var $homepagetitle_length = 255 ;
+		var $homepagetitle_length = 191 ;
 		var $version_length = 10 ;
 		var $size_length = 10 ;
 		var $platform_length = 50 ;
-		var $license_length = 255 ;
+		var $license_length = 191 ;
 		var $logourl_length = 60 ;
 		var $html ;
 		var $smiley ;
@@ -223,7 +223,9 @@ if( ! class_exists( 'Submit_Validate' ) )
 			$filters = $this->return_filters() ;
 			$str = $this->return_body_for_preview( $description, $use_htmlpurifierl, $html, $smiley, $xcode, $br, $filters ) ;
 			$description4preview = $this->replace_for_preview( $str, $title , $filename, $filename2 ) ;
-			if( ! empty( $extra ) ) $description4preview .= $this->return_extra_for_preview( $extra, $title , $filename, $filename2 ) ;
+			if( ! empty( $extra ) ) {
+                $description4preview .= $this->return_extra_for_preview($extra, $title, $filename, $filename2);
+            }
 
 			// set4sql
 			switch( $this->mode ) {
@@ -375,7 +377,7 @@ if( ! class_exists( 'Submit_Validate' ) )
 			$array = $this->extra_array( $extra, 1, 0, 1 ) ;
 			if( empty( $array ) ) return '' ;
 
-			$html  = '<br /><br />' ;
+			$html  = '<hr>' ;
 			$html .= '<table style="margin-top: 0.2em;margin-bottom: 1em;border-collapse: collapse;border: solid 1px #999;font-size: 100%;">' ;
 			foreach( $array as $info ){
 				$html .= '<tbody><tr>' ;
@@ -386,7 +388,7 @@ if( ! class_exists( 'Submit_Validate' ) )
 				$html .= $this->replace_for_preview( $info['desc'], $title , $filename, $filename2 ) ;
 				$html .= '</td></tr>' ;
 			}
-			$html .= '</tbody></table>' ;
+			$html .= '</tbody></table><hr>' ;
 			
 			return $html ;
 		}
@@ -424,7 +426,7 @@ if( ! class_exists( 'Submit_Validate' ) )
 		function htmlpr_except()
 		{
 			if( $this->xoops_isuser ) {
-				return !((count(array_intersect($this->xoops_groups, @$this->mod_config['use_htmlpurifier'])) > 0));
+				return ( count( array_intersect( $this->xoops_groups , @$this->mod_config['use_htmlpurifier'] ) ) > 0 ) ? false : true ;
 			} else {
 				return true ;
 			}
@@ -433,7 +435,7 @@ if( ! class_exists( 'Submit_Validate' ) )
 		function htmlpr_on_off()
 		{
 			if( $this->xoops_isuser ) {
-				return !empty($this->mod_config['use_htmlpurifier']);
+				return ( empty( $this->mod_config['use_htmlpurifier'] ) ) ? false : true ;
 			} else {
 				return true ;
 			}
@@ -445,7 +447,7 @@ if( ! class_exists( 'Submit_Validate' ) )
 			foreach( $_POST as $key => $val ) {
 				if( substr( $key , 0 , 15 ) == 'filter_enabled_' && $val ) {
 					$name = str_replace( '..' , '' , substr( $key , 15 ) ) ;
-					$filter_path = dirname( dirname(__FILE__) ).'/filters/enabled/d3downloads_'.$name.'.php' ;
+					$filter_path = dirname(__FILE__, 2) .'/filters/enabled/d3downloads_'.$name.'.php' ;
 					if( ! file_exists( $filter_path ) ) continue ;
 					$filters[$name] = $name;
 				}
@@ -517,7 +519,7 @@ if( ! class_exists( 'Submit_Validate' ) )
 				), 
 			) ;
 
-			if( $this->homepage != "http://" && ! empty( $this->homepage ) ){
+			if( $this->homepage != "https://" && ! empty( $this->homepage ) ){
 				$homepage_check = array(
 					array(
 						'value'   => $this->homepage,

@@ -128,7 +128,8 @@ if( ! class_exists( 'file_manager' ) )
 
 		function get_copy_target_category( $target_dirname )
 		{
-			require_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+			require_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
+
 			$mycategory = new MyCategory( $target_dirname, 'Show' ) ;
 
 			$category = "" ;

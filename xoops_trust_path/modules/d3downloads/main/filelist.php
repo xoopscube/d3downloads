@@ -12,7 +12,7 @@ $user_access = new user_access( $mydirname ) ;
 
 $download4assign = $category = $all = array() ;
 
-// �{���E���e�\�ȃJ�e�S���擾�̏���
+// Preparation for acquiring categories that can be viewed and posted
 $whr_cat = "cid IN (".implode(",", $user_access->can_read() ).")" ;
 $whr_cat4read = "d.".$whr_cat ;
 
@@ -38,7 +38,7 @@ $xoopsTpl->assign('lang_cursortedby', sprintf( _MD_D3DOWNLOADS_CURSORTBY, d3down
 
 $mydownload = new MyDownload( $mydirname );
 
-// CID ���擾�����ꍇ�̏���
+// Processing when CID is obtained
 $cid = ( ! empty( $_GET['cid'] ) ) ? intval( $_GET['cid'] ) : 0 ;
 $select_intree = d3download_select_intree();
 $intree =  ( ! empty( $_GET['intree'] ) ) ? 1 : 0 ;
@@ -48,18 +48,18 @@ $xoopsTpl->assign( 'category_id', $cid );
 $xoopsTpl->assign( 'select_intree' , $select_intree ) ; 
 $xoopsTpl->assign( 'intree', $intree );
 
-// �o�^�������擾
+// Get the number of registrations
 $total =  $mydownload->Total_Num( $whr_cat, $cid, 0, 0, $intree ) ;
 $total_num = ( ! empty( $cid ) ) ? sprintf( _MD_D3DOWNLOADS_CATEGORY_NUM , $total ) : sprintf( _MD_D3DOWNLOADS_TOTAL_NUM , $total ) ;
 
-// ����J�������A�T�C��
+// Assign a non-public number of cases
 if( $module_admin ){
 	$invisible_num = $mydownload->Invisible_Num( $cid, $intree ) ;
 	$xoopsTpl->assign( 'invisible_num' , $invisible_num['num']  ) ;
 	$xoopsTpl->assign( 'invisible_link' , $invisible_num['link']  ) ;
 }
 
-// �y�[�W�^�C�g�����A�T�C��
+// Assign page title
 $pagetitle4assign = _MD_D3DOWNLOADS_FILELIST_MAIN ;
 if( ! empty( $cid ) ){
 	include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
@@ -67,13 +67,13 @@ if( ! empty( $cid ) ){
 	$pagetitle4assign .= ' - '.$mycategory->return_title() ;
 }
 
-// �p�����������̏���
+// Processing the breadcrumb section
 $bc[0] = d3download_breadcrumbs( $mydirname ) ;
 $breadcrumbs_tree = d3download_breadcrumbs_tree( $mydirname, $cid, $whr_cat, "index.php?page=filelist" ) ;
 $bc[] = ( empty( $breadcrumbs_tree ) ) ? array( 'name' => _MD_D3DOWNLOADS_FILELIST_MAIN ) : array( 'url' => 'index.php?page=filelist' , 'name' => _MD_D3DOWNLOADS_FILELIST_MAIN ) ;
 $breadcrumbs = array_merge( $bc, $breadcrumbs_tree ) ;
 
-// �y�[�W�i�r�̏���
+// Page navigation processing
 $perpage4assign = d3download_items_perpage();
 $select_perpage = d3download_select_perpage( $mydirname ) ;
 $current_start = isset( $_GET['start'] ) ? intval( $_GET['start'] ) : 0 ;
@@ -93,15 +93,15 @@ $xoopsTpl->assign( 'orderby' , $orderby4pagenav ) ;
 
 $xoopsOption['template_main'] = $mydirname.'_main_filelist.html' ;
 
-// �o�^�������A�T�C��
+// Assign number of registrations
 $xoopsTpl->assign( 'download_total_num' , $total_num  ) ;
 
-// �{���\�ȃJ�e�S���̃��X�g�� SELECT�{�b�N�X�p�Ɏ擾
+// Get a list of browsable categories for the SELECT box
 $all = array( 0 => 'ALL' ) ;
 $category = d3download_makecache_for_selbox( $mydirname, $whr_cat, 0, 1 ) ;
 $category4assin = $all + $category ;
 
-// �{���\�ȓo�^�f�[�^���擾
+// Retrieve registration data available for viewing
 $download4assign = $mydownload->get_downdata_for_filelist( $cid, $whr_cat4read, $orderby, $select_perpage, $current_start, $intree ) ;
 
 $mod_url = XOOPS_URL.'/modules/'.$mydirname ;
@@ -110,7 +110,7 @@ $lang_directcatsel = _MD_D3DOWNLOADS_SEL_CATEGORY ;
 $xoops_module_header = d3download_dbmoduleheader( $mydirname );
 $xoopsTpl->assign( 'xoops_module_header', $xoops_module_header . "\n" . $xoopsTpl->get_template_vars('xoops_module_header' ) ) ;
 
-// assign
+// RENDER
 $xoopsTpl->assign( array(
 	'mydirname' => $mydirname ,
 	'mod_url' => $mod_url ,

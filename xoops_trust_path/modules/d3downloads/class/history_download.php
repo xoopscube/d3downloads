@@ -34,9 +34,9 @@ if( ! class_exists( 'history_download' ) )
 		function __construct($mydirname, $id= 0 )
 		{
             // TODO gigamaster parent construct
-            parent::__construct($mydirname);
+            parent::__construct($mydirname, $id= 0 );
 
-			include_once dirname( dirname(__FILE__) ).'/include/mytable.php' ;
+			include_once dirname(__FILE__, 2) .'/include/mytable.php' ;
 			$this->db =& Database::getInstance();
 			$this->myts =& d3downloadsTextSanitizer::sGetInstance() ;
 			$this->mod_url = XOOPS_URL.'/modules/'.$mydirname ;
@@ -87,7 +87,8 @@ if( ! class_exists( 'history_download' ) )
 			$url       = $this->return_url('Show') ;
 			$filename  = $this->return_filename('Show') ;
 			$ext       = $this->return_ext('Show') ;
-			$file_info = $this->file_link( $id, $cid, $url, $filename, $ext );
+            $title     = $this->return_title('Show');
+            $file_info = $this->file_link( $id, $cid, $title, $url, $filename, $ext, $novisit, 0, $block ) ;
 			$file2     = $this->return_file2('Show') ;
 			$filename2 = $this->return_filename2('Show') ;
 			$history = array(
@@ -147,7 +148,7 @@ if( ! class_exists( 'history_download' ) )
 			return $history ;
 		}
 
-		function file_link( $id, $cid, $url, $filename, $ext )
+		function file_link($id, $cid, $title, $url, $filename, $ext, $novisit = 0, $second = 0, $block = 0)
 		{
 			$broken_link = 0 ;
 			$filelink = '' ;
@@ -167,7 +168,7 @@ if( ! class_exists( 'history_download' ) )
 			} elseif ( preg_match('/('.$exception.')$/i', $url ) ) {
 				$filelink =  '<a href="'.$link.'">' ;
 			} else {
-				$filelink =  '<a href="'.$link.'" target="_blank">' ;
+				$filelink =  '<a href="'.$link.'" target="_blank" rel="noopener noreferrer nofollow">' ;
 			}
 			return array(
 				'broken_link' => $broken_link ,
@@ -181,7 +182,7 @@ if( ! class_exists( 'history_download' ) )
 			$link = $this->mod_url.'/index.php?page=visit_url&history=1&cid='.$cid.'&id='.$id ;
 			if ( ! preg_match("`^(https?|ftp)://`i", $url ) ) {
 				if( ! $this->check_file( $url ) ){
-					$filenamelink = $filename.'&nbsp;&nbsp;( <span style="color: #CC0000;font-weight: bold;">broken file !!</span> )';
+					$filenamelink = $filename.'&nbsp;&nbsp;( <span style="color: #CC0000;font-weight: bold;">Broken file !</span> )';
 				} else {
 					if( empty( $second ) ){
 						$filenamelink = '<a href="'.$link.'">'.$filename.'</a>';
