@@ -43,18 +43,16 @@
 	<{if $module_admin || $category_for_post}>
 	<div layout="row center-left my-4" class="action-control">
 		<form name="for_admin" action="<{$mod_url}>/index.php" method="post">
-		<{if $module_admin || $category_for_post}>
 			<select name="category_select" id="category_select">
 				<option value=""><{$lang_directcatsel}></option>
 				<{html_options options=$category_for_post}>
 			</select>
-		<{/if}>
-		<{if $module_admin}>
-			<input type="submit" class="ui-button" name="cat_edit" value="<{$smarty.const._MD_D3DOWNLOADS_CAT_EDIT}>">
-			<input type="submit" class="ui-button" name="brokencheck" value="<{$smarty.const._MD_D3DOWNLOADS_BROKENCHECK}>" onclick="return confirm('<{$smarty.const._MD_D3DOWNLOADS_CONFIRM_BROKENCHECK}>')">
-			<a class="ui-button" href="<{$mod_url}>/admin/index.php?page=categoryedit&amp;cid=0"><{$smarty.const._MD_D3DOWNLOADS_ADMIN_NEWCATEGORY}></a>
+			<{if $module_admin}>
+				<input type="submit" class="ui-button" name="cat_edit" value="<{$smarty.const._MD_D3DOWNLOADS_CAT_EDIT}>">
+				<input type="submit" class="ui-button" name="brokencheck" value="<{$smarty.const._MD_D3DOWNLOADS_BROKENCHECK}>" onclick="return confirm('<{$smarty.const._MD_D3DOWNLOADS_CONFIRM_BROKENCHECK}>')">
+				<a class="ui-button" href="<{$mod_url}>/admin/index.php?page=categoryedit&amp;cid=0"><{$smarty.const._MD_D3DOWNLOADS_ADMIN_NEWCATEGORY}></a>
+			<{/if}>
 			<input type="submit" class="ui-button" name="file_post" value="<{$smarty.const._MD_D3DOWNLOADS_NEWSUBMIT}>">
-		<{/if}>
 		</form>
 	</div>
 	<{/if}>

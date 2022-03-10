@@ -310,12 +310,12 @@
 		<tr>
 			<td></td>
 			<td>
-				<input type="submit" class="formButton" name="makedownload_post" id="makedownload_post" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_SUBMITEDITING}>">
-				<input type="submit" class="formButton" name="makedownload_preview" id="makedownload_preview" value="<{$smarty.const._PREVIEW}>">
+				<input class="ui-button" type="submit" name="makedownload_preview" id="makedownload_preview" value="<{$smarty.const._PREVIEW}>">
+				<input class="ui-button" type="button" name="back" id="back" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_CANCEL}>">
 				<{if $candelete}>
-					<input type="submit" name="makedownloadform_delete" id="makedownloadform_delete" value="<{$smarty.const._DELETE}>">
+				<input  class="button-delete" type="submit" name="makedownloadform_delete" id="makedownloadform_delete" value="<{$smarty.const._DELETE}>">
 				<{/if}>
-				<input type="button" name="back" id="back" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_CANCEL}>">
+				<input class="ui-button" type="submit" name="makedownload_post" id="makedownload_post" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_SUBMITEDITING}>">
 			</td>
 		</tr>
 		</tfoot>
@@ -324,15 +324,12 @@
 
 <{if ! $config_error && $canupload}>
 <script type="text/javascript">
-<!--//
 file_url_line_initialize() ;
-//-->
 </script>
 <{/if}>
 
 <script type="text/javascript">
-<!--//
-<!-- LiveValidator START -->
+
 <{$liveValidator}>
 <!-- LiveValidator END -->
 
@@ -345,5 +342,4 @@ jQuery( function($){
 		location.href="<{$mod_url}>/index.php" ;
     });
 });
-//-->
 </script>
