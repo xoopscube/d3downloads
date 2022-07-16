@@ -381,6 +381,19 @@ if ( ! function_exists('d3download_cat_description') ) {
 	}
 }
 
+// Get category custom image
+// $cat_image for main view category, @gigamaster
+if ( ! function_exists('d3download_cat_image') ) {
+    function d3download_cat_image( $mydirname, $imgurl )
+    {
+        include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
+        $mycategory = new MyCategory( $mydirname, 'Show', $imgurl ) ;
+        $cat_image = $mycategory->return_imgurl() ;
+        if( ! empty( $cat_image ) ) return $cat_image ;
+        else return '' ;
+    }
+}
+
 if ( ! function_exists('d3download_cat_pid') ) {
 	function d3download_cat_pid( $mydirname, $cid )
 	{

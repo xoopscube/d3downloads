@@ -68,7 +68,7 @@ if ( ! function_exists('d3download_file_error_message') ) {
 	}
 }
 
-// ��ʐݒ�̍ő�t�@�C���T�C�Y���擾
+// Get the maximum file size of general settings
 if ( ! function_exists('d3download_get_maxsize') ) {
     function d3download_get_maxsize( $mydirname )
     {
@@ -87,7 +87,7 @@ if ( ! function_exists('d3download_get_maxsize') ) {
 }
 
 
-// �A�b�v���[�h�\�Ȋg���q���擾
+// Get the uploadable extension
 if ( ! function_exists('d3download_get_allowed_extension') ) {
 	function d3download_get_allowed_extension( $mydirname )
 	{
@@ -98,11 +98,11 @@ if ( ! function_exists('d3download_get_allowed_extension') ) {
 	}
 }
 
-// �t�@�C���A�b�v���[�h����
+// File upload process
 if ( ! function_exists('d3download_file_upload') ) {
 	function d3download_file_upload( $mydirname, $upload_arr, $maxsize, $id, $uid )
 	{
-		// ���`�F�b�N
+        // Environmental check
 		$config_error = "" ;
 		$config_error = d3download_upload_config_check( $mydirname );
 		if( ! empty( $config_error ) ){
@@ -129,7 +129,7 @@ if ( ! function_exists('d3download_file_upload') ) {
 	}
 }
 
-// �t�@�C���A�b�v���[�h���s
+// File upload execution
 if ( ! function_exists('d3download_upload_execution') ) {
 	function d3download_upload_execution( $mydirname, $file_name, $file_tmp_name, $file_error, $maxsize, $id, $uid, $second=0 )
 	{
@@ -138,17 +138,17 @@ if ( ! function_exists('d3download_upload_execution') ) {
 
 		$uploads_dir = XOOPS_TRUST_PATH.'/uploads/'.$mydirname.'/';
 
-		// PHP 4.3.6 �ȑO�̃o�[�W�����ւ̑΍�( .. �� / ���܂܂�Ă���ꍇ�����I�� )
+        // Measures for PHP earlier versions (killed if double dot '..' and '/' are included)
 		$upload_validate->check_doubledot( $file_name ) ;
 
-		// �A�b�v���[�h���ꂽ�t�@�C���́A�g���q�͂Ȃ��A�t�@�C������ς��ĕۑ�����
+        // The uploaded file has no extension and is saved with a different file name.
 		$site_salt = substr( md5( XOOPS_URL ) , -4 ) ;
 		$uploads_filename = $id.'_'.$site_salt.'_'.$uid.'_'.time() ;
 		if ( ! empty( $second ) ) $uploads_filename .= '_1' ;
 		$uploads_path = $uploads_dir.$uploads_filename ;
 		$uploads_url = 'XOOPS_TRUST_PATH/uploads/'.$mydirname.'/'.$uploads_filename ;
 
-		// �G���[�`�F�b�N
+        // Error checking
 		if ( $file_error > 0 ){
 			return array(
 				'file_name'  => $file_name,
@@ -169,27 +169,27 @@ if ( ! function_exists('d3download_upload_execution') ) {
 				exit();
 			}
 
-			// �g���q�`�F�b�N
+            // Extension check
 			if( ! $upload_validate->check_allowed_extensions( $f_ext ) ){
 				redirect_header( XOOPS_URL."/modules/$mydirname/", 2, sprintf( _MD_D3DOWNLOADS_UPLOADERROR_EXT , $f_ext ) ) ;
 				exit() ;
 			} else {
-				// php �ȂǊ댯�Ȋg���q�̃t�@�C���̃A�b�v���[�h��h��
+                // Prevent uploading files with dangerous extensions such as php
 				$upload_validate->check_deny_extensions( $f_ext ) ;
 
-				// multiple dot file �̃`�F�b�N���s�����ǂ���
+                // Whether to check multiple dot files
 				$check_multiple_dot = $upload_validate->config_check_multiple_dot() ;
-				// multiple dot file �̃`�F�b�N
+                // Check multiple dot files
 				if( ! empty( $check_multiple_dot ) ){
 					$upload_validate->check_multiple_dot( $file_name ) ;
 				}
 
-				// �摜�t�@�C����ΏۂɊg���q�U���̃`�F�b�N
+                // Check for forged extensions for image files
 				$upload_validate->check_image_extensions( $f_ext, $file_tmp_name, $file_name ) ;
 
-				// �w�b�_�̃`�F�b�N���s�����ǂ���
+                // Whether to check the header
 				$check_of_head = $upload_validate->config_validate_of_head() ;
-				// �t�@�C���̐擪�����m�F���Ċg���q�U���̃`�F�b�N
+                // Check the beginning of the file to check for forged extensions
 				if( ! empty( $check_of_head ) ){
 					$upload_validate->Validate_of_head( $file_tmp_name, $file_name, $f_ext ) ;
 				}

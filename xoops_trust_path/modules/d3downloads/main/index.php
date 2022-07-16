@@ -49,6 +49,7 @@ if ( isset( $_GET['cid'] ) ) {
 	if ( ! empty( $_GET['intree'] ) ) $intree = 1 ;
 
 	$xoopsOption['template_main'] = $mydirname.'_main_viewcat.html' ;
+
 	$xoopsTpl->assign( 'category_id', $cid ) ;
 
 	$select_intree = d3download_select_intree();
@@ -62,6 +63,10 @@ if ( isset( $_GET['cid'] ) ) {
     // Get category description
 	$cat_description = d3download_cat_description( $mydirname, $cid ) ;
 	$xoopsTpl->assign( 'cat_description', $cat_description ) ;
+
+    // Get category imageurl
+    $cat_image_url = d3download_cat_image( $mydirname, $cid ) ;
+    $xoopsTpl->assign( 'cat_image_url', $cat_image_url ) ;
 
     // Assign view permission setting status for administrator
 	if( $module_admin ){
@@ -81,7 +86,7 @@ if ( isset( $_GET['cid'] ) ) {
 	$pagetitle4assign = $mycategory->return_title() ;
     $xoopsTpl->assign( 'cat_title', $pagetitle4assign ) ;
 
-    // Redirect for unbrowsable categories
+    // Redirect for inaccessible categories
 	$canread = $user_access->user_access_for_cat( $cid, $whr_cat ) ;
 	if( empty( $canread ) ) {
 		redirect_header( XOOPS_URL.'/modules/'.$mydirname.'/',3, _MD_D3DOWNLOADS_NOREADPERM ) ;
