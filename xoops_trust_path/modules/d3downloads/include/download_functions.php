@@ -5,7 +5,7 @@ if ( ! function_exists( 'd3download_download' ) ) {
 	{
 
 		if ( ! preg_match("`^(https?|ftp)://`i", $url ) ) {
-			include_once dirname( dirname(__FILE__) ).'/class/upload_validate.php' ;
+			include_once dirname(__FILE__, 2) .'/class/upload_validate.php' ;
 
 			if ( ! ini_get( 'safe_mode' ) ) { @set_time_limit(0); }
 			if( empty( $filename ) ){
@@ -48,13 +48,12 @@ if ( ! function_exists( 'd3download_download' ) ) {
 			} else {
 				fpassthru( $fp );
 			}
-			exit();
-		} else {
+        } else {
 			if ( ! preg_match( "/^ed2k*:\/\//i", $url ) ) { Header("Location: $url"); }
 			echo "<html><head><meta http-equiv=\"Refresh\" content=\"0; URL=".$url."\"></meta></head><body></body></html>";
-			exit();
-		}
-	}
+        }
+        exit();
+    }
 }
 
 if ( ! function_exists( 'd3download_get_download_name' ) ) {
@@ -125,5 +124,3 @@ if ( ! function_exists('d3download_chrome_filename') ) {
 		return ( $pos !== false ) ?  substr( $filename, 0, $pos + 1 ) : $filename ;
 	}
 }
-
-?>

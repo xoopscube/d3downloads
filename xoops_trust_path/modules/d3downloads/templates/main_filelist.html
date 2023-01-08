@@ -1,79 +1,104 @@
+<div class="ui-dev-mode"><{$smarty.template}></div>
+
+
 <{if $mod_config.show_breadcrumbs}>
 	<{include file="db:`$mydirname`_inc_breadcrumbs.html"}>
 <{/if}>
-<table width="100%" border="0" cellspacing="5" cellpadding="0" align="center">
-	<tr valign="top" align="left">
-		<td class="d3downloads_head">
-			<form name="cid_select" action="<{$mod_url}>/index.php?page=<{$page}>&amp;cid=<{$select_id}>" method="get" style="margin:0px;text-align:center;">
-				<input name="page" value="<{$page}>" type="hidden">
-				<input name="orderby" value="<{$orderby}>" type="hidden">
-				<select name="cid" onchange="submit();">
-					<option value=""><{$lang_directcatsel}></option>
-					<{html_options options=$category selected=$select_id}><br />
-				</select>
-				&nbsp;<{$download_total_num}>
-				<{if $module_admin && $invisible_num}>
-					<{$invisible_link}>
-				<{/if}>
-				&nbsp;| &nbsp;<{$smarty.const._MD_D3DOWNLOADS_LABEL_PERPAGE}>&nbsp;
-				<select name="perpage" onchange="submit();">
-					<{html_options options=$perpage selected=$select_perpage}>
-				</select>
-				<{if $select_id}>
-					&nbsp;| &nbsp;
-					<select name="intree" onchange="submit();">
-						<{html_options options=$select_intree selected=$intree}>
-					</select>
-				<{/if}>
-			</form>
-		</td>
-	</tr>
-</table>
+
+<form name="cid_select" action="<{$mod_url}>/index.php?page=<{$page}>&amp;cid=<{$select_id}>" method="get">
+	<input name="page" value="<{$page}>" type="hidden">
+	<input name="orderby" value="<{$orderby}>" type="hidden">
+
+	<div layout="row center-justify p-2 my-4 sm-column" class="activity">
+		<div self="px-2">
+			<select name="cid" onchange="submit();">
+			<option value=""><{$lang_directcatsel}></option>
+			<{html_options options=$category selected=$select_id}>
+		</select>
+			&nbsp;<{$download_total_num}>
+			<{if $module_admin && $invisible_num}>
+			<span data-before-text="<{$invisible_num}>" data-before-type="blue pill">
+				<a href="<{$invisible_link}>"><{$smarty.const._MD_D3DOWNLOADS_INVISIBLE_NUM}></a>
+			</span>
+			<{/if}>
+			<{if $select_id}>
+			<select name="intree" onchange="submit();">
+				<{html_options options=$select_intree selected=$intree}>
+			</select>
+			<{/if}>
+		</div>
+		<div self="px-2">
+			<{$smarty.const._MD_D3DOWNLOADS_LABEL_PERPAGE}>
+			<select name="perpage" onchange="submit();">
+				<{html_options options=$perpage selected=$select_perpage}>
+			</select>
+		</div>
+	</div>
+
+</form>
+
+
 
 <div class="d3downloads_sortedby">
-	<{$smarty.const._MD_D3DOWNLOADS_SORTBY}>&nbsp;&nbsp;<{$smarty.const._MD_D3DOWNLOADS_TITLE}> (<a href="<{$argument}>&amp;orderby=titleA"><img src="images/up.gif" border="0" align="middle" alt="" /></a><a href="<{$argument}>&amp;orderby=titleD"><img src="images/down.gif" border="0" align="middle" alt="" /></a>)&nbsp;<{$smarty.const._MD_D3DOWNLOADS_DATE}> (<a href="<{$argument}>&amp;orderby=dateA"><img src="images/up.gif" border="0" align="middle" alt="" /></a><a href="<{$argument}>&amp;orderby=dateD"><img src="images/down.gif" border="0" align="middle" alt="" /></a>)&nbsp;<{$smarty.const._MD_D3DOWNLOADS_RATING}> (<a href="<{$argument}>&amp;orderby=ratingA"><img src="images/up.gif" border="0" align="middle" alt="" /></a><a href="<{$argument}>&amp;orderby=ratingD"><img src="images/down.gif" border="0" align="middle" alt="" /></a>)&nbsp;<{$smarty.const._MD_D3DOWNLOADS_DOWNSUM}> (<a href="<{$argument}>&amp;orderby=hitsA"><img src="images/up.gif" border="0" align="middle" alt="" /></a><a href="<{$argument}>&amp;orderby=hitsD"><img src="images/down.gif" border="0" align="middle" alt="" /></a>)
-	<br /><span class="d3downloads_bold"><{$lang_cursortedby}></span>
+	<{$smarty.const._MD_D3DOWNLOADS_SORTBY}>&nbsp;&nbsp;
+	<{$smarty.const._MD_D3DOWNLOADS_TITLE}> 
+	(<a href="<{$argument}>&amp;orderby=titleA"><img src="images/up.gif" alt="up"></a>
+	<a href="<{$argument}>&amp;orderby=titleD"><img src="images/down.gif" alt=""></a>)&nbsp;
+	<{$smarty.const._MD_D3DOWNLOADS_DATE}> 
+	(<a href="<{$argument}>&amp;orderby=dateA"><img src="images/up.gif" alt=""></a>
+	<a href="<{$argument}>&amp;orderby=dateD"><img src="images/down.gif" alt=""></a>)&nbsp;
+	<{$smarty.const._MD_D3DOWNLOADS_RATING}> 
+	(<a href="<{$argument}>&amp;orderby=ratingA"><img src="images/up.gif" alt=""></a>
+	<a href="<{$argument}>&amp;orderby=ratingD"><img src="images/down.gif" alt=""></a>)&nbsp;
+	<{$smarty.const._MD_D3DOWNLOADS_DOWNSUM}> 
+	(<a href="<{$argument}>&amp;orderby=hitsA"><img src="images/up.gif" alt=""></a
+><a href="<{$argument}>&amp;orderby=hitsD"><img src="images/down.gif" alt=""></a>)
+	<br><span class="d3downloads_bold"><{$lang_cursortedby}></span>
 </div>
 
-<br />
+<hr>
+
 <{if $filelist}>
-	<table class="d3downloads_outer">
-		<tr>
-			<th width="15%" style="text-align:center;"><{$smarty.const._MD_D3DOWNLOADS_CATEGORY}></th>
-			<th width="10%" style="text-align:center;"><{$smarty.const._MD_D3DOWNLOADS_DATE}></th>
-			<th width="20%" style="text-align:center;"><{$smarty.const._MD_D3DOWNLOADS_TITLE}></th>
-			<th width="5%" style="text-align:center;"><{$smarty.const._MD_D3DOWNLOADS_VERSION}></th>
-			<th width="35%" style="text-align:center;"><{$smarty.const._MD_D3DOWNLOADS_SUMMARY}></th>
-			<th width="5%" style="text-align:center;"><{$smarty.const._MD_D3DOWNLOADS_DOWNSUM}></th>
-			<th width="5%" style="text-align:center;"><{$smarty.const._MD_D3DOWNLOADS_TOP_TEN_RATING}></th>
+	<table class="outer">
+		<thead>
+		<tr style="text-align:center;">
+			<th width="15%"><{$smarty.const._MD_D3DOWNLOADS_CATEGORY}></th>
+			<th width="10%"><{$smarty.const._MD_D3DOWNLOADS_DATE}></th>
+			<th width="20%"><{$smarty.const._MD_D3DOWNLOADS_TITLE}></th>
+			<th width="5%"><{$smarty.const._MD_D3DOWNLOADS_VERSION}></th>
+			<th width="35%"><{$smarty.const._MD_D3DOWNLOADS_SUMMARY}></th>
+			<th width="5%"><{$smarty.const._MD_D3DOWNLOADS_DOWNSUM}></th>
+			<th width="5%"><{$smarty.const._MD_D3DOWNLOADS_TOP_TEN_RATING}></th>
 			<{if $config_d3comment}>
-				<th width="5%" style="text-align:center;"><{$smarty.const._MD_D3DOWNLOADS_COMMENTS}></th>
+				<th><{$smarty.const._MD_D3DOWNLOADS_COMMENTS}></th>
 			<{/if}>
 		</tr>
-		<!-- Start files loop -->
+		</thead>
+		<tbody>
 		<{foreach item="file" from=$filelist}>
 			<tr class="<{cycle values="even,odd"}>">
 				<td><a href="<{$mod_url}>/index.php?cid=<{$file.cid}>"><{$file.category}></a></td>
-				<td style="text-align:center;"><{$file.updated}></td>
+				<td><{$file.updated}></td>
 				<td><a href="<{$mod_url}>/index.php?page=singlefile&amp;cid=<{$file.cid}>&amp;lid=<{$file.id}>"><{$file.title}></a></td>
-				<td style="text-align:center;"><{$file.version}></td>
-				<td><{$file.summary|xoops_substr:"0":"200"}></td>
-				<td style="text-align:center;"><{$file.hits}></td>
-				<td style="text-align:center;">
-					<{$file.rating}><br />
-					(<{$file.votes}><{$smarty.const._MD_D3DOWNLOADS_VOTEC}>)</td>
+				<td><{$file.version}></td>
+		<{* Description length limit to "50" characters *}>
+				<td><{$file.summary|xoops_substr:"0":"50"}></td>
+				<td><{$file.hits}></td>
+				<td><{$file.rating}> (<{$file.votes}><{$smarty.const._MD_D3DOWNLOADS_VOTEC}>)</td>
 				<{if $file.d3comment}>
-					<td style="text-align:center;"><a href="<{$mod_url}>/index.php?page=singlefile&amp;cid=<{$file.cid}>&amp;lid=<{$file.id}>#comment"><{$file.comments}></a></td>
+					<td><a href="<{$mod_url}>/index.php?page=singlefile&amp;cid=<{$file.cid}>&amp;lid=<{$file.id}>#comment"><{$file.comments}></a></td>
 				<{/if}>
 			</tr>
 		<{/foreach}>
-		<!-- End links loop-->
+		</tbody>
 	</table>
+
 <{else}>
-	<div align="center">
-		<br /><{$smarty.const._MD_D3DOWNLOADS_NOMATCH}><br />
+	<div class="resultMsg">
+		<p><{$smarty.const._MD_D3DOWNLOADS_NOMATCH}></p>
 	</div>
 <{/if}>
-<br />
-<hr />
-<{$pagenav}>
+
+<hr>
+
+<div class="pagination"><{$pagenav}></div>

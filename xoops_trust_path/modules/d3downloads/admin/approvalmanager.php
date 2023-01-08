@@ -1,8 +1,8 @@
 <?php
 
-require_once dirname( dirname(__FILE__) ).'/class/gtickets.php' ;
-require_once dirname( dirname(__FILE__) ).'/class/unapproval_download.php' ;
-require_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
+require_once dirname(__FILE__, 2) .'/class/gtickets.php' ;
+require_once dirname(__FILE__, 2) .'/class/unapproval_download.php' ;
+require_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
 
 // THIS PAGE CAN BE CALLED ONLY FROM D3DOWNLOADS
 if( $xoopsModule->getVar('dirname') != $mydirname ) die( 'this page can be called only from '.$mydirname ) ;
@@ -22,7 +22,9 @@ $error_message = '' ;
 
 // UNAPROVAL LIST
 $unapproval_execution = new unapproval_download( $mydirname ) ;
-$unaproval_sum = sprintf( _MD_D3DOWNLOADS_UNAPROVALNUM , $unapproval_execution->Total_Num( 'NewFile' ) );
+// @gigamaster removed sprintf (catalog) replace with UI badge
+// $unaproval_sum = sprintf( _MD_D3DOWNLOADS_UNAPROVALNUM , $unapproval_execution->Total_Num( 'NewFile' ) );
+$unaproval_sum = $unapproval_execution->Total_Num( 'NewFile' ) ;
 $unapproval = $unapproval_execution->get_unapproval_list( 'NewFile' ) ;
 
 // UNAPROVAL DELETE
@@ -30,10 +32,10 @@ if( ! empty( $_POST['unapproval_delete'] ) ) {
 	if ( ! $xoopsGTicket->check( true , 'd3downloads' ) ) {
 		redirect_header(XOOPS_URL.'/modules/'.$mydirname.'/admin/index.php',3,$xoopsGTicket->getErrors());
 	}
-	if( empty( $_POST['action_selects'] ) ) $message[] = _MD_D3DOWNLOADS_ERROR_SEL_FILSE ;
+	if( empty( $_POST['action_selects'] ) ) $message[] = _MD_D3DOWNLOADS_ERROR_SEL_FALSE ;
 	if( ! empty( $message ) ){
 		$iserror = 1 ;
-		$error_message = implode( '<br />' , $message ) ;
+		$error_message = implode( '<br>' , $message ) ;
 	}
 	if( empty( $iserror ) ) {
 		foreach( $_POST['action_selects'] as $id => $value ) {
@@ -48,7 +50,9 @@ if( ! empty( $_POST['unapproval_delete'] ) ) {
 }
 
 // UNAPROVAL MODFILE LIST
-$modfile_sum = sprintf( _MD_D3DOWNLOADS_UNAPROVALNUM , $unapproval_execution->Total_Num( 'ModFile' ) );
+// @gigamaster removed sprintf (catalog) replace with UI badge
+// $modfile_sum = sprintf( _MD_D3DOWNLOADS_UNAPROVALNUM , $unapproval_execution->Total_Num( 'ModFile' ) );
+$modfile_sum = $unapproval_execution->Total_Num( 'ModFile' ) ;
 $modfile = $unapproval_execution->get_unapproval_list( 'ModFile' ) ;
 
 // UNAPROVAL MODFILE DELETE
@@ -56,10 +60,10 @@ if( ! empty( $_POST['modfile_delete'] ) ) {
 	if ( ! $xoopsGTicket->check( true , 'd3downloads' ) ) {
 		redirect_header(XOOPS_URL.'/modules/'.$mydirname.'/admin/index.php',3,$xoopsGTicket->getErrors());
 	}
-	if( empty( $_POST['modfile_selects'] ) ) $message[] = _MD_D3DOWNLOADS_ERROR_SEL_FILSE ;
+	if( empty( $_POST['modfile_selects'] ) ) $message[] = _MD_D3DOWNLOADS_ERROR_SEL_FALSE ;
 	if( ! empty( $message ) ){
 		$iserror = 1 ;
-		$error_message = implode( '<br />' , $message ) ;
+		$error_message = implode( '<br>' , $message ) ;
 	}
 	if( empty( $iserror ) ) {
 		foreach( $_POST['modfile_selects'] as $id => $value ) {
@@ -73,7 +77,7 @@ if( ! empty( $_POST['modfile_delete'] ) ) {
 	}
 }
 
-// display stage
+// RENDER
 xoops_cp_header();
 include dirname(__FILE__).'/mymenu.php' ;
 require_once XOOPS_ROOT_PATH.'/class/template.php' ;
@@ -90,6 +94,5 @@ $tpl->assign( array(
 	'gticket_hidden' => $xoopsGTicket->getTicketHtml( __LINE__ , 1800 , 'd3downloads') ,
 ) ) ;
 $tpl->display( 'db:'.$mydirname.'_admin_approvalmanager.html' ) ;
-xoops_cp_footer();
 
-?>
+xoops_cp_footer();

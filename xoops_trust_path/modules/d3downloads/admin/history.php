@@ -13,6 +13,7 @@ $module_handler =& xoops_gethandler( 'module' ) ;
 $module =& $module_handler->getByDirname( $mydirname ) ;
 $moduleperm_handler =& xoops_gethandler( 'groupperm' ) ;
 $mid = $module->getVar('mid') ;
+
 if( ! is_object( @$xoopsUser ) || ! $moduleperm_handler->checkRight( 'module_admin' , $mid , $xoopsUser->getGroups() ) ) {
 	die( 'Only administrator can use this feature.' ) ;
 }
@@ -28,7 +29,7 @@ $history = new history_download( $mydirname ) ;
 $historydata = array() ;
 $historydata = $history->get_history_data( $id );
 
-// 存在しない LID の場合リダイレクト
+// Redirect for nonexistent LID
 if( empty( $historydata ) ) {
 	redirect_header( XOOPS_URL."/modules/$mydirname/" , 2 , _MD_D3DOWNLOADS_NOMATCH ) ;
 	exit();
@@ -41,8 +42,8 @@ $history4assign = $historydata['historydata'];
 $historylist = array() ;
 $historylist = $history->get_history_list( $lid, $id );
 
-// GET DOWNLOADDATA
-include_once dirname(dirname(__FILE__)).'/class/mydownload.php' ;
+// GET DOWNLOAD DATA
+include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
 $mydownload = new MyDownload( $mydirname, $lid );
 $download4assign = $mydownload->get_downdata_for_singleview( 0, $lid, 0, 0, 1 );
 $invisibleinfo = $mydownload->Invisible_Info();
@@ -52,7 +53,9 @@ if( ! empty( $_POST['restore'] ) ) {
 	if ( ! $xoopsGTicket->check( true , 'd3downloads' ) ) {
 		redirect_header(XOOPS_URL.'/modules/'.$mydirname.'/admin/index.php',3,$xoopsGTicket->getErrors());
 	}
-	require_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
+
+	require_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
+
 	$errors = '';
 	$id = isset( $_POST['id'] ) ? intval( $_POST['id'] ) : 0 ;
 	$lid = isset( $_POST['lid'] ) ? intval( $_POST['lid'] ) : 0 ;
@@ -60,9 +63,11 @@ if( ! empty( $_POST['restore'] ) ) {
 
 	$new_id = $history->history_Insert_DB( $lid ) ;
 	$result = $history->history_Restore( $id, $lid );
+
 	if( ! $result ) $errors = $id ;
 	$history->history_Delete( $lid ) ;
 	d3download_delete_cache_of_categories( $mydirname ) ;
+
 	if( empty( $errors ) && empty( $invisibleinfo ) ){
 		redirect_header( XOOPS_URL.'/modules/'.$mydirname.'/index.php?page=singlefile&amp;cid='.$cid.'&amp;lid='.$lid , 2 , _MD_D3DOWNLOADS_RESTOREDONE ) ;
 	} elseif( empty( $errors ) && ! empty( $invisibleinfo ) ){
@@ -73,7 +78,7 @@ if( ! empty( $_POST['restore'] ) ) {
 	exit();
 }
 
-// display stage
+// RENDER
 xoops_cp_header();
 include dirname(__FILE__).'/mymenu.php' ;
 require_once XOOPS_ROOT_PATH.'/class/template.php' ;
@@ -90,5 +95,3 @@ $tpl->assign( array(
 ) ) ;
 $tpl->display( 'db:'.$mydirname.'_admin_history.html' ) ;
 xoops_cp_footer();
-
-?>

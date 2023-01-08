@@ -17,11 +17,11 @@ if( ! class_exists( 'd3downloadsTextSanitizer' ) )
 			return $instance ;
 		}
 
-		function &getInstance()
-		{
-			$instance =& self::sGetInstance();
-			return $instance;
-		}
+        static function &getInstance()
+        {
+            $instance =& self::sGetInstance();
+            return $instance;
+        }
 
 		// override
 		function &htmlSpecialChars( $text, $forEdit=false )
@@ -102,8 +102,8 @@ if( ! class_exists( 'd3downloadsTextSanitizer' ) )
 			// [siteimg]
 			$patterns[] = "/\[siteimg align=(['\"]?)(left|center|right)\\1]([^\"\(\)\?\&'<>]*)\[\/siteimg\]/sU" ;
 			$patterns[] = "/\[siteimg]([^\"\(\)\?\&'<>]*)\[\/siteimg\]/sU" ;
-			$replacements[] = '<img src="'.XOOPS_URL.'/\\3" class="d3downloads_imgurl_frame" align="\\2" alt="" />' ;
-			$replacements[] = '<img src="'.XOOPS_URL.'/\\1" class="d3downloads_imgurl_frame" alt="" />' ;
+			$replacements[] = '<img src="'.XOOPS_URL.'/\\3" class="d3downloads_imgurl_frame" align="\\2" alt="">' ;
+			$replacements[] = '<img src="'.XOOPS_URL.'/\\1" class="d3downloads_imgurl_frame" alt="">' ;
 
 			return preg_replace( $patterns, $replacements, $text ) ;
 		}
@@ -120,13 +120,13 @@ if( ! class_exists( 'd3downloadsTextSanitizer' ) )
 			return $this->toEdit( $text ) ;
 		}
 
-		// Legacy_TextFilter ���炨�؂肵�܂���
+		// Legacy_TextFilter HtmlSpecialChars
 		function toShow( $text )
 		{
 			return preg_replace( "/&amp;(#[0-9]+|#x[0-9a-f]+|[a-z]+[0-9]*);/i", '&\\1;', htmlspecialchars( $text, ENT_QUOTES ) ) ;
 		}
 
-		// Legacy_TextFilter ���炨�؂肵�܂���
+		// Legacy_TextFilter undo HtmlSpecialChars
 		function toEdit( $text )
 		{
 			$text = $this->undoHtmlSpecialChars( $text ) ;
@@ -193,7 +193,7 @@ if( ! class_exists( 'd3downloadsTextSanitizer' ) )
 			}
 		}
 
-		// PHP4 �ł� htmLawed�APHP5 �ł� HTMLPurifier �𗘗p
+		// HTMLPurifier
 		function myFilter( $text )
 		{
 			if( substr( PHP_VERSION , 0 , 1 ) != 4 ) {
@@ -205,10 +205,13 @@ if( ! class_exists( 'd3downloadsTextSanitizer' ) )
 
 		function InputHTMLPurify( $text )
 		{
-			require_once dirname( dirname( __FILE__ ) ).'/class/HTMLPurifier/HTMLPurifier.standalone.php' ;
+			require_once dirname(__FILE__, 2) .'/class/HTMLPurifier/HTMLPurifier.standalone.php' ;
 
 			$config = HTMLPurifier_Config::createDefault() ;
-			$config->set( 'Cache', 'SerializerPath', XOOPS_ROOT_PATH.'/cache' ) ;
+
+            // TODO gigamaster set cache
+			$config->set( 'Cache', 'SerializerPath', XOOPS_TRUST_PATH.'/cache' ) ;
+
 			$config->set( 'Core', 'Encoding', _CHARSET ) ;
 			$config->set( 'Attr', 'AllowedFrameTargets', array( '_blank' , '_self' , '_top' ) ) ;
 			$config->set( 'Attr', 'AllowedRel', array( 'lightbox[]' ) ) ;
@@ -218,7 +221,7 @@ if( ! class_exists( 'd3downloadsTextSanitizer' ) )
 
 		function InputMyHtmlFilter( $text )
 		{
-			require_once dirname( dirname( __FILE__ ) ).'/class/MyHtmlFilter/htmLawed.php' ;
+			require_once dirname(__FILE__, 2) .'/class/MyHtmlFilter/htmLawed.php' ;
 
 			$config = $this->SetMyConfig() ;
 			$filter = new MyHtmlFilter( $config ) ;
@@ -239,7 +242,7 @@ if( ! class_exists( 'd3downloadsTextSanitizer' ) )
 			return $config ;
 		}
 
-		// PHP4 �p�̃z���C�g���X�g
+		// Allowed tags
 		function AllowedList()
 		{
 			return array(
@@ -400,5 +403,3 @@ if( ! class_exists( 'd3downloadsTextSanitizer' ) )
 		}
 	}
 }
-
-?>

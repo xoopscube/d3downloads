@@ -35,13 +35,13 @@ $shots_help =  $preview_title = $preview_body = $error_message =  '' ;
 if( ! empty( $_GET['cid'] ) ) $cid = intval( $_GET['cid'] ) ;
 elseif( ! empty( $_POST['cid'] ) ) $cid = intval( $_POST['cid'] ) ;
 
-// 登録は CID の指定を必要とします
+// Registration requires CID specification
 if( empty( $cid ) ){
 	redirect_header(XOOPS_URL.'/modules/'.$mydirname.'/index.php',3, _MD_D3DOWNLOADS_NO_CID );
 	exit();
 }
 
-// 編集権限をチェック(管理者は除く)
+// Check for edit permissions (except administrator)
 $user_access = new user_access( $mydirname ) ;
 $whr_cat4edit = "cid IN (".implode(",", $user_access->can_edit() ).")" ;
 $permissions = $user_access->permissions_of_current_user( $cid ) ;
@@ -51,44 +51,44 @@ if( empty( $can_edit ) ) {
 	exit();
 }
 
-// 自動承認のチェック(管理者は除く)
+// Automatic approval checks (except for administrators)
 $auto_approved = $permissions['edit_approved'] ;
 
-// HTML許可のチェック(登録ユーザー以外は HTMLを無効とする)
+// Check HTML permissions (disable HTML for non-registered users)
 $canhtml = $permissions['can_html'] ;
 
-// アップロード許可のチェック
+// Check upload permissions
 $canupload = $permissions['can_upload'] ;
 
-// 削除権限のチェック(管理者は除く)
+// Check delete permissions (except administrator)
 $candelete = $permissions['can_delete'] ;
 
-// 管理者と管理者以外のテンプレートを分けて処理
+// Separate processing for admin and non-admin templates
 if( $module_admin ){
 	$xoopsOption['template_main'] = $mydirname.'_admin_submit.html' ;
 } else {
 	$xoopsOption['template_main'] = $mydirname.'_main_submit.html' ;
 }
 
-// 管理者以外の投稿フォーム説明文を取得
+// Get non-admin submission form description
 $message = d3download_submit_message( $mydirname, $cid ) ;
 $formtitle = _MD_D3DOWNLOADS_SUBMIT_EDIT ;
 
 // GET LID FROM $_GET
 $id = isset( $_GET['lid'] ) ? intval( $_GET['lid'] ) : 0 ;
 
-// 編集可能なカテゴリリストのみ取得
+// Get only editable category list
 if( $module_admin ) $category = d3download_categories_selbox( $mydirname, $whr_cat4edit );
 else  $category = d3download_categories_selbox( $mydirname, $whr_cat4edit, $cid );
 
-// 利用可能な OS/ソフト等のリストを取得
+// Get a list of available OS/software, etc.
 $submit_download = new submit_download( $mydirname ) ;
 $select_platform = $submit_download->Select_Platform() ;
 
-// ライセンスのリストを取得
+// Get a list of licenses
 $select_license = $submit_download->Select_License() ;
 
-// スクリーンショット画像の取得
+// Get screenshot image
 $canuseshots = $submit_download->can_useshots() ;
 $usealbum = $submit_download->can_albumselect() ;
 if( ! empty( $canuseshots ) ){
@@ -101,7 +101,7 @@ if( ! empty( $canuseshots ) ){
 $mod_url = XOOPS_URL.'/modules/'.$mydirname ;
 $downdata = $submit_download->get_downdata_for_submit( $id, $category ) ;
 
-// DOWNLOADDATA を取得できない場合リダイレクト
+// Redirect if DOWNLOADDATA cannot be obtained
 if( empty( $downdata ) ) {
 	redirect_header( XOOPS_URL."/modules/$mydirname/" , 2 , _MD_D3DOWNLOADS_NOMATCH ) ;
 	exit();
@@ -125,7 +125,7 @@ if( empty( $downdata['downdata']['homepagetitle'] ) && $downdata['downdata']['ho
 
 if( empty( $ispreview ) && empty( $iserror ) ) $download4assign = $downdata['downdata'] ;
 
-// 取得した LID で投稿者本人かどうかをチェック
+// Check if the submitter is the person himself/herself with the obtained LID
 if( $module_admin ) $canedit = 1 ;
 elseif( ! empty( $can_edit ) && $submitter == $xoops_userid &&  $xoops_isuser ) $canedit = 1 ;
 else $canedit = 0 ;
@@ -135,29 +135,30 @@ if( empty( $canedit ) ) {
 	exit();
 }
 
-// パンくず部分の処理
+// Processing the breadcrumb section
 $whr_cat = "cid IN (".implode(",", $user_access->can_read() ).")" ;
 $bc[0] = d3download_breadcrumbs( $mydirname ) ;
 $breadcrumbs = array_merge( $bc ,d3download_breadcrumbs_tree( $mydirname, $cid4assign, $whr_cat, '', 1 ) ) ;
 $breadcrumbs[] = array( 'name' => $formtitle.':'.$title4assign ) ;
 
-// 管理者の投稿フォーム用に HISTORY DATA を取得
+// Get HISTORY DATA for admin submission form
 $history = new history_download( $mydirname ) ;
 $history4assign = $history->get_history_list( $lid );
 
-// 同一リンクの再登録を認めるかどうか
+// Whether to allow re-registration of the same link
 $check_url = ! empty( $xoopsModuleConfig['check_url'] ) ? 1 : 0 ;
 
-// maxfilesize(テンプレートへのアサイン用)
+// maxfilesize (for assignment to templates)
 $upload_max_filesize = d3download_get_maxsize( $mydirname );
 $max_submit_size = sprintf( _MD_D3DOWNLOADS_SUBMIT_MAXFILESIZE , number_format( $upload_max_filesize ) ) ;
 $submit_extension = d3download_get_allowed_extension( $mydirname );
 
-// 環境チェックし error の場合はアップロードフォームを選択できないようにする
+// Check the environment and disable the upload form if it is an error
 $config_error = d3download_upload_config_check( $mydirname );
 
-// LiveValidationによるValidationをアサイン
+// Assign Validation by LiveValidation
 require_once dirname( dirname(__FILE__) ).'/include/upload_submit_rules.inc.php' ;
+
 $liveValidator="";
 $liveform = new My_MassValidatePHP( 'makedownloadform', $_POST );
 
@@ -187,28 +188,30 @@ if( isset( $_POST['makedownload_post'] ) || isset( $_POST['makedownload_preview'
 	}
 }
 
-// 削除権限をチェックしたうえ関連データも同時に削除
+// Check delete permissions and delete related data at the same time
 if( isset( $_POST['makedownloadform_delete'] ) && ! empty( $candelete ) ) {
 	if ( ! $xoopsGTicket->check( true , 'd3downloads' ) ) {
 		redirect_header(XOOPS_URL.'/modules/'.$mydirname.'/admin/index.php',3,$xoopsGTicket->getErrors());
 	}
 	$delete_lid = isset( $_POST['lid'] ) ? intval( @$_POST['lid'] ) : "" ;
-	require_once dirname( dirname(__FILE__) ).'/class/submit_validate.php' ;
+
+	require_once dirname(__FILE__, 2) .'/class/submit_validate.php' ;
+
 	$submit_validate = new Submit_Validate( $mydirname, 'delete' ) ;
 	if( ! $module_admin ) $submit_validate->Validate_for_delete( $cid, $delete_lid ) ;
-	// 「投稿をユーザーの投稿数に反映」が有効な場合、投稿数に反映
+    // Reflected in the number of posts if "Reflect posts in user's post count" is enabled
 	d3download_delete_lid( $mydirname ,$lid );
 	redirect_header( XOOPS_URL."/modules/$mydirname/index.php" , 2 , _MD_D3DOWNLOADS_DELETED ) ;
 	exit();
 }
 
-// ファイル破損報告DATAの取得(管理者用)
+// Get file corruption report DATA (for administrator)
 $broken_data = d3download_get_broken_data( $mydirname, $lid ) ;
 $totalbroken = $broken_data['totalbroken'] ;
 $total_broken4assign = $broken_data['total_broken4assign'] ;
 $broken = $broken_data['broken'] ;
 
-// VOTE DATAの取得(管理者用)
+// Obtaining VOTE DATA (for administrators)
 $total_vote4assign = sprintf( _MD_D3DOWNLOADS_TOTAL_VOTE , $totalvotes );
 $user_vote_data = d3download_get_user_vote( $mydirname, $lid ) ;
 $user_vote4assign = $user_vote_data['user_totalvote'] ;
@@ -219,19 +222,19 @@ $guest_vote = $guest_vote_data['guest_vote'] ;
 
 // WYSIWYG
 $wysiwygs = array( 'name' => 'desc' , 'value' => $download4assign['description'] ) ;
-include dirname( dirname(__FILE__) ).'/include/wysiwyg_editors.inc.php' ;
+include dirname(__FILE__, 2) .'/include/wysiwyg_editors.inc.php' ;
 
 // COPY
-include_once dirname( dirname(__FILE__) ).'/class/file_manager.php' ;
+include_once dirname(__FILE__, 2) .'/class/file_manager.php' ;
 $file_manager = new file_manager( $mydirname ) ;
 $copy_select = $file_manager->get_copy_target_modules() ;
 
-// livevalidation.js と livevalidation.css を xoops_module_header にアサイン
+// Assign livevalidation.js and livevalidation.css to xoops_module_header
 $xoops_module_header = d3download_dbmoduleheader( $mydirname );
 $livevalidation_header = d3download_dbmoduleheader_for_livevalidation( $mydirname );
 $xoopsTpl->assign('xoops_module_header', $xoops_module_header . "\n" .$livevalidation_header. "\n" . $wysiwyg_header. "\n" . $xoopsTpl->get_template_vars('xoops_module_header'));
 
-// assign
+// RENDER
 $xoopsTpl->assign( array(
 	'mydirname' => $mydirname ,
 	'mod_url' => $mod_url ,
@@ -284,5 +287,3 @@ $xoopsTpl->assign( array(
 ) ) ;
 
 include XOOPS_ROOT_PATH.'/footer.php';
-
-?>

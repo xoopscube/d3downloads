@@ -5,9 +5,9 @@ if ( ! function_exists('d3download_common_make_feed') ) {
 	{
 		global $xoopsUser ;
 
-		require_once dirname( dirname(__FILE__) ).'/class/feed_maker.php';
-		require_once dirname( dirname(__FILE__) ).'/class/item_build.php' ;
-		require_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
+		require_once dirname(__FILE__, 2) .'/class/feed_maker.php';
+		require_once dirname(__FILE__, 2) .'/class/item_build.php' ;
+		require_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
 
 		$feed = new feed_maker( $mydirname ) ;
 		$item_build = new Item_build( $mydirname ) ;
@@ -56,5 +56,3 @@ if ( ! function_exists('d3download_common_make_feed') ) {
 		}
 	}
 }
-
-?>

@@ -31,7 +31,7 @@ function d3downloads_onupdate_base( $module , $mydirname )
 	// configs (Though I know it is not a recommended way...)
 	$check_sql = "SHOW COLUMNS FROM ".$db->prefix("config")." LIKE 'conf_title'" ;
 	if( ( $result = $db->query( $check_sql ) ) && ( $myrow = $db->fetchArray( $result ) ) && @$myrow['Type'] == 'varchar(30)' ) {
-		$db->queryF( "ALTER TABLE ".$db->prefix("config")." MODIFY `conf_title` varchar(255) NOT NULL default '', MODIFY `conf_desc` varchar(255) NOT NULL default ''" ) ;
+		$db->queryF( "ALTER TABLE ".$db->prefix("config")." MODIFY `conf_title` varchar(191) NOT NULL default '', MODIFY `conf_desc` varchar(191) NOT NULL default ''" ) ;
 	}
 
 	// 0.01
@@ -50,14 +50,14 @@ function d3downloads_onupdate_base( $module , $mydirname )
 	// 0.01 -> 0.02
 	$check_sql = "SELECT mail FROM ".$db->prefix($mydirname."_downloads") ;
 	if( ! $db->query( $check_sql ) ) {
-		$db->queryF( "ALTER TABLE ".$db->prefix($mydirname."_downloads")."  ADD mail varchar(250) NOT NULL default '' AFTER submitter,ADD kanrisya text AFTER comments" ) ;
-		$db->queryF( "ALTER TABLE ".$db->prefix($mydirname."_unapproval")." ADD mail varchar(250) NOT NULL default '' AFTER submitter,ADD kanrisya text AFTER notify" ) ;
+		$db->queryF( "ALTER TABLE ".$db->prefix($mydirname."_downloads")."  ADD mail varchar(191) NOT NULL default '' AFTER submitter,ADD kanrisya text AFTER comments" ) ;
+		$db->queryF( "ALTER TABLE ".$db->prefix($mydirname."_unapproval")." ADD mail varchar(191) NOT NULL default '' AFTER submitter,ADD kanrisya text AFTER notify" ) ;
 	}
 
 	// 0.02 -> 0.03
 	$check_sql = "SELECT shotsdir FROM ".$db->prefix($mydirname."_cat") ;
 	if( ! $db->query( $check_sql ) ) {
-		$db->queryF( "ALTER TABLE ".$db->prefix($mydirname."_cat")."  ADD shotsdir varchar(250) NOT NULL default '' AFTER imgurl" ) ;
+		$db->queryF( "ALTER TABLE ".$db->prefix($mydirname."_cat")."  ADD shotsdir varchar(191) NOT NULL default '' AFTER imgurl" ) ;
 	}
 
 	// 0.10 -> 0.20
@@ -97,8 +97,8 @@ function d3downloads_onupdate_base( $module , $mydirname )
 	// 1.02 -> 1.03
 	$check_sql = "SELECT homepagetitle FROM ".$db->prefix($mydirname."_downloads") ;
 	if( ! $db->query( $check_sql ) ) {
-		$db->queryF( "ALTER TABLE ".$db->prefix($mydirname."_downloads")." ADD homepagetitle varchar(255) NOT NULL default '' AFTER homepage,ADD license varchar(255) NOT NULL default '' AFTER platform" ) ;
-		$db->queryF( "ALTER TABLE ".$db->prefix($mydirname."_unapproval")." ADD homepagetitle varchar(255) NOT NULL default '' AFTER homepage,ADD license varchar(255) NOT NULL default '' AFTER platform" ) ;
+		$db->queryF( "ALTER TABLE ".$db->prefix($mydirname."_downloads")." ADD homepagetitle varchar(191) NOT NULL default '' AFTER homepage,ADD license varchar(191) NOT NULL default '' AFTER platform" ) ;
+		$db->queryF( "ALTER TABLE ".$db->prefix($mydirname."_unapproval")." ADD homepagetitle varchar(191) NOT NULL default '' AFTER homepage,ADD license varchar(191) NOT NULL default '' AFTER platform" ) ;
 	}
 
 	// 1.03 -> 1.04
@@ -111,9 +111,9 @@ function d3downloads_onupdate_base( $module , $mydirname )
 	// 1.04 -> 1.05
 	$check_sql = "SELECT file2 FROM ".$db->prefix($mydirname."_downloads") ;
 	if( ! $db->query( $check_sql ) ) {
-		$db->queryF( "ALTER TABLE ".$db->prefix($mydirname."_downloads")."  ADD file2 varchar(250) NOT NULL default '' AFTER ext,ADD filename2 varchar(50) NOT NULL default '' AFTER file2,ADD ext2 varchar(10) NOT NULL default '' AFTER filename2" ) ;
-		$db->queryF( "ALTER TABLE ".$db->prefix($mydirname."_unapproval")."  ADD file2 varchar(250) NOT NULL default '' AFTER ext,ADD filename2 varchar(50) NOT NULL default '' AFTER file2,ADD ext2 varchar(10) NOT NULL default '' AFTER filename2" ) ;
-		$db->queryF( "ALTER TABLE ".$db->prefix($mydirname."_downloads_history")."  ADD file2 varchar(250) NOT NULL default '' AFTER ext,ADD filename2 varchar(50) NOT NULL default '' AFTER file2,ADD ext2 varchar(10) NOT NULL default '' AFTER filename2" ) ;
+		$db->queryF( "ALTER TABLE ".$db->prefix($mydirname."_downloads")."  ADD file2 varchar(191) NOT NULL default '' AFTER ext,ADD filename2 varchar(50) NOT NULL default '' AFTER file2,ADD ext2 varchar(10) NOT NULL default '' AFTER filename2" ) ;
+		$db->queryF( "ALTER TABLE ".$db->prefix($mydirname."_unapproval")."  ADD file2 varchar(191) NOT NULL default '' AFTER ext,ADD filename2 varchar(50) NOT NULL default '' AFTER file2,ADD ext2 varchar(10) NOT NULL default '' AFTER filename2" ) ;
+		$db->queryF( "ALTER TABLE ".$db->prefix($mydirname."_downloads_history")."  ADD file2 varchar(191) NOT NULL default '' AFTER ext,ADD filename2 varchar(50) NOT NULL default '' AFTER file2,ADD ext2 varchar(10) NOT NULL default '' AFTER filename2" ) ;
 	}
 
 	// 1.05 -> 1.06
@@ -169,7 +169,7 @@ function d3downloads_onupdate_base( $module , $mydirname )
 	// configs (Though I know it is not a recommended way...)
 	$check_sql = "SHOW COLUMNS FROM ".$db->prefix("config")." LIKE 'conf_title'" ;
 	if( ( $result = $db->query( $check_sql ) ) && ( $myrow = $db->fetchArray( $result ) ) && @$myrow['Type'] == 'varchar(30)' ) {
-		$db->queryF( "ALTER TABLE ".$db->prefix("config")." MODIFY `conf_title` varchar(255) NOT NULL default '', MODIFY `conf_desc` varchar(255) NOT NULL default ''" ) ;
+		$db->queryF( "ALTER TABLE ".$db->prefix("config")." MODIFY `conf_title` varchar(191) NOT NULL default '', MODIFY `conf_desc` varchar(191) NOT NULL default ''" ) ;
 	}
 
 	// TEMPLATES (all templates have been already removed by modulesadmin)
@@ -228,5 +228,3 @@ function d3downloads_message_append_onupdate( &$module_obj , &$log )
 }
 
 }
-
-?>

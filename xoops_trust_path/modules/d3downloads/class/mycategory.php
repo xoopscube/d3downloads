@@ -30,11 +30,12 @@ if( ! class_exists( 'MyCategory' ) )
 		var $shotsdir_length = 150 ;
 		var $cat_weight_length = 5 ;
 
-		function MyCategory( $mydirname, $mode='', $cid= 0, $whr='' )
+		function __construct($mydirname, $mode='', $cid= 0, $whr='' )
 		{
-			include_once dirname( dirname(__FILE__) ).'/include/mytable.php' ;
+			include_once dirname(__FILE__, 2) .'/include/mytable.php' ;
 
-			$this->db =& Database::getInstance();
+			//$this->db =& Database::getInstance();
+            $this->db =& XoopsDatabaseFactory::getDatabaseConnection();
 			$this->myts =& d3downloadsTextSanitizer::sGetInstance() ;
 			$this->mydirname = $mydirname ;
 			$this->cat_table = $this->db->prefix( "{$mydirname}_cat" ) ;
@@ -553,7 +554,7 @@ if( ! class_exists( 'MyCategory' ) )
 					) ;
 				}
 				// Category's banner default
-				if( $imgurl == "http://" ) $imgurl = '' ;
+				if( $imgurl == "https://" ) $imgurl = '' ;
 				// Total sum of file
 				$cids = $this->getMycidsIntreeArray( $cid, $whr, $cids_child ) ;
 				$ret[] = array(
@@ -597,7 +598,7 @@ if( ! class_exists( 'MyCategory' ) )
 			$sql .= " ORDER BY cat_weight ASC";
 			$crs = $this->db->query( $sql ) ;
 			while( list( $id, $name, $imgurl, $child, $cids_child ) = $this->db->fetchRow( $crs ) ) {
-				if( $imgurl == "http://" ) $imgurl = '' ;
+				if( $imgurl == "https://" ) $imgurl = '' ;
 				$cid         = intval( $id );
 				$child_array = $this->unserialize_my_child( $cid, $whr, $child ) ;
 				$ret['parent'][$i] = array(
@@ -622,7 +623,7 @@ if( ! class_exists( 'MyCategory' ) )
 				$ret[] = array(
 					'title' => $child['prefix']."&nbsp;".$this->myts->makeTboxData4Show( $child['title'] ) ,
 					'url'   => $path.$liason.'cid='.$child_id  ,
-					'image' => ( $child['imgurl'] == "http://" ) ? '' : $this->myts->makeTboxData4Show( $child['imgurl'] ) ,
+					'image' => ( $child['imgurl'] == "https://" ) ? '' : $this->myts->makeTboxData4Show( $child['imgurl'] ) ,
 					'files' => $this->small_sum_from_cat( $child_id, $whr_append ) ,
 				) ;
 			} else foreach ( $child_array as $child ) {
@@ -719,7 +720,7 @@ if( ! class_exists( 'MyCategory' ) )
 					'subcategory' =>  $this->subcategory_sum( $cid ) ,
 					'parentid'    => ( empty( $my_parent_cat ) ) ? 0 : $my_parent_cat['parentid'] ,
 					'parent_cat'  => ( empty( $my_parent_cat ) ) ? '' : $my_parent_cat['title'] ,
-					'imgurl'      => ( $this->imgurl == "http://" ) ? '' : $this->return_imgurl( 'Show' ) ,
+					'imgurl'      => ( $this->imgurl == "https://" ) ? '' : $this->return_imgurl( 'Show' ) ,
 				) ;
 			}
 			return $category ;
@@ -747,7 +748,7 @@ if( ! class_exists( 'MyCategory' ) )
 
 		function my_user_access_copy( $fromid, $toid, $user_access_noupdate=0 )
 		{
-			include_once dirname( dirname(__FILE__) ).'/class/user_access.php' ;
+			include_once dirname(__FILE__, 2) .'/class/user_access.php' ;
 			$user_access = new user_access( $this->mydirname ) ;
 
 			$error = 0 ;
@@ -1029,7 +1030,7 @@ if( ! class_exists( 'MyCategory' ) )
 				), 
 			);
 
-			if( $this->imgurl != 'http://' && ! empty( $this->imgurl ) ) {
+			if( $this->imgurl != 'https://' && ! empty( $this->imgurl ) ) {
 				$imgurl_check = array(
 					array(
 						'value'   => $this->imgurl,
@@ -1082,5 +1083,3 @@ if( ! class_exists( 'MyCategory' ) )
 		}
 	}
 }
-
-?>

@@ -1,4 +1,4 @@
-Dear {X_UNAME}
+Hello {X_UNAME}
 
 A download has just been submitted in the category "{CAT_TITLE}" of {X_MODULE} module
 

@@ -98,16 +98,16 @@ if( ! empty( $_POST['delete'] ) ) {
 	if ( ! $xoopsGTicket->check( true , 'd3downloads' ) ) {
 		redirect_header(XOOPS_URL.'/modules/'.$mydirname.'/admin/index.php',3,$xoopsGTicket->getErrors());
 	}
-	if( empty( $_POST['action_selects'] ) ) $message[] = _MD_D3DOWNLOADS_ERROR_SEL_FILSE ;
+	if( empty( $_POST['action_selects'] ) ) $message[] = _MD_D3DOWNLOADS_ERROR_SEL_FALSE ;
 	if( ! empty( $message ) ){
 		$iserror = 1 ;
-		$error_message = implode( '<br />' , $message ) ;
+		$error_message = implode( '<br>' , $message ) ;
 	}
 	if( empty( $iserror ) ) {
 		foreach( $_POST['action_selects'] as $id => $value ) {
 			if( empty( $value ) ) continue ;
 			$lid = intval( $id ) ;
-			// u“Še‚ðƒ†[ƒU[‚Ì“Še”‚É”½‰fv‚ª—LŒø‚Èê‡A“Še”‚É”½‰f
+			// ï¿½uï¿½ï¿½ï¿½eï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Uï¿½[ï¿½Ì“ï¿½ï¿½eï¿½ï¿½ï¿½É”ï¿½ï¿½fï¿½vï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½Èê‡ï¿½Aï¿½ï¿½ï¿½eï¿½ï¿½ï¿½É”ï¿½ï¿½f
 			d3download_delete_lid( $mydirname ,$lid );
 		}
 		redirect_header( XOOPS_URL."/modules/$mydirname/admin/index.php?page=filemanager&amp;cid=$category_select" , 2 , _MD_D3DOWNLOADS_DELETED ) ;
@@ -123,11 +123,11 @@ if( ! empty( $_POST['move'] ) ) {
 		redirect_header(XOOPS_URL.'/modules/'.$mydirname.'/admin/index.php',3,$xoopsGTicket->getErrors());
 	}
 	$cid = intval( @$_POST['move_select'] ) ;
-	if( empty( $_POST['action_selects'] ) ) $message[] = _MD_D3DOWNLOADS_ERROR_SEL_FILSE ;
-	if( empty( $cid ) ) $message[] = _MD_D3DOWNLOADS_NO_MOVEED ;
+	if( empty( $_POST['action_selects'] ) ) $message[] = _MD_D3DOWNLOADS_ERROR_SEL_FALSE ;
+	if( empty( $cid ) ) $message[] = _MD_D3DOWNLOADS_NO_MOVED ;
 	if( ! empty( $message ) ){
 		$iserror = 1 ;
-		$error_message = implode( '<br />' , $message ) ;
+		$error_message = implode( '<br>' , $message ) ;
 	}
 	if( empty( $iserror ) ) {
 		$errors = d3download_file_manager_move_action( $mydirname, $cid ) ;
@@ -146,11 +146,11 @@ if( ! empty( $_POST['copy'] ) ) {
 	}
 	$taget_mid = intval( @$_POST['copy_mid'] ) ;
 	$taget_category = intval( @$_POST['copy_category_id'][$taget_mid] ) ;
-	if( empty( $_POST['action_selects'] ) ) $message[] = _MD_D3DOWNLOADS_ERROR_SEL_FILSE ;
+	if( empty( $_POST['action_selects'] ) ) $message[] = _MD_D3DOWNLOADS_ERROR_SEL_FALSE ;
 	if( empty( $taget_mid ) || empty( $taget_category ) ) $message[] = _MD_D3DOWNLOADS_NO_COPY ;
 	if( ! empty( $message ) ){
 		$iserror = 1 ;
-		$error_message = implode( '<br />' , $message ) ;
+		$error_message = implode( '<br>' , $message ) ;
 	}
 	if( empty( $iserror ) ) {
 		foreach( $_POST['action_selects'] as $id => $value ) {
@@ -164,7 +164,7 @@ if( ! empty( $_POST['copy'] ) ) {
 	}
 }
 
-// display stage
+// Render view
 xoops_cp_header();
 include dirname(__FILE__).'/mymenu.php' ;
 require_once XOOPS_ROOT_PATH.'/class/template.php' ;
@@ -198,5 +198,3 @@ $tpl->assign( array(
 ) ) ;
 $tpl->display( 'db:'.$mydirname.'_admin_filemanager.html' ) ;
 xoops_cp_footer();
-
-?>

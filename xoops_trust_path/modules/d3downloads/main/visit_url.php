@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname( dirname(__FILE__) ).'/include/download_functions.php' ;
+require_once dirname(__FILE__, 2) .'/include/download_functions.php' ;
 
 global $xoopsUser ;
 
@@ -12,7 +12,7 @@ $unapproval = isset( $_GET['unapproval'] ) ? intval( $_GET['unapproval'] ) : 0 ;
 $second = isset( $_GET['second'] ) ? intval( $_GET['second'] ) : 0 ;
 
 if( ! $xoopsUserIsAdmin ){
-	include_once dirname( dirname(__FILE__) ).'/class/user_access.php' ;
+	include_once dirname(__FILE__, 2) .'/class/user_access.php' ;
 	$user_access = new user_access( $mydirname ) ;
 	$whr_cat = "d.cid IN (".implode(",", $user_access->can_read() ).")" ;
 } else {
@@ -56,5 +56,3 @@ switch( $second ) {
 }
 
 d3download_download( $url, $filename, $ext, 1 ) ;
-
-?>

@@ -3,9 +3,9 @@
 if ( ! function_exists('d3download_submit_execution') ) {
 	function d3download_submit_execution( $mydirname, $mode, $myparams )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/submit_validate.php' ;
-		require_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
-		include_once dirname( dirname(__FILE__) ).'/include/upload_functions.php' ;
+		require_once dirname(__FILE__, 2) .'/class/submit_validate.php' ;
+		require_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
+		include_once dirname(__FILE__, 2) .'/include/upload_functions.php' ;
 
 		$db =& Database::getInstance() ;
 		global $xoopsUser , $xoopsModuleConfig ;
@@ -40,9 +40,9 @@ if ( ! function_exists('d3download_submit_execution') ) {
 		$requests_text = $submit_validate->get_requests_text( $html , $smiley , $xcode , $br ) ;
 		$title = $requests_text['title'];
 		$post_url = $requests_text['url'];
-		if ( preg_match("`^(https?|ftp)://|^XOOPS_URL/`i", $post_url ) && $post_url != 'http://' ) {
+		if ( preg_match("`^(https?|ftp)://|^XOOPS_URL/`i", $post_url ) && $post_url != 'https://' ) {
 			$access_url = str_replace( 'XOOPS_URL' , XOOPS_URL , $post_url ) ;
-			$filelink = '[<a href="'.$access_url.'" target="_blank">'._MD_D3DOWNLOADS_SUBMIT_ACCESS_URL.'</a>]' ;
+			$filelink = '[<a href="'.$access_url.'" target="_blank" rel="noopener noreferrer nofollow">'._MD_D3DOWNLOADS_SUBMIT_ACCESS_URL.'</a>]' ;
 		} else {
 			$filelink  = is_array( $downdata ) ? $downdata['downdata']['filelink'] :'' ;
 		}
@@ -164,7 +164,7 @@ if ( ! function_exists('d3download_submit_execution') ) {
 						$check_url_result = $submit_validate->Validate_check_url( $url, $lid ) ;
 						break ;
 				}
-				if( ! empty( $check_url_result ) ) $error_message .= $check_url_result . '<br />' ;
+				if( ! empty( $check_url_result ) ) $error_message .= $check_url_result . '<br>' ;
 			}
 
 			// 承認待ちの再登録はお断り
@@ -176,17 +176,17 @@ if ( ! function_exists('d3download_submit_execution') ) {
 					$check_unapproval_result =  $submit_validate->Validate_check_unapproval( $url, $lid ) ;
 					break ;
 			}
-			if( ! empty( $check_unapproval_result ) ) $error_message .= $check_unapproval_result . '<br />' ;
+			if( ! empty( $check_unapproval_result ) ) $error_message .= $check_unapproval_result . '<br>' ;
 		} 
 
-		// LiveValidationによるValidation が有効にならない環境を考慮し、ここでも入力チェック
+		// Again, input checks are required for environments where validation by LiveValidation is not enabled.
 		if( $mode != 'approval' ) $validate_result = $submit_validate->Validate( $url, $filename, $file2, $filename2 ) ;
 		else $validate_result = $submit_validate->Validate( $post_url, $post_filename, $post_file2, $post_filename2, 1 ) ;
 		if( $mode != 'approval' ){
-			if( ! empty( $upload_result[0]['error'] ) ) $error_message .= $upload_result[0]['error'] . '( ' .$upload_result[0]['file_name']. ' )<br />' ;
-			if( ! empty( $upload_result[1]['error'] ) ) $error_message .= $upload_result[1]['error'] . '( ' .$upload_result[1]['file_name']. ' )<br />' ;
+			if( ! empty( $upload_result[0]['error'] ) ) $error_message .= $upload_result[0]['error'] . '( ' .$upload_result[0]['file_name']. ' )<br>' ;
+			if( ! empty( $upload_result[1]['error'] ) ) $error_message .= $upload_result[1]['error'] . '( ' .$upload_result[1]['file_name']. ' )<br>' ;
 		}
-		if( ! empty( $validate_result ) ) $error_message .= implode( '<br />' , $validate_result['message'] ) ;
+		if( ! empty( $validate_result ) ) $error_message .= implode( '<br>' , $validate_result['message'] ) ;
 		if( ! empty( $error_message ) ) $iserror = true;
 
 		if( isset( $_POST['makedownload_preview'] ) ) $ispreview = true;
@@ -248,11 +248,12 @@ if ( ! function_exists('d3download_submit_execution') ) {
 if ( ! function_exists('d3download_submit_insertdb') ) {
 	function d3download_submit_insertdb( $mydirname, $myparams )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/db_download.php' ;
-		require_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
-		include_once dirname( dirname(__FILE__) ).'/include/upload_functions.php' ;
+		require_once dirname(__FILE__, 2) .'/class/db_download.php' ;
+		require_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
+		include_once dirname(__FILE__, 2) .'/include/upload_functions.php' ;
 
-		$db =& Database::getInstance() ;
+		//$db =& Database::getInstance() ;
+        $db = XoopsDatabaseFactory::getDatabaseConnection();
 		global $xoopsUser , $xoopsModuleConfig ;
 
 		// Initialization
@@ -277,7 +278,7 @@ if ( ! function_exists('d3download_submit_insertdb') ) {
 		}
 
 		// Category title
-		include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 		$mycategory = new MyCategory( $mydirname, 'Show', $cid ) ;
 		$ctitle = $mycategory->return_title() ;
 
@@ -293,6 +294,7 @@ if ( ! function_exists('d3download_submit_insertdb') ) {
 			'WAITING_URL' => XOOPS_URL . '/modules/' . $mydirname . '/admin/index.php?page=approvalmanager' ,
 		) ;
 		if( ! empty( $auto_approved ) ) {
+            // TODO gigamaster fix notification
 			d3download_main_trigger_event( $mydirname , 'global' , 0 , 'newpost' , $tags, 0 ) ;
 			d3download_main_trigger_event( $mydirname , 'category' , $cid , 'newpost' , $tags, 0 ) ;
 			d3download_main_trigger_event( $mydirname , 'category' , $cid , 'newpostfull' , $tags, 0 ) ;
@@ -309,7 +311,9 @@ if ( ! function_exists('d3download_submit_insertdb') ) {
 			}
 			exit();
 		} else {
-			d3download_main_trigger_event( $mydirname , 'global' , 0 , 'waiting' , $tags , 0 ) ;
+			// TODO gigamaster fix notification
+            d3download_main_trigger_event( $mydirname , 'global' , 0 , 'waiting' , $tags , 0 ) ;
+
 			if ( ! empty( $notify ) ) {
 				include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
 				$notification_handler =& xoops_gethandler('notification');
@@ -328,8 +332,8 @@ if ( ! function_exists('d3download_submit_insertdb') ) {
 if ( ! function_exists('d3download_modfile_insertdb') ) {
 	function d3download_modfile_insertdb( $mydirname, $myparams )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/db_download.php' ;
-		require_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
+		require_once dirname(__FILE__, 2) .'/class/db_download.php' ;
+		require_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
 
 		$db =& Database::getInstance() ;
 
@@ -337,7 +341,7 @@ if ( ! function_exists('d3download_modfile_insertdb') ) {
 		$error = 0 ;
 		foreach ( $myparams as $key=>$value ){ $$key = $value; }
 
-		// LIDを取得できなかった場合はお断り
+		// Refused if LID could not be obtained
 		if( empty( $lid ) ) {
 			redirect_header( XOOPS_URL."/modules/$mydirname/index.php" , 2 , _MD_D3DOWNLOADS_ERROR_MESSEAGE_NOID ) ;
 			exit();
@@ -346,7 +350,7 @@ if ( ! function_exists('d3download_modfile_insertdb') ) {
 			$make_link = new db_download( $db->prefix( $mydirname."_downloads" ) , "lid", $lid ) ;
 			$count = $make_link->db_getrowsnum( $lid );
 			if( $count > 0 ){
-				require_once dirname( dirname(__FILE__) ).'/class/history_download.php' ;
+				require_once dirname(__FILE__, 2) .'/class/history_download.php' ;
 				$history = new history_download( $mydirname ) ;
 				$history->history_Insert_DB( $lid ) ;
 				$result = $make_link->db_update( $set4sql, $lid );
@@ -395,9 +399,9 @@ if ( ! function_exists('d3download_modfile_insertdb') ) {
 if ( ! function_exists('d3download_approval_insertdb') ) {
 	function d3download_approval_insertdb( $mydirname, $myparams )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/db_download.php' ;
-		require_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
-		include_once dirname( dirname(__FILE__) ).'/include/upload_functions.php' ;
+		require_once dirname(__FILE__, 2) .'/class/db_download.php' ;
+		require_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
+		include_once dirname(__FILE__, 2) .'/include/upload_functions.php' ;
 
 		$db =& Database::getInstance() ;
 		global $xoopsUser , $xoopsModuleConfig ;
@@ -415,7 +419,7 @@ if ( ! function_exists('d3download_approval_insertdb') ) {
 			d3download_convert_for_newid( $mydirname, $newid, $post_url, $post_file2, $submitter );
 
 			// Category title
-			include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+			include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 			$mycategory = new MyCategory( $mydirname, 'Show', $cid ) ;
 			$ctitle = $mycategory->return_title() ;
 
@@ -446,7 +450,7 @@ if ( ! function_exists('d3download_approval_insertdb') ) {
 			$make_link = new db_download( $db->prefix( $mydirname."_downloads" ) , "lid", $lid ) ;
 			$count = $make_link->db_getrowsnum( $lid );
 			if( $count > 0 ){
-				require_once dirname( dirname(__FILE__) ).'/class/history_download.php' ;
+				require_once dirname(__FILE__, 2) .'/class/history_download.php' ;
 				$history = new history_download( $mydirname ) ;
 				$history->history_Insert_DB( $lid ) ;
 				$result = $make_link->db_update( $set4sql, $lid );
@@ -459,6 +463,7 @@ if ( ! function_exists('d3download_approval_insertdb') ) {
 						'POST_TITLE' => $title ,
 						'POST_URL' => XOOPS_URL . '/modules/' . $mydirname . '/index.php?page=singlefile&cid=' . $cid . '&lid=' . $lid,
 					) ;
+                    // TODO gigamaster fix notification !
 					d3download_main_trigger_event( $mydirname , 'global' , $lid , 'approve' , $tags, 0 ) ;
 				}
 			}
@@ -479,7 +484,7 @@ if ( ! function_exists('d3download_approval_insertdb') ) {
 if ( ! function_exists('d3download_file_manager_data_update') ) {
 	function d3download_file_manager_data_update( $mydirname )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+		require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 
 		$myts =& d3downloadsTextSanitizer::sGetInstance() ;
 		$db =& Database::getInstance() ;
@@ -532,7 +537,7 @@ if ( ! function_exists('d3download_file_manager_move_action') ) {
 if ( ! function_exists('d3download_categorymanager_data_update') ) {
 	function d3download_categorymanager_data_update( $mydirname )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+		require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 		$myts =& d3downloadsTextSanitizer::sGetInstance() ;
 		$db =& Database::getInstance() ;
 
@@ -566,7 +571,7 @@ if ( ! function_exists('d3download_categorymanager_data_update') ) {
 if ( ! function_exists('d3download_submit_message') ) {
 	function d3download_submit_message( $mydirname, $cid )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 		$mycategory = new MyCategory( $mydirname, 'Show', $cid ) ;
 		$submit_message = $mycategory->return_submit_message() ;
 		if( ! empty( $submit_message ) ){
@@ -580,7 +585,7 @@ if ( ! function_exists('d3download_submit_message') ) {
 if ( ! function_exists('d3download_can_useshots') ) {
 	function d3download_can_useshots( $mydirname )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
 		$mydownload = new MyDownload( $mydirname ) ;
 		return $mydownload->can_useshots() ;
 	}
@@ -589,7 +594,7 @@ if ( ! function_exists('d3download_can_useshots') ) {
 if ( ! function_exists('d3download_shots_dir') ) {
 	function d3download_shots_dir( $mydirname, $cid )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 		$mycategory = new MyCategory( $mydirname, 'Show', $cid ) ;
 		$cate_shotsdir = $mycategory->return_shotsdir() ;
 		if( ! empty( $cate_shotsdir ) && file_exists( XOOPS_ROOT_PATH.'/'.$cate_shotsdir ) ){
@@ -613,7 +618,7 @@ if ( ! function_exists('d3download_shots_link_for_post') ) {
 if ( ! function_exists('d3download_get_myfilter') ) {
 	function d3download_get_myfilter( $mydirname, $currentdata ='' )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
 		$mydownload = new MyDownload( $mydirname ) ;
 		return $mydownload->get_MyFilter( $currentdata ) ;
 	}
@@ -622,7 +627,7 @@ if ( ! function_exists('d3download_get_myfilter') ) {
 if ( ! function_exists('d3download_get_broken_data') ) {
 	function d3download_get_broken_data( $mydirname, $lid )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/broken_download.php' ;
+		require_once dirname(__FILE__, 2) .'/class/broken_download.php' ;
 		$broken_download = new broken_download( $mydirname ) ;
 		return $broken_download->Broken_of_Currentlid( $lid ) ;
 	}
@@ -631,7 +636,7 @@ if ( ! function_exists('d3download_get_broken_data') ) {
 if ( ! function_exists('d3download_get_user_vote') ) {
 	function d3download_get_user_vote( $mydirname, $lid )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/rate_download.php' ;
+		require_once dirname(__FILE__, 2) .'/class/rate_download.php' ;
 		$rate_download = new rate_download( $mydirname ) ;
 		return $rate_download->Get_User_vote( $lid ) ;
 	}
@@ -640,7 +645,7 @@ if ( ! function_exists('d3download_get_user_vote') ) {
 if ( ! function_exists('d3download_get_guest_vote') ) {
 	function d3download_get_guest_vote( $mydirname, $lid )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/rate_download.php' ;
+		require_once dirname(__FILE__, 2) .'/class/rate_download.php' ;
 		$rate_download = new rate_download( $mydirname ) ;
 		return $rate_download->Get_Guest_vote( $lid ) ;
 	}
@@ -649,7 +654,7 @@ if ( ! function_exists('d3download_get_guest_vote') ) {
 if ( ! function_exists('d3download_dbmoduleheader_for_livevalidation') ) {
 	function d3download_dbmoduleheader_for_livevalidation( $mydirname, $add_array=array() )
 	{
-		include_once dirname( dirname(__FILE__) ).'/include/module_header.php' ;
+		include_once dirname(__FILE__, 2) .'/include/module_header.php' ;
 
 		$module_handler =& xoops_gethandler('module');
 		$config_handler =& xoops_gethandler('config');
@@ -658,7 +663,7 @@ if ( ! function_exists('d3download_dbmoduleheader_for_livevalidation') ) {
 
 		$css_uri = ( empty( $mod_config['live_uri'] ) ) ? '{mod_url}/index.php?page=module_header&src=livevalidation.css' : htmlspecialchars( @$mod_config['live_uri'] , ENT_QUOTES ) ;
 
-		$array = array_merge( array( $css_uri , 'livevalidation.js' , 'jquery.js' , 'jquery.textarearesizer.js' , 'seekAttention.jquery.js' , 'd3downloads.js' ) , $add_array ) ;
+		$array = array_merge( array( $css_uri , 'livevalidation.js' , 'jquery.js' , 'seekAttention.jquery.js' , 'd3downloads.js' ) , $add_array ) ;
 		return d3download_add_moduleheader( $mydirname, $array ) ;
 	}
 }
@@ -672,5 +677,3 @@ if ( ! function_exists('d3download_delete_livevalidation') ) {
 		}
 	}
 }
-
-?>

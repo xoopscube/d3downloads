@@ -4,8 +4,8 @@
 
 if( ! class_exists( 'broken_download' ) )
 {
-	include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
-	require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+	include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
+	require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 
 	class broken_download extends MyDownload
 	{
@@ -30,10 +30,12 @@ if( ! class_exists( 'broken_download' ) )
 		var $submitter;
 		var $updated;
 
-		function broken_download( $mydirname )
+		function __construct( $mydirname )
 		{
+            // TODO gigamaster parent construct
+            parent::__construct($mydirname);
 			global $xoopsUser ;
-			include_once dirname( dirname(__FILE__) ).'/include/mytable.php' ;
+			include_once dirname(__FILE__, 2) .'/include/mytable.php' ;
 
 			$this->db =& Database::getInstance() ;
 			$this->myts =& d3downloadsTextSanitizer::sGetInstance() ;
@@ -96,7 +98,11 @@ if( ! class_exists( 'broken_download' ) )
 			return $ret ;
 		}
 
-		function Broken_of_Currentlid( $lid )
+        /**
+         * @param $lid
+         * @return array|string[]
+         */
+        function Broken_of_Currentlid($lid )
 		{
 			global $xoopsConfig ;
 
@@ -131,7 +137,15 @@ if( ! class_exists( 'broken_download' ) )
 			) ;
 		}
 
-		function Total_Num( $whr='', $cid=0, $all=0, $invisible=0, $intree=0 )
+        /**
+         * @param string $whr
+         * @param int $cid
+         * @param int $all
+         * @param int $invisible
+         * @param int $intree
+         * @return int
+         */
+        function Total_Num($whr='', $cid=0, $all=0, $invisible=0, $intree=0 )
 		{
 			$sql = "SELECT COUNT( reportid ) FROM ".$this->broken_table."";
 			$result = $this->db->query( $sql ) ;
@@ -144,7 +158,9 @@ if( ! class_exists( 'broken_download' ) )
 			$broken_num = $this->Total_Num() ;
 			return array(
 				'num' => $broken_num ,
-				'link' => '<a href="'.$this->mod_url.'/admin/index.php?page=brokenmanager">'.sprintf( _MD_D3DOWNLOADS_BROKEN_NUM , $broken_num ).'</a>' ,
+				//'link' => '<a href="'.$this->mod_url.'/admin/index.php?page=brokenmanager">'.sprintf( _MD_D3DOWNLOADS_BROKEN_NUM , $broken_num ).'</a>' ,
+                //'link' => '<a href="'.$this->mod_url.'/admin/index.php?page=brokenmanager">'._MD_D3DOWNLOADS_BROKEN_NUM.'</a>' ,
+                'link' => $this->mod_url.'/admin/index.php?page=brokenmanager' ,
 			) ;
 		}
 
@@ -215,7 +231,16 @@ if( ! class_exists( 'broken_download' ) )
 			}
 		}
 
-		function filename_link( $id, $cid, $url, $filename, $status, $second=0 )
+        /**
+         * @param $id
+         * @param $cid
+         * @param $url
+         * @param $filename
+         * @param $status
+         * @param int $second
+         * @return string
+         */
+        function filename_link($id, $cid, $url, $filename, $status, $second=0 )
 		{
 			$filenamelink = '';
 			$link = $this->mod_url.'/index.php?page=visit_url&cid='.$cid.'&lid='.$id ;
@@ -241,9 +266,9 @@ if( ! class_exists( 'broken_download' ) )
 
 if( ! class_exists( 'broken_report' ) )
 {
-	include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
-	require_once dirname( dirname(__FILE__) ).'/class/my_http.php' ;
-	require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+	include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
+	require_once dirname(__FILE__, 2) .'/class/my_http.php' ;
+	require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 
 	class broken_report extends MyDownload
 	{
@@ -267,7 +292,7 @@ if( ! class_exists( 'broken_report' ) )
 		var $email_length = 60 ;
 		var $cron_param_array = array( 'pass' , 'limit' , 'offset' ) ;
 
-		function broken_report( $mydirname )
+		function __construct($mydirname )
 		{
 			global $xoopsUser ;
 			include_once dirname( dirname(__FILE__) ).'/include/mytable.php' ;
@@ -534,7 +559,7 @@ if( ! class_exists( 'broken_report' ) )
 
 		function check_file( $file )
 		{
-			$this->check_result = ( ! is_file( $file ) || filesize( $file ) == 0 ) ? false : true ;
+			$this->check_result = !((!is_file($file) || filesize($file) == 0));
 			$this->status       = ( ! $this->check_result ) ? 'broken file' : '' ;
 		}
 
@@ -575,12 +600,12 @@ if( ! class_exists( 'broken_report' ) )
 
 		function message_option()
 		{
-			return ( $this->option_config( 'broken_message_from_sender' ) ) ? true : false ;
+			return (bool)$this->option_config('broken_message_from_sender');
 		}
 
 		function set_trigger_event( $title )
 		{
-			require_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
+			require_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
 			$tags = array(
 				'POST_TITLE' => $this->myts->makeTboxData4Show( $title ) ,
 				'BROKENREPORTS_URL' => XOOPS_URL . '/modules/'.$this->mydirname.'/admin/index.php?page=brokenmanager' ,
@@ -657,5 +682,3 @@ if( ! class_exists( 'broken_report' ) )
 		}
 	}
 }
-
-?>

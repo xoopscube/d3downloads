@@ -10,7 +10,7 @@ if( ! class_exists( 'feed_maker' ) )
 		var $data = array() ;
 		var $xsl_file = 'rss2html.xsl';
 
-		function feed_maker( $mydirname )
+		function __construct($mydirname )
 		{
 			global $xoopsModule;
 
@@ -86,8 +86,8 @@ if( ! class_exists( 'feed_maker' ) )
 
 		function get_feed_logo()
 		{
-			$logo = 'images/logo.gif';
-
+            // TODO if logo png, svg
+            $logo = 'images/logo.svg';
 			list( $file_width , $file_height ) = getimagesize( XOOPS_ROOT_PATH.'/'.$logo ) ;
 
 			$maxwidth = 144 ;
@@ -152,7 +152,7 @@ if( ! class_exists( 'feed_maker' ) )
 			return $usertimestamp;
 		}
 
-		// rdf 2.0
+		// RDF 2.0
 		function rdf_build( $cid, $data, $b_time, $encode, $encoding, $xsl_file='' )
 		{
 			$link = $this->get_feed_toplink( $cid );
@@ -174,7 +174,7 @@ if( ! class_exists( 'feed_maker' ) )
 			$out .='<dc:language>'.$this->get_feed_language().'</dc:language>';
 			$out .='<items><rdf:Seq>';
 			foreach( $data as $item ) {
-				$out .='<rdf:li rdf:resource="'.$item['link'].'" />';
+				$out .='<rdf:li rdf:resource="'.$item['link'].'"/>';
 			}
 			$out .='</rdf:Seq></items>
 					</channel>
@@ -195,7 +195,8 @@ if( ! class_exists( 'feed_maker' ) )
 			$this->feed_out( $out, $encode );
 		}
 
-		// rss 2.0
+
+		// RSS 2.0
 		function rss_build( $cid, $data, $b_time, $encode, $encoding, $xsl_file='' )
 		{
 			$link = $this->get_feed_toplink( $cid );
@@ -256,10 +257,11 @@ if( ! class_exists( 'feed_maker' ) )
 		// Atom 1.0
 		function Atom_build( $cid, $data, $b_time, $encode, $encoding, $xsl_file='' )
 		{
+
 			$link = $this->get_feed_toplink( $cid );
-			$out = '<?xml version="1.0" encoding="'.$encoding.'"?>';
+			$out = '<?xml version="1.0" encoding="UTF-8"?>';
 			if( ! empty( $xsl_file ) ){
-				$out .='<?xml-stylesheet type="text/xsl" media="screen" href="'.$xsl_file.'" ?>';
+				$out .='<?xml-stylesheet type="text/xsl" href="'.$xsl_file.'"?>';
 			}
 			$out .='<feed xmlns="http://www.w3.org/2005/Atom"';
 			if ( $this->get_feed_language() !='' ) {
@@ -271,20 +273,20 @@ if( ! class_exists( 'feed_maker' ) )
 				$out .='<subtitle>'.htmlspecialchars( $this->make_context( strip_tags( $this->get_feed_slogan() ) ), ENT_QUOTES ).'</subtitle>';
 			}
 
-			$out .='<link rel="alternate" type="text/html" href="'.$link.'"/>';
+			$out .='<link rel="alternate" type="text/html" href="' . $link . '"/>';
 			$out .='<id>'.$this->get_feed_id( $link, $cid, $data[0]['id'], $data[0]['time'] ).'</id>';
 			$out .='<updated>'.$this->iso8601( $b_time ).'</updated>';
 			$out .='<author><name>'.$this->get_feed_author().'</name></author>';
 			if ( $this->generator !=''){
-				$out .='<generator uri="http://www.photositelinks.com/">'.$this->generator.'</generator>';
+				$out .='<generator uri="'.XOOPS_URL.'">'.$this->generator.'</generator>';
  			}
 			if ( $this->get_feed_copyright() !=''){
 				$out .='<rights>'.$this->get_feed_copyright().'</rights>';
  			}
 			$out .='<link rel="self" type="application/atom+xml" href="'.$this->get_feed_link_self( $cid ).'" />';
-
+            //"text/xml
 			foreach( $data as $item ) {
-				$out .='  <entry>
+				$out .='<entry>
 						<title>'.htmlspecialchars( $this->make_context( strip_tags( $item['title'] ) ), ENT_QUOTES).'</title>
 						<link rel="alternate" type="text/html" href="'.$item['link'].'"/>
 						<published>'.$this->iso8601( $item['time'] ).'</published>
@@ -304,7 +306,7 @@ if( ! class_exists( 'feed_maker' ) )
 		{
 			if( XOOPS_USE_MULTIBYTES == 1 ) {
 				if ( ! extension_loaded( 'mbstring' ) && ! class_exists( 'HypMBString' ) ) {
-					require_once dirname( dirname( __FILE__ ) ).'/class/mbemulator/mb-emulator.php' ;
+					require_once dirname(__FILE__, 2) .'/class/mbemulator/mb-emulator.php' ;
 				}
 				$out = str_replace("\0", '', mb_convert_encoding( $out, $encode, _CHARSET ) );
 			} else {
@@ -315,10 +317,10 @@ if( ! class_exists( 'feed_maker' ) )
 			echo $out;
 		}
 
-		function make_context( $text, $words=array(), $l=255 ) 
+		function make_context( $text, $words=array(), $l=191 )
 		{
 			if ( ! extension_loaded( 'mbstring' ) && ! class_exists( 'HypMBString' ) ) {
-				require_once dirname( dirname( __FILE__ ) ).'/class/mbemulator/mb-emulator.php' ;
+				require_once dirname(__FILE__, 2) .'/class/mbemulator/mb-emulator.php' ;
 			}
 			static $strcut = "";
 			if ( ! $strcut )
@@ -352,5 +354,3 @@ if( ! class_exists( 'feed_maker' ) )
 		}
 	}
 }
-
-?>

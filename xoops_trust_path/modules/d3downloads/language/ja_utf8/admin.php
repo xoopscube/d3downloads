@@ -11,6 +11,7 @@ define('_MD_D3DOWNLOADS_TH_HITS','ダウンロード');
 define('_MD_D3DOWNLOADS_TH_RATING','評価');
 define('_MD_D3DOWNLOADS_TH_COMMENTS','コメント');
 define('_MD_D3DOWNLOADS_TH_MYLINK','マイリンク');
+define("_MD_D3DOWNLOADS_VIEW","参照View");
 define('_MD_D3DOWNLOADS_VOTES','票');
 define('_MD_D3DOWNLOADS_LABEL_FILECHECKED','右端にチェックしたダウンロード情報を');
 define('_MD_D3DOWNLOADS_CONFIRM_DELETE','削除してよろしいですか?');
@@ -21,13 +22,13 @@ define('_MD_D3DOWNLOADS_CATEGORY_FIlE_NUM','このカテゴリには %s 件の�
 define('_MD_D3DOWNLOADS_CATEGORY_INVISIBLE_NUM','このカテゴリには %s 件の非公開ファイルがあります');
 define('_MD_D3DOWNLOADS_BTN_MOVE','移動');
 define('_MD_D3DOWNLOADS_MOVEED','移動が完了しました');
-define('_MD_D3DOWNLOADS_NO_MOVEED','移動先のカテゴリを選択してください');
+define('_MD_D3DOWNLOADS_NO_MOVED','移動先のカテゴリを選択してください');
 define('_MD_D3DOWNLOADS_CONFIRM_MOVE','移動してよろしいですか? なお、カテゴリ毎のスクリーンショット画像を使用している場合は、その画像はご自身で移動してください。');
 define('_MD_D3DOWNLOADS_INVISIBLEINFO','非表示');
 define('_MD_D3DOWNLOADS_WAITINGRELEASEINFO','公開待ち');
 define('_MD_D3DOWNLOADS_EXPIREDINFO','期限切れ');
 define('_MD_D3DOWNLOADS_SEL_SUBMITTER','投稿者を選択');
-define('_MD_D3DOWNLOADS_ERROR_SEL_FILSE','ダウンロード情報を選択してください');
+define('_MD_D3DOWNLOADS_ERROR_SEL_FALSE','ダウンロード情報を選択してください');
 
 // D3DOWNLOADS APPROVALMANAGER
 define('_MD_D3DOWNLOADS_H2APROVALLIST','新規登録未承認ダウンロード情報管理');
@@ -35,7 +36,7 @@ define('_MD_D3DOWNLOADS_H2MODFILELIST','編集未承認ダウンロード情報�
 define('_MD_D3DOWNLOADS_APPROVAL','承認');
 define('_MD_D3DOWNLOADS_SUBMIT_APPROVAL','ダウンロード情報承認');
 define('_MD_D3DOWNLOADS_SUBMIT_APPROVED','承認しました');
-define('_MD_D3DOWNLOADS_UNAPROVALNUM','未承認のファイル : %s 件');
+define('_MD_D3DOWNLOADS_UNAPROVALNUM','未承認のファイル');
 define('_MD_D3DOWNLOADS_NOWDATA','承認前登録内容');
 
 // D3DOWNLOADS CATEGORY MANAGER
@@ -53,8 +54,8 @@ define('_MD_D3DOWNLOADS_CATEGORYTITLE','タイトル');
 define('_MD_D3DOWNLOADS_CATEGORYIMGURL','カテゴリ画像URL');
 define('_MD_D3DOWNLOADS_CATEGORYIMGURLDESC','画像ファイルの幅は 70ピクセルに調整されます');
 define('_MD_D3DOWNLOADS_CATEGORYSHOTSDIR','スクリーンショット画像用ディレクトリ');
-define('_MD_D3DOWNLOADS_CATEGORYSHOTSDIRDESC','XOOPS のインストール先からのパスで指定します<br />設定例 : images/shots/ (最初の / は不要、最後の / は必要)');
-define('_MD_D3DOWNLOADS_CATEGORYSHOTSDIRHELP','入力は必須ではなく、省略した場合には %s<br />ディレクトリ下にある画像ファイルをスクリーンショットとして利用することができます');
+define('_MD_D3DOWNLOADS_CATEGORYSHOTSDIRDESC','Public のインストール先からのパスで指定します<br>設定例 : images/shots/ (最初の / は不要、最後の / は必要)');
+define('_MD_D3DOWNLOADS_CATEGORYSHOTSDIRHELP','入力は必須ではなく、省略した場合には %s<br>ディレクトリ下にある画像ファイルをスクリーンショットとして利用することができます');
 define('_MD_D3DOWNLOADS_CATWEIGHT','表示順');
 define('_MD_D3DOWNLOADS_MAINCATEGORY','親カテゴリ');
 define('_MD_D3DOWNLOADS_CATEGORY_TREE','カテゴリツリー');
@@ -83,7 +84,8 @@ define('_MD_D3DOWNLOADS_SELECT_IMGURL','カテゴリ画像選択');
 define('_MD_D3DOWNLOADS_SELECT_IMGURLDESC','スクリーンショットディレクトリまたは一般設定で設定した画像管理モジュールの画像を選択することができます。');
 
 // D3DOWNLOADS USER ACCESS
-define('_MD_D3DOWNLOADS_H2USERACCESS','アクセス権限管理 ( %s )');
+define("_MD_D3DOWNLOADS_H2GROUPACCESS","グループアクセス許可 : %s ");
+define('_MD_D3DOWNLOADS_H2USERACCESS','ユーザーアクセス許可');
 define('_MD_D3DOWNLOADS_H2USERACCESS_INFO','アクセス権限確認 ( %s )');
 define('_MD_D3DOWNLOADS_NEWCID_USERACCESS','アクセス権限管理');
 define('_MD_D3DOWNLOADS_NEWCID_USERACCESS_INFO','アクセス権限確認');
@@ -99,8 +101,8 @@ define('_MD_D3DOWNLOADS_TH_CAN_UPLOAD','アップロード可');
 define('_MD_D3DOWNLOADS_TH_GROUPNAME','グループ名');
 define('_MD_D3DOWNLOADS_TH_UID','ユーザID');
 define('_MD_D3DOWNLOADS_TH_UNAME','ユーザ名');
-define('_MD_D3DOWNLOADS_HELP_USERACCESS','※ 登録ユーザーでない場合、「編集可」、「削除可」、「自動承認(編集可)、「HTML可」を選択しても実際には機能しません。<br />※ これらの設定が実際に機能するのは、登録ユーザーのみです。<br />※ また、サイト管理者はここでの設定に関係なく、編集・削除・アップロードが可能です。<br />※ ここで設定した内容が配下の全サブカテゴリに適用されます。');
-define('_MD_D3DOWNLOADS_HELP_USERACCESS_USER','※ ユーザを新規に追加する場合、ユーザ ID かユーザ名のいずれかを入力してください。<br />※ 「閲覧可」を外すと、そのユーザはリストから消すことができます。');
+define('_MD_D3DOWNLOADS_HELP_USERACCESS','※ 登録ユーザーでない場合、「編集可」、「削除可」、「自動承認(編集可)、「HTML可」を選択しても実際には機能しません。<br>※ これらの設定が実際に機能するのは、登録ユーザーのみです。<br>※ また、サイト管理者はここでの設定に関係なく、編集・削除・アップロードが可能です。<br>※ ここで設定した内容が配下の全サブカテゴリに適用されます。');
+define('_MD_D3DOWNLOADS_HELP_USERACCESS_USER','※ ユーザを新規に追加する場合、ユーザ ID かユーザ名のいずれかを入力してください。<br>※ 「閲覧可」を外すと、そのユーザはリストから消すことができます。');
 define('_MD_D3DOWNLOADS_HELP_USERACCESS_PID','※ 閲覧・投稿権限などの設定については、親カテゴリの設定がそのまま適用されます。');
 define('_MD_D3DOWNLOADS_USERACCESS_COPY','他のカテゴリにコピー');
 define('_MD_D3DOWNLOADS_CONFIRM_USERACCESS_COPY','コピーしてよろしいですか?');
@@ -124,7 +126,7 @@ define('_MD_D3DOWNLOADS_TH_IP','IPアドレス');
 define('_MD_D3DOWNLOADS_TH_REPORTDATE','報告日時');
 define('_MD_D3DOWNLOADS_TH_BROKENDEL','報告を無視する');
 define('_MD_D3DOWNLOADS_LABEL_BROKENCHECK','ファイル破損/リンク切れチェック');
-define('_MD_D3DOWNLOADS_HELP_BROKENCHECK','※ 「ファイル破損/リンク切れチェック」を実行すると、破損したファイルのレポートの他、どのダウンロード情報にもリンクされていないファイルを削除することができます。<br />※ cron を利用できる環境では、コマンドラインでの定期的なファイル破損/リンク切れチェックも可能です。<br />[ crontab の設定例 ] :<br /><ul><li>0 0 1 * * /usr/local/bin/php php -q -f home/***/html/modules/(dirname)/bin/broken_check.sh pass=パスワード limit=100 offset=0</li><li>パスワードは必須で、「一般設定」により設定・変更が可能。limit と offset は必須ではなく、必要に応じて設定してください。</li></ul>');
+define('_MD_D3DOWNLOADS_HELP_BROKENCHECK','※ 「ファイル破損/リンク切れチェック」を実行すると、破損したファイルのレポートの他、どのダウンロード情報にもリンクされていないファイルを削除することができます。<br>※ cron を利用できる環境では、コマンドラインでの定期的なファイル破損/リンク切れチェックも可能です。<br>[ crontab の設定例 ] :<br><ul><li>0 0 1 * * /usr/local/bin/php php -q -f home/***/html/modules/(dirname)/bin/broken_check.sh pass=パスワード limit=100 offset=0</li><li>パスワードは必須で、「一般設定」により設定・変更が可能。limit と offset は必須ではなく、必要に応じて設定してください。</li></ul>');
 define('_MD_D3DOWNLOADS_ERROR_SEL_REPORT','無視する破損報告を選択してください');
 define('_MD_D3DOWNLOADS_BTN_INVISIBLE','非表示にする');
 define('_MD_D3DOWNLOADS_CONFIRM_INVISIBLE','本当に非表示にしてよろしいですか?');
@@ -135,10 +137,10 @@ define('_MD_D3DOWNLOADS_H2_IMPORTFROM','インポート');
 define('_MD_D3DOWNLOADS_BTN_DOIMPORT','インポート実行');
 define('_MD_D3DOWNLOADS_LABEL_SELECTMODULE','モジュール選択');
 define('_MD_D3DOWNLOADS_CONFIRM_DOIMPORT','インポートを実行してよろしいですか?');
-//define('_MD_D3DOWNLOADS_HELP_IMPORTFROM','現在インポートに対応しているのは d3downloads と mydownloads です。<br />できる限り忠実にインポートしますが、完全な再現はできません。<br />なお、インポートを実行すると、現在モジュール内に保存されているデータは全て削除されます。<br />また、mydownloads からのインポートの場合、カテゴリ毎の閲覧・投稿権限は初期値に設定されます。<br />インポート後に「カテゴリ管理」で各種権限を確認してください。');
-define('_MD_D3DOWNLOADS_HELP_IMPORTFROM','現在インポートに対応しているのは d3downloads 、mydownloads 、wfdownloads v3.10 以上です。<br />できる限り忠実にインポートしますが、完全な再現はできません。<br />なお、インポートを実行すると、現在モジュール内に保存されているデータは全て削除されます。<br />また、mydownloads と wfdownloads からのインポートの場合、カテゴリ毎の閲覧・投稿権限は初期値に設定されます。<br />インポート後に「アクセス権限管理」で各種権限を確認してください。');
-define('_MD_D3DOWNLOADS_FILE_IMPORT_HELP','他の d3downloads からのインポートの場合 %s<br />にアップロードファイルをコピーしようと試みますが、使用環境によっては、完全なコピーができない場合があります。<br />インポート後に正しくコピーされているかどうか確認してください。');
-define('_MD_D3DOWNLOADS_FILE_CONFIGERROR_HELP','他の d3downloads からのインポートの場合、あらかじめ、ディレクトリ %s<br />を作り書き込み権限を与えてください。このディレクトリにアップロードファイルをコピーしようと試みます。');
+//define('_MD_D3DOWNLOADS_HELP_IMPORTFROM','現在インポートに対応しているのは d3downloads と mydownloads です。<br>できる限り忠実にインポートしますが、完全な再現はできません。<br>なお、インポートを実行すると、現在モジュール内に保存されているデータは全て削除されます。<br>また、mydownloads からのインポートの場合、カテゴリ毎の閲覧・投稿権限は初期値に設定されます。<br>インポート後に「カテゴリ管理」で各種権限を確認してください。');
+define('_MD_D3DOWNLOADS_HELP_IMPORTFROM','現在インポートに対応しているのは d3downloads 、mydownloads 、wfdownloads v3.10 以上です。<br>できる限り忠実にインポートしますが、完全な再現はできません。<br>なお、インポートを実行すると、現在モジュール内に保存されているデータは全て削除されます。<br>また、mydownloads と wfdownloads からのインポートの場合、カテゴリ毎の閲覧・投稿権限は初期値に設定されます。<br>インポート後に「アクセス権限管理」で各種権限を確認してください。');
+define('_MD_D3DOWNLOADS_FILE_IMPORT_HELP','他の d3downloads からのインポートの場合 %s<br>にアップロードファイルをコピーしようと試みますが、使用環境によっては、完全なコピーができない場合があります。<br>インポート後に正しくコピーされているかどうか確認してください。');
+define('_MD_D3DOWNLOADS_FILE_CONFIGERROR_HELP','他の d3downloads からのインポートの場合、あらかじめ、ディレクトリ %s<br>を作り書き込み権限を与えてください。このディレクトリにアップロードファイルをコピーしようと試みます。');
 define('_MD_D3DOWNLOADS_FILE_CONFIGERROR','あらかじめアップロード先ディレクトリを作り書き込み権限を与えてから実行してください');
 define('_MD_D3DOWNLOADS_IMPORTDONE','インポートが完了しました');
 define('_MD_D3DOWNLOADS_ERR_INVALIDMID','指定されたモジュールからはインポートできません');

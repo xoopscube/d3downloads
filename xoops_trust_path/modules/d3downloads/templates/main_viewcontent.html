@@ -1,78 +1,139 @@
-<table width="100%" border="0" cellspacing="5" cellpadding="0" align="center">
-	<tr valign="top" align="left">
-		<td class="d3downloads_head">
-			<form name="cid_select" action="<{$mod_url}>/index.php?cid=<{$cid}>" method="get" style="margin:0px;text-align:center;">
-				<select name="cid" onchange="submit();">
-					<option value=""><{$lang_directcatsel}></option>
-					<{html_options options=$category}><br />
-				</select> &nbsp; &nbsp;
-				<{$download_total_num}>
-				<{if $module_admin && $invisible_num}>
-					<{$invisible_link}>
-				<{/if}>
-				<{if $module_admin && $broken_num}>
-					<{$broken_link}>
-				<{/if}>
-				<{if $module_admin && $unapproval_num}>
-					<{$unapproval_link}>
-				<{/if}>
-			</form>
-		</td>
-	</tr>
-</table>
+<div class="ui-dev-mode"><{$smarty.template}></div>
+
+
+<{include file="db:`$mydirname`_inc_breadcrumbs.html"}>
+
+
+<{* ----- Top Message ----- *}>
+
+<section layout="column my-4 sm-first" id="<{$mydirname}>_container" class="category-top">
+
+	<div layout="rows center-justify">
+		<h3 self="size-x1">
+<!--			<img class="svg" src="<{$xoops_url}>/images/icons/folder.svg" width="1em" height="1em" alt="category">-->
+			<{$mydirname}>
+		</h3>
+
+		<div class="d3downloads_feed_select" self="mr-1">
+			<{if $category_id}>
+				<{* <a href="<{$mod_url}>/index.php?page=rdf&amp;cid=<{$category_id}><{if $intree}>&amp;intree=<{$intree}><{/if}><{if $mylink}>&amp;mylink=<{$mylink}><{/if}>">[RDF]</a> *}>
+			<a href="<{$mod_url}>/rss.php?cid=<{$category_id}><{if $intree}>&amp;intree=<{$intree}><{/if}><{if $mylink}>&amp;mylink=<{$mylink}><{/if}>">
+				<img class="svg" src="<{$xoops_url}>/images/icons/rss.svg" width="1em" height="1em" alt="RSS">
+			</a>
+				<{* <a href="<{$mod_url}>/index.php?page=atom&amp;cid=<{$category_id}><{if $intree}>&amp;intree=<{$intree}><{/if}><{if $mylink}>&amp;mylink=<{$mylink}><{/if}>">ATOM</a> *}>
+			<{* <a href="<{$mod_url}>/index.php?page=filelist&amp;cid=<{$category_id}><{if $intree}>&amp;intree=<{$intree}><{/if}>">[<{$smarty.const._MD_D3DOWNLOADS_FILELIST}>]</a> *}>
+			<{else}>
+				<{* <a href="<{$mod_url}>/index.php?page=rdf<{if $mylink}>&amp;mylink=<{$mylink}><{/if}>">[RDF]</a> *}>
+			<a href="<{$mod_url}>/rss.php<{if $mylink}>?mylink=<{$mylink}><{/if}>">
+				<img class="svg" src="<{$xoops_url}>/images/icons/rss.svg" width="1em" height="1em" alt="RSS">
+			</a>
+				<{* <a href="<{$mod_url}>/index.php?page=atom<{if $mylink}>&amp;mylink=<{$mylink}><{/if}>">ATOM </a>*}>
+				<{* <a href="<{$mod_url}>/index.php?page=filelist">[<{$smarty.const._MD_D3DOWNLOADS_FILELIST}>]</a> *}>
+			<{/if}>
+		</div>
+	</div>
+
+	<{if $mod_config.top_message}>
+		<div layout="row p-2 my-4">
+			<{$mod_config.top_message}>
+		</div>
+	<{/if}>
+
+	<{* ----- Admin controllers ----- *}>
+	<{if $module_admin || $category_for_post}>
+	<div layout="row center-left my-4" class="action-control">
+		<form name="for_admin" action="<{$mod_url}>/index.php" method="post">
+			<select name="category_select" id="category_select">
+				<option value=""><{$lang_directcatsel}></option>
+				<{html_options options=$category_for_post}>
+			</select>
+			<{if $module_admin}>
+				<input type="submit" class="ui-button" name="cat_edit" value="<{$smarty.const._MD_D3DOWNLOADS_CAT_EDIT}>">
+				<input type="submit" class="ui-button" name="brokencheck" value="<{$smarty.const._MD_D3DOWNLOADS_BROKENCHECK}>" onclick="return confirm('<{$smarty.const._MD_D3DOWNLOADS_CONFIRM_BROKENCHECK}>')">
+				<a class="ui-button" href="<{$mod_url}>/admin/index.php?page=categoryedit&amp;cid=0"><{$smarty.const._MD_D3DOWNLOADS_ADMIN_NEWCATEGORY}></a>
+			<{/if}>
+			<input type="submit" class="ui-button" name="file_post" value="<{$smarty.const._MD_D3DOWNLOADS_NEWSUBMIT}>">
+		</form>
+	</div>
+	<{/if}>
+
+</section>
+
+
+<{if $mylink}>
+<span class="d3downloads_mylink_info">1234567 <{$smarty.const._MD_D3DOWNLOADS_MYLINK_INFO}></span>
+<{/if}>
+
+<{* ----- CATEGORY TREE ----- *}>
+
+
+
+
+
+<{* ------- Activity Overview - Top Category ----- *}>
+
+<form name="cid_select" action="<{$mod_url}>/index.php?cid=<{$cid}>" method="get">
+	<div layout="row center-justify p-2 my-4 sm-column" class="activity">
+		<div self="px-2">
+			<select name="cid" onchange="submit();">
+				<option value=""><{$lang_directcatsel}></option>
+				<{html_options options=$category}>
+			</select>
+			<{$download_total_num}>
+		</div>
+		<div self="px-2">
+			<{if $module_admin && $invisible_num}>
+			<span data-before-text="<{$invisible_num}>" data-before-type="dark pill">
+				<a href="<{$invisible_link}>"><{$smarty.const._MD_D3DOWNLOADS_INVISIBLE_NUM}></a>
+			</span>
+			<{/if}>
+
+			<{if $module_admin && $broken_num}>
+			<span data-before-text="<{$broken_num}>" data-before-type="red pill">
+				<a href="<{$broken_link}>"><{$smarty.const._MD_D3DOWNLOADS_BROKEN_NUM}></a>
+			</span>
+
+			<{/if}>
+			<{if $module_admin && $unapproval_num}>
+			<span data-before-text="<{$unapproval_num}>" data-before-type="orange pill">
+				<a href="<{$unapproval_link}>"><{$smarty.const._MD_D3DOWNLOADS_UNAPPROVAL_NUM}></a>
+			</span>
+			<{/if}>
+		</div>
+	</div>
+</form>
+
+
+
+<{* ------- Activity Overview - Top Category ----- *}>
 
 <{include file="db:`$mydirname`_inc_viewcat.html"}>
 
-<{if $mod_config.top_message}>
-	<div class="d3downloads_top_message">
-		<{$mod_config.top_message}>
+
+<{* ------- Activity Overview - Top Category ----- *}>
+
+<{if $file}>
+	<h3><{$smarty.const._MD_D3DOWNLOADS_LATESTLIST}></h3>
+<{/if}>
+
+
+<{* ------- Downloads loop ----- *}>
+
+<{if $file}>
+	<{* ----- Start new link loop ----- *}>
+	<{section name=i loop=$file}>
+		<div self="mb-6" class="category-top">
+		<{include file="db:`$mydirname`_inc_download.html" down=$file[i]}>
+	</div>
+	<{/section}>
+	<{* ----- End new link loop ----- *}>
+	<{else}>
+		<div class="resultMsg">
+		<{$smarty.const._MD_D3DOWNLOADS_NOMATCH}>
 	</div>
 <{/if}>
 
-<{if $module_admin || $category_for_post}>
-<br />
-	<form name="for_admin" action="<{$mod_url}>/index.php" method="post">
-		<table width="100%" cellspacing="0" cellpadding="10" border="0">
-			<tr>
-				<td class="d3downloads_admin_link">
-					<{if $module_admin}>
-						[<a href="<{$mod_url}>/admin/index.php?page=categoryedit&amp;cid=0"><{$smarty.const._MD_D3DOWNLOADS_ADMIN_NEWCATEGORY}></a>]&nbsp;&nbsp;
-					<{/if}>
-					<{if $module_admin || $category_for_post}>
-						<select name="category_select" id="category_select">
-							<option value=""><{$lang_directcatsel}></option>
-							<{html_options options=$category_for_post}>
-						</select>
-						<input type="submit" class="d3downloads_submit" name="file_post" value="<{$smarty.const._MD_D3DOWNLOADS_NEWSUBMIT}>" />
-					<{/if}>
-					<{if $module_admin}>
-						<input type="submit" class="d3downloads_submit" name="cat_edit" value="<{$smarty.const._MD_D3DOWNLOADS_CAT_EDIT}>" />
-						<input type="submit" class="d3downloads_submit" name="brokencheck" value="<{$smarty.const._MD_D3DOWNLOADS_BROKENCHECK}>" onclick="return confirm('<{$smarty.const._MD_D3DOWNLOADS_CONFIRM_BROKENCHECK}>')" />
-					<{/if}>
-				</td>
-		</table>
-	</form>
-<{/if}>
 
-<{if $file}>
-	<h4><{$smarty.const._MD_D3DOWNLOADS_LATESTLIST}></h4>
-<{/if}>
-<table width="100%" cellspacing="0" cellpadding="10" border="0">
-<tr>
-	<td width="100%" align="center" valign="top">
-		<{if $file}>
-			<!-- Start new link loop -->
-			<{section name=i loop=$file}>
-				<{include file="db:`$mydirname`_inc_download.html" down=$file[i]}>
-			<{/section}>
-			<!-- End new link loop -->
-		<{else}>
-			<{$smarty.const._MD_D3DOWNLOADS_NOMATCH}>
-		<{/if}>
-	</td>
-</tr>
-</table>
-<br />
-<hr class="notification" />
+<hr class="notification">
 
-<{include file='db:system_notification_select.html'}>
+<{include file='db:legacy_notification_select.html'}>

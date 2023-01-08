@@ -1,32 +1,57 @@
-<script type="text/javascript" src="<{$mod_url}>/index.php?page=module_header&src=jquery.js"></script>
+<div class="ui-dev-mode"><{$smarty.template}></div>
+
 <script type="text/javascript" src="<{$mod_url}>/index.php?page=module_header&src=d3downloads.js"></script>
-<h2><{$smarty.const._MD_D3DOWNLOADS_H2APROVALLIST}> ( <{$unaproval_sum}> )</h2>
+
+<h2><{$smarty.const._MD_D3DOWNLOADS_H2APROVALLIST}></h2>
+
 <{if $iserror}>
-	<div style="color: #CC0000;font-size:100%;font-weight:bold;margin:5px;padding:5px;border-width:1px;border-style:solid;border-color:#808080;">
+	<div class="error">
 		<{$error_message}>
 	</div>
 <{/if}>
+
+
+
+<div layout="row center-justify" class="control-action">
+
+	<div>
+		<{$smarty.const._MD_D3DOWNLOADS_UNAPPROVAL_NUM}> <{$unaproval_sum}>
+	</div>
+
+	<div class="control-view">
+		<a class="ui-btn" href="<{$mod_url}>/admin/index.php?page=categoryedit&amp;cid=0">
+			<{$smarty.const._MD_D3DOWNLOADS_ADMIN_NEWCATEGORY}>
+		</a>
+		<button class="help-admin ui-btn" type="button" data-id="5" data-module="d3downloads" data-help-article="#help-approval" title="Help">
+			<span class="ui-icon ui-icon-help"></span>
+		</button>
+	</div>
+
+</div>
 <form name="approvalmanager" id="approvalmanager" action="<{$mod_url}>/admin/index.php?page=<{$page}>" method="post">
 <{$gticket_hidden}>
 <table class="outer">
+	<thead>
 	<tr>
-		<th style="text-align:center;">
+		<th>
 			<{$smarty.const._MD_D3DOWNLOADS_TH_ID}>
 		</th>
-		<th style="text-align:center;">
+		<th>
 			<{$smarty.const._MD_D3DOWNLOADS_TH_TITLE}>
 		</th>
-		<th style="text-align:center;">
+		<th>
 			<{$smarty.const._MD_D3DOWNLOADS_TH_CATEGORY}>
 		</th>
-		<th style="text-align:center;">
+		<th>
 			<{$smarty.const._MD_D3DOWNLOADS_TH_CONTENTSACTIONS}>
 			<input type="checkbox" onclick="col_check_on_off( this, 'col_action_u_' )">
 		</th>
 	</tr>
+	</thead>
+	<tbody>
 	<{foreach from=$unapproval item="item"}>
 		<tr class="<{cycle values="even,odd"}>">
-			<td style="text-align:center;">
+			<td>
 				<{$item.requestid}>
 			</td>
 			<td nowrap="nowrap">
@@ -35,80 +60,97 @@
 			<td nowrap="nowrap">
 				<{$item.ctitle}>
 			</td>
-			<td nowrap="nowrap" style="text-align:center;">
+			<td nowrap="nowrap">
 				<a href="<{$mod_url}>/admin/index.php?page=approval&amp;requestid=<{$item.requestid}>"><{$smarty.const._MD_D3DOWNLOADS_APPROVAL}></a> |
-				<input type="checkbox" name="action_selects[<{$item.requestid}>]" id="col_action_u_<{$item.requestid}>" value="1" /><br />
-				<{$item.postname}><br />
+				<input type="checkbox" name="action_selects[<{$item.requestid}>]" id="col_action_u_<{$item.requestid}>" value="1">
+				<br>
+				<{$item.postname}>
+				<br>
 				<{$item.date}>
 			</td>
 		</tr>
 	<{/foreach}>
+	</tbody>
+	<tfoot>
 	<tr>
-		<th colspan="11" style="text-align:right;">
+		<th colspan="11">
 			<{$smarty.const._MD_D3DOWNLOADS_LABEL_FILECHECKED}>
-			<input type="submit" name="unapproval_delete" id="unapproval_delete" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_DELETE}>" />
+			<input type="submit" name="unapproval_delete" id="unapproval_delete" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_DELETE}>">
 		</th>
 	</tr>
+	</tfoot>
 </table>
 </form>
-<br />
+
+<hr>
+
 <form name="modfilemanager" id="modfilemanager" action="<{$mod_url}>/admin/index.php?page=<{$page}>" method="post">
 <{$gticket_hidden}>
-<h2><{$smarty.const._MD_D3DOWNLOADS_H2MODFILELIST}> ( <{$modfile_sum}> )</h2>
-<table class="outer">
-	<tr>
-		<th style="text-align:center;">
-			<{$smarty.const._MD_D3DOWNLOADS_TH_ID}>
-		</th>
-		<th style="text-align:center;">
-			<{$smarty.const._MD_D3DOWNLOADS_TH_TITLE}>
-		</th>
-		<th style="text-align:center;">
-			<{$smarty.const._MD_D3DOWNLOADS_TH_CATEGORY}>
-		</th>
-		<th style="text-align:center;">
-			<{$smarty.const._MD_D3DOWNLOADS_TH_CONTENTSACTIONS}>
-			<input type="checkbox" onclick="col_check_on_off( this, 'col_action_m_' )">
-		</th>
-	</tr>
-	<{foreach from=$modfile item="file"}>
-		<tr class="<{cycle values="even,odd"}>">
-			<td style="text-align:center;">
-				<{$file.requestid}>
-			</td>
-			<td nowrap="nowrap">
-				<{$file.title}>
-			</td>
-			<td nowrap="nowrap">
-				<{$file.ctitle}>
-			</td>
-			<td nowrap="nowrap" style="text-align:center;">
-				<a href="<{$mod_url}>/admin/index.php?page=approval&amp;requestid=<{$file.requestid}>"><{$smarty.const._MD_D3DOWNLOADS_APPROVAL}></a> |
-				<input type="checkbox" name="modfile_selects[<{$file.requestid}>]" id="col_action_m_<{$file.requestid}>" value="1" /><br />
-				<{$file.postname}><br />
-				<{$file.date}>
-			</td>
+
+	<h2><{$smarty.const._MD_D3DOWNLOADS_H2MODFILELIST}></h2>
+
+	<h3><{$smarty.const._MD_D3DOWNLOADS_UNAPROVALNUM}> <{$modfile_sum}></h3>
+	<table class="outer">
+		<thead>
+		<tr>
+			<th>
+				<{$smarty.const._MD_D3DOWNLOADS_TH_ID}>
+			</th>
+			<th>
+				<{$smarty.const._MD_D3DOWNLOADS_TH_TITLE}>
+			</th>
+			<th>
+				<{$smarty.const._MD_D3DOWNLOADS_TH_CATEGORY}>
+			</th>
+			<th>
+				<{$smarty.const._MD_D3DOWNLOADS_TH_CONTENTSACTIONS}>
+				<input type="checkbox" onclick="col_check_on_off( this, 'col_action_m_' )">
+			</th>
 		</tr>
-	<{/foreach}>
-	<tr>
-		<th colspan="11" style="text-align:right;">
-			<{$smarty.const._MD_D3DOWNLOADS_LABEL_FILECHECKED}>
-			<input type="submit" name="modfile_delete" id="modfile_delete" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_DELETE}>" />
-		</th>
-	</tr>
+		</thead>
+		<tbody>
+		<{foreach from=$modfile item="file"}>
+			<tr class="<{cycle values="even,odd"}>">
+				<td style="text-align:center;">
+					<{$file.requestid}>
+				</td>
+				<td nowrap="nowrap">
+					<{$file.title}>
+				</td>
+				<td nowrap="nowrap">
+					<{$file.ctitle}>
+				</td>
+				<td nowrap="nowrap">
+					<a href="<{$mod_url}>/admin/index.php?page=approval&amp;requestid=<{$file.requestid}>"><{$smarty.const._MD_D3DOWNLOADS_APPROVAL}></a> |
+					<input type="checkbox" name="modfile_selects[<{$file.requestid}>]" id="col_action_m_<{$file.requestid}>" value="1">
+					<br>
+					<{$file.postname}>
+					<br>
+					<{$file.date}>
+				</td>
+			</tr>
+		<{/foreach}>
+		</tbody>
+		<tfoot>
+		<tr>
+			<th colspan="11">
+				<{$smarty.const._MD_D3DOWNLOADS_LABEL_FILECHECKED}>
+				<input type="submit" name="modfile_delete" id="modfile_delete" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_DELETE}>">
+			</th>
+		</tr>
+		</tfoot>
 </table>
 </form>
 
 <script type="text/javascript">
-<!--//
-jQuery( function($){
+$(function (){
 	$( '#unapproval_delete' ).click( function(){
 		infoDom_initialize() ;
 		col_action_check( 'col_action_u_' ) ;
 		if( validate_checked > 0 ){
 			return confirm('<{$smarty.const._MD_D3DOWNLOADS_CONFIRM_DELETE}>') ;
 		} else {
-			popup_info( '<{$smarty.const._MD_D3DOWNLOADS_ERROR_SEL_FILSE}>' )
+			popup_info( '<{$smarty.const._MD_D3DOWNLOADS_ERROR_SEL_FALSE}>' )
 			return false ;
 		}
     });
@@ -119,10 +161,9 @@ jQuery( function($){
 		if( validate_checked > 0 ){
 			return confirm('<{$smarty.const._MD_D3DOWNLOADS_CONFIRM_DELETE}>') ;
 		} else {
-			popup_info( '<{$smarty.const._MD_D3DOWNLOADS_ERROR_SEL_FILSE}>' )
+			popup_info( '<{$smarty.const._MD_D3DOWNLOADS_ERROR_SEL_FALSE}>' )
 			return false ;
 		}
     });
 });
-//-->
 </script>

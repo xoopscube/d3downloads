@@ -61,5 +61,3 @@ if (! function_exists('b_d3downloads_category_edit') ) {
 		return $tpl->fetch( 'db:'.$mydirname.'_blockedit_category.html' ) ;
 	}
 }
-
-?>

@@ -26,5 +26,3 @@ if( $body_editor == 'common_fckeditor' && file_exists( XOOPS_ROOT_PATH.'/common/
 	$wysiwyg_header = '' ;
 	$wysiwyg_body = '' ;
 }
-
-?>

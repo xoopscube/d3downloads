@@ -37,5 +37,3 @@ function b_waiting_d3downloads( $mydirname )
 
 	return $ret;
 }
-
-?>

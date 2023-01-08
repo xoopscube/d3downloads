@@ -1,6 +1,7 @@
 <?php
 
-require_once dirname(dirname(__FILE__)).'/class/gtickets.php' ;
+require_once dirname(__FILE__, 2) .'/class/gtickets.php' ;
+
 $db =& Database::getInstance() ;
 
 // THIS PAGE CAN BE CALLED ONLY FROM D3DOWNLOADS
@@ -36,6 +37,8 @@ if( ! empty( $_POST['update'] ) ) {
 	redirect_header( XOOPS_URL."/modules/$mydirname/admin/index.php?page=import" , 3 , _MD_D3DOWNLOADS_UPDATEDONE ) ;
 	exit ;
 }
+
+// RENDER
 xoops_cp_header();
 include dirname(__FILE__).'/mymenu.php' ;
 require_once XOOPS_ROOT_PATH.'/class/template.php' ;
@@ -44,6 +47,5 @@ $tpl->assign( array(
 	'gticket_hidden' => $xoopsGTicket->getTicketHtml( __LINE__ , 1800 , 'd3downloads') ,
 ) ) ;
 $tpl->display( 'db:'.$mydirname.'_admin_import.html' ) ;
-xoops_cp_footer();
 
-?>
+xoops_cp_footer();

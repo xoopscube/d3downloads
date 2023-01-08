@@ -3,14 +3,14 @@
 if ( ! function_exists('d3download_get_module_header_request') ) {
 	function d3download_get_module_header_request( $mydirname )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+		require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 
 		$myts =& d3downloadsTextSanitizer::sGetInstance() ;
 		$template = $file_path = $type = '' ;
 
 		$_GET = $myts->Delete_Nullbyte( $_GET ) ;
 		$my_file = preg_replace( '/[^0-9a-zA-Z_.-]/' , '' , @$_GET['src'] ) ;
-		$mytrustdirpath = dirname( dirname( __FILE__ ) ) ;
+		$mytrustdirpath = dirname(__FILE__, 2);
 
 		if ( preg_match("/^(.+)\.([^.]+)$/", $my_file, $match ) ) {
 			$file = $match[1] ;
@@ -29,7 +29,7 @@ if ( ! function_exists('d3download_get_module_header_request') ) {
 					}
 					break ;
 				case 'js' :
-					$array = array( 'livevalidation' , 'lightbox_plus' , 'spica' , 'jquery' , 'jquery.textarearesizer' , 'seekAttention.jquery' , 'd3downloads' ) ;
+					$array = array( 'livevalidation' , 'lightbox_plus' , 'spica' , 'jquery' , 'seekAttention.jquery' , 'd3downloads' ) ;
 					if( in_array( $file, $array ) ) switch( true ) {
 						case ( $file === 'lightbox_plus' ) :
 							$file_path = d3download_make_cashe_for_lightbox( $mydirname, 'lightbox_plus' ) ;
@@ -37,7 +37,7 @@ if ( ! function_exists('d3download_get_module_header_request') ) {
 						case ( $file === 'spica' ) :		
 							$file_path = $mytrustdirpath.'/include/js/lightbox/js/'. $my_file ;
 						break 2 ;
-						case ( $file === 'jquery' || $file === 'jquery.textarearesizer' || $file === 'seekAttention.jquery' ) :
+						case ( $file === 'jquery' || $file === 'seekAttention.jquery' ) :
 							$file_path = $mytrustdirpath.'/include/js/lib/'. $my_file ;
 						break 2 ;
 						default :	
@@ -150,7 +150,7 @@ if ( ! function_exists('d3download_make_module_header') ) {
 	{
 		switch( $type ) {
 			case 'css' :
-				return '<link rel="stylesheet" type="text/css" media="all" href="'.d3download_replace_css_uri( $mydirname, $name ).'" />' ;
+				return '<link rel="stylesheet" type="text/css" media="all" href="'.d3download_replace_css_uri( $mydirname, $name ).'">' ;
 			case 'js' :
 				return '<script type="text/javascript" src="'.XOOPS_URL.'/modules/'.$mydirname.'/index.php?page=module_header&src='.$name.'"></script>';
 		}
@@ -189,7 +189,7 @@ if ( ! function_exists('d3download_add_moduleheader') ) {
 if ( ! function_exists('d3download_ajax_load') ) {
 	function d3download_ajax_load( $mydirname )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+		require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 
 		$myts =& d3downloadsTextSanitizer::sGetInstance() ;
 		$_GET = $myts->Delete_Nullbyte( $_GET ) ;
@@ -263,7 +263,7 @@ if ( ! function_exists('d3download_check_url') ) {
 			exit ;
 		}
 
-		require_once dirname( dirname(__FILE__) ).'/class/submit_validate.php' ;
+		require_once dirname(__FILE__, 2) .'/class/submit_validate.php' ;
 		$submit_validate = new Submit_Validate( $mydirname ) ;
 
 		$check_result = '' ;
@@ -280,7 +280,7 @@ if ( ! function_exists('d3download_check_url') ) {
 if ( ! function_exists('d3download_check_unapproval') ) {
 	function d3download_check_unapproval( $mydirname )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/submit_validate.php' ;
+		require_once dirname(__FILE__, 2) .'/class/submit_validate.php' ;
 		$submit_validate = new Submit_Validate( $mydirname ) ;
 
 		$url = ( ! empty( $_GET['url'] ) ) ? @$_GET['url']  : '' ;
@@ -293,12 +293,12 @@ if ( ! function_exists('d3download_check_unapproval') ) {
 if ( ! function_exists('d3download_ratefile_check') ) {
 	function d3download_ratefile_check( $mydirname )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/rate_download.php' ;
+		require_once dirname(__FILE__, 2) .'/class/rate_download.php' ;
 		$rate_download = new rate_download( $mydirname, 'Rate' ) ;
 		$lid = intval( $_GET['lid'] ) ;
 		if( ! empty( $lid ) ) {
 			$check_result = $rate_download->Ratefile_check( $lid ) ;
-			echo ( ! empty( $check_result ) ) ? str_replace( '<br />', '', $check_result ) : '' ;
+			echo ( ! empty( $check_result ) ) ? str_replace( '<br>', '', $check_result ) : '' ;
 		}
 	}
 }
@@ -310,12 +310,12 @@ if ( ! function_exists('d3download_category_form_validate') ) {
 		$imgurl   = ( ! empty( $_GET['imgurl'] ) ) ?   @$_GET['imgurl']   : '' ;
 		$shotsdir = ( ! empty( $_GET['shotsdir'] ) ) ? @$_GET['shotsdir'] : '' ;
 
-		require_once dirname( dirname(__FILE__) ).'/class/post_check.php' ;
+		require_once dirname(__FILE__, 2) .'/class/post_check.php' ;
 		$post_check = new Post_Check() ;
 
 		switch( true ) {
 			case ( ! empty( $imgurl ) ) :
-				if( $imgurl != 'http://' ) {
+				if( $imgurl != 'https://' ) {
 					if ( ! $post_check->imgurlCheck( $imgurl ) ) $result = 'invalid' ;
 				}
 				break ;
@@ -333,7 +333,7 @@ if ( ! function_exists('d3download_logourl_load') ) {
 	{
 		$id = preg_replace( '/[^0-9_]/' , '' , @$_GET['id'] ) ;
 		if( ! empty( $id ) ) {
-			require_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
+			require_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
 			$mydownload = new MyDownload( $mydirname ) ;
 			header( 'Content-type: text/xml' ) ;
 			echo $mydownload->get_album_link_for_ajax( $id ) ;
@@ -344,7 +344,7 @@ if ( ! function_exists('d3download_logourl_load') ) {
 if ( ! function_exists('d3download_str_load') ) {
 	function d3download_str_load( $mydirname )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/spam_check.php' ;
+		require_once dirname(__FILE__, 2) .'/class/spam_check.php' ;
 		$spam_check = new spam_check( $mydirname ) ;
 		$spam_check->random_str() ;
 		echo $spam_check->select_value() ;
@@ -400,5 +400,3 @@ if ( ! function_exists('d3download_is_fckeditor') ) {
 		echo ( file_exists( XOOPS_ROOT_PATH.'/common/fckeditor/' ) ) ? 1 : 0 ;
 	}
 }
-
-?>

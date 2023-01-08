@@ -19,36 +19,33 @@ if( ! is_object( @$xoopsUser ) || ! $moduleperm_handler->checkRight( 'module_adm
 
 xoops_cp_header();
 include dirname(__FILE__).'/mymenu.php' ;
+// RENDER
+// Configuration Environment Check
+$constpref = ucfirst( $mydirname ) ;
+echo '<h2>'.$constpref.'</h2>';
+echo '<div class="ui-card-full">';
 
-echo '<h2>'._MD_D3DOWNLOADS_H2_CONFIG_CHECK.'</h2>';
-echo '<div style="color:inherit;border: 1px inset #CCC;padding: 5px;with: 80%;">';
+// upload dir_check
+echo '<h3>📁 '._MD_D3DOWNLOADS_UPLOADDIR_CHECK.'</h3>';
 
-echo '<ul>';
-
-// config_check
-$maxfilesize = ! empty( $GLOBALS['xoopsModuleConfig']['maxfilesize'] )? intval( $GLOBALS['xoopsModuleConfig']['maxfilesize'] ) * 1024  : 1000 * 1024;
-echo '<li>'.sprintf( _MD_D3DOWNLOADS_MAXFILESIZE , number_format( $maxfilesize ) );
-
-// uploaddir_check
-echo '<li>'._MD_D3DOWNLOADS_UPLOADDIR_CHECK ;
-echo '<ul style="margin-left:2em">';
 $upload_dir = XOOPS_TRUST_PATH.'/uploads/'.$mydirname.'/' ;
 $safe_mode = ini_get( "safe_mode" ) ;
-echo '<li>'._MD_D3DOWNLOADS_UPLOADDIR_CONFIFG.'<span style="padding-left:1em">'.$upload_dir.'</span>';
+$upload_config = _MD_D3DOWNLOADS_UPLOADDIR_CONFIFG.'<span style="padding-left:1em">'.$upload_dir.'</span>';
+
 if( ! is_dir( XOOPS_TRUST_PATH.'/uploads/' ) ) {
-	echo '<br /><span style="color:red;font-weight:bold;padding-left:1em;">'._MD_D3DOWNLOADS_UPLOADDIR_NOT_IS_DIR.'</span>';
+	echo '<div class="error">'.$upload_config.'<br>'._MD_D3DOWNLOADS_UPLOADDIR_NOT_IS_DIR.'</div>';
 } elseif ( ! is_dir( $upload_dir ) ) {
 	if( $safe_mode ) {
-		echo '<br /><span style="color:red;font-weight:bold;padding-left:1em;">'._MD_D3DOWNLOADS_UPLOADDIR_NOT_IS_DIR.'</span>';
+		echo '<div class="error">'.$upload_config.'<br>'._MD_D3DOWNLOADS_UPLOADDIR_NOT_IS_DIR.'</div>';
 	} elseif ( ! mkdir( $upload_dir , 0777 ) ) {
-		echo '<br /><span style="color:red;font-weight:bold;padding-left:1em;">'._MD_D3DOWNLOADS_UPLOADDIR_NOT_MKDIR.'</span>';
+		echo '<div class="error">'.$upload_config.'<br>'._MD_D3DOWNLOADS_UPLOADDIR_NOT_MKDIR.'</div>';
 	}
 } elseif ( ! is_writeable( $upload_dir ) ) {
 	if( ! chmod( $upload_dir , 0777 ) ) {
-		echo '<br /><span style="color:red;font-weight:bold;padding-left:1em;">'._MD_D3DOWNLOADS_UPLOADDIR_NOT_IS_WRITEABLE.'</span>';
+		echo '<div class="error">'.$upload_config.'<br>'._MD_D3DOWNLOADS_UPLOADDIR_NOT_IS_WRITEABLE.'</div>';
 	}
 } else {
-	echo '<span style="color:green;font-weight:bold;padding-left:1em;">OK</span></li>';
+	echo '<div class="success">'.$upload_config.' <span style="color:green;font-weight:bold;padding-left:1em;">OK</span></div>';
 }
 if( is_dir( $upload_dir ) ) {
 	require_once dirname( dirname(__FILE__) ).'/class/broken_download.php' ;
@@ -56,35 +53,34 @@ if( is_dir( $upload_dir ) ) {
 	$filecount = $broken_report->File_Count();
 	$nolinkfile = $filecount['nolink'];
 	$totalfile = $filecount['total'];
-	echo '<li>'._MD_D3DOWNLOADS_NOLINK_CHECK.'<span style="color:green;font-weight:bold;padding-left:1em;">'.$nolinkfile.' Files ( total '.$totalfile.' Files )</span>';
+	echo '<div class="tips">'._MD_D3DOWNLOADS_NOLINK_CHECK.' <span style="color:green;font-weight:bold;padding-left:1em;">'.$nolinkfile.' Files ( total '.$totalfile.' Files )</span></div>';
 }
 
-echo '</ul>';
 
-// cachedir_check
-echo '<li>'._MD_D3DOWNLOADS_CACHEDIR_CHECK ;
-echo '<ul style="margin-left:2em">';
+// cache dir_check
+echo '<h3>📁 '._MD_D3DOWNLOADS_CACHEDIR_CHECK.'</h3>';
+
 $cache_dir = XOOPS_TRUST_PATH.'/cache/' ;
-echo '<li>'._MD_D3DOWNLOADS_CACHEDIR_CONFIFG.'<span style="padding-left:1em">'.$cache_dir.'</span>';
+$cache_config = _MD_D3DOWNLOADS_CACHEDIR_CONFIFG.'<span style="padding-left:1em">'.$cache_dir.'</span>';
+
 if( ! is_dir( $cache_dir ) ) {
 	if( $safe_mode ) {
-		echo '<br /><span style="color:red;font-weight:bold;padding-left:1em;">'._MD_D3DOWNLOADS_CACHEDIR_NOT_IS_DIR.'</span>';
+		echo '<div class="error">'._MD_D3DOWNLOADS_CACHEDIR_NOT_IS_DIR.'</div>';
 	} elseif ( ! mkdir( $cache_dir , 0777 ) ) {
-		echo '<br /><span style="color:red;font-weight:bold;padding-left:1em;">'._MD_D3DOWNLOADS_CACHEDIR_NOT_MKDIR.'</span>';
+		echo '<div class="error">'._MD_D3DOWNLOADS_CACHEDIR_NOT_MKDIR.'</div>';
 	}
 } elseif ( ! is_writeable( $cache_dir ) ) {
 	if( ! chmod( $cache_dir , 0777 ) ) {
-		echo '<br /><span style="color:red;font-weight:bold;padding-left:1em;">'._MD_D3DOWNLOADS_CACHEDIR_NOT_IS_WRITEABLE.'</span>';
+		echo '<div class="success">'._MD_D3DOWNLOADS_CACHEDIR_NOT_IS_WRITEABLE.'</div>';
 	}
 } else {
-	echo '<span style="color:green;font-weight:bold;padding-left:1em;">OK</span></li>';
+	echo '<div class="success">'.$cache_config.' <span style="color:green;font-weight:bold;padding-left:1em;">OK</span></div>';
 }
-echo '</ul>';
+
 
 // system
-echo '<li>'._MD_D3DOWNLOADS_SYSTEM_CHECK ;
+echo '<h3>'._MD_D3DOWNLOADS_SYSTEM_CHECK.'</h3>';
 echo '<ul style="margin-left:2em">';
-
 echo '<li>XOOPS<span style="padding-left:1em">'.XOOPS_VERSION.'</span></li>';
 echo '<li>LANGUAGE<span style="padding-left:1em">'.$xoopsConfig['language'].'</span></li>';
 echo '<li>SERVER<span style="padding-left:1em">'.$_SERVER['SERVER_SOFTWARE'].'</span></li>';
@@ -98,12 +94,16 @@ echo '<li>d3downloads<span style="padding-left:1em">v'.$version.'</span></li>';
 $module4altsys =& $module_handler->getByDirname( 'altsys' );
 $version4altsys =intval( $module4altsys->getVar( 'version' ) ) / 100 ;
 echo '<li>altsys<span style="padding-left:1em">v'.$version4altsys.'</span>';
-echo ( $version4altsys >= 0.61 ) ? '<span style="color:green;font-weight:bold;padding-left:1em;">OK</span></li>':'<span style="color:red;font-weight:bold;padding-left:1em;">NG</span></li>';
-
+echo ( $version4altsys >= 2.00 ) ? '<span style="color:green;font-weight:bold;padding-left:1em;">OK</span></li>':'<span style="color:red;font-weight:bold;padding-left:1em;">NG</span></li>';
 echo '</ul>';
 
-// phpini_check
-echo '<li>'._MD_D3DOWNLOADS_PHPINI_CHECK ;
+// maximum filesize
+echo '<h3>'._MD_D3DOWNLOADS_H2_CONFIG_CHECK.'</h3>';
+$maxfilesize = ! empty( $GLOBALS['xoopsModuleConfig']['maxfilesize'] )? intval( $GLOBALS['xoopsModuleConfig']['maxfilesize'] ) * 1024  : 1000 * 1024;
+echo '<div class="tips">📦 '.sprintf( _MD_D3DOWNLOADS_MAXFILESIZE , number_format( $maxfilesize ) ).'</div>';
+
+// php ini_check
+echo '<h3>🛠 '._MD_D3DOWNLOADS_PHPINI_CHECK.'</h3>';
 echo '<ul style="margin-left:2em">';
 
 // file_uploads
@@ -111,14 +111,16 @@ echo '<li>file_uploads';
 echo ini_get('file_uploads')? '<span style="color:green;font-weight:bold;padding-left:1em;">OK</span></li>' : '<span style="color:red;font-weight:bold;padding-left:1em;">NG</span></li>';
 
 // upload_max_filesize
+//1 MB (MegaByte)	1024 KB or 1,048,576 bytes
+//1 GB (GigaByte)	1024 MB or 1,048,576 KiloBytes
 $upload_max_filesize = d3download_return_bytes( ini_get( 'upload_max_filesize' ) );
-echo '<li>upload_max_filesize<span style="padding-left:1em">'. number_format( $upload_max_filesize ).' byte</span>';
+echo '<li>upload_max_filesize<span style="padding-left:1em">'. number_format( $upload_max_filesize / 1048576 ).' MB</span>';
 echo ( $upload_max_filesize > $maxfilesize )? '<span style="color:green;font-weight:bold;padding-left:1em;">OK</span></li>' : '<span style="color:red;font-weight:bold;padding-left:1em;">NG</span></li>';
 
 // post_max_size
 $post_max_size = d3download_return_bytes( ini_get( 'post_max_size' ) );
 echo '<li>post_max_size<span style="padding-left:1em">';
-echo number_format( $post_max_size ).' byte</span>';
+echo number_format( $post_max_size  / 1048576 ).' MB</span>';
 echo ( $maxfilesize <= $post_max_size ) ? '<span style="color:green;font-weight:bold;padding-left:1em;">OK</span></li>':'<span style="color:red;font-weight:bold;padding-left:1em;">NG</span></li>';
 
 // open_basedir
@@ -139,7 +141,7 @@ echo '<li>upload_tmp_dir';
 foreach( $tmp_dirs as $dir ){
 	echo '<span style="padding-left:1em">'.$dir.'</span>';
 	if( $dir != "" && ( ! is_writable( $dir ) || ! is_readable( $dir ) ) ) {
-		echo '<br /><span style="color:red;font-weight:bold;padding-left:1em;">'._MD_D3DOWNLOADS_UPLOAD_TMP_DIR_IS_NOTWRITEABLE.'</span>';
+		echo '<br><span style="color:red;font-weight:bold;padding-left:1em;">'._MD_D3DOWNLOADS_UPLOAD_TMP_DIR_IS_NOTWRITEABLE.'</span>';
 	} else {
 		echo '<span style="color:green;font-weight:bold;padding-left:1em;">OK</span></li>';
 	}
@@ -188,9 +190,11 @@ if ( extension_loaded( 'mbstring' ) ){
 
 echo '</ul>';
 
+
+// Database SQL
 $v = substr( $SV, 0, 3 ) ;
-if ( $v >= 4.1 ) {
-	echo '<li>MySQL CHARACTER SET' ;
+if ( $v >= 5.5 ) {
+	echo '<h3>MySQL CHARACTER SET</h3>';
 	echo '<ul style="margin-left:2em">';
 	echo '<li>version<span style="padding-left:1em">'.$SV.'</span></li>' ;
 	$result = $db->queryF( "SHOW VARIABLES LIKE 'character\_set\_%'" ) ;
@@ -200,8 +204,9 @@ if ( $v >= 4.1 ) {
 	echo '</ul>';
 }
 
-// table
-echo '<li>'._MD_D3DOWNLOADS_TABLE_CHECK ;
+
+// Database table check
+echo '<h3>'._MD_D3DOWNLOADS_TABLE_CHECK.'</h3>';
 echo '<ul style="margin-left:2em">';
 $rs = $db->query( "SELECT COUNT(cid) FROM ".$db->prefix( $mydirname."_cat" )."" ) ;
 list( $num_cat ) = $db->fetchRow( $rs ) ;
@@ -245,11 +250,9 @@ echo ( $rs ) ? '<span style="color:green;font-weight:bold;padding-left:1em;">OK 
 
 echo '</ul>';
 
-//echo '<center>---- phpinfo() ----</center><br />';
+//echo '<center>---- phpinfo() ----</center><br>';
 //echo phpinfo();
 
 echo '</div>';
 
 xoops_cp_footer();
-
-?>

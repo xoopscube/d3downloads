@@ -2,14 +2,14 @@
 
 include XOOPS_ROOT_PATH."/header.php";
 
-require_once dirname( dirname(__FILE__) ).'/class/gtickets.php' ;
-require_once dirname( dirname(__FILE__) ).'/class/user_access.php' ;
-include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
-require_once dirname( dirname(__FILE__) ).'/class/post_check.php' ;
-require_once dirname( dirname(__FILE__) ).'/class/submit_download.php' ;
-require_once dirname( dirname(__FILE__) ).'/include/transact_functions.php' ;
-require_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
-include_once dirname( dirname(__FILE__) ).'/include/upload_functions.php' ;
+require_once dirname(__FILE__, 2) .'/class/gtickets.php' ;
+require_once dirname(__FILE__, 2) .'/class/user_access.php' ;
+include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
+require_once dirname(__FILE__, 2) .'/class/post_check.php' ;
+require_once dirname(__FILE__, 2) .'/class/submit_download.php' ;
+require_once dirname(__FILE__, 2) .'/include/transact_functions.php' ;
+require_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
+include_once dirname(__FILE__, 2) .'/include/upload_functions.php' ;
 
 global $xoopsUser , $xoopsModuleConfig , $xoopsConfig ;
 
@@ -35,20 +35,20 @@ $shots_help = $preview_title = $preview_body = $error_message = '';
 if( ! empty( $_GET['cid'] ) ) $cid = intval( $_GET['cid'] ) ;
 elseif( ! empty( $_POST['cid'] ) ) $cid = intval( $_POST['cid'] ) ;
 
-// 登録は CID の指定を必要とします
+// Registration requires CID specification
 if( empty( $cid ) ){
 	redirect_header(XOOPS_URL.'/modules/'.$mydirname.'/index.php',3, _MD_D3DOWNLOADS_NO_CID );
 	exit();
 }
 
-// 存在しない CID の場合リダイレクト
+// Redirect for nonexistent CID
 $mycategory = new MyCategory( $mydirname, 'Show', $cid ) ;
 if( ! $mycategory->return_cid() ) {
 	redirect_header( XOOPS_URL."/modules/$mydirname/" , 2 , _MD_D3DOWNLOADS_NOREADPERM ) ;
 	exit();
 }
 
-// 投稿権限をチェック
+// Check submission permissions
 $user_access = new user_access( $mydirname ) ;
 $permissions = $user_access->permissions_of_current_user( $cid ) ;
 if( empty( $permissions['can_post'] ) ) {
@@ -56,42 +56,44 @@ if( empty( $permissions['can_post'] ) ) {
 	exit();
 }
 
-// 自動承認のチェック(管理者は除く)
+// Automatic approval checks (except for administrators)
 $auto_approved = $permissions['auto_approved'] ;
 
-// HTML許可のチェック(登録ユーザー以外は HTMLを無効とする)
+// Check HTML permissions (disable HTML for non-registered users)
 $canhtml = $permissions['can_html'] ;
 
-// アップロード許可のチェック
+// Check upload permissions
 $canupload = $permissions['can_upload'] ;
 
-// 管理者と管理者以外のテンプレートを分けて処理
+// Separate processing for admin and non-admin templates
 if( $module_admin ){
 	$xoopsOption['template_main'] = $mydirname.'_admin_submit.html' ;
 } else {
 	$xoopsOption['template_main'] = $mydirname.'_main_submit.html' ;
 }
 
-// パンくず部分の処理
+// Processing the breadcrumb section
 $whr_cat = "cid IN (".implode(",", $user_access->can_read() ).")" ;
 $bc[0] = d3download_breadcrumbs( $mydirname ) ;
 $breadcrumbs = array_merge( $bc ,d3download_breadcrumbs_tree( $mydirname, $cid, $whr_cat, '', 1 ) ) ;
 $formtitle = _MD_D3DOWNLOADS_SUBMIT_NEW ;
 $breadcrumbs[] = array( 'name' => $formtitle ) ;
 
-// 投稿可能なカテゴリリストのみ取得
+// Get only the list of categories available for posting
 $whr_cat4post = "cid IN (".implode(",", $user_access->can_post() ).")" ;
-if( $module_admin ) $category = d3download_categories_selbox( $mydirname, $whr_cat4post );
+if( $module_admin ) {
+    $category = d3download_categories_selbox($mydirname, $whr_cat4post);
+}
 else $category = d3download_categories_selbox( $mydirname, $whr_cat4post, $cid );
 
-// 利用可能な OS/ソフト等のリストを取得
+// Get a list of available OS/software, etc.
 $submit_download = new submit_download( $mydirname ) ;
 $select_platform = $submit_download->Select_Platform() ;
 
-// ライセンスのリストを取得
+// Get a list of licenses
 $select_license = $submit_download->Select_License() ;
 
-// スクリーンショット画像の取得
+// Get screenshot image
 $canuseshots = $submit_download->can_useshots() ;
 $usealbum = $submit_download->can_albumselect() ;
 if( ! empty( $canuseshots ) ){
@@ -103,18 +105,18 @@ if( ! empty( $canuseshots ) ){
 $defalthp = XOOPS_URL.'/' ;
 $defaltsitename = $xoopsConfig['sitename'] ;
 
-// カテゴリ毎の投稿フォーム説明文があれば取得
+// Get post form descriptions for each category, if any.
 $message = d3download_submit_message( $mydirname , $cid );
 
-// 同一リンクの再登録を許可するかどうか
+// Whether to allow re-registration of the same link
 $check_url = ! empty( $xoopsModuleConfig['check_url']) ? 1 : 0 ;
 
-// maxfilesize(テンプレートへのアサイン用)
+// maxfilesize (for assignment to templates)
 $upload_max_filesize = d3download_get_maxsize( $mydirname );
 $max_submit_size = sprintf( _MD_D3DOWNLOADS_SUBMIT_MAXFILESIZE , number_format( $upload_max_filesize ) );
 $submit_extension = d3download_get_allowed_extension( $mydirname );
 
-// 環境チェックし error の場合はアップロードフォームを選択できないようにする
+// Check the environment and disable the upload form if it is an error
 $config_error = d3download_upload_config_check( $mydirname );
 
 // set content4assign as initial data
@@ -133,7 +135,7 @@ if( empty( $ispreview ) && empty( $iserror ) ) $download4assign = array(
 	'filters' => $submit_download->get_MyFilter() ,
 ) ;
 
-// LiveValidationによるValidationをアサイン
+// Assign Validation by LiveValidation
 require_once dirname( dirname(__FILE__) ).'/include/upload_submit_rules.inc.php' ;
 $liveValidator="";
 $liveform = new My_MassValidatePHP( 'makedownloadform', $_POST );
@@ -166,14 +168,14 @@ if( isset( $_POST['makedownload_post'] ) || isset( $_POST['makedownload_preview'
 
 // WYSIWYG
 $wysiwygs = array( 'name' => 'desc' , 'value' => $download4assign['description'] ) ;
-include dirname( dirname(__FILE__) ).'/include/wysiwyg_editors.inc.php' ;
+include dirname(__FILE__, 2) .'/include/wysiwyg_editors.inc.php' ;
 
-// livevalidation.js と livevalidation.css を xoops_module_header にアサイン
+// Assign livevalidation.js and livevalidation.css to xoops_module_header
 $xoops_module_header = d3download_dbmoduleheader( $mydirname );
 $livevalidation_header = d3download_dbmoduleheader_for_livevalidation( $mydirname );
 $xoopsTpl->assign('xoops_module_header', $xoops_module_header . "\n" .$livevalidation_header. "\n" . $wysiwyg_header. "\n" . $xoopsTpl->get_template_vars('xoops_module_header'));
 
-// assign
+// RENDER
 $xoopsTpl->assign( array(
 	'mydirname' => $mydirname ,
 	'mod_url' => XOOPS_URL.'/modules/'.$mydirname ,
@@ -211,8 +213,4 @@ $xoopsTpl->assign( array(
 	'xoops_breadcrumbs' => $breadcrumbs ,
 	'gticket_hidden' => $xoopsGTicket->getTicketHtml( __LINE__ , 1800 , 'd3downloads') ,
 ) ) ;
-// DISPLAY STAGE
-
 include XOOPS_ROOT_PATH.'/footer.php';
-
-?>

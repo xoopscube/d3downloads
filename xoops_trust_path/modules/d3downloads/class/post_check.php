@@ -94,32 +94,31 @@ if( ! class_exists( 'Post_Check' ) )
 			return $result;
 		}
 
-		// 空白
+        // Blank
 		function voidCheck( $value )
 		{
-			$result = ( $value != "" ) ? true : false;
-			return $result;
+            return $value != "";
 		}
 
-		// メールアドレス
+        // Email address
 		function mailCheck( $value )
 		{
-			$result = ( preg_match('`^([a-z0-9_]|\-|\.|\+)+@(([a-z0-9_]|\-)+\.)+[a-z]{2,6}$`i', $value ) ) ? true : false;
-			return $result;
+            return (bool)preg_match('`^([a-z0-9_]|\-|\.|\+)+@(([a-z0-9_]|\-)+\.)+[a-z]{2,6}$`i', $value);
 		}
 
 		// URL
 		function urlCheck( $value, $schemes = '', $imgurl = '' )
 		{
 			// Set initial data
-			if ( ! is_array( $schemes ) ) $schemes = array( 'http', 'https', 'ftp' );
+			//if ( ! is_array( $schemes ) ) $schemes = array( 'http', 'https', 'ftp' );
+            if ( ! is_array( $schemes ) ) $schemes = array( 'https', 'ftp' );
 			$deprecated = array( 'javascript', 'java script', 'vbscript', 'about', 'data' );
 
 			$allowed_schemes = implode( '|', $schemes );
 			$black_pattern = implode( '|', $deprecated );
 
 			// Check void
-			if ( preg_match("`^http://$`i", $value ) ) {
+			if ( preg_match("`^https://$`i", $value ) ) {
 				return false;
 			}
 
@@ -158,92 +157,81 @@ if( ! class_exists( 'Post_Check' ) )
 		// IMGURL
 		function imgurlCheck( $value, $schemes = '' )
 		{
-			if ( ! preg_match( "`(\.gif|\.jpe?g|\.png)$`i",$value ) ) {
+			if ( ! preg_match( "`(\.gif|\.jpe?g|\.svg|\.png)$`i",$value ) ) {
 				return false;
 			} else {
 				return $this->urlCheck( $value, $schemes, 1 );
 			}
 		}
 
-		// アルファベット
+        // Alphabetical
 		function alphaCheck( $value )
 		{
-			$result = ( ctype_alpha( $value ) ) ? true : false;
-			return $result;
+            return ctype_alpha( $value );
 		}
 
-		// アルファベット・数字
+		// Alphanumeric
 		function alnumCheck( $value )
 		{
-			$result = ( ctype_alnum( $value ) ) ? true : false;
-			return $result;
+            return ctype_alnum( $value );
 		}
 
-		// 数字
+        // Numbers
 		function numericCheck( $value )
 		{
-			$result = ( is_numeric( $value ) ) ? true : false;
-			return $result;
+            return is_numeric( $value );
 		}
 
-		// 整数
+        // Integer
 		function integerCheck( $value )
 		{
-			$result = ( preg_match( '`^[0-9]+$`' , $value ) ) ? true : false;
-			return $result;
+            return (bool)preg_match('`^[0-9]+$`', $value);
 		}
 
-		// 同じ値
+        // Same value
 		function sameValueCheck( $values )
 		{
-			$result = ( strcmp( $values[0], $values[1] ) == 0 ) ? true : false;
-			return $result;
+            return strcmp( $values[0], $values[1] ) == 0;
 		}
 
-		// 長さ
+        // Length
 		function lengthEqualCheck( $values )
 		{
-			$result = ( strlen( $values[0] ) == $values[1] ) ? true : false;
-			return $result;
+            return strlen( $values[0] ) == $values[1];
 		}
 
 		function lengthMaxCheck( $values )
 		{
-			$result = ( strlen( $values[0] ) <= $values[1] ) ? true : false;
-			return $result;
+            return strlen( $values[0] ) <= $values[1];
 		}
 
 		function lengthMinCheck( $values ) {
-			$result = ( strlen( $values[0] ) >= $values[1] ) ? true : false;
-			return $result;
+            return strlen( $values[0] ) >= $values[1];
 		}
 
-		// 正規表現
+        // Regular expression
 		function formatCheck( $values )
 		{
-			$result = ( preg_match( $values[1] , $values[0] ) ) ? true : false;
-			return $result;
+            return (bool)preg_match($values[1], $values[0]);
 		}
 
 		// file_exists
 		function fileexistsCheck( $value )
 		{
-			$result = ( file_exists( $value ) ) ? true : false;
-			return $result;
+            return file_exists( $value );
 		}
 
 		// is_file
 		function is_fileCheck( $value )
 		{
-			$result = ( is_file( $value ) ) ? true : false;
-			return $result;
+            return is_file( $value );
 		}
 	}
 }
 
 if( ! class_exists( 'My_ValidatePHP' ) )
 {
-	require_once dirname( dirname(__FILE__) ).'/class/livevalidationphp.class.php' ;
+	require_once dirname(__FILE__, 2) .'/class/livevalidationphp.class.php' ;
 
 	class My_ValidatePHP extends LiveValidationPHP
 	{
@@ -257,7 +245,7 @@ if( ! class_exists( 'My_ValidatePHP' ) )
 		var $parentData ;
 		var $display ;
 
-		function My_ValidatePHP( $data = array(), $elementID = '', $args = array(), $display = '' )
+		function __construct($data = array(), $elementID = '', $args = array(), $display = '' )
 		{
 			$this->parentData = $data ;
 			$this->elementID = '' ;
@@ -329,7 +317,7 @@ if( ! class_exists( 'My_ValidatePHP' ) )
 
 if( ! class_exists('My_Validate') )
 {
-	require_once dirname( dirname(__FILE__) ).'/class/livevalidationphp.class.php' ;
+	require_once dirname(__FILE__, 2) .'/class/livevalidationphp.class.php' ;
 
 	class My_Validate extends Validation
 	{
@@ -367,20 +355,22 @@ if( ! class_exists('My_Validate') )
 
 		function isValidEmail( $emailToCheck = '' )
 		{
-			return ( preg_match('`^([a-z0-9_]|\-|\.|\+)+@(([a-z0-9_]|\-)+\.)+[a-z]{2,6}$`i', trim( $emailToCheck ) ) ) ? true : false;
+			return (bool)preg_match('`^([a-z0-9_]|\-|\.|\+)+@(([a-z0-9_]|\-)+\.)+[a-z]{2,6}$`i', trim($emailToCheck));
 		}
 
 		function Inclusion()
 		{
 			if( ! isset( $this->args['failureMessage'] ) ) $this->args['failureMessage'] = 'Must be included in the list!' ;
-
-			if( $this->data != null || $this->data != '' )
+//if( $this->data != null || $this->data != '' )
+			if($this->data != '')
 			{
 				if( isset( $this->args['within'] ) && is_array( $this->args['within'] ) )
 				{
 					if( isset( $this->args['partialMatch'] ) && $this->args['partialMatch'] == true )
 					{
-						$words1 = split( ' ', $this->data ) ;
+						// Fix gigamaster deprecated
+                        // $words1 = split( ' ', $this->data ) ;
+                        $words1 = explode( ' ', $this->data ) ;
 						$words = array() ;
 
 						$count = count( $words1 ) ;
@@ -415,14 +405,16 @@ if( ! class_exists('My_Validate') )
 		function Exclusion()
 		{
 			if( ! isset( $this->args['failureMessage'] ) ) $this->args['failureMessage'] = 'Must not be included in the list!' ;
-
-			if( $this->data != null || $this->data != '' )
+//if( $this->data != null || $this->data != '' )
+			if($this->data != '')
 			{
 				if( isset( $this->args['within'] ) && is_array( $this->args['within'] ) )
 				{
 					if( isset( $this->args['partialMatch'] ) && $this->args['partialMatch'] == true )
 					{
-						$words1 = split( ' ', $this->data ) ;
+                        // Fix gigamaster deprecated
+						// $words1 = split( ' ', $this->data ) ;
+                        $words1 = explode( ' ', $this->data ) ;
 						$words = array() ;
 
 						$count = count( $words1 ) ;
@@ -458,7 +450,8 @@ if( ! class_exists('My_Validate') )
 		function Confirmation()
 		{
 			if( ! isset( $this->args['failureMessage'] ) ) $this->args['failureMessage'] = 'Does not match!' ;
-			if( $this->data != null || $this->data != '' )
+			// if( $this->data != null || $this->data != '' )
+            if($this->data != '')
 			{
 				if( isset( $this->args['match'] ) )
 				{
@@ -507,7 +500,8 @@ if( ! class_exists('My_Validate') )
 		{
 			if( ! isset( $this->args['failureMessage'] ) ) $this->args['failureMessage'] = 'Not valid!' ;
 
-			if( $this->data != null || $this->data != '' )
+            //if( $this->data != null || $this->data != '' )
+			if($this->data != '')
 			{
 				$pattern = $this->args['pattern'] ;
 
@@ -526,7 +520,8 @@ if( ! class_exists('My_Validate') )
 		{
 			if( ! isset( $this->args['failureMessage'] ) ) $this->args['failureMessage'] = 'Must be a valid email address!' ;
 
-			if( $this->data != null || $this->data != '' )
+            //if( $this->data != null || $this->data != '' )
+			// if( $this->data != null || $this->data != '' )
 			{
 				$this->data = trim( '' . $this->data ) ;
 				if( $this->isValidEmail( $this->data ) )
@@ -544,7 +539,8 @@ if( ! class_exists('My_Validate') )
 		{
 			if( ! isset( $this->args['failureMessage'] ) ) $this->args['failureMessage'] = 'Not a number' ;
 
-			if( $this->data != null || $this->data != '' )
+            //if( $this->data != null || $this->data != '' )
+			if($this->data != '')
 			{
 
 				if( ! isset( $this->args['onlyInteger'] ) && ! isset( $this->args['is'] ) && ! isset( $this->args['minimum'] ) && ! isset( $this->args['maximum'] ) )
@@ -732,7 +728,7 @@ if( ! class_exists('My_Validate') )
 
 if( ! class_exists('My_MassValidatePHP') )
 {
-	require_once dirname( dirname(__FILE__) ).'/class/livevalidationphp.class.php' ;
+	require_once dirname(__FILE__, 2) .'/class/livevalidationphp.class.php' ;
 
 	class My_MassValidatePHP extends LiveValidationMassValidatePHP
 	{
@@ -744,10 +740,12 @@ if( ! class_exists('My_MassValidatePHP') )
 		function addRules( $rules = array() )
 		{
 			$this->rules = $rules ;
-
-			while( $element = each( $this->rules ) )
-			{
-				$key = trim( $element['key'] ) ;
+            $elements =[];
+            // TODO gigamaster fix deprecated each PHP 7.2
+            //while( $element = each( $this->rules ) )
+            foreach ((array) $elements as $element)
+                {
+                $key = trim( $element['key'] ) ;
 				$currentElement = $this->rules[$key] ;
 
 				$dummyRule = null ;
@@ -782,5 +780,3 @@ if( ! class_exists('My_MassValidatePHP') )
 		}
 	}
 }
-
-?>

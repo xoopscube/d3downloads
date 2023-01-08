@@ -4,9 +4,9 @@ global $xoopsUser ;
 
 include XOOPS_ROOT_PATH.'/header.php';
 
-include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
-include_once dirname( dirname(__FILE__) ).'/class/user_access.php' ;
-require_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
+include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
+include_once dirname(__FILE__, 2) .'/class/user_access.php' ;
+require_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
 
 $user_access = new user_access( $mydirname ) ;
 
@@ -14,7 +14,7 @@ $cid = $mypost = $submitter= $can_post4cid = $post_cid = $intree = 0 ;
 $download4assign = $category4assin = $category4post = $submitter_select = array() ;
 $cat_arg = "" ;
 
-// 閲覧・投稿可能なカテゴリ取得の準備
+// Preparation for acquiring categories that can be viewed and posted
 $whr_cat = "cid IN (".implode(",", $user_access->can_read() ).")" ;
 $whr_cat4read = "d.".$whr_cat ;
 $whr_cat4post = "cid IN (".implode(",", $user_access->can_post() ).")" ;
@@ -43,27 +43,32 @@ $bc[0] = d3download_breadcrumbs( $mydirname ) ;
 
 $mydownload = new MyDownload( $mydirname ) ;
 
-// CID を取得した場合の処理
+// Processing when CID is obtained
 if ( isset( $_GET['cid'] ) ) {
 	$cid = intval( $_GET['cid'] ) ;
 	if ( ! empty( $_GET['intree'] ) ) $intree = 1 ;
 
 	$xoopsOption['template_main'] = $mydirname.'_main_viewcat.html' ;
+
 	$xoopsTpl->assign( 'category_id', $cid ) ;
 
 	$select_intree = d3download_select_intree();
 	$xoopsTpl->assign( 'select_intree' , $select_intree ) ; 
 	$xoopsTpl->assign( 'intree', $intree );
 
-	// カテゴリ毎の登録件数を取得
+    // Get the number of registrations per category
 	$total = $mydownload->Total_Num( $whr_cat, $cid, 0, 0, $intree ) ;
 	$total_num = sprintf( _MD_D3DOWNLOADS_CATEGORY_NUM , $total )  ;
 
-	// カテゴリーの説明を取得
+    // Get category description
 	$cat_description = d3download_cat_description( $mydirname, $cid ) ;
 	$xoopsTpl->assign( 'cat_description', $cat_description ) ;
 
-	// 管理者用に閲覧権限設定状況をアサイン
+    // Get category imageurl
+    $cat_image_url = d3download_cat_image( $mydirname, $cid ) ;
+    $xoopsTpl->assign( 'cat_image_url', $cat_image_url ) ;
+
+    // Assign view permission setting status for administrator
 	if( $module_admin ){
 		$canread_info = $user_access->canread_info( $cid ) ;
 		$group_trs = d3download_group_useraccess_info( $mydirname, $cid ) ;
@@ -75,26 +80,27 @@ if ( isset( $_GET['cid'] ) ) {
 		$xoopsTpl->assign( 'useraccess_edit', $useraccess_edit ) ;
 	}
 
-	// ページタイトルをアサイン
-	include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+    // Assign page title
+	include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 	$mycategory = new MyCategory( $mydirname, 'Show', $cid, $whr_cat ) ;
 	$pagetitle4assign = $mycategory->return_title() ;
+    $xoopsTpl->assign( 'cat_title', $pagetitle4assign ) ;
 
-	// 閲覧できないカテゴリはリダイレクト
+    // Redirect for inaccessible categories
 	$canread = $user_access->user_access_for_cat( $cid, $whr_cat ) ;
 	if( empty( $canread ) ) {
 		redirect_header( XOOPS_URL.'/modules/'.$mydirname.'/',3, _MD_D3DOWNLOADS_NOREADPERM ) ;
 		exit() ;
 	}
 
-	// 投稿可能なカテゴリのみ投稿フォームへのリンクを表示
+    // Show link to submission form only for categories where submission is possible
 	$can_post4cid = $user_access->user_access_for_cat( $cid, $whr_cat4post ) ;
 
-	// パンくず部分の処理
+    // Processing the breadcrumb section
 	$breadcrumbs = array_merge( $bc ,d3download_breadcrumbs_tree( $mydirname, $cid, $whr_cat ) ) ;
 
 } elseif ( isset( $_GET['submitter'] ) ) {
-	// uid を取得した場合の処理
+    // Processing when uid is obtained
 	$submitter = intval( $_GET['submitter'] ) ;
 
 	$xoopsOption['template_main'] = $mydirname.'_main_viewcat.html' ;
@@ -103,51 +109,51 @@ if ( isset( $_GET['cid'] ) ) {
 	$xoopsTpl->assign( 'mypost', $mypost ) ;
 	$xoopsTpl->assign( 'submitter', $submitter ) ;
 
-	// 投稿者毎の登録件数を取得
+    // Get the number of registrations per contributor
 	$total = $mydownload->Total_Mypost( $whr_cat, $submitter ) ;
 	$postname = $mydownload->get_postname( $submitter ) ;
 	$total_num = sprintf( _MD_D3DOWNLOADS_MYPOST_NUM , $postname , $total ) ;
 
-	//登録件数を取得できない場合はリダイレクト
+    // Redirect if unable to retrieve number of registrations
 	if( empty( $total ) ) {
 		redirect_header( XOOPS_URL.'/modules/'.$mydirname.'/',3, _MD_D3DOWNLOADS_NOMATCH ) ;
 		exit() ;
 	}
 
-	// ページタイトルをアサイン
+    // Assign page title
 	$pagetitle4assign = sprintf( _MD_D3DOWNLOADS_MYPOST_TITLE , $postname ) ;
 
 	$submitter_select = $mydownload->submitter_select_box( $whr_cat ) ;
 	$xoopsTpl->assign( 'submitter_select' , $submitter_select  ) ;
 
-	// パンくず部分の処理
+    // Processing the breadcrumb section
 	$bc[] = array( 'name' => $pagetitle4assign ) ;
 
 } else {
-	// CID がない場合の処理
+    // Processing when there is no CID
 	$xoopsOption['template_main'] = $mydirname.'_main_viewcontent.html' ;
 
-	// ページタイトルをアサイン
+    // Assign page title
 	$pagetitle4assign = $xoopsModule->getVar('name') ;
 
-	// 全体登録件数を取得
+    // Get overall registration count
 	$total = $mydownload->Total_Num( $whr_cat ) ;
 	$total_num = sprintf( _MD_D3DOWNLOADS_TOTAL_NUM , $total ) ;
 
 	if( $module_admin ){
-		include_once dirname( dirname(__FILE__) ).'/class/broken_download.php' ;
+		include_once dirname(__FILE__, 2) .'/class/broken_download.php' ;
 		$broken_download = new broken_download( $mydirname ) ;
-		// 破損報告件数をアサイン
+        // Assign number of damage reports
 		$broken_num = $broken_download->Broken_Num() ;
 		$xoopsTpl->assign( 'broken_num' , $broken_num['num']  ) ;
 		$xoopsTpl->assign( 'broken_link' , $broken_num['link']  ) ;
-		// アップロードファイル破損チェック
+        // Check uploaded files for corruption
 		if( ! empty( $_POST['brokencheck'] ) ) {
 			$broken_report = new broken_report( $mydirname ) ;
 			$broken_report->broken_check() ;
 		}
-		// 承認待ち件数をアサイン
-		include_once dirname( dirname(__FILE__) ).'/class/unapproval_download.php' ;
+        // Assign the number of cases awaiting approval
+		include_once dirname(__FILE__, 2) .'/class/unapproval_download.php' ;
 		$unapproval_download = new unapproval_download( $mydirname ) ;
 		$unapproval_num = $unapproval_download->Unapproval_Num() ;
 		$xoopsTpl->assign( 'unapproval_num' , $unapproval_num['num']  ) ;
@@ -155,7 +161,7 @@ if ( isset( $_GET['cid'] ) ) {
 	}
 }
 
-// ページナビなどをアサイン
+// Assign page navigation, etc.
 if( ! empty( $cid ) || ! empty( $mypost ) ){
 	$perpage4assign = d3download_items_perpage() ;
 	$select_perpage = d3download_select_perpage( $mydirname ) ;
@@ -178,13 +184,13 @@ if( ! empty( $cid ) || ! empty( $mypost ) ){
 if( ! empty( $select_perpage ) ) $cat_arg .= "&amp;perpage=".$select_perpage ;
 if( ! empty( $orderby4pagenav ) ) $cat_arg .= "&amp;orderby=".$orderby4pagenav ;
 if( ! empty( $intree ) ) $cat_arg .= "&amp;intree=".$intree ;
-$xoopsTpl->assign( 'cat_arg' , $cat_arg ) ; 
+$xoopsTpl->assign( 'cat_arg' , $cat_arg ) ;
 
-// カテゴリと登録件数をアサイン
+// Assign category and number of registrations
 $xoopsTpl->assign( 'categories' , d3download_getsub_categories( $mydirname, $cid , $whr_cat ) ) ; 
 $xoopsTpl->assign( 'download_total_num' , $total_num  ) ;
 
-// 非公開件数をアサイン
+// Assign a non-public number of cases
 $mod_url = XOOPS_URL.'/modules/'.$mydirname ;
 if( $module_admin ){
 	$invisible_num = $mydownload->Invisible_Num( $cid, $intree ) ;
@@ -192,10 +198,10 @@ if( $module_admin ){
 	$xoopsTpl->assign( 'invisible_link' , $invisible_num['link']  ) ;
 }
 
-// 閲覧可能なカテゴリのリストを SELECTボックス用に取得
+// Get a list of browsable categories for the SELECT box
 $category4assin = d3download_makecache_for_selbox( $mydirname, $whr_cat, 0, 1 ) ;
 
-// 閲覧可能な登録データを取得
+// Retrieve registration data available for viewing
 if( empty( $cid ) && empty( $mypost ) ){
 	$limit = $xoopsModuleConfig['newdownloads'] ;
 	$download4assign = $mydownload->get_downdata_for_topview( $whr_cat4read, $limit ) ;
@@ -205,10 +211,10 @@ if( empty( $cid ) && empty( $mypost ) ){
 
 $lang_directcatsel = _MD_D3DOWNLOADS_SEL_CATEGORY;
 
-// スクリーンショット画像を使用するかどうか
+// Whether to use screenshot images
 $canuseshots = ! empty( $xoopsModuleConfig['useshots'] ) ? 1 : 0 ;
 
-// 投稿可能なカテゴリリストのみ取得
+// Get only the list of categories available for posting
 $category4post = d3download_categories_selbox( $mydirname, $whr_cat4post ) ;
 if( ! empty( $_POST['file_post'] ) && ! empty( $_POST['category_select'] ) ) {
 	$post_cid = intval( $_POST['category_select']) ;
@@ -225,7 +231,7 @@ if( ! empty( $_POST['cat_edit'] ) && ! empty( $_POST['category_select'] ) ) {
 $xoops_module_header = d3download_dbmoduleheader( $mydirname ) ;
 $xoopsTpl->assign( 'xoops_module_header', $xoops_module_header . "\n" . $xoopsTpl->get_template_vars('xoops_module_header' ) ) ;
 
-// assign
+// RENDER
 $xoopsTpl->assign( array(
 	'mydirname' => $mydirname ,
 	'mod_url' => $mod_url ,
@@ -247,5 +253,3 @@ $xoopsTpl->assign( array(
 ) ) ;
 // display
 include XOOPS_ROOT_PATH.'/footer.php';
-
-?>

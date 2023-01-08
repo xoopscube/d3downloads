@@ -4,8 +4,8 @@
 
 if( ! class_exists( 'history_download' ) )
 {
-	include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
-	require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+	include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
+	require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 
 	class history_download extends MyDownload
 	{
@@ -31,9 +31,12 @@ if( ! class_exists( 'history_download' ) )
 		var $history_int = array( 'lid' ,'cid' , 'date', 'size' ) ;
 		var $history_txt =  array( 'title' , 'url' , 'filename' , 'ext' , 'file2' , 'filename2' , 'ext2' , 'version' , 'description' , 'extra' ) ;
 
-		function history_download( $mydirname, $id= 0 )
+		function __construct($mydirname, $id= 0 )
 		{
-			include_once dirname( dirname(__FILE__) ).'/include/mytable.php' ;
+            // TODO gigamaster parent construct
+            parent::__construct($mydirname, $id= 0 );
+
+			include_once dirname(__FILE__, 2) .'/include/mytable.php' ;
 			$this->db =& Database::getInstance();
 			$this->myts =& d3downloadsTextSanitizer::sGetInstance() ;
 			$this->mod_url = XOOPS_URL.'/modules/'.$mydirname ;
@@ -57,7 +60,9 @@ if( ! class_exists( 'history_download' ) )
 			}
 		}
 
-		function GetMyDownload( $id )
+
+        function GetMyDownload( $lid, $whr = '' )
+		//function GetMyDownload( $id )
 		{
 			$sql = "SELECT $this->columns FROM ".$this->table." h LEFT JOIN ".$this->cat_table." c ON h.cid=c.cid WHERE h.id='".$id."'";
 			$result = $this->db->query( $sql );
@@ -82,7 +87,8 @@ if( ! class_exists( 'history_download' ) )
 			$url       = $this->return_url('Show') ;
 			$filename  = $this->return_filename('Show') ;
 			$ext       = $this->return_ext('Show') ;
-			$file_info = $this->file_link( $id, $cid, $url, $filename, $ext );
+            $title     = $this->return_title('Show');
+            $file_info = $this->file_link( $id, $cid, $title, $url, $filename, $ext, $novisit, 0, $block ) ;
 			$file2     = $this->return_file2('Show') ;
 			$filename2 = $this->return_filename2('Show') ;
 			$history = array(
@@ -142,7 +148,7 @@ if( ! class_exists( 'history_download' ) )
 			return $history ;
 		}
 
-		function file_link( $id, $cid, $url, $filename, $ext )
+		function file_link($id, $cid, $title, $url, $filename, $ext, $novisit = 0, $second = 0, $block = 0)
 		{
 			$broken_link = 0 ;
 			$filelink = '' ;
@@ -162,7 +168,7 @@ if( ! class_exists( 'history_download' ) )
 			} elseif ( preg_match('/('.$exception.')$/i', $url ) ) {
 				$filelink =  '<a href="'.$link.'">' ;
 			} else {
-				$filelink =  '<a href="'.$link.'" target="_blank">' ;
+				$filelink =  '<a href="'.$link.'" target="_blank" rel="noopener noreferrer nofollow">' ;
 			}
 			return array(
 				'broken_link' => $broken_link ,
@@ -176,7 +182,7 @@ if( ! class_exists( 'history_download' ) )
 			$link = $this->mod_url.'/index.php?page=visit_url&history=1&cid='.$cid.'&id='.$id ;
 			if ( ! preg_match("`^(https?|ftp)://`i", $url ) ) {
 				if( ! $this->check_file( $url ) ){
-					$filenamelink = $filename.'&nbsp;&nbsp;( <span style="color: #CC0000;font-weight: bold;">broken file !!</span> )';
+					$filenamelink = $filename.'&nbsp;&nbsp;( <span style="color: #CC0000;font-weight: bold;">Broken file !</span> )';
 				} else {
 					if( empty( $second ) ){
 						$filenamelink = '<a href="'.$link.'">'.$filename.'</a>';
@@ -275,5 +281,3 @@ if( ! class_exists( 'history_download' ) )
 		}
 	}
 }
-
-?>

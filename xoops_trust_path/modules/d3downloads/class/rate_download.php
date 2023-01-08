@@ -4,8 +4,8 @@
 
 if( ! class_exists( 'rate_download' ) )
 {
-	include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
-	require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+	include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
+	require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 
 	class rate_download extends MyDownload
 	{
@@ -20,9 +20,12 @@ if( ! class_exists( 'rate_download' ) )
 		var $anonwaitdays = 1 ;//Make sure only 1 anonymous from an IP in a single day.
 		var $Insertdata = array( 'lid' ,'ratinguser' , 'rating', 'ratinghostname', 'ratingtimestamp' ) ;
 
-		function rate_download( $mydirname, $mode='' )
+		function __construct($mydirname, $mode='' )
 		{
-			include_once dirname( dirname(__FILE__) ).'/include/mytable.php' ;
+            // TODO gigamaster parent construct
+            parent::__construct($mydirname);
+
+			include_once dirname(__FILE__, 2) .'/include/mytable.php' ;
 
 			$this->db =& Database::getInstance();
 			$this->myts =& d3downloadsTextSanitizer::sGetInstance() ;
@@ -48,7 +51,11 @@ if( ! class_exists( 'rate_download' ) )
 			}
 		}
 
-		function Get_User_vote( $lid )
+        /**
+         * @param $lid
+         * @return array|string[]
+         */
+        function Get_User_vote($lid )
 		{
 			global $xoopsConfig ;
 
@@ -90,7 +97,11 @@ if( ! class_exists( 'rate_download' ) )
 			) ;
 		}
 
-		function Get_Guest_vote( $lid )
+        /**
+         * @param $lid
+         * @return array|string[]
+         */
+        function Get_Guest_vote($lid )
 		{
 			global $xoopsConfig ;
 
@@ -142,10 +153,10 @@ if( ! class_exists( 'rate_download' ) )
 			//All is well.  Calculate Score & Add to Summary (for quick retrieval & sorting) to DB.
 			$this->UpdateRating( $lid );
 
-			include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+			include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 			$mycategory = new MyCategory( $this->mydirname, 'Show' ) ;
 			$mycategory->delete_cache_of_categories() ;
-			$message = _MD_D3DOWNLOADS_VOTEAPPRE."<br />".sprintf( _MD_D3DOWNLOADS_THANKURATE , $xoopsConfig['sitename'] ) ;
+			$message = _MD_D3DOWNLOADS_VOTEAPPRE."<br>".sprintf( _MD_D3DOWNLOADS_THANKURATE , $xoopsConfig['sitename'] ) ;
 			$this->redirect_message( $message ) ;
 			exit ;
 		}
@@ -207,5 +218,3 @@ if( ! class_exists( 'rate_download' ) )
 		}
 	}
 }
-
-?>

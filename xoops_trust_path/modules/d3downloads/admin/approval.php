@@ -56,7 +56,7 @@ $formtitle = _MD_D3DOWNLOADS_SUBMIT_APPROVAL ;
 $mod_url = XOOPS_URL.'/modules/'.$mydirname ;
 $downdata = $unapproval->get_unapprovaldata( $requestid, $category );
 
-// 存在しない aprovalid の場合リダイレクト
+// Redirect for nonexistent approval id
 if( empty( $downdata ) ) {
 	redirect_header( XOOPS_URL."/modules/$mydirname/admin/index.php?page=approvalmanager" , 2 , _MD_D3DOWNLOADS_NOMATCH ) ;
 	exit();
@@ -113,7 +113,7 @@ if( isset( $_POST['makedownloadform_delete'] ) ) {
 	exit();
 }
 
-// display stage
+// RENDER
 xoops_cp_header();
 include dirname(__FILE__).'/mymenu.php' ;
 require_once XOOPS_ROOT_PATH.'/class/template.php' ;
@@ -143,6 +143,5 @@ $tpl->assign( array(
 	'gticket_hidden' => $xoopsGTicket->getTicketHtml( __LINE__ , 1800 , 'd3downloads') ,
 ) ) ;
 $tpl->display( 'db:'.$mydirname.'_admin_approval.html' ) ;
-xoops_cp_footer();
 
-?>
+xoops_cp_footer();

@@ -13,18 +13,18 @@ define( $constpref.'_LOADED' , 1 ) ;
 define($constpref."_NAME","Duplicatable V3 (D3) downloads module");
 
 // A brief description of this module
-define($constpref."_DESC","Creates a downloads section where users can download/submit/rate various files.");
+define($constpref."_DESC","Creates a downloads section where users can download, submit and rate various files.");
 
 // admin menus
 define($constpref.'_ADMENU_FILEMANAGER',"Downloads") ;
 define($constpref.'_ADMENU_APPROVALMANAGER',"Approvals") ;
 define($constpref.'_ADMENU_CATEGORYMANAGER',"Categories") ;
-define($constpref.'_ADMENU_USER_ACCES','Category Permissions') ;
+define($constpref.'_ADMENU_USER_ACCES','Permissions') ;
 define($constpref.'_ADMENU_IMPORT',"Import/Update") ;
 define($constpref.'_ADMENU_CONFIG_CHECK',"Environment Check") ;
 define($constpref.'_ADMENU_MYLANGADMIN',"Languages") ;
 define($constpref.'_ADMENU_MYTPLSADMIN',"Templates") ;
-define($constpref.'_ADMENU_MYBLOCKSADMIN',"Blocks/Permissions") ;
+define($constpref.'_ADMENU_MYBLOCKSADMIN',"Blocks") ;
 define($constpref.'_ADMENU_MYPREFERENCES',"Preferences") ;
 
 // blocks
@@ -68,11 +68,11 @@ define($constpref.'_SHOTSSELECTDSC',"If 'Display Screenshot Images' is selected 
 define($constpref.'_SHOTWIDTH',"Image Display Width");
 define($constpref.'_CHECKURL',"Disallow downloads from the same URL");
 define($constpref.'_CHECKHOST',"Disallow direct download linking (leeching)");
-define($constpref.'_REFERERS',"Sites that can directly link to your files <br />Separate with | ");
+define($constpref.'_REFERERS',"Sites that can directly link to your files <br>Separate with | ");
 define($constpref.'_PER_HISTORY',"Number of generations for history");
 define($constpref.'_EXTENSION',"Allowed extension");
 define($constpref.'_EXTENSIONDSC',"List allowed extentions separated by |. Small leters without spaces or dot. php or html will be ignored.");
-define($constpref.'_MAXFILESIZE',"Max size of file for uploading (in bytes)");
+define($constpref.'_MAXFILESIZE',"Max size of file for uploading (in bytes). 1 MB =	1,000,000 Bytes or 1,048,576 Bytes (binary)");
 define($constpref.'_MULTIDOT',"Check multi-dot when uploading");
 define($constpref.'_MULTIDOTDSC',"Set upload permission to multiple dot file name (file name with 2 or more dots). At default multiple dot file will be dropped because of security reason.");
 define($constpref.'_CHECKHEAD',"Check file header when uploading");
@@ -163,6 +163,4 @@ define($constpref.'_LIVE_URI','URI of CSS file for livevalidation');
 define($constpref.'_LIVE_URIDSC','relative or absolute path can be set. default: {mod_url}/index.php?page=module_header&src=livevalidation.css');
 define($constpref.'_HTMLPR_EXCEPT','Groups can avoid purification by HTML Filter');
 define($constpref.'_HTMLPR_EXCEPTDSC','Post from users who are not belonged these groups will be forced to purified as sanitized HTML by HTML Filter');
-
 }
-?>

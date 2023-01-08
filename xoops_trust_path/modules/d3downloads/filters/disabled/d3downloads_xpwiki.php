@@ -15,26 +15,26 @@ if ( ! function_exists('d3downloads_xpwiki') ) {
 		if( ! class_exists( 'XpWiki' ) ) die( 'xpWiki is not installed correctly' ) ;
 
 		// Get instance. option is xpWiki module's directory name.
-		// 引数は、xpWikiをインストールしたディレクトリ名です。
+        // argument is the name of the directory where xpWiki is installed.
 		$wiki =& XpWiki::getSingleton( 'xpwiki' );
-	
-		// xpWiki の動作を決定する設定値を変更できます。
+
+        // You can change the configuration values that determine the behavior of xpWiki.
 		// $wiki->setIniConst( '[KEY]' , '[VALUE]' ); // $wiki->root->[KEY] = [VALUE];
 		// $wiki->setIniRoot( '[KEY]' , '[VALUE]' );  // $wiki->cont->[KEY] = [VALUE];
-	
-		// ex, 改行を有効にする
+
+        // ex, enable line breaks
 		$wiki->setIniRoot( 'line_break' , 1 );
-		// ex. レンダリングキャッシュをする
+        // ex. rendering cache.
 		$wiki->setIniRoot( 'render_use_cache' , 1 );
-		// ex. レンダリングキャッシュの有効期限は新たにページが作成されるまで
-		$wiki->setIniRoot( 'render_cache_min' , 0 ); // キャッシュ有効時間(分)
-		// ex. 外部リンクの target 属性 '_blank'
+        // ex. render cache expires until a new page is created
+		$wiki->setIniRoot( 'render_cache_min' , 0 ); // Cache validity time (min)
+        // ex. target attribute '_blank' for external link
 		$wiki->setIniRoot( 'link_target' , '_blank' );
 	
 		if ($html != 1) {
- 			// 第二引数は、xpWikiのCSSを適用するためのDIVクラス名
-			// 通常インストールしたディレクトリ名です。
-			// CSS を適用しない場合は空白 '' でOK。
+            // Second argument is the DIV class name to apply xpWiki's CSS
+            // usually the name of the directory where it was installed.
+            // If CSS is not applied, a blank '' is OK.
 			$text = $wiki->transform( $text , 'xpwiki' ) ;
 		} else {
 			$text = $myts->codePreConv( $text, $xcode ) ;
@@ -48,5 +48,3 @@ if ( ! function_exists('d3downloads_xpwiki') ) {
 		return $text;
 	}
 }
-
-?>

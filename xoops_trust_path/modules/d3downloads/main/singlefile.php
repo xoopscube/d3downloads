@@ -1,6 +1,7 @@
 <?php
 
 include XOOPS_ROOT_PATH.'/header.php';
+
 $xoopsOption['template_main'] = $mydirname.'_main_singlefile.html' ;
 
 global $xoopsUser ;
@@ -13,7 +14,7 @@ $user_access = new user_access( $mydirname ) ;
 
 $download4assign = $category4assin = array();
 
-// 閲覧・投稿可能なカテゴリ取得の準備
+// Preparation for acquiring categories that can be viewed and posted
 $whr_cat = "cid IN (".implode(",", $user_access->can_read() ).")" ;
 $whr_cat4read = "d.".$whr_cat ;
 $whr_cat4post = "cid IN (".implode(",", $user_access->can_post() ).")" ;
@@ -33,11 +34,11 @@ if( is_object( $xoopsUser ) ) {
 	$module_admin = false ;
 }
 
-// カテゴリ番号を取得
+// Get category number
 $cid = isset( $_GET['cid'] ) ? intval( $_GET['cid'] ) : 0 ;
 $lid = isset( $_GET['lid'] ) ? intval( $_GET['lid'] ) : 0 ;
 
-// 該当するダウンロード情報がない場合はリダイレクト
+// Redirect if no applicable download information is available
 $mydownload = new MyDownload( $mydirname, $whr_cat4read, $lid ) ;
 if( ! $mydownload->return_lid() ) {
 	d3download_delete_cache_of_categories( $mydirname ) ;
@@ -45,46 +46,46 @@ if( ! $mydownload->return_lid() ) {
 	exit() ;
 }
 
-// mydownloads との互換性を図るため、カテゴリ番号を指定しなくてもアクセスできるようにします
+// For compatibility with mydownloads, access without specifying a category number
 if( empty( $cid ) ) $cid = $mydownload->return_cid();
 
-// 閲覧できないカテゴリの場合はリダイレクト
+// Redirect for unbrowsable categories
 $canread = $user_access->user_access_for_cat( $cid, $whr_cat );
 if( empty( $canread ) ) {
 	redirect_header( XOOPS_URL.'/modules/'.$mydirname.'/',3, _MD_D3DOWNLOADS_NOREADLINKPERM );
 	exit();
 }
 
-// 閲覧可能なリンクのみの登録件数を取得しアサイン
+// Get and assign the number of registrations for browsable links only
 $total = $mydownload->Total_Num( $whr_cat, $cid );
 $total_num = sprintf( _MD_D3DOWNLOADS_CATEGORY_NUM , $total );
 $xoopsTpl->assign( 'download_total_num' , $total_num ) ;
 
-// 登録データを取得
+// Get registration data
 $download4assign = $mydownload->get_downdata_for_singleview( $whr_cat4read, $lid, $cid, 1 );
 
 $mod_url = XOOPS_URL.'/modules/'.$mydirname ;
 
-// 閲覧可能なカテゴリのリストを SELECTボックス用に取得
+// Get a list of browsable categories for the SELECT box
 $category4assin = d3download_makecache_for_selbox( $mydirname, $whr_cat, 0, 1 );
 
 $lang_directcatsel = _MD_D3DOWNLOADS_SEL_CATEGORY;
-$d3comment_dirname = $xoopsModuleConfig['comment_dirname']  ? $xoopsModuleConfig['comment_dirname']  : "";
-$d3comment_forum_id = $xoopsModuleConfig['comment_forum_id']  ? $xoopsModuleConfig['comment_forum_id']  : "";
-$comment_view = $xoopsModuleConfig['comment_view']  ? $xoopsModuleConfig['comment_view']  : "";
+$d3comment_dirname = $xoopsModuleConfig['comment_dirname'] ? $xoopsModuleConfig['comment_dirname']  : "";
+$d3comment_forum_id = $xoopsModuleConfig['comment_forum_id'] ? $xoopsModuleConfig['comment_forum_id']  : "";
+$comment_view = $xoopsModuleConfig['comment_view'] ? $xoopsModuleConfig['comment_view']  : "";
 
-// スクリーンショット画像を使用するかどうか
+// Whether to use screenshot images
 $canuseshots = ! empty( $xoopsModuleConfig['useshots'] ) ? 1 : 0 ;
 $xoops_module_header = d3download_dbmoduleheader( $mydirname );
 $xoopsTpl->assign('xoops_module_header', $xoops_module_header . "\n" . $xoopsTpl->get_template_vars('xoops_module_header'));
 
-// パンくず部分をアサイン
+// Assign breadcrumb section
 $bc[0] = d3download_breadcrumbs( $mydirname ) ;
 $breadcrumbs = array_merge( $bc ,d3download_breadcrumbs_tree( $mydirname, $cid, $whr_cat, '', 1 ) ) ;
 $title4assign = $mydownload->return_title('Show') ;
 $breadcrumbs[] = array( 'name' => $title4assign ) ;
 
-// assign
+// RENDER
 $xoopsTpl->assign( array(
 	'mydirname' => $mydirname ,
 	'mod_url' => $mod_url ,
@@ -106,7 +107,4 @@ $xoopsTpl->assign( array(
 	'xoops_pagetitle' => $title4assign ,
 	'xoops_breadcrumbs' => $breadcrumbs ,
 ) ) ;
-// display
 include XOOPS_ROOT_PATH.'/footer.php';
-
-?>

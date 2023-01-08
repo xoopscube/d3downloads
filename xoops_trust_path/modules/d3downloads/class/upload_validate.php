@@ -10,7 +10,7 @@ if( ! class_exists( 'Upload_Validate' ) )
 		var $deny_extension;
 		var $error;
 
-		function Upload_Validate( $mydirname='' )
+		function __construct($mydirname='' )
 		{
 			if( ! empty( $mydirname ) ){
 				$this->mydirname = $mydirname ;
@@ -25,7 +25,7 @@ if( ! class_exists( 'Upload_Validate' ) )
 			}
 		}
 
-		// アップロードを許可する拡張子
+        // Extensions allowed for upload
 		function allowed_extension( $mydirname )
 		{
 			$module_handler =& xoops_gethandler('module');
@@ -42,19 +42,19 @@ if( ! class_exists( 'Upload_Validate' ) )
 			return $allowed_extension ;
 		}
 
-		// アップロードを許可しない拡張子
+        // Extensions not allowed to upload
 		function deny_extension()
 		{
 			return array( 'php' , 'phtml' , 'phtm' , 'php3' , 'php4' , 'cgi' , 'pl' , 'asp' ) ;
 		}
 
-		// 拡張子偽造をチェックする画像ファイル
+        // Image files to be checked for extension forgery
 		function image_extensions()
 		{
-			return array( 1 => 'gif', 2 => 'jpg', 3 => 'png', 4 => 'swf', 5 => 'psd', 6 => 'bmp', 7 => 'tif', 8 => 'tif', 9 => 'jpc', 10 => 'jp2', 11 => 'jpx', 12 => 'jb2', 13 => 'swc', 14 => 'iff', 15 => 'wbmp', 16 => 'xbm' ) ;
+			return array( 1 => 'gif', 2 => 'jpg', 3 => 'png', 4 => 'svg', 5 => 'psd', 6 => 'bmp', 7 => 'tif', 8 => 'tif', 9 => 'jpc', 10 => 'jp2', 11 => 'jpx', 12 => 'jb2', 13 => 'swc', 14 => 'iff', 15 => 'wbmp', 16 => 'xbm' ) ;
 		}
 
-		// 各拡張子の先頭部分での正規表現
+        // Regular expression at the beginning of each extension
 		function extension_head()
 		{
 			return array(
@@ -89,7 +89,7 @@ if( ! class_exists( 'Upload_Validate' ) )
 			) ;
 		}
 
-		// 拡張子のチェック
+        // Check extension
 		function check_allowed_extensions( $ext )
 		{
 			if( ! $this->mydirname ){
@@ -103,7 +103,7 @@ if( ! class_exists( 'Upload_Validate' ) )
 			}
 		}
 
-		// php など危険な拡張子のファイルのアップロードを防ぐ
+        // Prevent uploading files with dangerous extensions such as php
 		function check_deny_extensions( $ext )
 		{
 			if( ! $this->mydirname ){
@@ -115,7 +115,7 @@ if( ! class_exists( 'Upload_Validate' ) )
 			}
 		}
 
-		// PHP 4.3.6 以前のバージョンへの対策( .. と / が含まれている場合強制終了)
+        // Countermeasure for PHP previous versions ( . and / are included)
 		function check_doubledot( $file_name )
 		{
 			if( strstr( $file_name, '..' ) ){
@@ -126,9 +126,9 @@ if( ! class_exists( 'Upload_Validate' ) )
 			}
 		}
 
-		// multiple dot file のチェックを行うかどうか
-		// protector が入っていない環境を考慮して、multiple dot file のチェックをする
-		// ただ、誤認識もあるかもしれませんので、一般設定で選択できるようにしました
+        // whether to check for multiple dot files
+        // check for multiple dot files to account for environments without protector
+        // However, there may be some erroneous identification, so we made it selectable in the general settings.
 		function config_check_multiple_dot()
 		{
 			if( ! $this->mydirname ){
@@ -143,7 +143,7 @@ if( ! class_exists( 'Upload_Validate' ) )
 			}
 		}
 
-		// multiple dot file のチェック
+        // check for multiple dot file
 		function check_multiple_dot( $file_name )
 		{
 			if( count( explode( '.' , str_replace( '.tar.gz' , '.tgz' , $file_name ) ) ) > 2 ) {
@@ -151,7 +151,7 @@ if( ! class_exists( 'Upload_Validate' ) )
 			}
 		}
 
-		// 画像ファイルを対象に拡張子偽造のチェック
+        // Check for extension forgery for image files
 		function check_image_extensions( $ext, $tmp_name, $file_name )
 		{
 			if( ! $this->mydirname ){
@@ -168,7 +168,7 @@ if( ! class_exists( 'Upload_Validate' ) )
 			}
 		}
 
-		// ヘッダのチェックを行うかどうか
+        // Whether to check headers
 		function config_validate_of_head()
 		{
 			if( ! $this->mydirname ){
@@ -183,8 +183,8 @@ if( ! class_exists( 'Upload_Validate' ) )
 			}
 		}
 
-		// 各拡張子の先頭部分での正規表現を定義している場合はそのチェック
-		// 定義されていない拡張子については、先頭部分に <?php または <script が含まれていないかチェック
+        // Check for regular expressions defined at the beginning of each extension, if any
+        // For extensions that are not defined, check for <?php or <script in the leading part
 		function Validate_of_head( $filepath, $file_name, $ext )
 		{
 			$error = 0 ;
@@ -201,7 +201,7 @@ if( ! class_exists( 'Upload_Validate' ) )
 				$handle = @fopen( $filepath, 'rb' );
 			}
 			if ( $handle ) {
-				$file_line = fgets( $handle, 255 );
+				$file_line = fgets( $handle, 191 );
 			}
 			fclose( $handle );
 			if( ! empty( $head ) ){
@@ -481,5 +481,3 @@ if( ! class_exists( 'Upload_Validate' ) )
 		}
 	}
 }
-
-?>

@@ -3,7 +3,7 @@
 if ( ! function_exists('d3download_getsub_categories') ) {
 	function d3download_getsub_categories( $mydirname, $cid, $whr_cat )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 		$mycategory = new MyCategory( $mydirname, 'Show', $cid ) ;
 		return $mycategory->getsub_categories( $whr_cat ) ;
 	}
@@ -12,7 +12,7 @@ if ( ! function_exists('d3download_getsub_categories') ) {
 if ( ! function_exists('d3download_makecache_for_selbox') ) {
 	function d3download_makecache_for_selbox( $mydirname, $whr_cat, $selectcat=0, $sum=0, $all=0, $none='', $top=0, $notnin=0 )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 		$mycategory = new MyCategory( $mydirname, 'Show' ) ;
 		return $mycategory->makecache_for_selbox( $whr_cat, $selectcat, $sum, $all, $none, $top, $notnin ) ;
 	}
@@ -21,7 +21,7 @@ if ( ! function_exists('d3download_makecache_for_selbox') ) {
 if ( ! function_exists('d3download_categories_selbox') ) {
 	function d3download_categories_selbox( $mydirname, $whr_cat, $selectcat=0, $sum=0, $all=0, $none='', $top=0, $notnin=0 )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 		$mycategory = new MyCategory( $mydirname, 'Show' ) ;
 		return $mycategory->categories_selbox( $whr_cat, $selectcat, $sum, $all, $none, $top, $notnin ) ;
 	}
@@ -30,7 +30,7 @@ if ( ! function_exists('d3download_categories_selbox') ) {
 if ( ! function_exists('d3download_get_title') ) {
 	function d3download_get_title( $mydirname, $lid, $whr )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
 		$mydownload = new MyDownload( $mydirname, $whr, $lid ) ;
 		if( ! $mydownload->return_lid() ) {
 			redirect_header( XOOPS_URL."/modules/$mydirname/" , 2 , _MD_D3DOWNLOADS_NOMATCH ) ;
@@ -214,7 +214,7 @@ if ( ! function_exists('d3download_convertorderbyout') ) {
 if ( ! function_exists('d3download_get_categories_list') ) {
 	function d3download_get_categories_list( $mydirname, $top=0 )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/block_download.php' ;
+		require_once dirname(__FILE__, 2) .'/class/block_download.php' ;
 		$block_download = new block_download( $mydirname ) ;
 		return $block_download->get_categories_list( $top ) ;
 	}
@@ -223,7 +223,7 @@ if ( ! function_exists('d3download_get_categories_list') ) {
 if ( ! function_exists('d3download_get_downloads_title') ) {
 	function d3download_get_downloads_title( $mydirname )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/block_download.php' ;
+		require_once dirname(__FILE__, 2) .'/class/block_download.php' ;
 		$block_download = new block_download( $mydirname ) ;
 		return $block_download->get_downloads_list() ;
 	}
@@ -232,7 +232,7 @@ if ( ! function_exists('d3download_get_downloads_title') ) {
 if ( ! function_exists('d3download_can_albumselect') ) {
 	function d3download_can_albumselect( $mydirname, $myalbum_dirname='' )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/submit_download.php' ;
+		include_once dirname(__FILE__, 2) .'/class/submit_download.php' ;
 		$submit_download = new submit_download( $mydirname ) ;
 		return $submit_download->can_albumselect( $myalbum_dirname ) ;
 	}
@@ -241,8 +241,9 @@ if ( ! function_exists('d3download_can_albumselect') ) {
 if ( ! function_exists('d3download_delcat') ) {
 	function d3download_delcat( $mydirname, $cid )
 	{
-		$db =& Database::getInstance() ;
-		include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+		//$db =& Database::getInstance() ;
+        $db =& XoopsDatabaseFactory::getDatabaseConnection();
+		include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 
 		$mycategory = new MyCategory( $mydirname, 'Show' ) ;
 		$module_handler =& xoops_gethandler('module');
@@ -305,7 +306,7 @@ if ( ! function_exists('d3download_delete_lid') ) {
 			$file2 = htmlspecialchars( $fil2 , ENT_QUOTES ) ;
 			$submitter = intval( $uid ) ;
 
-			// u“Še‚ðƒ†[ƒU[‚Ì“Še”‚É”½‰fv‚ª—LŒø‚Èê‡A“Še”‚É”½‰f
+            // Reflected in the number of posts if "Reflect posts in user's post count" is enabled
 			if( $submitter > 0 && ! empty( $mod_config['plus_posts'] ) ) {
 				d3download_decrementPost( $submitter ) ;
 			}
@@ -354,7 +355,7 @@ if ( ! function_exists('d3download_delete_uploadfiles') ) {
 if ( ! function_exists('d3download_real_path') ) {
 	function d3download_real_path( $mydirname, $text )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
 		$mydownload = new MyDownload( $mydirname ) ;
 		return $mydownload->Real_path( $text ) ;
 	}
@@ -363,7 +364,7 @@ if ( ! function_exists('d3download_real_path') ) {
 if ( ! function_exists('d3download_delete_cache_of_categories') ) {
 	function d3download_delete_cache_of_categories( $mydirname )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 		$mycategory = new MyCategory( $mydirname, 'Show' ) ;
 		$mycategory->delete_cache_of_categories() ;
 	}
@@ -372,7 +373,7 @@ if ( ! function_exists('d3download_delete_cache_of_categories') ) {
 if ( ! function_exists('d3download_cat_description') ) {
 	function d3download_cat_description( $mydirname, $cid )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 		$mycategory = new MyCategory( $mydirname, 'Show', $cid ) ;
 		$cat_description = $mycategory->return_description() ;
 		if( ! empty( $cat_description ) ) return $cat_description ;
@@ -380,10 +381,23 @@ if ( ! function_exists('d3download_cat_description') ) {
 	}
 }
 
+// Get category custom image
+// $cat_image for main view category, @gigamaster
+if ( ! function_exists('d3download_cat_image') ) {
+    function d3download_cat_image( $mydirname, $imgurl )
+    {
+        include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
+        $mycategory = new MyCategory( $mydirname, 'Show', $imgurl ) ;
+        $cat_image = $mycategory->return_imgurl() ;
+        if( ! empty( $cat_image ) ) return $cat_image ;
+        else return '' ;
+    }
+}
+
 if ( ! function_exists('d3download_cat_pid') ) {
 	function d3download_cat_pid( $mydirname, $cid )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 		$mycategory = new MyCategory( $mydirname, 'Show', $cid ) ;
 		return $mycategory->return_pid() ;
 	}
@@ -392,7 +406,7 @@ if ( ! function_exists('d3download_cat_pid') ) {
 if ( ! function_exists('d3download_maincat_cid') ) {
 	function d3download_maincat_cid( $mydirname, $cid )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 		$mycategory = new MyCategory( $mydirname, 'Show', $cid ) ;
 		return $mycategory->get_my_maincid() ;
 	}
@@ -401,7 +415,7 @@ if ( ! function_exists('d3download_maincat_cid') ) {
 if ( ! function_exists('d3download_subcategory_sum') ) {
 	function d3download_subcategory_sum( $mydirname, $cid, $whr='' )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 		$mycategory = new MyCategory( $mydirname, 'Show' ) ;
 		return $mycategory->subcategory_sum( $cid, $whr ) ;
 	}
@@ -410,7 +424,7 @@ if ( ! function_exists('d3download_subcategory_sum') ) {
 if ( ! function_exists('d3download_get_my_parent_cat') ) {
 	function d3download_get_my_parent_cat( $mydirname, $cid )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 		$mycategory = new MyCategory( $mydirname, 'Show', $cid ) ;
 		return $mycategory->get_my_parent_cat() ;
 	}
@@ -421,13 +435,13 @@ if ( ! function_exists('d3download_useraccess_edit_info') ) {
 	{
 		$pid = empty( $parentid ) ? d3download_cat_pid( $mydirname, $cid ) : $parentid ;
 		if( ! empty( $cid ) && $pid == 0 ){
-			$info = '<a href="'.XOOPS_URL.'/modules/'.$mydirname.'/admin/index.php?page=user_access&amp;cid='.$cid.'">'._MD_D3DOWNLOADS_USERACCESS_EDIT.'</a>' ;
+			$info = '<a class="ui-button" href="'.XOOPS_URL.'/modules/'.$mydirname.'/admin/index.php?page=user_access&amp;cid='.$cid.'">'._MD_D3DOWNLOADS_USERACCESS_EDIT.'</a>' ;
 		} elseif( empty( $cid ) && $pid > 0 ){
 			$maincid = d3download_maincat_cid( $mydirname, $pid ) ;
-			$info = '<a href="'.XOOPS_URL.'/modules/'.$mydirname.'/admin/index.php?page=user_access&amp;cid='.$maincid.'">'._MD_D3DOWNLOADS_MAINCAT_USERACCESS_EDIT.'</a>' ;
+			$info = '<a class="ui-button" href="'.XOOPS_URL.'/modules/'.$mydirname.'/admin/index.php?page=user_access&amp;cid='.$maincid.'">'._MD_D3DOWNLOADS_MAINCAT_USERACCESS_EDIT.'</a>' ;
 		} else {
 			$maincid = d3download_maincat_cid( $mydirname, $cid ) ;
-			$info = '<a href="'.XOOPS_URL.'/modules/'.$mydirname.'/admin/index.php?page=user_access&amp;cid='.$maincid.'">'._MD_D3DOWNLOADS_MAINCAT_USERACCESS_EDIT.'</a>' ;
+			$info = '<a class="ui-button" href="'.XOOPS_URL.'/modules/'.$mydirname.'/admin/index.php?page=user_access&amp;cid='.$maincid.'">'._MD_D3DOWNLOADS_MAINCAT_USERACCESS_EDIT.'</a>' ;
 		}
 		return $info ;
 	}
@@ -437,7 +451,7 @@ if ( ! function_exists('d3download_group_useraccess_info') ) {
 	function d3download_group_useraccess_info( $mydirname, $cid )
 	{
 		$pid = d3download_cat_pid( $mydirname, $cid ) ;
-		require_once dirname( dirname(__FILE__) ).'/class/user_access.php' ;
+		require_once dirname(__FILE__, 2) .'/class/user_access.php' ;
 		$user_access = new user_access( $mydirname ) ;
 		return $user_access->get_group_form( $cid, $pid, 1 ) ;
 	}
@@ -447,7 +461,7 @@ if ( ! function_exists('d3download_myuser_useraccess_info') ) {
 	function d3download_myuser_useraccess_info( $mydirname, $cid )
 	{
 		$pid = d3download_cat_pid( $mydirname, $cid ) ;
-		require_once dirname( dirname(__FILE__) ).'/class/user_access.php' ;
+		require_once dirname(__FILE__, 2) .'/class/user_access.php' ;
 		$user_access = new user_access( $mydirname ) ;
 		return $user_access->get_user_form( $cid, $pid, 1 ) ;
 	}
@@ -456,7 +470,7 @@ if ( ! function_exists('d3download_myuser_useraccess_info') ) {
 if ( ! function_exists('d3download_postname') ) {
 	function d3download_postname( $mydirname , $submitter )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
 		$mydownload = new MyDownload( $mydirname ) ;
 		return $mydownload->get_postname( $submitter ) ;
 	}
@@ -465,7 +479,7 @@ if ( ! function_exists('d3download_postname') ) {
 if ( ! function_exists('d3download_getlink_for_postname') ) {
 	function d3download_getlink_for_postname( $mydirname , $submitter )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
 		$mydownload = new MyDownload( $mydirname ) ;
 		return $mydownload->getlink_for_postname( $submitter ) ;
 	}
@@ -474,7 +488,7 @@ if ( ! function_exists('d3download_getlink_for_postname') ) {
 if ( ! function_exists('d3download_return_user_url') ) {
 	function d3download_return_user_url( $mydirname , $submitter )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
 		$mydownload = new MyDownload( $mydirname ) ;
 		return $mydownload->return_user_url( $submitter ) ;
 	}
@@ -483,7 +497,7 @@ if ( ! function_exists('d3download_return_user_url') ) {
 if ( ! function_exists('d3download_can_read') ) {
 	function d3download_can_read( $mydirname )
 	{
-		include_once dirname(dirname(__FILE__)).'/class/user_access.php' ;
+		include_once dirname(__FILE__, 2) .'/class/user_access.php' ;
 		$user_access = new user_access( $mydirname ) ;
 		return $user_access->can_read() ;
 	}
@@ -492,7 +506,7 @@ if ( ! function_exists('d3download_can_read') ) {
 if ( ! function_exists('d3download_canread_info') ) {
 	function d3download_canread_info( $mydirname, $cid )
 	{
-		include_once dirname(dirname(__FILE__)).'/class/user_access.php' ;
+		include_once dirname(__FILE__, 2) .'/class/user_access.php' ;
 		$user_access = new user_access( $mydirname ) ;
 		return $user_access->canread_info( $cid ) ;
 	}
@@ -500,20 +514,26 @@ if ( ! function_exists('d3download_canread_info') ) {
 
 // trigger event for D3
 if ( ! function_exists('d3download_main_trigger_event') ) {
-	function d3download_main_trigger_event( $mydirname , $category , $item_id, $event, $extra_tags=array(), $user_list=array(), $omit_user_id=null )
+	function d3download_main_trigger_event( $mydirname, $category, $item_id, $event, $extra_tags = [], $user_list = [], $omit_user_id = null )
 	{
 		require_once XOOPS_TRUST_PATH.'/libs/altsys/class/D3NotificationHandler.class.php' ;
-		$mytrustdirpath = dirname( dirname( __FILE__ ) );
-		$mytrustdirname = basename( $mytrustdirpath );
-		$not_handler =& D3NotificationHandler::getInstance() ;
+		$trustdirpath = dirname(__FILE__, 2);
+		$mytrustdirname = basename( $trustdirpath );
+
+        // TODO Fix Notification !!!
+        if ( empty( $user_list ) ) {
+            $user_list = [ 0 ];
+        }
+		$not_handler = D3NotificationHandler::getInstance() ;
 		$not_handler->triggerEvent( $mydirname , $mytrustdirname , $category , $item_id , $event , $extra_tags , $user_list , $omit_user_id ) ;
 	}
 }
 
+
 if ( ! function_exists('d3download_submenu') ) {
 	function d3download_submenu( $mydirname, $submenu_option )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/user_access.php' ;
+		include_once dirname(__FILE__, 2) .'/class/user_access.php' ;
 
 		$module_handler =& xoops_gethandler('module');
 		$config_handler =& xoops_gethandler('config');
@@ -555,10 +575,10 @@ if ( ! function_exists('d3download_submenu') ) {
 if ( ! function_exists('d3download_get_submenu_option') ) {
 	function d3download_get_submenu_option( $mydirname )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+		require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 		$myts =& d3downloadsTextSanitizer::sGetInstance() ;
 
-		$mytrustdirpath = dirname( dirname( __FILE__ ) ) ;
+		$mytrustdirpath = dirname(__FILE__, 2);
 		$mytrustdirname = basename( $mytrustdirpath ) ;
 
 		$config_file =  array(
@@ -588,7 +608,7 @@ if ( ! function_exists('d3download_submenu_option') ) {
 if ( ! function_exists('d3download_get_categories_for_submenu') ) {
 	function d3download_get_categories_for_submenu( $mydirname, $whr )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+		require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 		$myts =& d3downloadsTextSanitizer::sGetInstance() ;
 		$db =& Database::getInstance() ;
 
@@ -614,7 +634,7 @@ if ( ! function_exists('d3download_is_submitter') ) {
 
 		$submitter = 0 ;
 		if( is_object( $xoopsUser ) ){
-			include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
+			include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
 			$mydownload = new MyDownload( $mydirname ) ;
 			$uid = $xoopsUser->getVar( 'uid' ) ;
 			$mypost = $mydownload->Total_Mypost( $whr, $uid ) ;
@@ -627,7 +647,7 @@ if ( ! function_exists('d3download_is_submitter') ) {
 if ( ! function_exists('d3download_total_mylink') ) {
 	function d3download_total_mylink( $mydirname, $cid=0, $whr='', $intree=0 )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
 		$mydownload = new MyDownload( $mydirname ) ;
 		return $mydownload->total_mylink( $cid, $whr, $intree ) ;
 	}
@@ -636,8 +656,8 @@ if ( ! function_exists('d3download_total_mylink') ) {
 if ( ! function_exists('d3download_dbmoduleheader') ) {
 	function d3download_dbmoduleheader( $mydirname, $add_array=array() )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
-		include_once dirname( dirname(__FILE__) ).'/include/module_header.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
+		include_once dirname(__FILE__, 2) .'/include/module_header.php' ;
 		$mydownload = new MyDownload( $mydirname ) ;
 
 		$module_handler =& xoops_gethandler('module');
@@ -674,7 +694,7 @@ if ( ! function_exists('d3download_breadcrumbs') ) {
 if ( ! function_exists('d3download_breadcrumbs_tree') ) {
 	function d3download_breadcrumbs_tree( $mydirname, $cid, $whr, $path='', $halfway=0 )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 		$mycategory = new MyCategory( $mydirname, 'Show' ) ;
 
 		$i = 0 ;
@@ -694,7 +714,7 @@ if ( ! function_exists('d3download_breadcrumbs_tree') ) {
 if ( ! function_exists('d3download_category_tree') ) {
 	function d3download_category_tree( $mydirname, $cid, $path='', $whr='' )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 		$mycategory = new MyCategory( $mydirname, 'Show' ) ;
 		$funcURL = ( empty( $path ) ) ? "index.php?" : $path ;
 		return $mycategory->getNicePathFromId( $cid, $whr, $funcURL ) ;
@@ -704,7 +724,7 @@ if ( ! function_exists('d3download_category_tree') ) {
 if ( ! function_exists('d3download_delete_nullbyte') ) {
 	function d3download_delete_nullbyte( $arr )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+		require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 		$myts =& d3downloadsTextSanitizer::sGetInstance() ;
 		return $myts->Delete_Nullbyte( $arr ) ;
 	}
@@ -713,7 +733,7 @@ if ( ! function_exists('d3download_delete_nullbyte') ) {
 if ( ! function_exists('d3download_make_serialize_data') ) {
 	function d3download_make_serialize_data( $mydirname )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
+		include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
 		$mycategory = new MyCategory( $mydirname, 'Show' ) ;
 		$mycategory->serialize_insertdb() ;
 	}
@@ -722,7 +742,7 @@ if ( ! function_exists('d3download_make_serialize_data') ) {
 if ( ! function_exists('d3download_set_default_user_access') ) {
 	function d3download_set_default_user_access( $mydirname )
 	{
-		require_once dirname( dirname(__FILE__) ).'/class/user_access.php' ;
+		require_once dirname(__FILE__, 2) .'/class/user_access.php' ;
 
 		$db =& Database::getInstance() ;
 		$user_access = new user_access( $mydirname ) ;
@@ -823,5 +843,3 @@ if ( ! function_exists('d3download_history_delete') ) {
 		$db->query("DELETE FROM ".$db->prefix( $mydirname."_downloads_history" )." WHERE id='".$id."'" ) ;
 	}
 }
-
-?>

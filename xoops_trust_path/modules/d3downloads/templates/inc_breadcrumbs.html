@@ -1,13 +1,15 @@
-<div class="d3downloads_breadcrumbs">
-	<a href="<{$mod_url}>/index.php"><{$smarty.const._MD_D3DOWNLOADS_MAIN}></a>
+<ul class="breadcrumb" aria-label="breadcrumb">
+	<li><a href="<{$xoops_url}>/">
+		<img class="svg home" src="<{$xoops_url}>/images/icons/home.svg" width="1em" height="1em" alt="home">
+	</a>
+	<li><a href="<{$mod_url}>/index.php"><{$smarty.const._MD_D3DOWNLOADS_MAIN}></a>
 	<{foreach from=$xoops_breadcrumbs key="i" item="bc"}>
 		<{if $i > 0}>
-			&nbsp;&gt;&nbsp;
 			<{if $bc.url}>
-				<a href="<{$bc.url}>"><{$bc.name}></a>
+	<li><a href="<{$bc.url}>"><{$bc.name}></a>
 			<{else}>
-				<{$bc.name}>
+	<li aria-current="page"><{$bc.name}>
 			<{/if}>
 		<{/if}>
 	<{/foreach}>
-</div>
+</ul>

@@ -21,11 +21,11 @@
 
 	Copyright (c) 2007 Fransjo Leihitu
 
-	Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+	Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ï¿½Softwareï¿½), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
 	The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-	THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+	THE SOFTWARE IS PROVIDED ï¿½AS ISï¿½, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 	*/
 
@@ -47,7 +47,7 @@ if( ! class_exists( 'LiveValidationPHP' ) )
 		var $parentData;
 		var $display;
 
-		function LiveValidationPHP($data=array(),$elementID="",$args=array(),$display="")
+		function __construct($data=array(), $elementID="", $args=array(), $display="")
 		{
 			$this->parentData=$data;
 			$this->elementID="";
@@ -110,9 +110,10 @@ if( ! class_exists( 'LiveValidationPHP' ) )
 			$argsKeys=count(array_keys($this->args));
 			$counter=0;
 			if($argsKeys>0) $html.= ", { ";
-
-			while($element=each($this->args))
-			{
+            // Fix gigamaster deprecated
+			//while($element=each($this->args))
+            foreach($this->args as list($element))
+            {
 				$key=trim($element["key"]);
 				$value=$element["value"];
 
@@ -183,7 +184,7 @@ if( ! class_exists('Validation') )
 		var $elementID;
 		var $display;
 
-		function Validation($data,$type="Validate.Presence",$args=array(),$parentData=array(),$elementID="",$display="")
+		function __construct($data, $type="Validate.Presence", $args=array(), $parentData=array(), $elementID="", $display="")
 		{
 			$this->elementID=$elementID;
 			$this->display=$this->elementID;
@@ -237,15 +238,21 @@ if( ! class_exists('Validation') )
 
 		function isValidEmail($emailToCheck="")
 		{
-			if(trim($emailToCheck)!="")
-			{
-				$Result = ereg ("^[^@ ]+@[^@ ]+\.[^@ \.]+$",$emailToCheck);
-				if ($Result)
-				{
-					return true;
-				}
+//			if(trim($emailToCheck)!="")
+//			{
+//				$Result = ereg ("^[^@ ]+@[^@ ]+\.[^@ \.]+$",$emailToCheck); // TODO ereg removed in PHP7.0
+//				if ($Result)
+//				{
+//					return true;
+//				}
+//			}
+//			return false;
+
+			if (filter_var($emailToCheck, FILTER_VALIDATE_EMAIL)) {
+				return true;
 			}
 			return false;
+
 		}
 
 		function array_in_array($needle, $haystack) {
@@ -268,7 +275,9 @@ if( ! class_exists('Validation') )
 				{
 					if(isSet($this->args["partialMatch"]) && $this->args["partialMatch"]==true)
 					{
-						$words1=split(" ",$this->data);
+						// FIX  gigamaster deprecated in php7
+						// $words1=split(" ",$this->data);
+						$words1=explode(" ",$this->data);
 						$words=array();
 
 						$count=count($words1);
@@ -306,7 +315,10 @@ if( ! class_exists('Validation') )
 				{
 					if(isSet($this->args["partialMatch"]) && $this->args["partialMatch"]==true)
 					{
-						$words1=split(" ",$this->data);
+						// FIX  gigamaster deprecated in php7
+						// $words1=split(" ",$this->data);
+						$words1=explode(" ",$this->data);
+
 						$words=array();
 
 						$count=count($words1);
@@ -718,7 +730,7 @@ if( ! class_exists('LiveValidationMassValidatePHP') )
 		var $varname;
 		var $rules;
 
-		function LiveValidationMassValidatePHP($formID="",$data=array())
+		function __construct($formID="", $data=array())
 		{
 			$this->data=$data;
 			$this->formID=trim(stripslashes(strip_tags($formID)));
@@ -843,5 +855,3 @@ if( ! class_exists('LiveValidationMassValidatePHP') )
 		}
 	}
 }
-
-?>

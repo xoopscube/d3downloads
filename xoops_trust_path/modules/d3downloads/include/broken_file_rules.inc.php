@@ -1,6 +1,7 @@
 <?php
 
-include_once dirname( dirname(__FILE__) ).'/class/broken_download.php' ;
+include_once dirname(__FILE__, 2) .'/class/broken_download.php' ;
+
 $broken_report = new broken_report( $mydirname ) ;
 
 $formRules['brokenreport'] = array(
@@ -50,5 +51,3 @@ $formRules['brokenreport'] = array(
 		)
 	),
 );
-
-?>

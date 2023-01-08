@@ -32,7 +32,7 @@ function mb_language($language='') {
 
 if (! function_exists('mb_internal_encoding')) {
 function mb_internal_encoding($encoding = '') {
-	$mb =& HypMBString::getInstance();
+    $mb =& HypMBString::getInstance();
 	return $mb->mb_internal_encoding($encoding);
 }
 }
@@ -669,17 +669,17 @@ Class HypMBString
 
 	function _sjistoeuc(&$str)
 	{
-		$max = preg_match_all('/'.$this->mbemu_internals['regex'][2].'/', $str, $allchars);  // Ê¸»ú¤ÎÇÛÎó¤ËÊ¬²ò
+		$max = preg_match_all('/'.$this->mbemu_internals['regex'][2].'/', $str, $allchars);  // Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¬ï¿½ï¿½
 		$str_EUC = '';
 		for ($i = 0; $i < $max; ++$i) {
-			$num = ord($allchars[0][$i]);  // ³ÆÊ¸»ú¤Î1¥Ð¥¤¥ÈÌÜ¤ò¿ôÃÍ¤È¤·¤Æ¼è¤ê½Ð¤¹
-			if ($num2 = ord($allchars[1][$i])) { // 2¥Ð¥¤¥ÈÌÜ¤¬¤¢¤ë¾ì¹ç
+			$num = ord($allchars[0][$i]);  // ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½1ï¿½Ð¥ï¿½ï¿½ï¿½ï¿½Ü¤ï¿½ï¿½ï¿½Í¤È¤ï¿½ï¿½Æ¼ï¿½ï¿½Ð¤ï¿½
+			if ($num2 = ord($allchars[1][$i])) { // 2ï¿½Ð¥ï¿½ï¿½ï¿½ï¿½Ü¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				$shift = $this->mbemu_internals['sjistoeuc_byte1_shift'][$num2];
 				$str_EUC .= chr($this->mbemu_internals['sjistoeuc_byte1'][$num] + $shift)
 						   .chr($this->mbemu_internals['sjistoeuc_byte2'][$shift][$num2]);
-			} elseif ($num <= 0x7F) {//±Ñ¿ô»ú
+			} elseif ($num <= 0x7F) {//ï¿½Ñ¿ï¿½ï¿½ï¿½
 				$str_EUC .= chr($num);
-			} else { //È¾³Ñ¥«¥Ê
+			} else { //È¾ï¿½Ñ¥ï¿½ï¿½ï¿½
 				$str_EUC .= chr(0x8E).chr($num);
 			}
 		}
@@ -689,19 +689,19 @@ Class HypMBString
 
 	function _euctosjis(&$str)
 	{
-		$max = preg_match_all('/'.$this->mbemu_internals['regex'][1].'/', $str, $allchars);  // Ê¸»ú¤ÎÇÛÎó¤ËÊ¬²ò
+		$max = preg_match_all('/'.$this->mbemu_internals['regex'][1].'/', $str, $allchars);  // Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¬ï¿½ï¿½
 		$str_SJIS = '';
 		for ($i = 0; $i < $max; ++$i) {
-			$num = ord($allchars[0][$i]);  // ³ÆÊ¸»ú¤Î1¥Ð¥¤¥ÈÌÜ¤ò¿ôÃÍ¤È¤·¤Æ¼è¤ê½Ð¤¹
-			if ($num2 = ord($allchars[1][$i])) { // ´Á»ú¤Î¾ì¹ç
+			$num = ord($allchars[0][$i]);  // ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½1ï¿½Ð¥ï¿½ï¿½ï¿½ï¿½Ü¤ï¿½ï¿½ï¿½Í¤È¤ï¿½ï¿½Æ¼ï¿½ï¿½Ð¤ï¿½
+			if ($num2 = ord($allchars[1][$i])) { // ï¿½ï¿½ï¿½ï¿½ï¿½Î¾ï¿½ï¿½
 				$str_SJIS .= chr($this->mbemu_internals['euctosjis_byte1'][$num]);
 				if ($num & 1)
 					$str_SJIS .= chr($this->mbemu_internals['euctosjis_byte2'][0][$num2]);
 				else
 					$str_SJIS .= chr($this->mbemu_internals['euctosjis_byte2'][1][$num2]);
-			} elseif ($num3 = ord($allchars[2][$i])) {//È¾³Ñ¥«¥Ê
+			} elseif ($num3 = ord($allchars[2][$i])) {//È¾ï¿½Ñ¥ï¿½ï¿½ï¿½
 				$str_SJIS .= chr($num3);
-			} else { //±Ñ¿ô»ú
+			} else { //ï¿½Ñ¿ï¿½ï¿½ï¿½
 				$str_SJIS .= chr($num);
 			}
 		}
@@ -710,12 +710,12 @@ Class HypMBString
 
 	function _sjistojis(&$str)
 	{
-		$max = preg_match_all('/'.$this->mbemu_internals['regex'][2].'/', $str, $allchars);  // Ê¸»ú¤ÎÇÛÎó¤ËÊ¬²ò
+		$max = preg_match_all('/'.$this->mbemu_internals['regex'][2].'/', $str, $allchars);  // Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¬ï¿½ï¿½
 		$str_JIS = '';
-		$mode = 0; // ±Ñ¿ô
+		$mode = 0; // ï¿½Ñ¿ï¿½
 		for ($i = 0; $i < $max; ++$i) {
-			$num = ord($allchars[0][$i]);  // ³ÆÊ¸»ú¤Î1¥Ð¥¤¥ÈÌÜ¤ò¿ôÃÍ¤È¤·¤Æ¼è¤ê½Ð¤¹
-			if ($num2 = ord($allchars[1][$i])) { // 2¥Ð¥¤¥ÈÌÜ¤¬¤¢¤ë¾ì¹ç
+			$num = ord($allchars[0][$i]);  // ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½1ï¿½Ð¥ï¿½ï¿½ï¿½ï¿½Ü¤ï¿½ï¿½ï¿½Í¤È¤ï¿½ï¿½Æ¼ï¿½ï¿½Ð¤ï¿½
+			if ($num2 = ord($allchars[1][$i])) { // 2ï¿½Ð¥ï¿½ï¿½ï¿½ï¿½Ü¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				if ($mode != 1) {
 					$mode = 1;
 					$str_JIS .= chr(0x1b).'$B';
@@ -723,13 +723,13 @@ Class HypMBString
 				$shift = $this->mbemu_internals['sjistoeuc_byte1_shift'][$num2];
 				$str_JIS .= chr(($this->mbemu_internals['sjistoeuc_byte1'][$num] + $shift) & 0x7F)
 						   .chr($this->mbemu_internals['sjistoeuc_byte2'][$shift][$num2] & 0x7F);
-			} elseif ($num > 0x80) {//È¾³Ñ¥«¥Ê
+			} elseif ($num > 0x80) {//È¾ï¿½Ñ¥ï¿½ï¿½ï¿½
 				if ($mode != 2) {
 					$mode = 2;
 					$str_JIS .= chr(0x1B).'(I';
 				}
 				$str_JIS .= chr($num & 0x7F);
-			} else {//È¾³Ñ±Ñ¿ô
+			} else {//È¾ï¿½Ñ±Ñ¿ï¿½
 				if ($mode != 0) {
 					$mode = 0;
 					$str_JIS .= chr(0x1B).'(B';
@@ -758,15 +758,15 @@ Class HypMBString
 
 	function _jistosjis(&$str)
 	{
-		$max = preg_match_all('/'.$this->mbemu_internals['regex'][3].'/', $str, $allchunks, PREG_SET_ORDER);  // Ê¸»ú¼ï¤´¤È¤ÎÇÛÎó¤ËÊ¬²ò
+		$max = preg_match_all('/'.$this->mbemu_internals['regex'][3].'/', $str, $allchunks, PREG_SET_ORDER);  // Ê¸ï¿½ï¿½ï¿½ï¤´ï¿½È¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¬ï¿½ï¿½
 		$st = '';
 		for ($i = 0; $i < $max; ++$i) {
-			if (ord($allchunks[$i][1])) { //±Ñ¿ô¤Ë¥Þ¥Ã¥Á
+			if (ord($allchunks[$i][1])) { //ï¿½Ñ¿ï¿½ï¿½Ë¥Þ¥Ã¥ï¿½
 				$st .= $allchunks[$i][1];
-			} elseif (ord(@$allchunks[$i][2])) { //´Á»ú¤Ë¥Þ¥Ã¥Á
+			} elseif (ord(@$allchunks[$i][2])) { //ï¿½ï¿½ï¿½ï¿½ï¿½Ë¥Þ¥Ã¥ï¿½
 				$tmp = substr($allchunks[$i][0], 3, strlen($allchunks[$i][0]));
 				$st .= preg_replace_callback("/.(.)/", array(& $this, '_sub_jtosj'), $tmp);
-			} elseif (ord(@$allchunks[$i][3])) { //È¾³Ñ¥«¥Ê¤Ë¥Þ¥Ã¥Á
+			} elseif (ord(@$allchunks[$i][3])) { //È¾ï¿½Ñ¥ï¿½ï¿½Ê¤Ë¥Þ¥Ã¥ï¿½
 				$st .= preg_replace("/./e","chr(ord['$1'] | 0x80);",$allchunks[$i][3]);
 			}
 		}
@@ -794,15 +794,15 @@ Class HypMBString
 	{
 		$this->load_table('sjistouni');
 		$st = '';
-		$max = preg_match_all('/'.$this->mbemu_internals['regex'][2].'/', $str, $allchars);  // Ê¸»ú¤ÎÇÛÎó¤ËÊ¬²ò
+		$max = preg_match_all('/'.$this->mbemu_internals['regex'][2].'/', $str, $allchars);  // Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¬ï¿½ï¿½
 		for ($i = 0; $i < $max; ++$i) {
-			$num = ord($allchars[0][$i]);  // ³ÆÊ¸»ú¤Î1¥Ð¥¤¥ÈÌÜ¤ò¿ôÃÍ¤È¤·¤Æ¼è¤ê½Ð¤¹
-			if ($num2 = ord($allchars[1][$i])) { // 2¥Ð¥¤¥ÈÌÜ¤¬¤¢¤ë¾ì¹ç
+			$num = ord($allchars[0][$i]);  // ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½1ï¿½Ð¥ï¿½ï¿½ï¿½ï¿½Ü¤ï¿½ï¿½ï¿½Í¤È¤ï¿½ï¿½Æ¼ï¿½ï¿½Ð¤ï¿½
+			if ($num2 = ord($allchars[1][$i])) { // 2ï¿½Ð¥ï¿½ï¿½ï¿½ï¿½Ü¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				$ucs2 = $this->mbemu_internals['sjistoucs2'][($num << 8) | $num2];
 				$st .= $this->_ucs2utf8($ucs2);
-			} elseif ($num > 0x80) {//È¾³Ñ¥«¥Ê
+			} elseif ($num > 0x80) {//È¾ï¿½Ñ¥ï¿½ï¿½ï¿½
 				$st .= $this->_ucs2utf8(0xfec0 + $num);
-			} else {//È¾³Ñ±Ñ¿ô
+			} else {//È¾ï¿½Ñ±Ñ¿ï¿½
 				$st .= chr($num);
 			}
 		}
@@ -828,9 +828,9 @@ Class HypMBString
 	{
 		$this->load_table('unitosjis');
 		$st = '';
-		$max = preg_match_all('/'.$this->mbemu_internals['regex'][4].'/', $str, $allchars);  // Ê¸»ú¤ÎÇÛÎó¤ËÊ¬²ò
+		$max = preg_match_all('/'.$this->mbemu_internals['regex'][4].'/', $str, $allchars);  // Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¬ï¿½ï¿½
 		for ($i = 0; $i < $max; ++$i) {
-			$num = $this->_utf8ucs2($allchars[0][$i]); //ucs2¤ÎÃÍ¤ò¼è¤ê½Ð¤¹
+			$num = $this->_utf8ucs2($allchars[0][$i]); //ucs2ï¿½ï¿½ï¿½Í¤ï¿½ï¿½ï¿½Ð¤ï¿½
 			if ($num < 0x80)
 				$st .= chr($num);
 			elseif ((0xff61 <= $num) && ($num <= 0xff9f))
@@ -847,10 +847,10 @@ Class HypMBString
 	{
 		$this->load_table('sjistouni');
 		$st = '';
-		$max = preg_match_all('/'.$this->mbemu_internals['regex'][1].'/', $str, $allchars);  // Ê¸»ú¤ÎÇÛÎó¤ËÊ¬²ò
+		$max = preg_match_all('/'.$this->mbemu_internals['regex'][1].'/', $str, $allchars);  // Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¬ï¿½ï¿½
 		for ($i = 0; $i < $max; ++$i) {
-			$num = ord($allchars[0][$i]);  // ³ÆÊ¸»ú¤Î1¥Ð¥¤¥ÈÌÜ¤ò¿ôÃÍ¤È¤·¤Æ¼è¤ê½Ð¤¹
-			if ($num2 = ord($allchars[1][$i])) { // 2¥Ð¥¤¥ÈÌÜ¤¬¤¢¤ë¾ì¹ç
+			$num = ord($allchars[0][$i]);  // ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½1ï¿½Ð¥ï¿½ï¿½ï¿½ï¿½Ü¤ï¿½ï¿½ï¿½Í¤È¤ï¿½ï¿½Æ¼ï¿½ï¿½Ð¤ï¿½
+			if ($num2 = ord($allchars[1][$i])) { // 2ï¿½Ð¥ï¿½ï¿½ï¿½ï¿½Ü¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				if ($num & 1)
 					$sjis = ($this->mbemu_internals['euctosjis_byte1'][$num] << 8) | $this->mbemu_internals['euctosjis_byte2'][0][$num2];
 				else
@@ -858,7 +858,7 @@ Class HypMBString
 				$st .= $this->_ucs2utf8($this->mbemu_internals['sjistoucs2'][$sjis]);
 			} elseif ($num3 = ord($allchars[2][$i])) {
 				$st .= $this->_ucs2utf8(0xfec0 + $num3);
-			} else {//È¾³Ñ±Ñ¿ô
+			} else {//È¾ï¿½Ñ±Ñ¿ï¿½
 				$st .= chr($num);
 			}
 		}
@@ -869,12 +869,12 @@ Class HypMBString
 	{
 		$this->load_table('unitosjis');
 		$st = '';
-		$max = preg_match_all('/'.$this->mbemu_internals['regex'][4].'/', $str, $allchars);  // Ê¸»ú¤ÎÇÛÎó¤ËÊ¬²ò
+		$max = preg_match_all('/'.$this->mbemu_internals['regex'][4].'/', $str, $allchars);  // Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¬ï¿½ï¿½
 		for ($i = 0; $i < $max; ++$i) {
-			$num = $this->_utf8ucs2($allchars[0][$i]); //ucs2¤ÎÃÍ¤ò¼è¤ê½Ð¤¹
+			$num = $this->_utf8ucs2($allchars[0][$i]); //ucs2ï¿½ï¿½ï¿½Í¤ï¿½ï¿½ï¿½Ð¤ï¿½
 			if ($num < 0x80)
 				$st .= chr($num);
-			elseif ((0xff61 <= $num) && ($num <= 0xff9f)) //È¾³Ñ¥«¥Ê
+			elseif ((0xff61 <= $num) && ($num <= 0xff9f)) //È¾ï¿½Ñ¥ï¿½ï¿½ï¿½
 				$st .= chr(0x8e) . chr($num - 0xfec0);
 			else {
 				$sjis = $this->mbemu_internals['ucs2tosjis'][$num];
@@ -891,9 +891,9 @@ Class HypMBString
 	function _utf8toutf16(&$str)
 	{
 		$st = '';
-		$max = preg_match_all('/'.$this->mbemu_internals['regex'][4].'/', $str, $allchars);  // Ê¸»ú¤ÎÇÛÎó¤ËÊ¬²ò
+		$max = preg_match_all('/'.$this->mbemu_internals['regex'][4].'/', $str, $allchars);  // Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¬ï¿½ï¿½
 		for ($i = 0; $i < $max; ++$i) {
-			$num = $this->_utf8ucs2($allchars[0][$i]); //ucs2¤ÎÃÍ¤ò¼è¤ê½Ð¤¹
+			$num = $this->_utf8ucs2($allchars[0][$i]); //ucs2ï¿½ï¿½ï¿½Í¤ï¿½ï¿½ï¿½Ð¤ï¿½
 			$st .= chr(($num >> 8) & 0xff).chr($num & 0xff);
 		}
 		return $st;
@@ -915,7 +915,7 @@ Class HypMBString
 		$max = preg_match_all("/$match/", $str, $chars);
 		$str = '';
 		for ($i = 0; $i < $max; ++$i) {
-			if ($num = ord($chars[1][$i])) //Á´³Ñ¤Ë¥Þ¥Ã¥Á¥ó¥°¤·¤¿¾ì¹ç
+			if ($num = ord($chars[1][$i])) //ï¿½ï¿½ï¿½Ñ¤Ë¥Þ¥Ã¥ï¿½ï¿½ó¥°¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				$str .= chr(array_search($chars[1][$i], $this->mbemu_internals['alphanumeric_convert']));
 			//	$str .= chr($num & 0x7F);
 			else
@@ -928,7 +928,7 @@ Class HypMBString
 		$max = preg_match_all("/$match/", $str, $chars);
 		$str = '';
 		for ($i = 0; $i < $max; ++$i) {
-			if ($num = ord($chars[1][$i])) //È¾³Ñ¤Ë¥Þ¥Ã¥Á¥ó¥°¤·¤¿¾ì¹ç
+			if ($num = ord($chars[1][$i])) //È¾ï¿½Ñ¤Ë¥Þ¥Ã¥ï¿½ï¿½ó¥°¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				$str .= $this->mbemu_internals['alphanumeric_convert'][$num];
 			else
 				$str .= $chars[0][$i];
@@ -974,9 +974,9 @@ Class HypMBString
 		$max = preg_match_all("/$match/", $str, $chars);
 		$str = '';
 		for ($i = 0; $i < $max; ++$i) {
-			if ($num = ord($chars[1][$i])) //¥«¥Ê¤Ë¥Þ¥Ã¥Á¥ó¥°¤·¤¿¾ì¹ç
+			if ($num = ord($chars[1][$i])) //ï¿½ï¿½ï¿½Ê¤Ë¥Þ¥Ã¥ï¿½ï¿½ó¥°¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				$str .= chr(0x8e) . $this->mbemu_internals['kana_zenhan_convert'][$num];
-			elseif ($num = ord($chars[2][$i])) //È¾³ÑÊÑ´¹²ÄÇ½¤ÊÆÃ¼ìÊ¸»ú¤Ë¥Þ¥Ã¥Á¤·¤¿¾ì¹ç
+			elseif ($num = ord($chars[2][$i])) //È¾ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½Ç½ï¿½ï¿½ï¿½Ã¼ï¿½Ê¸ï¿½ï¿½ï¿½Ë¥Þ¥Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				$str .= chr(0x8e) . $this->mbemu_internals['special_zenhan_convert'][$num];
 			else
 				$str .= $chars[0][$i];
@@ -988,24 +988,24 @@ Class HypMBString
 		$max = preg_match_all("/$match/", $str, $chars);
 		$str = '';
 		for ($i = 0; $i < $max; ++$i) {
-			if ($num = ord($chars[1][$i])) //¤«¤Ê¤Ë¥Þ¥Ã¥Á¥ó¥°¤·¤¿¾ì¹ç
+			if ($num = ord($chars[1][$i])) //ï¿½ï¿½ï¿½Ê¤Ë¥Þ¥Ã¥ï¿½ï¿½ó¥°¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				$str .= chr(0x8e) . $this->mbemu_internals['kana_zenhan_convert'][$num];
-			elseif ($num = ord($chars[2][$i])) //È¾³ÑÊÑ´¹²ÄÇ½¤ÊÆÃ¼ìÊ¸»ú¤Ë¥Þ¥Ã¥Á¤·¤¿¾ì¹ç
+			elseif ($num = ord($chars[2][$i])) //È¾ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½Ç½ï¿½ï¿½ï¿½Ã¼ï¿½Ê¸ï¿½ï¿½ï¿½Ë¥Þ¥Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				$str .= chr(0x8e) . $this->mbemu_internals['special_zenhan_convert'][$num];
 			else
 				$str .= $chars[0][$i];
 		}
 	}
 
-	function katakana_hanzen1_EUC(&$str) {	//ÂùÅÀ¤ÎÅý¹ç¤ò¤¹¤ëÊý
+	function katakana_hanzen1_EUC(&$str) {	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò¤¹¤ï¿½ï¿½ï¿½
 		$match = "\x8e((?:[\xb3,\xb6-\xc4,\xca-\xce]\x8e\xde)|(?:[\xca-\xce]\x8e\xdf))|[\xa1-\xfe][\xa1-\xfe]|[\x01-\x7f]|\x8e([\xa1-\xdf])";
-			//ÂùÅÀ¤äÈ¾ÂùÅÀ¤Ï°ì½ï¤Ë¥Þ¥Ã¥Á¥ó¥°
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¾ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½Ë¥Þ¥Ã¥ï¿½ï¿½ï¿½
 		$max = preg_match_all("/$match/", $str, $chars);
 		$str = '';
 		for ($i = 0; $i < $max; ++$i) {
-			if ($chars[1][$i]) //Âù²»¡¤È¾Âù²»¤Ë¥Þ¥Ã¥Á¥ó¥°¤·¤¿¾ì¹ç
+			if ($chars[1][$i]) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¾ï¿½ï¿½ï¿½ï¿½ï¿½Ë¥Þ¥Ã¥ï¿½ï¿½ó¥°¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				$str .= chr(0xa5).chr(array_search($chars[1][$i], $this->mbemu_internals['kana_zenhan_convert']));
-			elseif ($chars[2][$i]) //¤½¤ÎÂ¾¤ÎÈ¾³Ñ¥«¥Ê¤Ë¥Þ¥Ã¥Á
+			elseif ($chars[2][$i]) //ï¿½ï¿½ï¿½ï¿½Â¾ï¿½ï¿½È¾ï¿½Ñ¥ï¿½ï¿½Ê¤Ë¥Þ¥Ã¥ï¿½
 				if ($num = array_search($chars[2][$i], $this->mbemu_internals['kana_zenhan_convert']))
 					$str .= chr(0xa5).chr($num);
 				else
@@ -1015,15 +1015,15 @@ Class HypMBString
 		}
 	}
 
-	function hiragana_hanzen1_EUC(&$str) {	//ÂùÅÀ¤ÎÅý¹ç¤ò¤¹¤ëÊý
+	function hiragana_hanzen1_EUC(&$str) {	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò¤¹¤ï¿½ï¿½ï¿½
 		$match = "\x8e((?:[\xb6-\xc4,\xca-\xce]\x8e\xde)|(?:[\xca-\xce]\x8e\xdf))|[\xa1-\xfe][\xa1-\xfe]|[\x01-\x7f]|\x8e([\xa1-\xdf])";
-			//ÂùÅÀ¤äÈ¾ÂùÅÀ¤Ï°ì½ï¤Ë¥Þ¥Ã¥Á¥ó¥°
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¾ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½Ë¥Þ¥Ã¥ï¿½ï¿½ï¿½
 		$max = preg_match_all("/$match/", $str, $chars);
 		$str = '';
 		for ($i = 0; $i < $max; ++$i) {
-			if ($chars[1][$i]) //Âù²»¡¤È¾Âù²»¤Ë¥Þ¥Ã¥Á¥ó¥°¤·¤¿¾ì¹ç
+			if ($chars[1][$i]) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¾ï¿½ï¿½ï¿½ï¿½ï¿½Ë¥Þ¥Ã¥ï¿½ï¿½ó¥°¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				$str .= chr(0xa4).chr(array_search($chars[1][$i], $this->mbemu_internals['kana_zenhan_convert']));
-			elseif ($chars[2][$i]) //¤½¤ÎÂ¾¤ÎÈ¾³Ñ¥«¥Ê¤Ë¥Þ¥Ã¥Á
+			elseif ($chars[2][$i]) //ï¿½ï¿½ï¿½ï¿½Â¾ï¿½ï¿½È¾ï¿½Ñ¥ï¿½ï¿½Ê¤Ë¥Þ¥Ã¥ï¿½
 				if ($num = array_search($chars[2][$i], $this->mbemu_internals['kana_zenhan_convert']))
 					$str .= chr(0xa4).chr($num);
 				else
@@ -1033,12 +1033,12 @@ Class HypMBString
 		}
 	}
 
-	function katakana_hanzen2_EUC(&$str) {	//ÂùÅÀ¤ÎÅý¹ç¤ò¤·¤Ê¤¤Êý
+	function katakana_hanzen2_EUC(&$str) {	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò¤·¤Ê¤ï¿½ï¿½ï¿½
 		$match = "[\xa1-\xfe][\xa1-\xfe]|[\x01-\x7f]|\x8e([\xa1-\xdf])";
 		$max = preg_match_all("/$match/", $str, $chars);
 		$str = '';
 		for ($i = 0; $i < $max; ++$i) {
-			if ($chars[1][$i]) //È¾³Ñ¥«¥Ê¤Ë¥Þ¥Ã¥Á
+			if ($chars[1][$i]) //È¾ï¿½Ñ¥ï¿½ï¿½Ê¤Ë¥Þ¥Ã¥ï¿½
 				if ($num = array_search($chars[1][$i], $this->mbemu_internals['kana_zenhan_convert']))
 					$str .= chr(0xa5).chr($num);
 				else
@@ -1048,12 +1048,12 @@ Class HypMBString
 		}
 	}
 
-	function hiragana_hanzen2_EUC(&$str) {	//ÂùÅÀ¤ÎÅý¹ç¤ò¤·¤Ê¤¤Êý
+	function hiragana_hanzen2_EUC(&$str) {	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò¤·¤Ê¤ï¿½ï¿½ï¿½
 		$match = "[\xa1-\xfe][\xa1-\xfe]|[\x01-\x7f]|\x8e([\xa1-\xdf])";
 		$max = preg_match_all("/$match/", $str, $chars);
 		$str = '';
 		for ($i = 0; $i < $max; ++$i) {
-			if ($chars[1][$i]) //È¾³Ñ¥«¥Ê¤Ë¥Þ¥Ã¥Á
+			if ($chars[1][$i]) //È¾ï¿½Ñ¥ï¿½ï¿½Ê¤Ë¥Þ¥Ã¥ï¿½
 				if ($num = array_search($chars[1][$i], $this->mbemu_internals['kana_zenhan_convert']))
 					$str .= chr(0xa4).chr($num);
 				else
@@ -1069,7 +1069,7 @@ Class HypMBString
 		$max = preg_match_all("/$match/", $str, $chars);
 		$str = '';
 		for ($i = 0; $i < $max; ++$i) {
-			if ($num = ord($chars[1][$i])) //¥«¥Ê¤Ë¥Þ¥Ã¥Á¥ó¥°¤·¤¿¾ì¹ç
+			if ($num = ord($chars[1][$i])) //ï¿½ï¿½ï¿½Ê¤Ë¥Þ¥Ã¥ï¿½ï¿½ó¥°¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				$str .= chr(0xa4) . chr($num);
 			else
 				$str .= $chars[0][$i];
@@ -1082,7 +1082,7 @@ Class HypMBString
 		$max = preg_match_all("/$match/", $str, $chars);
 		$str = '';
 		for ($i = 0; $i < $max; ++$i) {
-			if ($num = ord($chars[1][$i])) //¥«¥Ê¤Ë¥Þ¥Ã¥Á¥ó¥°¤·¤¿¾ì¹ç
+			if ($num = ord($chars[1][$i])) //ï¿½ï¿½ï¿½Ê¤Ë¥Þ¥Ã¥ï¿½ï¿½ó¥°¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				$str .= chr(0xa5) . chr($num);
 			else
 				$str .= $chars[0][$i];
@@ -1660,7 +1660,7 @@ Class HypMBString
 		$s = '';
 		foreach ($lines as $line) {
 			if ($line != "") {
-				$line = preg_replace("/<[\w\-+\.]+\@[\w\-+\.]+>/","", $line); //¥á¡¼¥ë¡¦¥¢¥É¥ì¥¹Éô¤ò¾Ã¤¹
+				$line = preg_replace("/<[\w\-+\.]+\@[\w\-+\.]+>/","", $line); //ï¿½á¡¼ï¿½ë¡¦ï¿½ï¿½ï¿½É¥ì¥¹ï¿½ï¿½ï¿½ï¿½Ã¤ï¿½
 				$matches = preg_split("/=\?([^?]+)\?(B|Q)\?([^?]+)\?=/", $line, -1, PREG_SPLIT_DELIM_CAPTURE);
 				for ($i = 0; $i < count($matches)-1; $i+=4) {
 					if (!preg_match("/^[ \t\r\n]*$/", $matches[$i]))
@@ -1707,12 +1707,12 @@ Class HypMBString
 				$max = preg_match_all('/'.$this->mbemu_internals['regex'][$e].'/', $str, $allchars);
 				break;
 			case 3 : //jis
-				$max = preg_match_all('/'.$this->mbemu_internals['regex'][3].'/', $str, $allchunks, PREG_SET_ORDER);  // Ê¸»ú¼ï¤´¤È¤ÎÇÛÎó¤ËÊ¬²ò
-				$st = ''; // quoted printableÊÑ´¹¸å¤ÎÊ¸»úÎó
-				$len = $maxline;  // ¤½¤Î¹Ô¤ËÄÉ²Ã²ÄÇ½¤Ê¥Ð¥¤¥È¿ô
-				$needterminate = FALSE; //ºÇ¸å¤Ë¥¨¥¹¥±¡¼¥×¥·¡¼¥±¥ó¥¹¤¬É¬Í×¤«¤É¤¦¤«
+				$max = preg_match_all('/'.$this->mbemu_internals['regex'][3].'/', $str, $allchunks, PREG_SET_ORDER);  // Ê¸ï¿½ï¿½ï¿½ï¤´ï¿½È¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¬ï¿½ï¿½
+				$st = ''; // quoted printableï¿½Ñ´ï¿½ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½
+				$len = $maxline;  // ï¿½ï¿½ï¿½Î¹Ô¤ï¿½ï¿½É²Ã²ï¿½Ç½ï¿½Ê¥Ð¥ï¿½ï¿½È¿ï¿½
+				$needterminate = FALSE; //ï¿½Ç¸ï¿½Ë¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó¥¹¤ï¿½É¬ï¿½×¤ï¿½ï¿½É¤ï¿½ï¿½ï¿½
 				for ($i = 0; $i < $max; ++$i) {
-					if (ord($allchunks[$i][1])) { //±Ñ¿ô¤Ë¥Þ¥Ã¥Á
+					if (ord($allchunks[$i][1])) { //ï¿½Ñ¿ï¿½ï¿½Ë¥Þ¥Ã¥ï¿½
 						if ($needterminate) {
 							$st .= '=1B=28B';
 							$len -= 7;
@@ -1728,7 +1728,7 @@ Class HypMBString
 							$len -= $l;
 						} 
 						$needterminate = FALSE;
-					} elseif (ord($allchunks[$i][2])) { //´Á»ú¤Ë¥Þ¥Ã¥Á
+					} elseif (ord($allchunks[$i][2])) { //ï¿½ï¿½ï¿½ï¿½ï¿½Ë¥Þ¥Ã¥ï¿½
 						$maxchars = preg_match_all("/../",substr($allchunks[$i][0], 3),$allchars);
 						$tmp = $this->_sub_qponechar($allchars[0][0], $l);
 						if ($len < 14 + $l) {
@@ -1750,7 +1750,7 @@ Class HypMBString
 						}
 						$needterminate = TRUE;
 						
-					} elseif (ord($allchunks[$i][3])) { //È¾³Ñ¥«¥Ê¤Ë¥Þ¥Ã¥Á
+					} elseif (ord($allchunks[$i][3])) { //È¾ï¿½Ñ¥ï¿½ï¿½Ê¤Ë¥Þ¥Ã¥ï¿½
 						$max = preg_match_all("/./",$allchunks[$i][3],$allchars);
 						$tmp = $this->_sub_qponechar($allchars[0][0], $l);
 						if ($len < 14 + $l) {
@@ -1777,8 +1777,8 @@ Class HypMBString
 				$st .= $linefeed;
 				return $st;
 		}
-		$st = ''; // quoted printableÊÑ´¹¸å¤ÎÊ¸»úÎó
-		$len = $maxline;  // ¤½¤Î¹Ô¤ËÄÉ²Ã²ÄÇ½¤Ê¥Ð¥¤¥È¿ô
+		$st = ''; // quoted printableï¿½Ñ´ï¿½ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½
+		$len = $maxline;  // ï¿½ï¿½ï¿½Î¹Ô¤ï¿½ï¿½É²Ã²ï¿½Ç½ï¿½Ê¥Ð¥ï¿½ï¿½È¿ï¿½
 		for ($i = 0; $i < $max; ++$i) {
 			$tmp = $this->_sub_qponechar($allchars[0][$i], $l);
 			if ($l > $len) {
@@ -1806,20 +1806,20 @@ Class HypMBString
 				$max = preg_match_all('/'.$this->mbemu_internals['regex'][$e].'/', $str, $allchars);
 				break;
 			case 3 : //jis
-				$max = preg_match_all('/'.$this->mbemu_internals['regex'][3].'/', $str, $allchunks);  // Ê¸»ú¼ï¤´¤È¤ÎÇÛÎó¤ËÊ¬²ò
-				$st = ''; // BASE64ÊÑ´¹¸å¤ÎÊ¸»úÎó
-				$maxbytes = floor($maxline * 3 / 4);  //1¹Ô¤ËÊÑ´¹²ÄÇ½¤Ê¥Ð¥¤¥È¿ô
-				$len = $maxbytes;  // ¤½¤Î¹Ô¤ËÄÉ²Ã²ÄÇ½¤Ê¥Ð¥¤¥È¿ô
-				$line = '';  //1¹ÔÊ¬¤ÎÊÑ´¹Á°¤ÎÊ¸»úÎó
-				$needterminate = FALSE; //ºÇ¸å¤Ë¥¨¥¹¥±¡¼¥×¥·¡¼¥±¥ó¥¹¤¬É¬Í×¤«¤É¤¦¤«
+				$max = preg_match_all('/'.$this->mbemu_internals['regex'][3].'/', $str, $allchunks);  // Ê¸ï¿½ï¿½ï¿½ï¤´ï¿½È¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¬ï¿½ï¿½
+				$st = ''; // BASE64ï¿½Ñ´ï¿½ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½
+				$maxbytes = floor($maxline * 3 / 4);  //1ï¿½Ô¤ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½Ç½ï¿½Ê¥Ð¥ï¿½ï¿½È¿ï¿½
+				$len = $maxbytes;  // ï¿½ï¿½ï¿½Î¹Ô¤ï¿½ï¿½É²Ã²ï¿½Ç½ï¿½Ê¥Ð¥ï¿½ï¿½È¿ï¿½
+				$line = '';  //1ï¿½ï¿½Ê¬ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½
+				$needterminate = FALSE; //ï¿½Ç¸ï¿½Ë¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó¥¹¤ï¿½É¬ï¿½×¤ï¿½ï¿½É¤ï¿½ï¿½ï¿½
 				for ($i = 0; $i < $max; ++$i) {
-					if (ord($allchunks[1][$i])) { //±Ñ¿ô¤Ë¥Þ¥Ã¥Á
+					if (ord($allchunks[1][$i])) { //ï¿½Ñ¿ï¿½ï¿½Ë¥Þ¥Ã¥ï¿½
 						if ($needterminate) {
 							$line .= chr(0x1B).'(B';
 							$len -= 3;
 						}
-						$tmpstr = $allchunks[1][$i];  //ÄÉ²Ã¤¹¤ëÊ¸»úÎó
-						$l = strlen($tmpstr);  //ÄÉ²Ã¤¹¤ëÊ¸»úÎó¤ÎÄ¹¤µ
+						$tmpstr = $allchunks[1][$i];  //ï¿½É²Ã¤ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½
+						$l = strlen($tmpstr);  //ï¿½É²Ã¤ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½
 						while ($l > $len) {
 							$line .= substr($tmpstr, 0, $len);
 							$st .= base64_encode($line).$linefeed;
@@ -1831,9 +1831,9 @@ Class HypMBString
 						$line .= $tmpstr;
 						$len -= $l;
 						$needterminate = FALSE;
-					} elseif (ord($allchunks[2][$i])) { //´Á»ú¤Ë¥Þ¥Ã¥Á
+					} elseif (ord($allchunks[2][$i])) { //ï¿½ï¿½ï¿½ï¿½ï¿½Ë¥Þ¥Ã¥ï¿½
 						$tmpstr = substr($allchunks[0][$i], 3);
-						if ($len < 8) { //Ê¸»ú¤òÄÉ²Ã¤¹¤ë¤Î¤ËºÇÄã8¥Ð¥¤¥ÈÉ¬Í×¤Ê¤Î¤Ç
+						if ($len < 8) { //Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½É²Ã¤ï¿½ï¿½ï¿½Î¤Ëºï¿½ï¿½ï¿½8ï¿½Ð¥ï¿½ï¿½ï¿½É¬ï¿½×¤Ê¤Î¤ï¿½
 							if ($needterminate)
 								$line .= chr(0x1B).'(B';
 							$st .= base64_encode($line).$linefeed;
@@ -1857,9 +1857,9 @@ Class HypMBString
 						$len -= $l;
 						$needterminate = TRUE;
 						
-					} elseif (ord($allchunks[3][$i])) { //È¾³Ñ¥«¥Ê¤Ë¥Þ¥Ã¥Á
+					} elseif (ord($allchunks[3][$i])) { //È¾ï¿½Ñ¥ï¿½ï¿½Ê¤Ë¥Þ¥Ã¥ï¿½
 						$tmpstr = $allchunks[3][$i];
-						if ($len < 7) { //Ê¸»ú¤òÄÉ²Ã¤¹¤ë¤Î¤ËºÇÄã7¥Ð¥¤¥ÈÉ¬Í×¤Ê¤Î¤Ç
+						if ($len < 7) { //Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½É²Ã¤ï¿½ï¿½ï¿½Î¤Ëºï¿½ï¿½ï¿½7ï¿½Ð¥ï¿½ï¿½ï¿½É¬ï¿½×¤Ê¤Î¤ï¿½
 							if ($needterminate)
 								$line .= chr(0x1B).'(B';
 							$st .= base64_encode($line).$linefeed;
@@ -1886,10 +1886,10 @@ Class HypMBString
 				$st .= base64_encode($line).$linefeed;
 				return $st;
 		}
-		$st = ''; // BASE64ÊÑ´¹¸å¤ÎÊ¸»úÎó
-		$maxbytes = floor($maxline * 3 / 4);  //1¹Ô¤ËÊÑ´¹²ÄÇ½¤Ê¥Ð¥¤¥È¿ô
-		$len = $maxbytes;  // ¤½¤Î¹Ô¤ËÄÉ²Ã²ÄÇ½¤Ê¥Ð¥¤¥È¿ô
-		$line = '';  //1¹ÔÊ¬¤ÎÊÑ´¹Á°¤ÎÊ¸»úÎó
+		$st = ''; // BASE64ï¿½Ñ´ï¿½ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½
+		$maxbytes = floor($maxline * 3 / 4);  //1ï¿½Ô¤ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½Ç½ï¿½Ê¥Ð¥ï¿½ï¿½È¿ï¿½
+		$len = $maxbytes;  // ï¿½ï¿½ï¿½Î¹Ô¤ï¿½ï¿½É²Ã²ï¿½Ç½ï¿½Ê¥Ð¥ï¿½ï¿½È¿ï¿½
+		$line = '';  //1ï¿½ï¿½Ê¬ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½
 		for ($i = 0; $i < $max; ++$i) {
 			$l = strlen($allchars[0][$i]);
 			if ($l > $len) {

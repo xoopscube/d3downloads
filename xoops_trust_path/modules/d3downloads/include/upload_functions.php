@@ -1,20 +1,20 @@
 <?php
 
 if ( ! function_exists('d3download_return_bytes') ) {
-	function d3download_return_bytes( $val )
-	{
-	    $val = trim( $val );
-		$last = strtolower( substr( $val, -1, 1 ) );
-		switch( $last ) {
-			case 'g':
-				$val *= 1024;
-			case 'm':
-				$val *= 1024;
-			case 'k':
-				$val *= 1024;
-		}
-		return intval( $val );
-	}
+    function d3download_return_bytes( $val )
+    {
+        $val = trim( $val );
+        $last = strtolower( substr( $val, -1, 1 ) );
+        switch( $last ) {
+            case 'g':
+                $val *= 1024;
+            case 'm':
+                $val *= 1024;
+            case 'k':
+                $val *= 1024;
+        }
+        return intval( $val );
+    }
 }
 
 if ( ! function_exists('d3download_upload_config_check') ) {
@@ -46,6 +46,8 @@ if ( ! function_exists('d3download_upload_config_check') ) {
 	}
 }
 
+
+
 if ( ! function_exists('d3download_file_error_message') ) {
 	function d3download_file_error_message( $file_error )
 	{
@@ -66,40 +68,41 @@ if ( ! function_exists('d3download_file_error_message') ) {
 	}
 }
 
-// 一般設定の最大ファイルサイズを取得
+// Get the maximum file size of general settings
 if ( ! function_exists('d3download_get_maxsize') ) {
-	function d3download_get_maxsize( $mydirname )
-	{
-		$module_handler =& xoops_gethandler('module');
-		$config_handler =& xoops_gethandler('config');
-		$module =& $module_handler->getByDirname( $mydirname );
-		$mod_config =& $config_handler->getConfigsByCat( 0, $module->getVar('mid') );
+    function d3download_get_maxsize( $mydirname )
+    {
+        $module_handler =& xoops_gethandler('module');
+        $config_handler =& xoops_gethandler('config');
+        $module =& $module_handler->getByDirname( $mydirname );
+        $mod_config =& $config_handler->getConfigsByCat( 0, $module->getVar('mid') );
 
-		if( empty( $mod_config['maxfilesize'] ) ) {
-			$maxsize = 1000 * 1024 ;
-		} else {
-			$maxsize = intval( $mod_config['maxfilesize'] ) * 1024 ;
-		}
-		return $maxsize ;
-	}
+        if( empty( $mod_config['maxfilesize'] ) ) {
+            $maxsize = 1000 * 1024 ;
+        } else {
+            $maxsize = intval( $mod_config['maxfilesize'] ) * 1024 ;
+        }
+        return $maxsize ;
+    }
 }
 
-// アップロード可能な拡張子を取得
+
+// Get the uploadable extension
 if ( ! function_exists('d3download_get_allowed_extension') ) {
 	function d3download_get_allowed_extension( $mydirname )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/upload_validate.php' ;
+		include_once dirname(__FILE__, 2) .'/class/upload_validate.php' ;
 		$upload_validate = new Upload_Validate() ;
 		$allowed_extension = array_diff( $upload_validate->allowed_extension( $mydirname ), $upload_validate->deny_extension() );
 		return sprintf( _MD_D3DOWNLOADS_SUBMIT_EXTENSION , implode( ',',$allowed_extension ) ) ;
 	}
 }
 
-// ファイルアップロード処理
+// File upload process
 if ( ! function_exists('d3download_file_upload') ) {
 	function d3download_file_upload( $mydirname, $upload_arr, $maxsize, $id, $uid )
 	{
-		// 環境チェック
+        // Environmental check
 		$config_error = "" ;
 		$config_error = d3download_upload_config_check( $mydirname );
 		if( ! empty( $config_error ) ){
@@ -126,26 +129,26 @@ if ( ! function_exists('d3download_file_upload') ) {
 	}
 }
 
-// ファイルアップロード実行
+// File upload execution
 if ( ! function_exists('d3download_upload_execution') ) {
 	function d3download_upload_execution( $mydirname, $file_name, $file_tmp_name, $file_error, $maxsize, $id, $uid, $second=0 )
 	{
-		include_once dirname( dirname(__FILE__) ).'/class/upload_validate.php' ;
+		include_once dirname(__FILE__, 2) .'/class/upload_validate.php' ;
 		$upload_validate = new Upload_Validate( $mydirname ) ;
 
 		$uploads_dir = XOOPS_TRUST_PATH.'/uploads/'.$mydirname.'/';
 
-		// PHP 4.3.6 以前のバージョンへの対策( .. と / が含まれている場合強制終了 )
+        // Measures for PHP earlier versions (killed if double dot '..' and '/' are included)
 		$upload_validate->check_doubledot( $file_name ) ;
 
-		// アップロードされたファイルは、拡張子はなく、ファイル名を変えて保存する
+        // The uploaded file has no extension and is saved with a different file name.
 		$site_salt = substr( md5( XOOPS_URL ) , -4 ) ;
 		$uploads_filename = $id.'_'.$site_salt.'_'.$uid.'_'.time() ;
 		if ( ! empty( $second ) ) $uploads_filename .= '_1' ;
 		$uploads_path = $uploads_dir.$uploads_filename ;
 		$uploads_url = 'XOOPS_TRUST_PATH/uploads/'.$mydirname.'/'.$uploads_filename ;
 
-		// エラーチェック
+        // Error checking
 		if ( $file_error > 0 ){
 			return array(
 				'file_name'  => $file_name,
@@ -166,27 +169,27 @@ if ( ! function_exists('d3download_upload_execution') ) {
 				exit();
 			}
 
-			// 拡張子チェック
+            // Extension check
 			if( ! $upload_validate->check_allowed_extensions( $f_ext ) ){
 				redirect_header( XOOPS_URL."/modules/$mydirname/", 2, sprintf( _MD_D3DOWNLOADS_UPLOADERROR_EXT , $f_ext ) ) ;
 				exit() ;
 			} else {
-				// php など危険な拡張子のファイルのアップロードを防ぐ
+                // Prevent uploading files with dangerous extensions such as php
 				$upload_validate->check_deny_extensions( $f_ext ) ;
 
-				// multiple dot file のチェックを行うかどうか
+                // Whether to check multiple dot files
 				$check_multiple_dot = $upload_validate->config_check_multiple_dot() ;
-				// multiple dot file のチェック
+                // Check multiple dot files
 				if( ! empty( $check_multiple_dot ) ){
 					$upload_validate->check_multiple_dot( $file_name ) ;
 				}
 
-				// 画像ファイルを対象に拡張子偽造のチェック
+                // Check for forged extensions for image files
 				$upload_validate->check_image_extensions( $f_ext, $file_tmp_name, $file_name ) ;
 
-				// ヘッダのチェックを行うかどうか
+                // Whether to check the header
 				$check_of_head = $upload_validate->config_validate_of_head() ;
-				// ファイルの先頭部を確認して拡張子偽造のチェック
+                // Check the beginning of the file to check for forged extensions
 				if( ! empty( $check_of_head ) ){
 					$upload_validate->Validate_of_head( $file_tmp_name, $file_name, $f_ext ) ;
 				}
@@ -215,7 +218,7 @@ if ( ! function_exists('d3download_upload_execution') ) {
 if ( ! function_exists('d3download_convert_for_newid') ) {
 	function d3download_convert_for_newid( $mydirname, $newid, $url, $file2, $uid )
 	{
-		include_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
+		include_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
 		$db =& Database::getInstance() ;
 
 		$uploads_dir = XOOPS_TRUST_PATH.'/uploads/'.$mydirname ;
@@ -261,7 +264,8 @@ if ( ! function_exists('d3download_convert_for_newid') ) {
 if ( ! function_exists('d3download_convert_for_unapproval') ) {
 	function d3download_convert_for_unapproval( $mydirname, $newid, $url, $file2, $uid )
 	{
-		include_once dirname( dirname(__FILE__) ).'/include/common_functions.php' ;
+		include_once dirname(__FILE__, 2) .'/include/common_functions.php' ;
+
 		$db =& Database::getInstance() ;
 
 		$uploads_dir = XOOPS_TRUST_PATH.'/uploads/'.$mydirname ;
@@ -304,5 +308,3 @@ if ( ! function_exists('d3download_convert_for_unapproval') ) {
 		}
 	}
 }
-
-?>

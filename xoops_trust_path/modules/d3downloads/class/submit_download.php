@@ -4,8 +4,8 @@
 
 if( ! class_exists( 'submit_download' ) )
 {
-	include_once dirname( dirname(__FILE__) ).'/class/mydownload.php' ;
-	require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+	include_once dirname(__FILE__, 2) .'/class/mydownload.php' ;
+	require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 
 	class submit_download extends MyDownload
 	{
@@ -45,11 +45,15 @@ if( ! class_exists( 'submit_download' ) )
 		var $comments ;
 		var $downdata=array();
 
-		function submit_download( $mydirname )
+		function __construct($mydirname )
 		{
-			include_once dirname( dirname(__FILE__) ).'/include/mytable.php' ;
+            //parent::__construct($mydirname);
 
-			$this->db =& Database::getInstance();
+			include_once dirname(__FILE__, 2) .'/include/mytable.php' ;
+
+
+            //$this->db =& Database::getInstance();
+            $this->db =& XoopsDatabaseFactory::getDatabaseConnection();
 			$this->myts =& d3downloadsTextSanitizer::sGetInstance() ;
 			$this->table = $this->db->prefix( "{$mydirname}_downloads" ) ;
 			$this->mydirname = $mydirname ;
@@ -142,5 +146,3 @@ if( ! class_exists( 'submit_download' ) )
 		}
 	}
 }
-
-?>

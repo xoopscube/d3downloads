@@ -1,157 +1,173 @@
-<script type="text/javascript" src="<{$mod_url}>/index.php?page=module_header&src=jquery.js"></script>
+<div class="ui-dev-mode"><{$smarty.template}></div>
+
 <script type="text/javascript" src="<{$mod_url}>/index.php?page=module_header&src=d3downloads.js"></script>
-<h2><{$smarty.const._MD_D3DOWNLOADS_H2FILEMANAGER}> ( <{$total_num}> )
-	<{if $invisible_num && ! $invisible}>
-		<{$invisible_link}>
-	<{/if}>
+
+<h2>
+	<{$smarty.const._MD_D3DOWNLOADS_H2FILEMANAGER}> <{if $category_tree}> : <{$category_tree}><{/if}>
 </h2>
+
+
 <{if $iserror}>
-	<div style="color: #CC0000;font-size:100%;font-weight:bold;margin:5px;padding:5px;border-width:1px;border-style:solid;border-color:#808080;">
+	<div class="error">
 		<{$error_message}>
 	</div>
 <{/if}>
+
+<div class="tips">
+<{$smarty.const._MD_D3DOWNLOADS_H2FILEMANAGER}> ( <{$total_num}> )
+	<{if $invisible_num && ! $invisible}>
+	<span data-before-text="<{$invisible_num}>" data-before-type="blue pill">
+		<a href="<{$invisible_link}>"><{$smarty.const._MD_D3DOWNLOADS_INVISIBLE_NUM}></a>
+	</span>
+	<{/if}>
+</div>
+
 <form name="filemanager" id="filemanager" action="<{$mod_url}>/admin/index.php?page=<{$page}>" method="post">
 	<{$gticket_hidden}>
 	<input name="page" value="<{$mod_url}>/admin/index.php?page=<{$page}>" type="hidden">
-	<div style="text-align:right;color:inherit;border: 1px inset #CCC;padding: 3px;with: 80%;font-size: small;">
-		<{$smarty.const._MD_D3DOWNLOADS_LABEL_PERPAGE}>&nbsp;
-		<select name="perpage" id="perpage">
-			<{html_options options=$perpage selected=$select_perpage}>
-		</select>
-		<{$smarty.const._MD_D3DOWNLOADS_SORTBY}>
-		<select name="order_select" id="order_select">
-			<{html_options options=$list_order selected=$select_order}>
-		</select>
-		<{$smarty.const._MD_D3DOWNLOADS_SEL_CATEGORY}>
-		<select name="category_select"  id="category_select">
-			<{html_options options=$categoryselect selected=$select_cid}>
-		</select>
-		<{if $select_cid}>
+
+
+	<div layout="row center-justify mb-4" class="control-action">
+		<div>
+			<{$smarty.const._MD_D3DOWNLOADS_SEL_CATEGORY}>
+			<select name="category_select"  id="category_select">
+				<{html_options options=$categoryselect selected=$select_cid}>
+			</select>
+			<{$smarty.const._MD_D3DOWNLOADS_SORTBY}>
+			<select name="order_select" id="order_select">
+				<{html_options options=$list_order selected=$select_order}>
+			</select>
+			<{if $select_cid}>
 			<select name="intree"  id="intree">
 				<{html_options options=$select_intree selected=$intree}>
 			</select>
-		<{/if}>
-		<{if ! $invisible}>
+			<{/if}>
+		</div>
+		<div class="control-view">
+			<{$smarty.const._MD_D3DOWNLOADS_LABEL_PERPAGE}>
+			<select name="perpage" id="perpage">
+				<{html_options options=$perpage selected=$select_perpage}>
+			</select>
+			<button class="help-admin ui-btn" type="button" data-id="5" data-module="d3downloads" data-help-article="#help-download" title="Help">
+				<span class="ui-icon ui-icon-help"></span>
+			</button>
+		</div>
+	</div>
+	<div layout="row center-left mb-6">
+			<{if ! $invisible}>
 			<{$smarty.const._MD_D3DOWNLOADS_SEL_SUBMITTER}>
-			<input type="checkbox" name="sel_submitter" id="sel_submitter" value="1" <{if $mypost}> checked="checked"<{/if}> />
-			<br />
+			<input type="checkbox" name="sel_submitter" id="sel_submitter" value="1" <{if $mypost}> checked="checked"<{/if}>>
 			<div style="display: none;" id="submitter_select_line">
 				<select disabled="disabled" name="submitter" id="submitter">
 					<{html_options options=$submitter_select selected=$submitter}>
 				</select>
-				<{*<input type="submit" name="submitter_select" value="<{$smarty.const._SUBMIT}>" tabindex="0" />*}>
+				<{*<input type="submit" name="submitter_select" value="<{$smarty.const._SUBMIT}>" tabindex="0">*}>
 			</div>
-		<{/if}>
-	</div>
+			<{/if}>
+		</div>
+
+
 <table class="outer">
-	<tr>
-		<th style="text-align:center;font-size: small;">
-			<<{$smarty.const._MD_D3DOWNLOADS_TH_ID}>
-		</th>
-		<th style="text-align:center;font-size: small;">
-			<{$smarty.const._MD_D3DOWNLOADS_TH_TITLE}>
-		</th>
-		<th style="text-align:center;font-size: small;">
-			<{$smarty.const._MD_D3DOWNLOADS_TH_CATEGORY}>
-		</th>
-		<th style="text-align:center;font-size: small;">
+	<thead>
+	<tr style="text-align:center;font-size: small;">
+		<th><{$smarty.const._MD_D3DOWNLOADS_TH_ID}></th>
+		<th><{$smarty.const._MD_D3DOWNLOADS_TH_TITLE}></th>
+		<th><{$smarty.const._MD_D3DOWNLOADS_TH_CATEGORY}></th>
+		<th>
 			<{$smarty.const._MD_D3DOWNLOADS_TH_VISIBLE}>
 			<input type="checkbox" onclick="col_check_on_off( this, 'col_visible_' )">
 		</th>
-		<th style="text-align:center;font-size: small;">
+		<th>
 			<{$smarty.const._MD_D3DOWNLOADS_TH_CANCOMMENT}>
 			<input type="checkbox" onclick="col_check_on_off( this, 'col_comment_' )">
 		</th>
-		<th style="text-align:center;font-size: small;">
-			<{$smarty.const._MD_D3DOWNLOADS_TH_HITS}>
-		</th>
-		<th style="text-align:center;font-size: small;">
-			<{$smarty.const._MD_D3DOWNLOADS_TH_RATING}>
-		</th>
-		<th style="font-size: small;">
-			<{$smarty.const._MD_D3DOWNLOADS_TH_COMMENTS}>
-		</th>
-		<th style="font-size: small;">
-			<{$smarty.const._MD_D3DOWNLOADS_TH_MYLINK}>
-		</th>
-		<th style="font-size: small;">
-			<{$smarty.const._MD_D3DOWNLOADS_TH_BROKEN}>
-		</th>
-		<th style="text-align:right;font-size: small;">
-			<{$smarty.const._MD_D3DOWNLOADS_TH_CONTENTSACTIONS}>
+		<th><{$smarty.const._MD_D3DOWNLOADS_TH_HITS}></th>
+		<th><{$smarty.const._MD_D3DOWNLOADS_TH_RATING}></th>
+		<th><{$smarty.const._MD_D3DOWNLOADS_TH_COMMENTS}></th>
+		<th><{$smarty.const._MD_D3DOWNLOADS_TH_MYLINK}></th>
+		<th><{$smarty.const._MD_D3DOWNLOADS_TH_BROKEN}></th>
+		<th>
+			<{$smarty.const._MD_D3DOWNLOADS_TH_CONTENTSACTIONS}><br>
 			<input type="checkbox" onclick="col_check_on_off( this, 'col_action_' )">
 		</th>
 	</tr>
+	</thead>
+	<tbody>
 	<{foreach from=$download item="file"}>
-		<tr class="<{cycle values="even,odd"}>">
+		<tr class="<{cycle values="even,odd"}>" style="text-align:center;">
 			<td style="text-align:center;">
 				<{$file.lid}>
 			</td>
 			<td nowrap="nowrap">
-				<input type="text" size="24" maxlength="255" name="title[<{$file.lid}>]" id="col_title_<{$file.lid}>" value="<{$file.title}>" />
+				<input type="text" size="24" maxlength="191" name="title[<{$file.lid}>]" id="col_title_<{$file.lid}>" value="<{$file.title}>">
 				<div id="title_info_<{$file.lid}>" style="display:none;color: #CC0000;font-size:100%;font-weight:bold;margin:2px;padding:2px;"></div>
 			</td>
 			<td nowrap="nowrap">
 				<{$file.ctitle}>
 			</td>
-			<td nowrap="nowrap" style="text-align:center;">
-				<input type="checkbox" name="visible[<{$file.lid}>]" id="col_visible_<{$file.lid}>" value="1" <{if $file.visible}>checked="checked"<{/if}> />
+			<td nowrap="nowrap">
+				<input type="checkbox" name="visible[<{$file.lid}>]" id="col_visible_<{$file.lid}>" value="1" <{if $file.visible}>checked="checked"<{/if}>>
 			</td>
-			<td nowrap="nowrap" style="text-align:center;">
-				<input type="checkbox" name="comment[<{$file.lid}>]" id="col_comment_<{$file.lid}>" value="1" <{if $file.cancomment}>checked="checked"<{/if}> />
+			<td nowrap="nowrap">
+				<input type="checkbox" name="comment[<{$file.lid}>]" id="col_comment_<{$file.lid}>" value="1" <{if $file.cancomment}>checked="checked"<{/if}>>
 			</td>
-			<td nowrap="nowrap" style="text-align:center;">
+			<td nowrap="nowrap">
 				<{$file.hits}>
 			</td>
-			<td nowrap="nowrap" style="text-align:center;">
-				<{$file.rating}><br />
-				(<{$file.votes}><{$smarty.const._MD_D3DOWNLOADS_VOTES}>)
+			<td nowrap="nowrap">
+				<{$file.rating}>
+				<br>
+				<span style="font-size:small"><{$file.votes}> <{$smarty.const._MD_D3DOWNLOADS_VOTES}></span>
 			</td>
-			<td nowrap="nowrap" style="text-align:center;">
+			<td nowrap="nowrap">
 				<{$file.comments}>
 			</td>
-			<td nowrap="nowrap" style="text-align:center;">
+			<td nowrap="nowrap">
 				<{$file.mylink}>
 			</td>
-			<td nowrap="nowrap" style="text-align:center;">
+			<td nowrap="nowrap">
 				<{if $file.broken > 0}>
-					<a href="<{$mod_url}>/index.php?page=modfile&amp;cid=<{$file.cid}>&amp;lid=<{$file.lid}>"><font color="#CC0000"><b><{$file.broken}></b></font></a>
+					<a href="<{$mod_url}>/index.php?page=modfile&amp;cid=<{$file.cid}>&amp;lid=<{$file.lid}>"><b class="message-warning"> <{$file.broken}> </b></a>
 				<{else}>
 					<{$file.broken}>
 				<{/if}>
 			</td>
 			<td nowrap="nowrap" style="text-align:right;">
+				<input type="checkbox" name="action_selects[<{$file.lid}>]" id="col_action_<{$file.lid}>" value="1">
+				<a href="<{$mod_url}>/index.php?page=modfile&amp;cid=<{$file.cid}>&amp;lid=<{$file.lid}>"><{$smarty.const._EDIT}></a>
+				<br>
 				<{if $file.dateinfo}>
 					<{$file.dateinfo}> |
 				<{else}>
-					<a href="<{$mod_url}>/index.php?page=singlefile&amp;cid=<{$file.cid}>&amp;lid=<{$file.lid}>"><{$smarty.const._MD_D3DOWNLOADS_VISIBLE}></a> |
+					<a href="<{$mod_url}>/index.php?page=singlefile&amp;cid=<{$file.cid}>&amp;lid=<{$file.lid}>"><{$smarty.const._MD_D3DOWNLOADS_VIEW}></a>
 				<{/if}>
-				<a href="<{$mod_url}>/index.php?page=modfile&amp;cid=<{$file.cid}>&amp;lid=<{$file.lid}>"><{$smarty.const._EDIT}></a> |
-				<input type="checkbox" name="action_selects[<{$file.lid}>]" id="col_action_<{$file.lid}>" value="1" /><br />
+				<br>
 				<{$file.user_url}>
-				<br />
-				<{$file.date}>
+				<br>
+				<span style="font-size:small"><{$file.date}></span>
 			</td>
 		</tr>
 	<{/foreach}>
+	</tbody>
+	<tfoot>
 	<tr>
-		<td colspan="11" align="center" class="head">
-			<input type="submit" name="filemanager_update" id="filemanager_update" value="<{$smarty.const._SUBMIT}>" tabindex="0" />
+		<td colspan="11">
+			<input type="submit" name="filemanager_update" id="filemanager_update" value="<{$smarty.const._SUBMIT}>" tabindex="0">
 		</td>
 	</tr>
 	<tr>
-		<th colspan="11" style="text-align:right;">
+		<th colspan="11">
 			<{$smarty.const._MD_D3DOWNLOADS_LABEL_FILECHECKED}>
-			<input type="submit" name="delete" id="delete" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_DELETE}>" /> 
+			<input type="submit" class="button-delete" name="delete" id="delete" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_DELETE}>">
 			<{if $moveselect|@count > 1}>
-				<input type="submit" name="move" id="move" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_MOVE}>" /> 
+				<input type="submit" name="move" id="move" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_MOVE}>">
 				<select name="move_select" id="move_select">
 					<{html_options options=$moveselect}>
 				</select>
 			<{/if}>
 			<{if $copy_select}>
-				<br />
-				<input type="submit" name="copy" id="copy" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_COPY}>" /> 
+				<br>
+				<input type="submit" name="copy" id="copy" value="<{$smarty.const._MD_D3DOWNLOADS_BTN_COPY}>">
 				<select name="copy_mid" id="copy_mid">
 					<{html_options options=$copy_select.target_modules}>
 				</select>
@@ -167,15 +183,14 @@
 			<{/if}>
 		</th>
 	</tr>
+	</tfoot>
 </table>
+
 </form>
 
-<div align="right"><{$pagenav}></div><br />
-<{if $category_tree}>
-	<div style="color:inherit;border: 1px inset #CCC;padding: 6px;with: 80%;font-size: small;">
-		<{$category_tree}>
-	</div>
-<{/if}>
+
+<div class="pagenavi"><{$pagenav}></div>
+
 
 <{if $copy_select}><{$copy_select.category_select_showhide}><{/if}>
 
@@ -201,7 +216,7 @@ jQuery( function($){
 		if( validate_checked > 0 ){
 			return confirm('<{$smarty.const._MD_D3DOWNLOADS_CONFIRM_DELETE}>') ;
 		} else {
-			popup_info( '<{$smarty.const._MD_D3DOWNLOADS_ERROR_SEL_FILSE}>' )
+			popup_info( '<{$smarty.const._MD_D3DOWNLOADS_ERROR_SEL_FALSE}>' )
 			return false ;
 		}
     });
@@ -213,8 +228,8 @@ jQuery( function($){
 		if( validate_checked > 0 && validate_selected > 0 ){
 			return confirm('<{$smarty.const._MD_D3DOWNLOADS_CONFIRM_MOVE}>') ;
 		} else {
-			if( validate_checked  == 0 ) popup_info( '<{$smarty.const._MD_D3DOWNLOADS_ERROR_SEL_FILSE}>' )
-			if( validate_selected == 0 ) popup_info( '<{$smarty.const._MD_D3DOWNLOADS_NO_MOVEED}>' )
+			if( validate_checked  == 0 ) popup_info( '<{$smarty.const._MD_D3DOWNLOADS_ERROR_SEL_FALSE}>' )
+			if( validate_selected == 0 ) popup_info( '<{$smarty.const._MD_D3DOWNLOADS_NO_MOVED}>' )
 			return false ;
 		}
     });
@@ -226,7 +241,7 @@ jQuery( function($){
 		if( validate_checked > 0 && validate_selected == 2 ){
 			return confirm('<{$smarty.const._MD_D3DOWNLOADS_CONFIRM_COPY}>') ;
 		} else {
-			if( validate_checked  == 0 ) popup_info( '<{$smarty.const._MD_D3DOWNLOADS_ERROR_SEL_FILSE}>' )
+			if( validate_checked  == 0 ) popup_info( '<{$smarty.const._MD_D3DOWNLOADS_ERROR_SEL_FALSE}>' )
 			if( validate_selected != 2 ) popup_info( '<{$smarty.const._MD_D3DOWNLOADS_NO_COPY}>' )
 			return false ;
 		}

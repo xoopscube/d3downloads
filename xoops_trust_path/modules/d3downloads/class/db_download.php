@@ -1,6 +1,6 @@
 <?php
 
-// for DB_insert , DB_update , DB_delete etc.
+// DB CRUD Operations
 
 if( ! class_exists( 'db_download' ) )
 {
@@ -10,7 +10,7 @@ if( ! class_exists( 'db_download' ) )
 		var $id_name;
 		var $db;
 
-		function db_download( $table_name, $id_name )
+		function __construct($table_name, $id_name )
 		{
 			$this->db =& Database::getInstance();
 			$this->table = $table_name;
@@ -47,5 +47,3 @@ if( ! class_exists( 'db_download' ) )
 		}
 	}
 }
-
-?>

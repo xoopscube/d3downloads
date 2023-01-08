@@ -54,7 +54,8 @@ if( ! class_exists( 'My_HTTP' ) )
 				}
 			}
 
-			$this->result = ( ! empty( $this->headers ) ) ? true : false ;
+			//$this->result = ( ! empty( $this->headers ) ) ? true : false ;
+            $this->result = ! empty( $this->headers );
 			if( empty( $this->result ) && empty( $this->error ) ) $this->set_error( 0 , 'Unable To Connect' ) ;
 			if( ! empty( $this->result ) ) $this->save_result() ;
 
@@ -177,12 +178,14 @@ if( ! class_exists( 'My_HTTP' ) )
 		function check_url( $url )
 		{
 			$post_check = new Post_Check() ;
-			return ( $post_check->urlCheck( $url, $this->schemes ) ) ? true : false ;
+			//return ( $post_check->urlCheck( $url, $this->schemes ) ) ? true : false ;
+            return $post_check->urlCheck( $url, $this->schemes );
 		}
 
 		function is_proxy()
 		{
-			$this->is_proxy = ( ! empty( $this->proxy_host ) && ! empty( $this->proxy_port ) ) ? true : false ;
+			//$this->is_proxy = ( ! empty( $this->proxy_host ) && ! empty( $this->proxy_port ) ) ? true : false ;
+            $this->is_proxy = ! empty( $this->proxy_host ) && ! empty( $this->proxy_port );
 		}
 
 		function set_cookies( $value )
@@ -230,5 +233,3 @@ if( ! class_exists( 'My_HTTP' ) )
 		}
 	}
 }
-
-?>

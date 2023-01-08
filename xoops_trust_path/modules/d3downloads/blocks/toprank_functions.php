@@ -109,5 +109,3 @@ if (! function_exists('b_d3downloads_toprank_edit') ) {
 		return $tpl->fetch( 'db:'.$mydirname.'_blockedit_toprank.html' ) ;
 	}
 }
-
-?>

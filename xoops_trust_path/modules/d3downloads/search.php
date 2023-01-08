@@ -1,13 +1,6 @@
 <?php
 
-eval( '
-
-function '.$mydirname.'_global_search( $keywords , $andor , $limit , $offset , $userid )
-{
-    return d3downloads_global_search_base( "'.$mydirname.'" , $keywords , $andor , $limit , $offset , $userid ) ;
-}
-
-' ) ;
+eval( 'function '.$mydirname.'_global_search( $keywords , $andor , $limit , $offset , $userid ){ return d3downloads_global_search_base( "'.$mydirname.'" , $keywords , $andor , $limit , $offset , $userid ) ;}' ) ;
 
 if( ! function_exists( 'd3downloads_global_search_base' ) ) {
 	function d3downloads_global_search_base( $mydirname, $keywords, $andor, $limit, $offset, $userid )
@@ -19,8 +12,9 @@ if( ! function_exists( 'd3downloads_global_search_base' ) ) {
 		$myts =& d3downloadsTextSanitizer::sGetInstance() ;
 		$db =& Database::getInstance() ;
 
-		$showcontext = isset( $_GET['showcontext'] ) ? $_GET['showcontext'] : 0 ;
-		$mydownload = new MyDownload( $mydirname ) ;
+		//$showcontext = isset( $_GET['showcontext'] ) ? $_GET['showcontext'] : 0 ;
+        $showcontext = $_GET['showcontext'] ?? 0;
+        $mydownload = new MyDownload( $mydirname ) ;
 		$user_access = new user_access( $mydirname ) ;
 		$whr = "cid IN ( ".implode( ",", $user_access->can_read() )." )" ;
 		
@@ -75,5 +69,3 @@ if( ! function_exists( 'd3downloads_global_search_base' ) ) {
 		return $ret ;
 	}
 }
-
-?>

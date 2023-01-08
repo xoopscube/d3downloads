@@ -2,8 +2,8 @@
 
 if( ! class_exists( 'user_access' ) )
 {
-	include_once dirname( dirname(__FILE__) ).'/class/mycategory.php' ;
-	require_once dirname( dirname(__FILE__) ).'/class/d3downloads.textsanitizer.php' ;
+	include_once dirname(__FILE__, 2) .'/class/mycategory.php' ;
+	require_once dirname(__FILE__, 2) .'/class/d3downloads.textsanitizer.php' ;
 
 	class user_access extends MyCategory
 	{
@@ -13,10 +13,13 @@ if( ! class_exists( 'user_access' ) )
 		var $cat_ids;
 		var $whr4cat;
 
-		function user_access( $mydirname )
+		function __construct($mydirname )
 		{
+            // TODO gigamaster parent construct
+            parent::__construct($mydirname);
+
 			global $xoopsUser ;
-			include_once dirname( dirname(__FILE__) ).'/include/mytable.php' ;
+			include_once dirname(__FILE__, 2) .'/include/mytable.php' ;
 
 			$this->db =& Database::getInstance() ;
 			$this->myts =& d3downloadsTextSanitizer::sGetInstance() ;
@@ -90,7 +93,9 @@ if( ! class_exists( 'user_access' ) )
 			if( $this->xoops_isadmin ) {
 				return true ;
 			} elseif( $this->xoops_isuser ){
-				if( empty( $whr_cat4edit ) ) $whr = "cid IN (".implode(",", $this->can_edit() ).")" ;
+				if( empty( $whr_cat4edit ) ) {
+                    $whr = "cid IN (" . implode(",", $this->can_edit() ).")";
+                }
 				return $this->user_access_for_cat( $cid, $whr ) ;
 			} else {
 				return false ;
@@ -412,7 +417,7 @@ if( ! class_exists( 'user_access' ) )
 			$maincid = $this->get_my_maincid( $cid ) ;
 			$group_handler = & xoops_gethandler( 'group' ) ;
 			$groups =& $group_handler->getObjects() ;
-			$canread_info = '| ' ;
+			$canread_info = '&nbsp; ' ;
 
 			foreach( $groups as $group ) {
 				$gid = $group->getVar('groupid') ;
@@ -461,16 +466,16 @@ if( ! class_exists( 'user_access' ) )
 						<td class='even' style='text-align:center;'>
 							<input type=\"checkbox\" onclick=\"col_check_on_off( this, '_gid$groupid' )\">
 						</td>
-						<td class='even' style='text-align:center;'><input type='checkbox' name='can_read[$groupid]' id='gcol_1_{$groupid}_gid{$groupid}' value='1' $can_read_checked /></td>
-						<td class='even' style='text-align:center;'><input type='checkbox' name='can_posts[$groupid]' id='gcol_2_{$groupid}_gid{$groupid}' value='1' $can_post_checked /></td>
-						<td class='even' style='text-align:center;'><input type='checkbox' name='can_edits[$groupid]' id='gcol_3_{$groupid}_gid{$groupid}' value='1' $can_edit_checked /></td>
-						<td class='even' style='text-align:center;'><input type='checkbox' name='can_deletes[$groupid]' id='gcol_4_{$groupid}_gid{$groupid}' value='1' $can_delete_checked /></td>
-						<td class='even' style='text-align:center;'><input type='checkbox' name='post_auto_approveds[$groupid]' id='gcol_5_{$groupid}_gid{$groupid}' value='1' $post_auto_approved_checked /></td>
-						<td class='even' style='text-align:center;'><input type='checkbox' name='edit_auto_approved[$groupid]' id='gcol_6_{$groupid}_gid{$groupid}' value='1' $edit_auto_approved_checked /></td>
-						<td class='even' style='text-align:center;'><input type='checkbox' name='html[$groupid]' id='gcol_7_{$groupid}_gid{$groupid}' value='1' $html_checked /></td>
-						<td class='even' style='text-align:center;'><input type='checkbox' name='upload[$groupid]' id='gcol_8_{$groupid}_gid{$groupid}' value='1' $upload_checked /></td>" ;
+						<td class='even' style='text-align:center;'><input type='checkbox' name='can_read[$groupid]' id='gcol_1_{$groupid}_gid{$groupid}' value='1' $can_read_checked></td>
+						<td class='even' style='text-align:center;'><input type='checkbox' name='can_posts[$groupid]' id='gcol_2_{$groupid}_gid{$groupid}' value='1' $can_post_checked></td>
+						<td class='even' style='text-align:center;'><input type='checkbox' name='can_edits[$groupid]' id='gcol_3_{$groupid}_gid{$groupid}' value='1' $can_edit_checked></td>
+						<td class='even' style='text-align:center;'><input type='checkbox' name='can_deletes[$groupid]' id='gcol_4_{$groupid}_gid{$groupid}' value='1' $can_delete_checked></td>
+						<td class='even' style='text-align:center;'><input type='checkbox' name='post_auto_approveds[$groupid]' id='gcol_5_{$groupid}_gid{$groupid}' value='1' $post_auto_approved_checked></td>
+						<td class='even' style='text-align:center;'><input type='checkbox' name='edit_auto_approved[$groupid]' id='gcol_6_{$groupid}_gid{$groupid}' value='1' $edit_auto_approved_checked></td>
+						<td class='even' style='text-align:center;'><input type='checkbox' name='html[$groupid]' id='gcol_7_{$groupid}_gid{$groupid}' value='1' $html_checked></td>
+						<td class='even' style='text-align:center;'><input type='checkbox' name='upload[$groupid]' id='gcol_8_{$groupid}_gid{$groupid}' value='1' $upload_checked></td>" ;
 				if( empty( $group_sel ) )$group_trs .= "</tr>\n" ;
-				else $group_trs .= "<td class='even' style='text-align:center;'><input type='checkbox' name='action_selects[$groupid]' id='col_action_g_{$groupid}' value='1'/></td></tr>\n" ;
+				else $group_trs .= "<td class='even' style='text-align:center;'><input type='checkbox' name='action_selects[$groupid]' id='col_action_g_{$groupid}' value='1'></td></tr>\n" ;
 			}
 			return $group_trs ;
 		}
@@ -515,16 +520,16 @@ if( ! class_exists( 'user_access' ) )
 						<td class='even' style='text-align:center;'>
 							<input type=\"checkbox\" onclick=\"col_check_on_off( this, '_uid$uid' )\">
 						</td>
-						<td class='even' style='text-align:center;'><input type='checkbox' name='can_read_user[$uid]' id='ucol_1_{$uid}_uid{$uid}' value='1' $can_read_checked_user /></td>
-						<td class='even' style='text-align:center;'><input type='checkbox' name='can_posts_user[$uid]' id='ucol_2_{$uid}_uid{$uid}' value='1' $can_post_checked_user /></td>
-						<td class='even' style='text-align:center;'><input type='checkbox' name='can_edits_user[$uid]' id='ucol_3_{$uid}_uid{$uid}' value='1' $can_edit_checked_user /></td>
-						<td class='even' style='text-align:center;'><input type='checkbox' name='can_deletes_user[$uid]' id='ucol_4_{$uid}_uid{$uid}' value='1' $can_delete_checked_user /></td>
-						<td class='even' style='text-align:center;'><input type='checkbox' name='post_auto_approveds_user[$uid]' id='ucol_5_{$uid}_uid{$uid}' value='1' $post_auto_approved_checked_user /></td>
-						<td class='even' style='text-align:center;'><input type='checkbox' name='edit_auto_approved_user[$uid]' id='ucol_6_{$uid}_uid{$uid}' value='1' $edit_auto_approved_checked_user /></td>
-						<td class='even' style='text-align:center;'><input type='checkbox' name='html_user[$uid]' id='ucol_7_{$uid}_uid{$uid}' value='1' $html_checked_user /></td>
-						<td class='even' style='text-align:center;'><input type='checkbox' name='upload_user[$uid]' id='ucol_8_{$uid}_uid{$uid}' value='1' $upload_checked_user /></td>" ;
+						<td class='even' style='text-align:center;'><input type='checkbox' name='can_read_user[$uid]' id='ucol_1_{$uid}_uid{$uid}' value='1' $can_read_checked_user></td>
+						<td class='even' style='text-align:center;'><input type='checkbox' name='can_posts_user[$uid]' id='ucol_2_{$uid}_uid{$uid}' value='1' $can_post_checked_user></td>
+						<td class='even' style='text-align:center;'><input type='checkbox' name='can_edits_user[$uid]' id='ucol_3_{$uid}_uid{$uid}' value='1' $can_edit_checked_user></td>
+						<td class='even' style='text-align:center;'><input type='checkbox' name='can_deletes_user[$uid]' id='ucol_4_{$uid}_uid{$uid}' value='1' $can_delete_checked_user></td>
+						<td class='even' style='text-align:center;'><input type='checkbox' name='post_auto_approveds_user[$uid]' id='ucol_5_{$uid}_uid{$uid}' value='1' $post_auto_approved_checked_user></td>
+						<td class='even' style='text-align:center;'><input type='checkbox' name='edit_auto_approved_user[$uid]' id='ucol_6_{$uid}_uid{$uid}' value='1' $edit_auto_approved_checked_user></td>
+						<td class='even' style='text-align:center;'><input type='checkbox' name='html_user[$uid]' id='ucol_7_{$uid}_uid{$uid}' value='1' $html_checked_user></td>
+						<td class='even' style='text-align:center;'><input type='checkbox' name='upload_user[$uid]' id='ucol_8_{$uid}_uid{$uid}' value='1' $upload_checked_user></td>" ;
 				if( empty( $user_sel ) )$user_trs .= "</tr>\n" ;
-				else $user_trs .= "<td class='even' style='text-align:center;'><input type='checkbox' name='action_selects_u[$uid]' id='col_action_u_{$uid}' value='1'/></td></tr>\n" ;
+				else $user_trs .= "<td class='even' style='text-align:center;'><input type='checkbox' name='action_selects_u[$uid]' id='col_action_u_{$uid}' value='1'></td></tr>\n" ;
 			}
 			return $user_trs ;
 		}
@@ -535,21 +540,21 @@ if( ! class_exists( 'user_access' ) )
 			for( $i = 0 ; $i < 5 ; $i ++ ) {
 				$newuser_trs .= "
 					<tr>
-						<td class='head' style='text-align:center;'><input type='text' size='4' name='new_uids[$i]' value='' /></th>
-						<td class='head' style='text-align:center;'><input type='text' size='12' name='new_unames[$i]' value='' /></th>
+						<td class='head' style='text-align:center;'><input type='text' size='4' name='new_uids[$i]' value=''></th>
+						<td class='head' style='text-align:center;'><input type='text' size='12' name='new_unames[$i]' value=''></th>
 						<td class='head' style='text-align:center;'>
 							<input type=\"checkbox\" onclick=\"col_check_on_off( this, '_new$i' )\">
 						</td>
-						<td class='head' style='text-align:center;'><input type='checkbox' name='new_can_read[$i]' id='ncol_1_{$i}_new{$i}' checked='checked' /></th>
-						<td class='head' style='text-align:center;'><input type='checkbox' name='new_can_posts[$i]' id='ncol_2_{$i}_new{$i}' value='1' /></th>
-						<td class='head' style='text-align:center;'><input type='checkbox' name='new_can_edits[$i]' id='ncol_3_{$i}_new{$i}' value='1' /></td>
-						<td class='head' style='text-align:center;'><input type='checkbox' name='new_can_deletes[$i]' id='ncol_4_{$i}_new{$i}' value='1' /></td>
-						<td class='head' style='text-align:center;'><input type='checkbox' name='new_post_auto_approveds[$i]' id='ncol_5_{$i}_new{$i}' value='1' /></td>
-						<td class='head' style='text-align:center;'><input type='checkbox' name='new_edit_auto_approved[$i]' id='ncol_6_{$i}_new{$i}' value='1' /></td>
-						<td class='head' style='text-align:center;'><input type='checkbox' name='new_html[$i]' id='ncol_7_{$i}_new{$i}' value='1' /></td>
-						<td class='head' style='text-align:center;'><input type='checkbox' name='new_upload[$i]' id='ncol_8_{$i}_new{$i}' value='1' /></td>" ;
+						<td class='head' style='text-align:center;'><input type='checkbox' name='new_can_read[$i]' id='ncol_1_{$i}_new{$i}' checked='checked'></th>
+						<td class='head' style='text-align:center;'><input type='checkbox' name='new_can_posts[$i]' id='ncol_2_{$i}_new{$i}' value='1'></th>
+						<td class='head' style='text-align:center;'><input type='checkbox' name='new_can_edits[$i]' id='ncol_3_{$i}_new{$i}' value='1'></td>
+						<td class='head' style='text-align:center;'><input type='checkbox' name='new_can_deletes[$i]' id='ncol_4_{$i}_new{$i}' value='1'></td>
+						<td class='head' style='text-align:center;'><input type='checkbox' name='new_post_auto_approveds[$i]' id='ncol_5_{$i}_new{$i}' value='1'></td>
+						<td class='head' style='text-align:center;'><input type='checkbox' name='new_edit_auto_approved[$i]' id='ncol_6_{$i}_new{$i}' value='1'></td>
+						<td class='head' style='text-align:center;'><input type='checkbox' name='new_html[$i]' id='ncol_7_{$i}_new{$i}' value='1'></td>
+						<td class='head' style='text-align:center;'><input type='checkbox' name='new_upload[$i]' id='ncol_8_{$i}_new{$i}' value='1'></td>" ;
 				if( empty( $user_sel ) )$newuser_trs .= "</tr>\n" ;
-				else $newuser_trs .= "<td class='head' style='text-align:center;'><input type='checkbox' name='new_action_selects_u[$i]' id='new_col_action_u_{$i}' value='1'/></td></tr>\n" ;
+				else $newuser_trs .= "<td class='head' style='text-align:center;'><input type='checkbox' name='new_action_selects_u[$i]' id='new_col_action_u_{$i}' value='1'></td></tr>\n" ;
 			}
 			return $newuser_trs ;
 		}
@@ -975,5 +980,3 @@ if( ! class_exists( 'user_access' ) )
 		}
 	}
 }
-
-?>

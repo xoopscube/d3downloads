@@ -235,10 +235,11 @@ $formRules['makedownloadform'] = array(
 
 // set extension data
 include_once dirname( dirname(__FILE__) ).'/class/upload_validate.php' ;
+
 $upload_validate = new Upload_Validate() ;
 $allowed_extension = '\.'.implode( '|\.',array_diff( $upload_validate->allowed_extension( $mydirname ), $upload_validate->deny_extension() ) );
 
-// ˆê”ÊÝ’è‚ÅÝ’è‚³‚ê‚Ä‚¢‚éŠg’£Žq‚ðƒ`ƒFƒbƒN
+// ï¿½ï¿½ÊÝ’ï¿½ÅÝ’è‚³ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½gï¿½ï¿½ï¿½qï¿½ï¿½ï¿½`ï¿½Fï¿½bï¿½N
 $formRules['fileupload'] = array(
 	// File_upload check
 	'file_upload_1' => array(
@@ -293,5 +294,3 @@ $formRules['license'] = array(
 		)
 	),
 );
-
-?>

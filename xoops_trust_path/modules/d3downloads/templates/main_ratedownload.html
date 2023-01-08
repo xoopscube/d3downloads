@@ -1,40 +1,55 @@
+<div class="ui-dev-mode"><{$smarty.template}></div>
+
+
 <{if $mod_config.show_breadcrumbs}>
 	<{include file="db:`$mydirname`_inc_breadcrumbs.html"}>
 <{/if}>
-<div class="d3downloads_ratelink_frame">
-	<div align="center">
-		<h4><{$down.title}></h4>
-	</div>
+
+
+<h4><{$down.title}></h4>
+
+
+<div class="resultMsg">
+	<{$lang_voteonce}>
+</div>
+
+
+<div layout="column p-2 my-6">
 
 	<ul>
-		<li><{$lang_voteonce}>
 		<li><{$lang_ratingscale}>
 		<li><{$lang_beobjective}>
 		<li><{$lang_donotvote}>
 	</ul>
-	<div class="d3downloads_ratelink_form">
-		<form method="post" action="<{$mod_url}>/index.php?page=<{$page}>&amp;cid=<{$down.cid}>&amp;lid=<{$down.lid}>">
-			<input type="hidden" name="lid" id="lid" value="<{$down.lid}>" />
-			<input type="hidden" name="cid" id="cid" value="<{$down.cid}>" />
-			<input type="hidden" name="url" id="url" value="<{$mod_url}>/index.php?page=ajax_load" />
-				<select name="rating" id="rating">
-					<option value="0">--</option>
-					<option value="10">10</option>
-					<option value="9">9</option>
-					<option value="8">8</option>
-					<option value="7">7</option>
-					<option value="6">6</option>
-					<option value="5">5</option>
-					<option value="4">4</option>
-					<option value="3">3</option>
-					<option value="2">2</option>
-					<option value="1">1</option>
-				</select>&nbsp;&nbsp;
-			<input type="submit" name="rate_submit" id="rate_submit" value="<{$lang_rateit}>" />
-			<input type=button name="rate_cancel" id="rate_cancel" value="<{$lang_cancel}>" />
-		</form>
-	</div>
+
 </div>
+
+
+	<form method="post" action="<{$mod_url}>/index.php?page=<{$page}>&amp;cid=<{$down.cid}>&amp;lid=<{$down.lid}>">
+		<input type="hidden" name="lid" id="lid" value="<{$down.lid}>">
+		<input type="hidden" name="cid" id="cid" value="<{$down.cid}>">
+		<input type="hidden" name="url" id="url" value="<{$mod_url}>/index.php?page=ajax_load">
+		<fieldset>
+			<select name="rating" id="rating">
+				<option value="0">--</option>
+				<option value="10">10</option>
+				<option value="9">9</option>
+				<option value="8">8</option>
+				<option value="7">7</option>
+				<option value="6">6</option>
+				<option value="5">5</option>
+				<option value="4">4</option>
+				<option value="3">3</option>
+				<option value="2">2</option>
+				<option value="1">1</option>
+			</select>&nbsp;&nbsp;
+		<input class="ui-button" type="submit" name="rate_submit" id="rate_submit" value="<{$lang_rateit}>">
+		<input type=button name="rate_cancel" id="rate_cancel" value="<{$lang_cancel}>">
+		</fieldset>
+	</form>
+
+
+
 
 <script type="text/javascript">
 <!--//
